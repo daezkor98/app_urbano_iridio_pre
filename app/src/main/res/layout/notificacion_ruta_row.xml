@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:theme="@style/selectableItemGrisStyle">
+
+    <LinearLayout
+        android:id="@+id/bgLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        android:layout_gravity="center">
+
+        <FrameLayout
+            android:id="@+id/containerImgStatusLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp">
+
+            <FrameLayout
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_gravity="center">
+
+                <FrameLayout
+                    android:id="@+id/bgIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/imgIcon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerInside"
+                        android:adjustViewBounds="true"/>
+                </FrameLayout>
+            </FrameLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/lblTituloNotificacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/gris_2"/>
+
+            <TextView
+                android:id="@+id/lblMsgNotificacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/darkPrimaryText" />
+
+            <TextView
+                android:id="@+id/lblFechaCHK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/blue_1_dark"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/boxCheckNotificacionGestionada"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_status_check"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/darkDividers" />
+</LinearLayout>

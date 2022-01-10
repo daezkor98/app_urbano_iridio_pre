@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_transferir_guias" android:title="@string/title_activity_transferir_guia"
+        android:icon="@drawable/ic_share_white"
+        android:orderInCategory="2" app:showAsAction="always" />
+    <item android:id="@+id/action_check_all" android:title="Seleccionar todo"
+        android:icon="@drawable/ic_check_all_white"
+        android:orderInCategory="1" app:showAsAction="always" />
+</menu>

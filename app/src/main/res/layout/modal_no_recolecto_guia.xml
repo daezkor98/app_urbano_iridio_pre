@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:theme="@style/color_theme_colorPrimary">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Gestionar: No Recolectado"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/lblGuiaElectronica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="WYB8563425"
+                    android:textColor="@android:color/white"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:ellipsize="marquee"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#f1f1f1">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/darkDividers" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Motivo"
+                        android:textColor="@color/gris_2"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
+                        android:layout_gravity="left|center_vertical" />
+
+                    <ImageButton
+                        android:id="@+id/btnUpdateMotivos"
+                        android:theme="@style/selectableItemGrisStyle"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_refresh_grey"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:scaleType="centerInside"
+                        android:layout_gravity="right|center_vertical" />
+                </FrameLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/darkDividers" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvMotivos"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:scrollbars="vertical"
+                android:fadeScrollbars="false"
+                android:focusable="false"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#f1f1f1"
+                android:layout_marginTop="10dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/darkDividers" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Datos adjuntos"
+                        android:textColor="@color/gris_2"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/darkDividers" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Comentarios"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/darkSecondaryText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".7"
+                    android:gravity="right">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtComentarios"
+                        android:textColor="@color/gris_2"
+                        android:maxLength="160" />
+
+                    <TextView
+                        android:id="@+id/lblContadorComentario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0/160"
+                        android:textColor="@color/gris_2"
+                        android:gravity="center_vertical"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#f1f1f1"
+                android:layout_marginTop="10dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/darkDividers" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Galería"
+                        android:textColor="@color/gris_2"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/darkDividers"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_white_with_border"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lvGaleriaDescarga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:minWidth="88dp"
+            android:theme="@style/selectableItemGrisStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:text="@string/text_cancelar"
+            android:layout_gravity="center_vertical"
+            android:textAllCaps="true"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+
+        <Button
+            android:id="@+id/btnAceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:minWidth="88dp"
+            android:theme="@style/selectableItemGrisStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:text="@string/text_gestionar"
+            android:layout_gravity="center_vertical"
+            android:textAllCaps="true"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

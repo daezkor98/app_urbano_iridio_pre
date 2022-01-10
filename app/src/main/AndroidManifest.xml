@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.urbanoexpress.iridio">
+
+    <application
+        android:name=".application.AndroidApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.Base">
+
+        <activity
+            android:name=".ui.InitActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.MainActivity" />
+        <activity
+            android:name=".ui.GoogleMapActivity"
+            android:label="@string/title_activity_google_map"
+            android:parentActivityName=".ui.PlanDeViajeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.PlanDeViajeActivity"
+            android:label="@string/title_activity_plan_de_viaje"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.ParadaProgramadaActivity"
+            android:label="@string/title_activity_parada_programada"
+            android:parentActivityName=".ui.PlanDeViajeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.QRScannerActivity"
+            android:label="@string/title_activity_qrscanner"
+            android:parentActivityName=".ui.ParadaProgramadaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base" />
+        <activity
+            android:name=".ui.RutaActivity"
+            android:label="@string/title_activity_ruta"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.ResumenRutaActivity"
+            android:label="@string/title_activity_resumen_ruta"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.ResumenRutaRuralActivity"
+            android:label="@string/title_activity_resumen_ruta"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.FirmarActivity"
+            android:parentActivityName=".ui.DetalleRutaRuralActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.GenerarManifiestoActivity"
+            android:label="@string/activity_generar_man_title_generar_manifiesto"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.RutaRuralActivity"
+            android:label="@string/title_activity_ruta_rural"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.DetalleRutaRuralActivity"
+            android:label="@string/title_activity_detalle_ruta"
+            android:parentActivityName=".ui.RutaRuralActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.AcercaDeActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.ConfiguracionActivity"
+            android:label="@string/title_activity_configuracion"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.LogErrorSyncActivity"
+            android:label="@string/title_activity_registro_errores"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.ManifestarGuiaActivity"
+            android:label="@string/title_activity_manifestar_guia"
+            android:parentActivityName=".ui.RutaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.InformacionRutaActivity"
+            android:label="@string/title_activity_informacion_ruta"
+            android:parentActivityName=".ui.RutaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.RequestPermissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.SplashScreen" />
+        <activity
+            android:name=".ui.TransferirGuiaActivity"
+            android:label="@string/title_activity_transferir_guia"
+            android:parentActivityName=".ui.RutaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.TurnOnGPSActivity"
+            android:label="@string/title_activity_turn_on_gps"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.MapaRutaDelDiaActivity"
+            android:parentActivityName=".ui.RutaActivity"
+            android:theme="@style/AppTheme.MapRutaDelDiaActivity" />
+        <activity
+            android:name=".ui.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.FiltrarGuiaActivity"
+            android:label="@string/title_activity_filtrar_guia"
+            android:parentActivityName=".ui.TransferirGuiaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.ReportarIncidenteActivity"
+            android:label="@string/title_activity_google_map"
+            android:parentActivityName=".ui.GoogleMapActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ReportarIncidenciaActivity" />
+        <activity
+            android:name=".ui.ConsideracionesImportantesRutaActivity"
+            android:label="@string/title_activity_consideraciones_importantes_ruta"
+            android:parentActivityName=".ui.RutaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.NotificacionesRutaActivity"
+            android:label="@string/title_activity_notificaciones_ruta"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.UserProfileActivity"
+            android:parentActivityName=".ui.ConfiguracionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.UserCredentialActivity"
+            android:parentActivityName=".ui.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.MapRutaDelDiaActivity" />
+        <activity
+            android:name=".ui.ShareProfileQRCodeActivity"
+            android:parentActivityName=".ui.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.ChangePasswordActivity"
+            android:parentActivityName=".ui.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.RecolectarValijaActivity"
+            android:parentActivityName=".ui.RutaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.RutaActivity" />
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCswdNIXdLvzlCecL43kNM1ZK6QfmC2YTE" />
+        <meta-data
+            android:name="DATABASE"
+            android:value="urbano.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="52" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.urbanoexpress.iridio" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_urbano_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <receiver
+            android:name=".util.SmsBroadcastReceiver"
+            android:exported="true"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".services.DataSyncService"
+            android:exported="false"
+            android:persistent="true" />
+        <service android:name=".util.firebase.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+</manifest>

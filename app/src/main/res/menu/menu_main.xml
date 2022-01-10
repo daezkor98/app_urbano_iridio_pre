@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.urbanoexpress.urbano.ui.MainActivity">
+
+    <item
+        android:id="@+id/view_user_profile"
+        android:icon="@drawable/ic_account_circle_white"
+        android:title="@string/menu_user_profile"
+        app:showAsAction="always" />
+</menu>

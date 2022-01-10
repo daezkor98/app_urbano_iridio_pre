@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "884191591532",
+    "firebase_url": "https://urbano-iridio.firebaseio.com",
+    "project_id": "urbano-iridio",
+    "storage_bucket": "urbano-iridio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884191591532:android:9d0b76928e9ab5bf",
+        "android_client_info": {
+          "package_name": "com.urbanoexpress.iridio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884191591532-f5f3j6qo5h0pt7c6rm3g9n7uh3qpfaod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio",
+            "certificate_hash": "1dce3db251b42e1c5f94f4f75858cdff511b43e5"
+          }
+        },
+        {
+          "client_id": "884191591532-pihjg998hnl2mtum7nj4e0b4o0fbq8um.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio",
+            "certificate_hash": "4c5ddcc5c89f557fcce758d0a696a8f67f656014"
+          }
+        },
+        {
+          "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCswdNIXdLvzlCecL43kNM1ZK6QfmC2YTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

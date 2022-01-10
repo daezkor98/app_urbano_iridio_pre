@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_white_with_corner"
+    android:theme="@style/color_theme_colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/lightPrimaryText"
+            android:text="Gestionar guías no recolectadas"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/lblGuia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/lightPrimaryText"
+            android:text="WYB234234233"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/red_3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="0.2"
+                    android:gravity="center">
+
+                    <CheckBox
+                        android:id="@+id/chkSelectAllGE"
+                        android:theme="@style/selectableItemWhiteBoldStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/lightPrimaryText" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guía Electrónica"
+                        android:textColor="@color/lightPrimaryText"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@color/lightPrimaryText" />
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Piezas"
+                        android:textColor="@color/lightPrimaryText"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGuiasElectronicas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:fadeScrollbars="false"
+                android:focusable="false" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darkDividers" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:minWidth="88dp"
+            android:theme="@style/selectableItemGrisStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:text="@string/text_cancelar"
+            android:layout_gravity="center_vertical"
+            android:textAllCaps="true"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+
+        <Button
+            android:id="@+id/btnAceptar"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:minWidth="88dp"
+            android:theme="@style/selectableItemGrisStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            android:text="@string/text_continuar"
+            android:layout_gravity="center_vertical"
+            android:textAllCaps="true"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

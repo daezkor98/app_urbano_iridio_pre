@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:theme="@style/color_theme_colorPrimary">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Gestionar: Recolectado"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/lblGuiaElectronica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:ellipsize="marquee"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/step_formulario_container_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gris_11"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
+                        android:text="FORMULARIO DE RECOLECCION" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="8dp"
+                            android:background="#F1F1F1"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:gravity="center"
+                                android:textColor="@color/gris"
+                                android:textSize="12sp"
+                                android:text="PAQUETES" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <FrameLayout
+                                    android:id="@+id/action_minus_paquetes_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/gris_9"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/box1"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="-" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/box1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/action_minus_paquetes_layout"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/action_plus_paquetes_layout"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <EditText
+                                        android:id="@+id/txtFrmRecPaquete"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:digits="0123456789"
+                                        android:imeOptions="actionNext"
+                                        android:textColor="@color/gris_2"
+                                        android:maxLength="5"
+                                        android:text="0"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/action_plus_paquetes_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/colorPrimary"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/box1"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="+" />
+                                </FrameLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+                        <View android:layout_width="8dp" android:layout_height="0dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="8dp"
+                            android:background="#F1F1F1"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:gravity="center"
+                                android:textColor="@color/gris"
+                                android:textSize="12sp"
+                                android:text="SOBRES" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <FrameLayout
+                                    android:id="@+id/action_minus_sobres_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/gris_9"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/box2"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="-" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/box2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/action_minus_sobres_layout"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/action_plus_sobres_layout"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <EditText
+                                        android:id="@+id/txtFrmRecSobre"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:digits="0123456789"
+                                        android:imeOptions="actionNext"
+                                        android:textColor="@color/gris_2"
+                                        android:maxLength="5"
+                                        android:text="0"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/action_plus_sobres_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/colorPrimary"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/box2"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="+" />
+                                </FrameLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="8dp"
+                            android:background="#F1F1F1"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:gravity="center"
+                                android:textColor="@color/gris"
+                                android:textSize="12sp"
+                                android:text="VALIJAS" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <FrameLayout
+                                    android:id="@+id/action_minus_valijas_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/gris_9"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/box3"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="-" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/box3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/action_minus_valijas_layout"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/action_plus_valijas_layout"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <EditText
+                                        android:id="@+id/txtFrmRecValija"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:digits="0123456789"
+                                        android:imeOptions="actionNext"
+                                        android:textColor="@color/gris_2"
+                                        android:maxLength="5"
+                                        android:text="0"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/action_plus_valijas_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/colorPrimary"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/box3"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="+" />
+                                </FrameLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+                        <View android:layout_width="8dp" android:layout_height="0dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="8dp"
+                            android:background="#F1F1F1"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:gravity="center"
+                                android:textColor="@color/gris"
+                                android:textSize="12sp"
+                                android:text="OTROS" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <FrameLayout
+                                    android:id="@+id/action_minus_otros_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/gris_9"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/box11"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="-" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/box11"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/action_minus_otros_layout"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/action_plus_otros_layout"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <EditText
+                                        android:id="@+id/txtFrmRecOtros"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@android:color/transparent"
+                                        android:gravity="center"
+                                        android:inputType="number"
+                                        android:digits="0123456789"
+                                        android:imeOptions="actionNext"
+                                        android:textColor="@color/gris_2"
+                                        android:maxLength="5"
+                                        android:text="0"/>
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:id="@+id/action_plus_otros_layout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:background="@color/colorPrimary"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintStart_toEndOf="@id/box11"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/lightPrimaryText"
+                                        android:includeFontPadding="false"
+                                        android:text="+" />
+                                </FrameLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
+                        android:background="#F1F1F1"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingRight="8dp"
+                            android:textColor="@color/gris"
+                            android:textSize="12sp"
+                            android:text="TOTAL RECOLECTADO"/>
+
+                        <TextView
+                            android:id="@+id/lblTotalRecolectado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gris_2"
+                            android:text="0"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/input_comentarios_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="8dp"
+                        android:background="#F1F1F1"
+                        android:padding="10dp">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:text="COMENTARIOS"
+                                android:textColor="@color/gris"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/lblContadorComentario"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0/160"
+                                android:textColor="@color/gris_2"
+                                android:layout_gravity="right|center_vertical"
+                                android:textSize="12sp" />
+                        </FrameLayout>
+
+                        <EditText
+                            android:id="@+id/txtComentarios"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gris_2"
+                            android:maxLength="160"
+                            android:background="@android:color/transparent"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/step_fotos_producto_container_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gris_11"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
+                        android:text="FOTOS DEL PRODUCTO" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvGaleriaFotos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/step_fotos_domicilio_container_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gris_11"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingBottom="@dimen/activity_vertical_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
+                        android:text="FOTOS DEL DOMICILIO" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvGaleriaDomicilio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darkDividers" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/colorPrimary">
+
+        <Button
+            android:id="@+id/btnSiguiente"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:theme="@style/selectableItemWhiteStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="@string/text_siguiente"
+            android:layout_gravity="center_vertical"
+            android:textAllCaps="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
+    </LinearLayout>
+</LinearLayout>

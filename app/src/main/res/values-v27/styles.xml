@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="Theme.MyApp.BottomSheetDialog" parent="Widget.BottomSheet.Dialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+</resources>

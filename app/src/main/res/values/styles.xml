@@ -1,0 +1,170 @@
+<resources>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccentDark</item>
+        <item name="colorControlHighlight">@color/colorAccentDark</item>
+        <item name="android:textColorPrimary">@color/gris_2</item>
+
+        <item name="windowActionModeOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@color/lightPrimaryText</item>
+    </style>
+
+    <style name="AppTheme.MainActivity" parent="AppTheme.Base" />
+
+    <style name="AppTheme.RutaActivity" parent="AppTheme.Base">
+        <item name="actionModeBackground">@color/gris</item>
+    </style>
+
+    <style name="AppTheme.ReportarIncidenciaActivity" parent="AppTheme.Base">
+        <item name="actionModeBackground">@color/gris</item>
+    </style>
+
+    <style name="AppTheme.ResumenRutaActivity" parent="AppTheme.Base">
+        <item name="actionModeBackground">@color/gris</item>
+    </style>
+
+    <style name="AppTheme.SplashScreen" parent="AppTheme.Base">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="actionModeBackground">@color/gris_4</item>
+    </style>
+
+    <style name="AppTheme.MapRutaDelDiaActivity" parent="AppTheme.Base">
+        <item name="android:textColorPrimary">@color/gris_2</item>
+        <item name="android:windowBackground">@color/lightPrimaryText</item>
+        <item name="actionModeBackground">@color/gris_4</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="AlertDialogTheme.Light" parent="Base.Theme.AppCompat.Light.Dialog.Alert" />
+
+    <style name="fab_menu_labels_style_black">
+        <item name="android:background">@drawable/fab_label_background_black</item>
+        <item name="android:textColor">@color/lightPrimaryText</item>
+    </style>
+
+    <style name="fab_menu_labels_style_white">
+        <item name="android:background">@drawable/fab_label_background_white</item>
+        <item name="android:textColor">@color/gris_10</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#FFFFFF</item>
+    </style>
+
+    <style name="selectableItemWhiteStyle">
+        <item name="colorAccent">@color/lightDividers</item>
+        <item name="colorControlNormal">@color/lightDividers</item>
+        <item name="colorControlActivated">@color/lightDisabledText</item>
+        <item name="colorControlHighlight">@color/lightDisabledText</item>
+    </style>
+
+    <style name="selectableItemGrisStyle">
+        <item name="colorAccent">@color/darkDividers</item>
+        <item name="colorControlNormal">@color/darkDividers</item>
+        <item name="colorControlActivated">@color/darkDisabledText</item>
+        <item name="colorControlHighlight">@color/darkDisabledText</item>
+    </style>
+
+    <style name="color_theme_colorPrimary">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="style_spinner_white">
+        <item name="colorAccent">@color/lightPrimaryText</item>
+        <item name="colorControlNormal">@color/lightPrimaryText</item>
+        <item name="colorControlActivated">@color/darkDividers20</item>
+        <item name="colorControlHighlight">@color/darkDividers20</item>
+    </style>
+
+    <style name="selectableItemWhiteBoldStyle">
+        <item name="colorAccent">@color/lightPrimaryText</item>
+        <item name="colorControlNormal">@color/lightPrimaryText</item>
+        <item name="colorControlActivated">@color/lightPrimaryText</item>
+        <item name="colorControlHighlight">@color/lightPrimaryText</item>
+    </style>
+
+    <style name="style_spinner_black">
+        <item name="colorAccent">@color/gris_4</item>
+        <item name="colorControlNormal">@color/gris_4</item>
+        <item name="colorControlActivated">@color/gris_4</item>
+        <item name="colorControlHighlight">@color/gris_4</item>
+    </style>
+
+    <style name="selectableSwitchStyle">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+    </style>
+
+    <style name="date_picker_theme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="Button">
+        <item name="colorControlNormal">@color/darkSecondaryText</item>
+        <item name="colorControlActivated">@color/darkPrimaryText</item>
+        <item name="colorControlHighlight">@color/darkPrimaryText</item>
+    </style>
+
+    <style name="Button.Red">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+
+    <!--<style name="TextAppearance.RobotoLight" parent="android:TextAppearance">
+        <item name="fontPath">fonts/Roboto-Light.ttf</item>
+    </style>
+
+    <style name="TextAppearance.RobotoThin" parent="android:TextAppearance">
+        <item name="fontPath">fonts/Roboto-Thin.ttf</item>
+    </style>
+
+    <style name="TextAppearance.RobotoRegular" parent="android:TextAppearance">
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>-->
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/gris_2</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Base.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.Base.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MSV_ImageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:paddingLeft">@dimen/search_icon_padding</item>
+        <item name="android:paddingRight">@dimen/search_icon_padding</item>
+    </style>
+
+    <style name="Widget.BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet_dialog_fragment</item>
+    </style>
+
+    <style name="Widget.BottomSheet.Dialog" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/Widget.BottomSheet</item>
+    </style>
+
+    <style name="Theme.MyApp.BottomSheetDialog" parent="Widget.BottomSheet.Dialog" />
+
+</resources>

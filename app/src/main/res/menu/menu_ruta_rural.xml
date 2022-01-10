@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_buscar"
+        android:title="Buscar"
+        android:icon="@drawable/ic_action_magnify_white"
+        android:orderInCategory="1" app:showAsAction="always" />
+    <item android:id="@+id/action_info_ruta_del_dia"
+        android:title="Información de la ruta"
+        android:orderInCategory="2" app:showAsAction="never" />
+    <item android:id="@+id/action_consideraciones_importantes"
+        android:title="Consideraciones importantes"
+        android:orderInCategory="3" app:showAsAction="never" />
+    <item android:id="@+id/action_mapa_de_ruta"
+        android:title="Mapa de Distribución"
+        android:icon="@drawable/ic_action_google_maps_white"
+        android:orderInCategory="4" app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_eliminar_manifiesto"
+        android:title="Eliminar manifiesto"
+        android:orderInCategory="5" app:showAsAction="never" />
+    <item android:id="@+id/action_transferir_guias"
+        android:title="Transferir"
+        android:orderInCategory="6" app:showAsAction="never" />
+    <!--<item android:id="@+id/action_asignar_ruta"
+        android:title="Asignar ruta"
+        android:orderInCategory="7" app:showAsAction="never" />-->
+    <item android:id="@+id/action_codigo_qr_ruta"
+        android:title="Código QR de la ruta"
+        android:orderInCategory="7" app:showAsAction="never" />
+</menu>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_asignar_despachos"
+        android:title="Asignar despachos"
+        android:icon="@drawable/ic_package_add"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <!--<item android:id="@+id/action_mapa_paradas"
+        android:title="Mapa de paradas"
+        android:orderInCategory="2" app:showAsAction="never" />-->
+    <item android:id="@+id/action_forzar_terminar_ruta"
+        android:title="Forzar cierre de ruta"
+        android:orderInCategory="2" app:showAsAction="never" />
+</menu>

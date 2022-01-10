@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_white_with_corner">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/lightPrimaryText"
+            android:text="Buscar Unidades por Placa"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:background="@color/lightPrimaryText">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".2"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Placa"
+                            android:textColor="@color/darkSecondaryText"
+                            android:layout_weight=".2" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/darkDividers" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".8"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="15dp">
+
+                        <EditText
+                            android:id="@+id/txtPlaca"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@color/lightPrimaryText"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:maxLength="10"
+                            android:inputType="text|textCapCharacters"
+                            android:textColor="@color/gris_2"
+                            android:textAllCaps="true"/>
+
+                        <Button
+                            android:id="@+id/btnBuscar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:theme="@style/selectableItemGrisStyle"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="14sp"
+                            android:text="BUSCAR"
+                            android:layout_gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darkDividers" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:theme="@style/selectableItemGrisStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp"
+            android:text="CANCELAR"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"/>
+    </LinearLayout>
+
+</LinearLayout>

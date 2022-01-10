@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_galeria"
+        android:title="Galeria"
+        android:icon="@drawable/ic_image_white"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_volverConfirmarGestion"
+        android:title="Volver a confirmar entrega/recolección"
+        android:icon="@drawable/ic_package_repeat_white"
+        android:orderInCategory="2"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_agregar_guia"
+        android:title="Agregar guia"
+        android:icon="@drawable/ic_package_white"
+        android:orderInCategory="3"
+        app:showAsAction="never" />
+</menu>

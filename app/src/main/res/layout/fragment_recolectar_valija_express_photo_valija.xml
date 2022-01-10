@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:animateLayoutChanges="true">
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/gris_2"
+        android:textStyle="bold"
+        android:text="Toma foto de la valija recolectada"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/divider1"/>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darkDividers"
+        app:layout_constraintTop_toBottomOf="@id/title_text"
+        app:layout_constraintBottom_toTopOf="@id/gallery_recycler_view"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gallery_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        app:layout_constraintTop_toBottomOf="@id/divider1"
+        app:layout_constraintBottom_toTopOf="@id/msg_error_text"/>
+
+    <TextView
+        android:id="@+id/msg_error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#20ba151d"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingVertical="@dimen/activity_vertical_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/red_1"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/gallery_recycler_view"
+        app:layout_constraintBottom_toTopOf="@id/divider2"/>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darkDividers"
+        app:layout_constraintTop_toBottomOf="@id/msg_error_text"
+        app:layout_constraintBottom_toTopOf="@id/save_button"/>
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/ripple_button_default"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@android:color/white"
+        android:text="Recolectar Valija"
+        app:layout_constraintTop_toBottomOf="@id/divider2"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <include android:id="@+id/progress_layout" layout="@layout/progressbar_layout"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

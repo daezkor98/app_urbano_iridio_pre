@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#d13339</color>
+    <color name="colorPrimaryDark">#b4292e</color>
+    <color name="colorAccent">#448AFF</color>
+    <color name="colorAccentDark">#2979FF</color>
+    <color name="statusBarColor">#20000000</color>
+
+    <color name="colorBlackUrbano">#262324</color>
+    <color name="colorBlackDarkUrbano">#191717</color>
+    <color name="colorGreyUrbano">#6f7073</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_2">#fafafa</color>
+    <color name="white_3">#35FFFF00</color>
+
+    <color name="red_1">#ba151d</color>
+    <color name="red_2">#f18589</color>
+    <color name="red_3">#e93e46</color>
+    <color name="gris">#6f7072</color>
+    <color name="gris_1">#3E3636</color>
+    <color name="gris_2">#262324</color>
+    <color name="gris_3">#d9d9d9</color>
+    <color name="gris_4">#121011</color>
+    <color name="gris_5">#453f41</color>
+    <color name="gris_6">#82787b</color>
+    <color name="gris_7">#565758</color>
+    <color name="gris_8">#312c2e</color>
+    <color name="gris_9">#cccccc</color>
+    <color name="gris_10">#727272</color>
+    <color name="gris_11">#212b33</color>
+    <color name="gris_12">#272932</color>
+
+    <color name="light_blue">#1be5dc</color>
+    <color name="light_blue_2">#99dbd7</color>
+    <color name="light_blue_3">#8ab1de</color>
+
+    <color name="blue_1">#1b89e5</color>
+    <color name="blue_1_dark">#187bcf</color>
+    <color name="blue_1_dark50">#50187bcf</color>
+    <color name="blue_2">#0C4B8E</color>
+    <color name="blue_3">#237dd7</color>
+    <color name="blue_4">#227bc2</color>
+
+    <color name="green">#28a428</color>
+    <color name="green_2">#009827</color>
+    <color name="green_4">#189b48</color>
+
+    <color name="yellow">#e7e617</color>
+    <color name="yellow_2">#F79F00</color>
+
+    <color name="orange">#e5451b</color>
+    <color name="orangeDark">#ba3815</color>
+    <color name="orange_2">#e5341b</color>
+    <color name="orange_3">#deb78a</color>
+
+    <color name="oro_valija">#e4ce92</color>
+    <color name="logistica_inversa">#92a8e4</color>
+    <color name="rojo_devolucion">#f9e3e4</color>
+
+    <color name="bg_list_even">#f6f6f6</color>
+    <color name="bg_list_odd">#ffffff</color>
+
+    <color name="blackPrimary">#0f1015</color>
+    <color name="blackPrimaryDark">#0a0b0f</color>
+
+    <color name="black">#000000</color>
+    <color name="black_2">#262626</color>
+    <color name="black_3">#1a1a1a</color>
+    <color name="darkPrimaryText">#87000000</color>
+    <color name="darkSecondaryText">#54000000</color>
+    <color name="darkDisabledText">#38000000</color>
+    <color name="darkDividers20">#20000000</color>
+    <color name="darkDividers">#12000000</color>
+
+    <color name="lightPrimaryText">#ffffff</color>
+    <color name="lightSecondaryText">#70FFFFFF</color>
+    <color name="lightDisabledText">#50FFFFFF</color>
+    <color name="lightDividers">#12FFFFFF</color>
+
+    <color name="menuIconTint">#757575</color>
+
+    <color name="fab_background">#D13339</color>
+    <color name="fab_icon_tint">#FFFFFF</color>
+
+    <color name="notify_new">#20187bcf</color>
+
+    <color name="white_overlay">#F3F3F3</color>
+
+    <color name="search_layover_bg">#80000000</color>
+
+    <color name="colorStatesMaterialButton">@color/color_states_materialbutton</color>
+</resources>

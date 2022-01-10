@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true">
+
+    <LinearLayout
+        android:id="@+id/boxChip"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:background="@drawable/bg_chip_telefono_color_grey">
+
+        <TextView
+            android:id="@+id/lblTelefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="640528166"/>
+
+        <ImageButton
+            android:id="@+id/btnLlamar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="4dp"
+            android:src="@drawable/ic_phone_circle_red"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/btnContacto"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_account_circle_blue"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/btnEditar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_pencil_circle_black"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+</LinearLayout>

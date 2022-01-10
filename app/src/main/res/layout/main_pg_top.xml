@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerPgTop"
+    android:layout_width="41dp"
+    android:layout_height="41dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="24dp"
+    android:padding="10dp"
+    android:background="@drawable/bg_progress_top">
+    <ProgressBar
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pgTop"
+        android:indeterminate="true"
+        android:max="100"
+        android:progress="0"
+        android:layout_gravity="center"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/colorPrimary"
+        android:elevation="2dp"/>
+</FrameLayout>

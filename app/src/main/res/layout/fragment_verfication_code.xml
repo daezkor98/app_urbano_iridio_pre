@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:background="@color/light_blue_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/content_layout"
+        app:layout_constraintHeight_percent="0.4"/>
+
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <TextView
+                android:text="Ingresa tu código de verificación"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/gris_2"
+                android:layout_marginBottom="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/txtCode1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/gris_2"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:theme="@style/color_theme_colorPrimary"
+                    android:background="@drawable/bg_input_default"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+
+                <EditText
+                    android:id="@+id/txtCode2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/gris_2"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:theme="@style/color_theme_colorPrimary"
+                    android:background="@drawable/bg_input_default"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+
+                <EditText
+                    android:id="@+id/txtCode3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/gris_2"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:theme="@style/color_theme_colorPrimary"
+                    android:background="@drawable/bg_input_default"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+
+                <EditText
+                    android:id="@+id/txtCode4"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/gris_2"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:theme="@style/color_theme_colorPrimary"
+                    android:background="@drawable/bg_input_default"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+
+                <EditText
+                    android:id="@+id/txtCode5"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/gris_2"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:theme="@style/color_theme_colorPrimary"
+                    android:background="@drawable/bg_input_default"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+
+                <EditText
+                    android:id="@+id/txtCode6"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/gris_2"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:theme="@style/color_theme_colorPrimary"
+                    android:background="@drawable/bg_input_default"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/gris_2"
+                android:text="Revisa tus mensajes. Hemos enviado un código de 6 dígitos al +51 9234234324"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/darkDividers"/>
+
+        <Button
+            style="@style/Widget.App.Button.TextButton"
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_gravity="end"
+            android:text="@string/text_siguiente"/>
+    </LinearLayout>
+
+    <include android:id="@+id/progress_layout" layout="@layout/progressbar_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

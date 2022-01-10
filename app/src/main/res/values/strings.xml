@@ -1,0 +1,471 @@
+<resources>
+    <string name="app_name">Urbano - Iridio</string>
+
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+
+    <string name="fab_menu_map_satelite">Satélite</string>
+    <string name="fab_menu_map_relieve">Relieve</string>
+    <string name="fab_menu_map_hibrido">Híbrido</string>
+    <string name="fab_menu_map_trafico">Tráfico</string>
+
+    <!-- Activity Main -->
+    <string name="act_main_message_date_time_incorrect">La fecha y/u hora del sistema no está correctamente configurado.\n\nAsegurese de que la fecha y hora del dispositivo este configurado de acuerdo a su zona local, antes de continuar.</string>
+    <string name="menu_user_profile">Perfil</string>
+    <string name="menu_user_profile_hello">Hola, %s</string>
+
+    <!-- Activity Login -->
+    <string name="act_login_hint_input_username">USUARIO</string>
+    <string name="act_login_hint_input_password">●●●●●●●</string>
+    <string name="act_login_error_datos_usuario">Ingrese sus datos de usuario correctamente.</string>
+    <string name="act_login_error_login">Ocurrio un error iniciando sesión, intentalo de nuevo.</string>
+    <string name="act_login_login_success">Ha iniciado sesión exitosamente.</string>
+    <string name="act_login_login_msg_error_descargando_motivos">Lo sentimos, no se pudo cargar los datos de motivos (CHK). Vuelva a iniciar sesión para cargar los motivos.</string>
+    <string name="act_login_login_title_iniciando_sesion">Iniciando Sesión</string>
+    <string name="act_login_login_msg_procesando_datos">Procesando datos&#8230;</string>
+    <string name="act_login_login_msg_error_datos_user_profile">Ocurrió un error al procesar los datos del perfil de usuario. Por favor, inténtalo de nuevo.</string>
+    <string name="act_login_login_msg_error_datos_app_data_default">Ocurrió un error al procesar los datos base de la aplicación. Por favor, inténtalo de nuevo.</string>
+    <string name="act_login_login_msg_error_datos_app_menu_user">Ocurrió un error al procesar los datos del menu del usuario. Por favor, inténtalo de nuevo.</string>
+
+    <!-- Activity Plan De Viaje -->
+    <string name="title_activity_plan_de_viaje">Plan De Viaje</string>
+    <string name="act_plan_de_viaje_title_mapa_paradas">Mapa De Paradas</string>
+    <string name="act_plan_de_viaje_no_definido">No definido.</string>
+    <string name="act_plan_de_viaje_no_hay_plan_de_viaje">Actualmente no tiene un plan de viaje activo.</string>
+    <string name="act_plan_de_viaje_error_datos_placa">Ingrese los datos de la placa correctamente.</string>
+    <string name="act_plan_de_viaje_update_plan_viaje">Actualizando información de plan de viaje.</string>
+    <string name="act_plan_de_viaje_title_confirmar_llegada">Confirmar Llegada</string>
+    <string name="act_plan_de_viaje_title_confirmando_llegada">Confirmando Llegada</string>
+    <string name="act_plan_de_viaje_message_confirmar_llegada">¿Usted desea confirmar su llegada a esta agencia?</string>
+    <string name="act_plan_de_viaje_message_success_confirmar_llegada">Su llegada a la agencia ha sido confirmado correctamente.</string>
+    <string name="act_plan_de_viaje_title_confirmar_salida">Confirmar Salida</string>
+    <string name="act_plan_de_viaje_title_confirmando_salida">Confirmando Salida</string>
+    <string name="act_plan_de_viaje_message_confirmar_salida">¿Usted desea confirmar su salida de esta agencia?</string>
+    <string name="act_plan_de_viaje_message_success_confirmar_salida">Su salida de la agencia ha sido confirmado correctamente.</string>
+    <string name="act_plan_de_viaje_title_parada_programada_finalizada">Parada Finalizada</string>
+    <string name="act_plan_de_viaje_message_parada_programada_finalizada">Usted a finalizado su despacho en esta agencia.</string>
+    <string name="act_plan_de_viaje_title_parada_programada_final">Parada Final</string>
+    <string name="act_plan_de_viaje_message_parada_programada_final">Usted llegó a su ultima parada.</string>
+    <string name="act_plan_de_viaje_btn_iniciar_ruta">Iniciar Ruta</string>
+    <string name="act_plan_de_viaje_btn_terminar_ruta">Terminar Ruta</string>
+    <string name="act_plan_de_viaje_title_iniciando_ruta">Iniciando Ruta</string>
+    <string name="act_plan_de_viaje_title_finalizando_ruta">Finalizando Ruta</string>
+    <string name="act_plan_de_viaje_message_success_iniciando_ruta">Su ruta ha sido iniciada correctamente.</string>
+    <string name="act_plan_de_viaje_message_success_finalizando_ruta">Su ruta ha sido finalizado correctamente.</string>
+    <string name="act_plan_de_viaje_message_no_inicio_ruta">Lo sentimos, aún no ha iniciado la ruta.</string>
+    <string name="act_plan_de_viaje_message_no_se_encuentra_en_la_ubicacion">Lo sentimos, aún no se encuentra cerca de la ubicación de la agencia.</string>
+    <string name="act_plan_de_viaje_message_no_confirmo_salida_parada_anterior">Lo sentimos, aún no ha confirmado la salida de la agencia anterior.</string>
+    <string name="act_plan_de_viaje_message_no_reviso_despachos">Lo sentimos, aún no ha revisado si tiene despachos pendientes en esta agencia.</string>
+    <string name="act_plan_de_viaje_message_no_ha_bajado_despachos">Lo sentimos, aún no ha realizado la descarga de los despachos en esta agencia.</string>
+    <string name="act_plan_de_viaje_message_subida_despachos_exitoso">Los despachos fueron asignados correctamente.</string>
+    <string name="act_plan_de_viaje_message_no_hay_despachos_pendientes_seleccionados">No ha seleccionado ningún despacho.</string>
+    <string name="act_plan_de_viaje_message_no_puede_asignar_despachos_pendientes">Lo sentimos, no es posible asignar despachos por que la ruta ya fue iniciada.</string>
+    <string name="act_plan_de_viaje_msg_seleccione_correctamente_origen">Seleccione correctamente el origen del plan de viaje.</string>
+    <string name="act_plan_de_viaje_msg_sugerencia_seleccione_origen">Seleccione el origen del plan de viaje que desea asignarse.</string>
+    <string name="act_plan_de_viaje_msg_advertencia_forzar_cierre_ruta">Considere que este proceso es irreversible, todo los datos se borrarán y se perderá todo el progreso actual del plan de viaje.\n\n¿Está seguro de que quiere continuar con el proceso de forzar cierre de ruta?</string>
+    <string name="act_plan_de_viaje_msg_forzar_cierre_ruta_no_inicia_ruta">No es necesario forzar cierre el de ruta, por que aún no ha iniciado la ruta del plan de viaje.</string>
+    <string name="act_plan_de_viaje_title_ubicacion_fuera_rango_origen_planviaje">Ubicación Actual Incorrecta</string>
+    <string name="act_plan_de_viaje_msg_ubicacion_fuera_rango_origen_planviaje">Antes de continuar, considere que su posición actual no se encuentra en la ubicación del origen del plan de viaje.\n\nAsegurese de estar seleccionando el plan de viaje correcto antes de continuar.</string>
+    <string name="act_plan_de_viaje_msg_imagenes_sync_pendientes">Para terminar la ruta debe verificar que todos las imágenes hayan sido sincronizados correctamente.</string>
+    <string name="act_plan_de_viaje_msg_tomar_al_menos_una_foto">Debe tomar una foto como mínimo para confirmar la salida de la parada.</string>
+    <string name="act_plan_de_viaje_msg_sugerencia_ingresar_kilometraje">Ingrese el kilometraje actual de la unidad que esta usando en el plan de viaje.</string>
+    <string name="act_plan_de_viaje_msg_ingrese_kilometraje">Ingrese correctamente el kilometraje.</string>
+    <string name="act_plan_de_viaje_msg_placa_no_valida">Para iniciar ruta debe ingresar una placa valida.</string>
+
+    <!-- Activity Parada Programada -->
+    <string name="act_parada_programda_message_no_confirmo_llegada_parada">Lo sentimos, aún no ha confirmado la llegada a la agencia.</string>
+    <string name="act_parada_programda_msg_no_confirmo_llegada_parada">Lo sentimos, ya marco salida de la agencia.</string>
+    <string name="act_parada_programda_title_confirmando_despachos">Confirmando Despachos</string>
+    <string name="act_plan_de_viaje_message_success_confirmar_despachos">Se ha confirmado los despachos correctamente.</string>
+    <string name="act_parada_programda_message_no_puede_confirmar_porque_salio_agencia">Lo sentimos, ya no puede confirmar los despachos por que ya salio de la agencia.</string>
+    <string name="act_parada_programda_message_no_puede_confirmar_porque_finalizo_plan_viaje">Lo sentimos, ya no puede confirmar los despachos por que el plan de viaje ha sido finalizado.</string>
+
+    <!-- Activity Parada Programada -->
+    <string name="title_activity_parada_programada">Parada Programada</string>
+
+    <!-- Activity Parada Programada -->
+    <string name="title_activity_google_map">Mi Ubicación</string>
+
+    <!-- Activity Ruta -->
+    <string name="title_activity_ruta">Ruta del Día</string>
+    <string name="activity_ruta_fab_menu_iniciar_ruta">Iniciar Ruta</string>
+    <string name="activity_ruta_fab_menu_terminar_ruta">Cerrar Ruta</string>
+    <string name="activity_ruta_message_ruta_iniciada_exitosamente">La ruta ha sido iniciada exitosamente.</string>
+    <string name="activity_ruta_message_ruta_finalizado_exitosamente">La ruta ha sido finalizado exitosamente.</string>
+    <string name="activity_ruta_message_ruta_ya_iniciada">La ruta ya ha sido iniciada.</string>
+    <string name="activity_ruta_message_ruta_ya_finalizada">La ruta ya ha sido finalizado.</string>
+    <string name="activity_ruta_message_ruta_no_iniciada">La ruta aún no ha sido iniciada.</string>
+    <string name="activity_ruta_message_ruta_no_finalizado">La ruta aún no ha sido finalizado.</string>
+    <string name="activity_ruta_title_hay_rutas_pendientes">Guías Pendientes por Gestionar</string>
+    <string name="activity_ruta_message_hay_rutas_pendientes">Precaución, actualmente tiene guías pendientes por gestionar.\n\n¿Está seguro de que quiere cerrar la ruta?</string>
+    <string name="activity_ruta_title_eliminar_manifiesto">Eliminar Manifiesto</string>
+    <string name="activity_ruta_message_eliminar_manifiesto">¿Está seguro de que quiere eliminar el manifiesto?</string>
+    <string name="activity_ruta_message_datos_sync_pendientes">Actualmente tiene datos por sincronizar, asegurese que todos los datos se sincronicen antes de cerrar la ruta.</string>
+    <string name="activity_ruta_message_pendientes_liquidacion_devolucion">Actualmente tiene Liquidaciones/Devoluciones pendientes por gestionar, es necesario gestionarlos como no efectiva antes de cerrar la ruta.</string>
+    <string name="activity_ruta_message_set_inicio_serie_exitosamente">El inicio de serie para las recolecciones fue establecido exitosamente.</string>
+    <string name="activity_ruta_message_iniciar_ruta">Para empezar a realizar las gestiones de las guías, primero debe iniciar la ruta.\n\n¿Desea iniciar ruta?</string>
+    <string name="activity_ruta_message_terminar_ruta">Para cerrar la ruta debe completar las gestiones de sus guías y verificar que todos los datos (Gestiones, Imágenes, GPS, etc) hayan sido sincronizados correctamente.\n\n¿Está seguro de que quiere cerrar la ruta?</string>
+    <string name="activity_ruta_message_clave_forzar_cierre_ruta_incorrecto">Ingrese correctamente las credenciales.</string>
+    <string name="activity_ruta_title_advertencia_forzar_cierre_ruta">Forzar Cierre de Ruta</string>
+    <string name="activity_ruta_message_advertencia_forzar_cierre_ruta">Considere que este proceso es irreversible, todo los datos (Gestiones, Imágenes, GPS, etc) de su ruta que aún no han sido sincronizados se borrarán definitivamente.\n\nVerifique que el retorno a ruta este consolidado correctamente antes de realizar este proceso.\n\n¿Está seguro de que quiere continuar con el proceso de forzar cierre de ruta?</string>
+    <string name="activity_ruta_forzar_cierre_ruta_completado">Todos los datos han sido borrados exitosamente.</string>
+    <string name="activity_ruta_message_ingresar_credencial_personal_autorizado">Ingrese las credenciales del personal autorizado para forzar el cierre de ruta.</string>
+    <string name="activity_ruta_message_asignar_ruta">Ingrese la ruta que desea asignarse.</string>
+    <string name="activity_ruta_message_sugerencia_editar_placa">Ingrese la placa de la unidad que esta usando.</string>
+    <string name="activity_ruta_message_ruta_asignada_correctamente">La ruta ha sido asignado correctamente.</string>
+    <string name="activity_ruta_message_placa_editada_correctamente">La placa ha sido editada correctamente.</string>
+    <string name="activity_ruta_message_actualizando_placa">Actualizando placa&#8230;</string>
+    <string name="activity_ruta_message_no_puede_asignar_ruta">No es posible asignar ruta, ya que actualmente se encontró una ruta pendiente. Asegurese de no tener ruta pendiente antes de asignar una ruta.</string>
+    <string name="activity_ruta_message_ingrese_id_ruta">Ingrese correctamente la ruta.</string>
+    <string name="activity_ruta_message_seleccione_ruta">Seleccione una ruta.</string>
+    <string name="activity_ruta_message_ingrese_placa">Ingrese correctamente la placa.</string>
+    <string name="activity_ruta_message_eliminando_datos_ruta">Eliminando datos de la ruta&#8230;</string>
+    <string name="activity_ruta_message_ruta_eliminada_correctamente">Los datos de la ruta se elimino correctamente.</string>
+    <string name="activity_ruta_title_nueva_ruta_asignada">Nueva Ruta Asignada</string>
+    <string name="activity_ruta_message_nueva_ruta_asignada">Tiene una nueva ruta asignada, pero actualmente tiene una ruta pendiente por cerrar y no es posible descargar su nueva ruta asignada.\n\nDebe cerrar/eliminar la ruta pendiente antes de continuar con la nueva ruta.</string>
+    <string name="activity_ruta_message_ruta_iniciada_editar_placa">La ruta ya fue iniciada, ya no es posible editar la placa.</string>
+    <string name="activity_ruta_message_ruta_iniciada_asignar_ruta">La ruta ya fue iniciada, ya no es posible asignar la ruta.</string>
+    <string name="activity_ruta_msg_transferir_guias_por_ruta">Ingrese la ruta del courier al que va transferir las guías.</string>
+    <string name="activity_ruta_msg_transferir_guias_sin_ruta">Ingrese la placa y el doc. de identificación del courier al que va transferir las guías.</string>
+    <string name="activity_ruta_msg_error_datos_transferencia_ruta">Ingrese la ruta correctamente.</string>
+    <string name="activity_ruta_msg_error_datos_transferencia_placa">Ingrese la placa correctamente.</string>
+    <string name="activity_ruta_title_confirmar_transferencia">Confirmar Transferencia</string>
+    <string name="activity_ruta_msg_transferencia_exitosa">La transferencia de guías de realizó correctamente.</string>
+    <string name="activity_ruta_msg_ingrese_la_posicion_correctamente">Ingrese la posición correctamente.</string>
+    <string name="activity_ruta_msg_max_limite_posicion_guia">Posición incorrecta.</string>
+    <string name="activity_ruta_msg_selecciona_guia_para_definir_coordenada">Presiona una guía para definir su ubicación</string>
+    <string name="activity_ruta_msg_seleccionar_coordenada">¿Desea seleccionar esta ubicación?</string>
+    <string name="activity_ruta_msg_cancelar_seleccion_coordenada">¿Desea cancelar la selección de ubicación?</string>
+    <string name="activity_ruta_msg_coordenada_actualizado_exitosamente">La ubicación se actualizó exitosamente.</string>
+    <string name="activity_ruta_msg_guardar_ruteo_guias">¿Desea guardar el ruteo de las guías?</string>
+    <string name="activity_ruta_msg_cancelar_ruteo_guias">¿Desea cancelar el ruteo de las guías?</string>
+    <string name="activity_ruta_msg_ruteo_guardado_exitosamente">El ruteo de las guías se guardó exitosamente.</string>
+    <string name="activity_ruta_msg_debe_seleccionar_una_guia_ruteo">Debe seleccionar al menos una guía antes de guardar el ruteo de guías.</string>
+    <string name="activity_ruta_msg_posicion_definida_guia_ruteo">La posición de la guía ya fue definida.</string>
+    <string name="act_ruta_msg_sugerencia_ingresar_kilometraje_inicio">Ingrese el kilometraje con el que va a iniciar la ruta.</string>
+    <string name="act_ruta_msg_sugerencia_ingresar_kilometraje_cierre">Ingrese el kilometraje con el que va a terminar la ruta.</string>
+    <string name="act_ruta_title_ultima_gestion_efectiva">Alerta de entrega</string>
+    <string name="act_ruta_msg_ultima_gestion_efectiva">El último envío de este cliente fue entregado. ¿Está seguro de gestionarlo como no entrega?</string>
+    <string name="act_ruta_title_estado_shipper">Estado del Shipper</string>
+    <string name="act_ruta_msg_estado_shipper_critico_entrega">El estado del shipper es crítico, tomar en cuenta al entregar.</string>
+    <string name="act_ruta_msg_estado_shipper_critico_recoleccion">El estado del shipper es crítico, tomar en cuenta al recolectar.</string>
+    <string name="act_ruta_title_confirma_editar_placa">Confirme la placa de su ruta</string>
+    <string name="act_ruta_msg_confirma_editar_placa">Antes de iniciar su ruta confirme y edite la placa de la unidad que esta usando en su ruta.</string>
+
+    <!-- Activity Ruta -->
+    <string name="title_activity_ruta_rural">Ruta Rural</string>
+
+    <!-- Activity Resumen Ruta -->
+    <string name="title_activity_resumen_ruta">Resumen Ruta</string>
+    <string name="activity_resumen_ruta_message_error_al_tomar_foto">Lo sentimos, ocurrió un error al momento de tomar la foto, intentalo de nuevo.</string>
+    <string name="activity_resumen_ruta_msg_no_inicio_ruta">No inició ruta.</string>
+
+    <!-- Activity Detalle Ruta -->
+    <string name="title_activity_detalle_ruta">Detalle de la Guía</string>
+    <string name="activity_detalle_ruta_title_orden_descarga_no_permitido">Gestión de Guía no Disponible</string>
+    <string name="activity_detalle_ruta_message_orden_descarga_no_permitido">Actualmente no puede realizar la gestión de la guía, considere realizar las gestiones segun el orden de la lista (desde el principio hasta el final).</string>
+    <string name="activity_detalle_ruta_message_no_puede_tomar_foto">Lo sentimos, usted alcanzo el limite de capturas de fotos. Solo es posible realizar 10 capturas de fotos como maximo.</string>
+    <string name="activity_detalle_ruta_message_no_puede_firmar">Lo sentimos, solo puede firmar una vez.</string>
+    <string name="activity_detalle_ruta_message_piezas_no_seleccionado">Debe seleccionar las piezas/bultos para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_producto_no_seleccionado">Debe seleccionar los productos a entregar para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_motivo_no_seleccionado">Debe seleccionar un motivo para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_tomar_al_menos_una_foto">Debe tomar una foto como mínimo para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_tomar_foto_voucher">Debe tomar una foto del voucher de pago para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_tipo_direccion_no_seleccionado">Debe seleccionar el tipo de dirección para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_tipo_medio_pago_no_seleccionado">Debe seleccionar el tipo de medio de pago para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_descarga_finalizado_exitosamente">La gestión de la guía se ha finalizado exitosamente.</string>
+    <string name="activity_detalle_ruta_message_recoleccion_finalizado_exitosamente">La gestión de la recolección se ha finalizado exitosamente.</string>
+    <string name="activity_detalle_ruta_msg_no_puede_seleccionar_pieza">No puedes seleccionar el producto.</string>
+    <string name="activity_detalle_ruta_title_eliminar_galeria">Eliminar Imagen</string>
+    <string name="activity_detalle_ruta_message_eliminar_galeria">¿Está seguro de que quiere eliminar esta foto?</string>
+    <string name="activity_detalle_ruta_message_eliminar_cargo">¿Está seguro de que quiere eliminar la foto del cargo?</string>
+    <string name="activity_detalle_ruta_message_eliminar_domicilio">¿Está seguro de que quiere eliminar la foto del domicilio?</string>
+    <string name="activity_detalle_ruta_message_eliminar_voucher">¿Está seguro de que quiere eliminar la foto del voucher?</string>
+    <string name="activity_detalle_ruta_message_eliminar_firma">¿Está seguro de que quiere eliminar la firma del cliente?</string>
+    <string name="activity_detalle_ruta_message_debe_iniciar_ruta">Lo sentimos, no es posible gestionar la guía, por que la ruta aún no ha sido iniciada.\n\nDebe iniciar la ruta antes de realizar una entrega o recolección.</string>
+    <string name="activity_detalle_ruta_message_ruta_finalizada">Lo sentimos, no es posible gestionar la guía, por que la ruta ya fue finalizado.</string>
+    <string name="activity_detalle_ruta_message_no_hay_galeria">La galería solo esta disponible una vez realizado la entrega/recolección.</string>
+    <string name="activity_detalle_ruta_message_no_hay_gps">Lo sentimos, la guía no tiene coordenada disponible.</string>
+    <string name="activity_detalle_ruta_message_no_hay_direccion">Lo sentimos, la guía no tiene dirección disponible.</string>
+    <string name="activity_detalle_ruta_message_no_ingreso_piezas">Debe ingresar el total de piezas.</string>
+    <string name="activity_detalle_ruta_message_no_ingreso_serie">Debe ingresar una serie.</string>
+    <string name="activity_detalle_ruta_message_serie_fuera_de_rango">La serie esta fuera del rango.</string>
+    <string name="activity_detalle_ruta_message_serie_excluida_en_lista">La serie ya se encuentra en la lista.</string>
+    <string name="activity_detalle_ruta_title_agregar_otra_guia">Agregar guía</string>
+    <string name="activity_detalle_ruta_message_agregar_otra_guia">¿Desea agregar otra guía?</string>
+    <string name="activity_detalle_ruta_message_seleccionar_medio_navegacion">Seleccione un medio de navegación.</string>
+    <string name="activity_detalle_ruta_title_ruta_finalizada">Ruta Finalizada</string>
+    <string name="activity_detalle_ruta_title_ruta_no_iniciada">Ruta no Iniciada</string>
+    <string name="activity_detalle_ruta_msg_recoleccion_no_hay_guias_electrocnicas">No hay guías electrónicas disponibles para esta recolección.</string>
+    <string name="activity_detalle_ruta_msg_recoleccion_no_hay_contenedores">No hay contenedores disponibles para esta recolección.</string>
+    <string name="activity_detalle_ruta_msg_recoleccion_no_hay_piezas">No hay guías electrónicas seleccionadas.</string>
+    <string name="activity_detalle_ruta_msg_seleccione_guia_electronica">Seleccione una o varias guías electrónicas.</string>
+    <string name="activity_detalle_ruta_msg_seleccione_contenedor">Seleccione uno o varios contenedores.</string>
+    <string name="activity_detalle_ruta_msg_necesitas_recolectar">Debes escanear 1 o más paquetes para continuar con la recolección.</string>
+    <string name="activity_detalle_ruta_msg_recoleccion_completa_corregir">La recolección esta marcada como completa. Debe seleccionar todas las guias antes de continuar.</string>
+    <string name="activity_detalle_ruta_msg_recoleccion_parcial_corregir">La recolección esta marcada como parcial, pero tiene seleccionado todas las guías. Debe marcar como recolección completa antes de continuar.</string>
+    <string name="activity_detalle_ruta_msg_ingrese_pieza">Ingrese correctamente el total de piezas de la guía electrónica.</string>
+    <string name="activity_detalle_ruta_title_limite_pieza">Limite Máximo de Piezas Excedido</string>
+    <string name="activity_detalle_ruta_msg_limite_pieza">Ha excedido el límite máximo de piezas (20 piezas).\n\n¿Está seguro de que quiere asignar las piezas?</string>
+    <string name="activity_detalle_ruta_title_motivo_gestion_llamada_pendiente_descarga">Motivos de gestión de llamada pendiente de descarga</string>
+    <string name="activity_detalle_ruta_msg_motivo_gestion_llamada_pendiente_descarga">Lo sentimos, es necesario descargar los motivos de gestión de llamada antes de realizar una llamada.</string>
+    <string name="activity_detalle_ruta_msg_descarga_motivo_gestion_llamada">Los motivos de gestión de llamada se descargó exitosamente.</string>
+    <string name="act_detalle_ruta_msg_error_ingresa_guia_recoleccion">Ingrese correctamente la guía de recolección.</string>
+    <string name="act_detalle_ruta_msg_error_guia_recoleccion_incorrecto">La guía de recolección es incorrecta.</string>
+    <string name="act_detalle_ruta_msg_error_guia_recoleccion_en_uso">La guía de recolección ya fue registrada.</string>
+    <string name="act_detalle_ruta_msg_error_frm_rec_ingresar_cantidad">Ingrese correctamente las cantidades del formulario de recolección.</string>
+
+    <!-- Activity Firmar -->
+    <string name="title_activity_firmar">Firmar</string>
+    <string name="activity_firmar_message_no_puede_tomar_foto">Lo sentimos, no puede guardar sin haber firmado.</string>
+
+    <!-- Activity QRScanner -->
+    <string name="activity_qr_scanner_title_lectura_de_cod_barra">Lectura de codigo de barra</string>
+
+    <!-- Activity Generar Manifiesto -->
+    <string name="activity_generar_man_title_generar_manifiesto">Generar Manifiesto</string>
+    <string name="activity_generar_man_btn_generar_manifiesto">Generar</string>
+    <string name="activity_generar_man_no_hay_guias">Debe tener al menos una guía para generar manifiesto.</string>
+    <string name="activity_generar_man_existe_guias_generadas">Algunas de las guías, ya se encuentra generado su manifiesto. Debe eliminarlos antes de generar un nuevo manifiesto.</string>
+
+    <!-- Activity Admision Paquete -->
+    <string name="activity_admision_paquete_title">Admisión de Paquetes</string>
+    <string name="activity_admision_paquete_msg_cargando_despacho">Cargando despachos&#8230;</string>
+    <string name="activity_admision_paquete_msg_no_hay_despachos">Actualmente no hay despachos.</string>
+
+    <!-- Activity Gestion Plan De Viaje -->
+    <string name="act_gestion_plan_viaje_title">Monitor Plan de Viaje</string>
+    <string name="act_gestion_plan_viaje_message_no_hay_unidades">Actualmente no hay unidades en ruta.</string>
+    <string name="act_gestion_plan_viaje_message_no_hay_rutas">No se encontro rutas disponibles para el origen seleccionado.</string>
+    <string name="act_gestion_plan_viaje_message_error_calcular_ruta_hub">Ocurrio un error al calcular la ruta de la unidad hacia el HUB.</string>
+    <string name="act_gestion_plan_viaje_message_error_generar_ruta_hub">Ocurrio un error al procesar los datos de coordenadas.</string>
+    <string name="act_gestion_plan_viaje_message_datos_incorrectos_filtro">No se seleccionó correctamente los datos del filtro.</string>
+
+    <!-- Activity Init -->
+    <string name="activity_init_no_selecciono_pais">Debe seleccionar su país.</string>
+
+    <!-- Activity Configuracion -->
+    <string name="title_activity_configuracion">Configuración</string>
+    <string name="activity_configuracion_title_politica_privacidad">Política de Privacidad</string>
+    <string name="activity_configuracion_sub_title_politica_privacidad">Importante para ti y para nosotros</string>
+    <string name="activity_configuracion_title_terminos_condiciones">Términos de servicio</string>
+    <string name="activity_configuracion_sub_title_terminos_condiciones">Condiciones de uso del servicio</string>
+
+    <!-- Activity Registro de Errores -->
+    <string name="title_activity_registro_errores">Registro de Errores</string>
+
+    <!-- Activity Detalle Ruta -->
+    <string name="title_activity_manifestar_guia">Agregar Guía a Ruta</string>
+    <string name="activity_manifestar_guia_msg_producto_no_seleccionado">Debe seleccionar los productos, para manifestar la guía.</string>
+    <string name="activity_manifestar_guia_msg_limite_seleccion_piezas">Para manifestar más de 10 productos, debes escanear el código de barra de cada producto para seleccionarlo.</string>
+
+    <!-- Activity Información de la Ruta -->
+    <string name="title_activity_informacion_ruta">Información de la Ruta</string>
+
+    <!-- Activity Transferir Guia -->
+    <string name="title_activity_transferir_guia">Transferir</string>
+
+    <!-- Activity Filtrar Guia -->
+    <string name="title_activity_filtrar_guia">Filtros</string>
+    <string name="act_filtrar_guia_title_restablecer_filtro">Restablecer filtros</string>
+    <string name="act_filtrar_guia_msg_restablecer_filtro">¿Deseas restablecer todos los filtros?</string>
+
+    <!-- Activity Liquidacion al Cliente -->
+    <string name="title_activity_liquidacion_cliente">Liquidación al Cliente</string>
+    <string name="activity_liquidacion_cliente_searchview_hint">Buscar valija&#8230;</string>
+
+    <!-- Activity Consideraciones Importantes Ruta -->
+    <string name="title_activity_consideraciones_importantes_ruta">Consideraciones Importantes Ruta</string>
+
+    <!-- Activity Notificaciones Ruta -->
+    <string name="title_activity_notificaciones_ruta">Notificaciones Ruta</string>
+    <string name="act_notificaciones_ruta_msg_no_hay_notificaciones">Actualmente no tienes notificaciones.</string>
+
+    <!-- Dialog Reportar Incidente-->
+    <string name="dlg_reportar_incidente_msg_tomar_al_menos_una_foto">Debe tomar una foto como mínimo para reportar la incidencia.</string>
+    <string name="dlg_reportar_incidente_msg_reporte_incidente_exitoso">Su incidente se generó exitosamente.</string>
+    <string name="dlg_reportar_incidente_msg_incidentes_sync_pendientes">Para terminar la ruta debe verificar que todos las incidentes hayan sido sincronizados correctamente.</string>
+
+    <!-- Activity Forgot Password -->
+    <string name="act_forgot_password_title_forgot_password">¿Has olvidado tu contraseña?</string>
+    <string name="act_forgot_password_msg_forgot_password">Ingresa tu nombre de usuario para restablecer tu contraseña</string>
+    <string name="act_forgot_password_title_reset_password">Restablece tu contraseña</string>
+    <string name="act_forgot_password_msg_reset_password">Ingresa una nueva contraseña que puedas recordar facilmente</string>
+    <string name="act_forgot_password_msg_error_user_name">Ingresa tu nombre de usuario correctamente.</string>
+    <string name="act_forgot_password_msg_error_new_password">Ingresa tu nueva contraseña correctamente.</string>
+    <string name="act_forgot_password_msg_error_different_password">Las contraseñas ingresadas no coinciden.</string>
+    <string name="act_forgot_password_msg_error_min_length">La contraseña de tener una longitud mínima de 8 caracteres.</string>
+    <string name="act_forgot_password_msg_not_found_user_data">Lo sentimos, no se encontró los datos del usuario.</string>
+    <string name="act_forgot_password_title_restablecer_password">Contraseña restablecida</string>
+    <string name="act_forgot_password_msg_restablecer_password">Se restableció la contraseña exitosamente. Ahora podrás iniciar sesión con tu nombre de usuario y la nueva contraseña.</string>
+    <string name="act_forgot_password_title_cancelar_restablecer_password">Salir de restablecer contraseña</string>
+    <string name="act_forgot_password_msg_cancelar_restablecer_password">¿Estás seguro de que quieres salir del proceso de restablecer contraseña?</string>
+
+    <!-- Fragment Rutas Pendientes -->
+    <string name="fragment_ruta_pendiente_titulo_no_hay_rutas">No Hay Ruta Pendiente</string>
+    <string name="fragment_ruta_pendiente_message_no_hay_rutas">Actualmente no tiene ruta pendiente por realizar.</string>
+    <string name="fragment_ruta_pendiente_message_no_hay_nuevas_rutas">No se encontró nuevas rutas pendientes por realizar.</string>
+    <string name="fragment_ruta_pendiente_message_no_hay_consideraciones_importantes_ruta">No se encontró consideraciones importantes para esta ruta.</string>
+    <string name="fragment_ruta_pendiente_title_eliminar_guias">Eliminando guías.</string>
+    <string name="fragment_ruta_pendiente_message_ruta_eliminada">Guía eliminada correctamente.</string>
+    <string name="fragment_ruta_pendiente_message_rutas_eliminadas">Guías eliminadas correctamente.</string>
+    <string name="fragment_ruta_pendiente_message_seleccion_no_valida">El tipo de selección no es valida.</string>
+    <string name="fragment_ruta_pendiente_message_seleccion_recoleccion">Solo se permite seleccionar guías para gestión multiple.</string>
+    <string name="fragment_ruta_pendiente_message_seleccion_multiples_piezas">Solo se permite seleccionar guías con una sola pieza.</string>
+    <string name="fragment_ruta_pendiente_title_seleccion_diferentes_shipper">Multiples shippers</string>
+    <string name="fragment_ruta_pendiente_message_seleccion_diferentes_shipper">La guía que intentas seleccionar es de otro shipper.\n\n¿Estás seguro de que quieres seleccionarla?</string>
+    <string name="fragment_ruta_pendiente_message_seleccion_diferentes_lineas">Solo se permite seleccionar guías de la misma linea (Logística o Valorados).</string>
+    <string name="fragment_ruta_pendiente_message_seleccion_diferentes_tipo_envio">Solo se permite seleccionar guías del mismo tipo de envío (Paquete, Valija, Logistica Inversa, Recolección Express, Liquidación o Devolución).</string>
+    <string name="fragment_ruta_pendiente_message_eliminar_guias">¿Está seguro de que quiere eliminar estas guías?</string>
+    <string name="fragment_ruta_pendiente_message_gestion_multiple_mayores_a_dos">Para realizar una gestión multiple debe seleccionar dos o mas guías.</string>
+    <string name="fragment_ruta_pendiente_message_eliminacion_multiple_mayores_a_dos">Para eliminar debe seleccionar dos o mas guías.</string>
+    <string name="fragment_ruta_pendiente_message_ruta_estado_diferentes">Lo sentimos, el proceso de gestión de las guías se encuentran en diferentes estados. Al parecer alguna de las guías seleccionadas se gestionó individualmente.</string>
+    <string name="fragment_ruta_pendiente_message_ordenando_guias">Ordenando guías&#8230;</string>
+
+    <!-- Fragment Rutas Gestionadas -->
+    <string name="fragment_ruta_gestionada_msg_no_hay_gestionados">No hay gestiones realizadas.</string>
+
+    <!-- Fragment Config Pais -->
+    <string name="fragment_config_pais_title_confirmar_pais">Confirmar país</string>
+    <string name="fragment_config_pais_message_confirmar_pais">Confirme el país seleccionado antes de continuar.</string>
+    <string name="fragment_request_verification_code_ingrese_codigo_verificacion">Ingresa el código de verificación correctamente.</string>
+
+    <!-- Fragment Request Permission -->
+    <string name="fragment_request_permission_title_requerimos_su_permiso">¡Requerimos su permiso!</string>
+    <string name="fragment_request_permission_msg_requerimos_su_permiso_default">Permite que Urbano - Iridio acceda al espacio de almacenamiento, a la camara, a tu ubicación y a la información del telefono, para poder seguir usando la aplicación.</string>
+    <string name="fragment_request_permission_msg_requerimos_su_permiso_config">\n\nPara activarlo, haz clic a continuación en \"Configurar\" y activa los permisos en el menú \"Permisos\".</string>
+
+    <!-- Navigation Drawer Fragment -->
+    <string name="nav_drawer_fragment_get_menu_error">Ocurrió un error y no se pudo procesar la solicitud para generar menu de usuario.</string>
+    <string name="nav_drawer_fragment_not_found_class_menu_title">Menu Inactivo</string>
+    <string name="nav_drawer_fragment_not_found_class_menu">Lo sentimos, ocurrió un error al intentar abrir el modulo, al parecer actualmente no se encuentra activo o esta en desarrollo.</string>
+    <string name="nav_drawer_fragment_title_cerrar_sesion">Cerrar Sesión</string>
+    <string name="nav_drawer_fragment_message_cerrar_sesion">¿Seguro que desea cerrar sesión?</string>
+
+    <!-- Class: Connection -->
+    <string name="please_connect_to_internet">Red no disponible. Compruebe su conexión a internet e inténtalo de nuevo.</string>
+    <string name="title_dialog_connect_to_internet">No hay conexión a Internet.</string>
+    <string name="message_dialog_connect_to_internet">¿Desea activar o verificar su estado de conexión a Internet?</string>
+
+    <!-- Class: MyLocation -->
+    <string name="title_dialog_no_gps">Ubicación no Disponible</string>
+    <string name="message_dialog_enable_gps">El servicio de GPS no se encuentra disponible. Active el GPS e inténtalo de nuevo.</string>
+    <string name="message_not_found_location">Lo sentimos, no se encontró su ubicación. Por favor, inténtalo de nuevo.</string>
+
+    <!-- Class: JSONObject -->
+    <string name="json_object_exception">Ocurrió un error al procesar los datos recibidos. Por favor, inténtalo de nuevo.</string>
+
+    <!-- Class: Volley -->
+    <string name="volley_error_title">Error de conexión</string>
+    <string name="volley_error_message">Hubo un error y no se pudo procesar la solicitud.\nPor favor, inténtalo de nuevo.</string>
+
+    <string name="transition_main_toolbar">transition:TOOLBAR</string>
+    <string name="transition_main_body">transition:BODY</string>
+
+    <string name="transition_content_header">transition:CONTENT_HEADER</string>
+    <string name="transition_table_header">transition:TABLE_HEADER</string>
+
+    <string name="modal_title_requerimos_tu_permiso">Requerimos tu permiso</string>
+    <string name="modal_msg_requerimos_permiso_ubicacion">Para gestionar tus rutas, permite que Urbano - Iridio use tu ubicación todo el tiempo.</string>
+    <string name="modal_msg_requerimos_permiso_ubicacion_denegado">Para gestionar tus rutas, ve a configuración de la aplicación y permite que Urbano - Iridio use tu ubicación todo el tiempo.</string>
+
+    <string name="modal_title_confirm_no_selected_guias">Seleccionar guías</string>
+    <string name="modal_msg_confirm_no_selected_guias">¿Estás seguro de que quieres continuar con la recolección sin seleccionar guías?</string>
+
+    <string name="bottom_msg_select_guias_mal_embaladas">Selecciona las guías que no se pudo recolectar por motivo de mal embalaje, las que no selecciones se contarán como producto no estuvo listo.</string>
+    <string name="bottom_msg_select_guias_sin_alistar">"Guías seleccionadas que no se pudo recolectar por motivo que el producto no estuvo listo.</string>
+
+    <string name="msg_ingrese_barra_correctamente">Ingrese la barra correctamente.</string>
+
+    <string name="msg_not_connected_to_network">No hay conexión a internet. Conéctate a una red wifi o móvil.</string>
+
+    <string name="text_volver_a_intentar">Reintentar</string>
+    <string name="text_ajustes">Ajustes</string>
+    <string name="text_aceptar">Aceptar</string>
+    <string name="text_ok">OK</string>
+    <string name="text_espere_un_momento">Espere un momento&#8230;</string>
+    <string name="text_gestionando_guia">Gestionando guía&#8230;</string>
+    <string name="text_agregando_observacion_gestion_entrega">Agregando observación&#8230;</string>
+    <string name="text_gestionando_recoleccion">Gestionando recolección&#8230;</string>
+    <string name="text_iniciando_ruta">Iniciando ruta&#8230;</string>
+    <string name="text_terminando_ruta">Terminando ruta&#8230;</string>
+    <string name="text_forzar_cierre_ruta">Forzando cierre de ruta&#8230;</string>
+    <string name="text_validando_clave">Validando clave&#8230;</string>
+    <string name="text_validando_ruta">Validando ruta&#8230;</string>
+    <string name="text_validando_transferencia_guia">Validando transferencia&#8230;</string>
+    <string name="text_transfiriendo_guia">Transfiriendo guías&#8230;</string>
+    <string name="text_actualizando_motivos">Actualizando motivos&#8230;</string>
+    <string name="text_actualizando_motivos_error">Ocurrió un error al momento de actualizar los motivos. Por favor, inténtalo de nuevo.</string>
+    <string name="text_actualizando_ubicacion">Actualizando ubicación&#8230;</string>
+    <string name="text_guardando_ruteo_guias">Guardando el ruteo de las guías&#8230;</string>
+    <string name="text_cargando_guias_electronicas">Cargando guías electrónicas&#8230;</string>
+    <string name="text_validando_nombre_usuario">Validando nombre de usuario&#8230;</string>
+    <string name="text_restableciendo_contrasena">Restableciendo contraseña&#8230;</string>
+    <string name="text_actualizando_foto">Actualizando foto&#8230;</string>
+    <string name="text_cargando">Cargando&#8230;</string>
+    <string name="text_cargando_imagen">Cargando imagen&#8230;</string>
+    <string name="text_cancelar">Cancelar</string>
+    <string name="text_ver_ubicacion">Ver ubicación</string>
+    <string name="text_confirmar">Confirmar</string>
+    <string name="text_continuar">Continuar</string>
+    <string name="text_continue_without_select">Continuar, sin seleccionar</string>
+    <string name="text_siguiente">Siguiente</string>
+    <string name="text_eliminar">Eliminar</string>
+    <string name="text_advertencia">Advertencia</string>
+    <string name="text_deshacer">Deshacer</string>
+    <string name="text_inicializando">Inicializando</string>
+    <string name="text_actualizar">Actualizar</string>
+    <string name="text_seleccionar">Seleccionar</string>
+    <string name="text_version">Versión</string>
+    <string name="text_configurar">Configurar</string>
+    <string name="text_transferir">Transferir</string>
+    <string name="text_gestionar">Gestionar</string>
+    <string name="text_entregar">Entregar</string>
+    <string name="text_recolectar">Recolectar</string>
+    <string name="text_confirmar_eliminacion">Confirmar eliminación</string>
+    <string name="text_permitir">Permitir</string>
+    <string name="text_denegar">Denegar</string>
+    <string name="text_asignar">Asignar</string>
+    <string name="text_guardar">Guardar</string>
+    <string name="text_agregar">Agregar</string>
+    <string name="text_editar">Editar</string>
+    <string name="text_reportar">Reportar</string>
+    <string name="text_restablecer">Restablecer</string>
+    <string name="text_descargar">Descargar</string>
+    <string name="text_devolver">Devolver</string>
+    <string name="text_otorgar_acceso">Otorgar Acceso</string>
+    <string name="text_enciende_gps">Enciende el gps</string>
+    <string name="text_acerca_de">Acerca de</string>
+    <string name="text_salir">Salir</string>
+    <string name="text_aplicar_filtros">Aplicar filtros</string>
+    <string name="text_accion_no_disponible">Acción no Disponible</string>
+    <string name="text_alert_enciende_gps">¡Enciende el GPS!</string>
+    <string name="text_msg_enciende_gps">Es necesario que encienda el GPS, para poder seguir usando la aplicación.</string>
+    <string name="text_configurar_fecha_hora">Configurar Fecha y Hora</string>
+    <string name="text_no_gracias">No, gracias</string>
+    <string name="text_si">Si</string>
+    <string name="text_no">No</string>
+    <string name="text_menu_ruta_del_dia">Gestiona tus guías asignadas a tu ruta (Entregas y/o Recolecciones).</string>
+    <string name="text_menu_resumen_ruta">Información detallada de tu ruta (total de guías, tiempo en ruta, etc.).</string>
+    <string name="text_menu_plan_de_viaje">Marca tus llegadas y salidas en las paradas programadas.</string>
+    <string name="text_menu_notificaciones">Aqui puedes ver todas tus notificaciones, no te olvides leerlos.</string>
+    <string name="title_activity_qrscanner">QRScannerActivity</string>
+    <string name="text_gregar_a_ruta">Agregar a ruta</string>
+    <string name="text_dot">&#8226;</string>
+    <string name="update_password_button">Actualizar contraseña</string>
+
+    <string name="menu_view_credentials">Ver Credencial</string>
+
+    <string name="url_legal_terms_service">https://app.urbano.com.pe/legal/iridio/terms_of_service</string>
+    <string name="url_legal_privacy_policy">https://app.urbano.com.pe/legal/iridio/privacy_policy</string>
+
+    <string name="urbano_copy_right">© 2022 URBANO HOLDING - IT</string>
+    <string name="urbano_copy_right_text">Todos los derechos reservados.</string>
+    <string name="urbano_ec_copy_right">© 1996-2020 URBANO EXPRESS S.A. RAPIEXX</string>
+    <string name="urbano_pe_copy_right">© 2003-2020 URBANO EXPRESS PERU S.A.</string>
+    <string name="title_activity_turn_on_gps">TurnOnGPSActivity</string>
+
+    <string name="default_notification_channel_id" translatable="false">com.urbanoexpress.iridio.channel.id.GENERAL_NOTIFICATIONS</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

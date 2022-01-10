@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_white_with_corner">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/lightPrimaryText"
+        android:text="Confirmar piezas recolectadas"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#20227bc2"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingVertical="@dimen/activity_vertical_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/blue_4"
+        android:text="Confirma el total de piezas que estas recolectando."/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkSecondaryText"
+            android:text="Piezas"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/darkDividers"
+            android:layout_marginHorizontal="15dp"/>
+
+        <EditText
+            android:id="@+id/total_piezas_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textColor="@color/gris_2"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/darkDividers" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:theme="@style/selectableItemGrisStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/blue_4"
+            android:textSize="14sp"
+            android:text="@string/text_cancelar"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"/>
+
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:theme="@style/selectableItemGrisStyle"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/blue_4"
+            android:textSize="14sp"
+            android:text="@string/text_confirmar"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"/>
+    </LinearLayout>
+</LinearLayout>

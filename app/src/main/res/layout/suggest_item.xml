@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/suggestion_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_clock_grey" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/suggestion_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#727272"
+            android:focusable="false"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

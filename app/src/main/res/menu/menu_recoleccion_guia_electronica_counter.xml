@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_selection_mode_scan"
+        android:title="Modo recolección (Escaneo)"
+        android:orderInCategory="1" />
+    <item android:id="@+id/action_selection_mode_check"
+        android:title="Modo recolección (Selección)"
+        android:orderInCategory="2" />
+    <item android:id="@+id/collect_containers"
+        android:title="Modo recolección (Contenedores)"
+        android:orderInCategory="3" />
+</menu>

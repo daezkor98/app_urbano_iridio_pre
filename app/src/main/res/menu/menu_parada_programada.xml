@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--<item android:id="@+id/action_agregar_despacho_subida" android:title="Agregar despacho subida"
+        android:icon="@drawable/ic_plus_white"
+        android:orderInCategory="2" app:showAsAction="always" />-->
+    <item android:id="@+id/action_agregar_fotos_parada_programada" android:title="Agregar fotos"
+        android:icon="@drawable/ic_camera_white"
+        android:orderInCategory="1" app:showAsAction="always" />
+</menu>

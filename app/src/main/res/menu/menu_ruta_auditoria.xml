@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_forzar_terminar_ruta"
+        android:title="Forzar cierre de ruta"
+        android:orderInCategory="3" app:showAsAction="never" />
+    <item android:id="@+id/action_info_ruta_del_dia"
+        android:title="Información de la ruta"
+        android:orderInCategory="2" app:showAsAction="never" />
+    <item android:id="@+id/action_mapa_de_ruta"
+        android:title="Mapa de Distribución"
+        android:icon="@drawable/ic_action_google_maps_white"
+        android:orderInCategory="1" app:showAsAction="always" />
+</menu>

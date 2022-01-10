@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--<item android:id="@+id/action_delete" android:title="Eliminar varios"-->
+        <!--android:icon="@drawable/ic_delete_white"-->
+        <!--android:orderInCategory="3" app:showAsAction="always" />-->
+    <item android:id="@+id/action_gestion_multiple" android:title="Gestión multiple"
+        android:icon="@drawable/ic_action_package_white"
+        android:orderInCategory="1" app:showAsAction="always" />
+    <item android:id="@+id/action_check_all" android:title="Seleccionar todo"
+        android:icon="@drawable/ic_action_playlist_check_white"
+        android:orderInCategory="2" app:showAsAction="always" />
+    <item android:id="@+id/action_ordenar_guias" android:title="Ordenar guías selectivamente"
+        android:icon="@drawable/ic_format_list_numbers_white"
+        android:orderInCategory="3" app:showAsAction="always" />
+    <item android:id="@+id/action_definir_posicion_guia" android:title="Definir posición de la guía"
+        android:icon="@drawable/ic_priority_high_white"
+        android:orderInCategory="4" app:showAsAction="always" />
+    <item android:id="@+id/action_guardar_orden_guias" android:title="Guardar orden"
+        android:icon="@drawable/ic_action_playlist_save_white"
+        android:orderInCategory="4" app:showAsAction="always" />
+</menu>

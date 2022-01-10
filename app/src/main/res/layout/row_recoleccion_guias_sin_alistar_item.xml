@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+    android:paddingVertical="10dp"
+    android:theme="@style/selectableItemGrisStyle"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/barra_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/gris_2"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textAllCaps="true"/>
+
+    <TextView
+        android:id="@+id/description_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/darkSecondaryText"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+</LinearLayout>

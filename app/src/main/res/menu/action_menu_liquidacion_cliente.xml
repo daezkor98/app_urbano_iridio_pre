@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item android:id="@+id/action_buscar_valija" android:title="Buscar"
+        android:icon="@drawable/ic_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:orderInCategory="1" app:showAsAction="always" />
+    <item android:id="@+id/action_liquidar" android:title="Liquidar"
+        android:icon="@drawable/ic_valija_liquidar"
+        android:orderInCategory="2" app:showAsAction="always" />
+    <item android:id="@+id/action_leer_codigo_barra" android:title="Leer código de barra"
+        android:icon="@drawable/ic_barcode_scan_white"
+        android:orderInCategory="3" app:showAsAction="never" />
+    <item android:id="@+id/action_check_all" android:title="Seleccionar todo"
+        android:icon="@drawable/ic_check_all_white"
+        android:orderInCategory="4" app:showAsAction="never" />
+</menu>

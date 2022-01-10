@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/selectableItemGrisStyle"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:minHeight="72dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bgLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        android:layout_gravity="center">
+
+        <FrameLayout
+            android:id="@+id/containerImgStatusLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp">
+
+            <FrameLayout
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/imgLinea"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside" />
+
+                <View
+                    android:id="@+id/imgCheckGestionEfectiva"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="bottom|right"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/boxCounterItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="15dp"
+                    android:layout_gravity="bottom|right"
+                    android:paddingLeft="2dp"
+                    android:paddingTop="1dp"
+                    android:paddingRight="2dp"
+                    android:paddingBottom="1dp"
+                    android:background="@drawable/bg_counter_guias_ruta_del_dia"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/lblCounterItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|top"
+                        android:textSize="12sp"
+                        android:textColor="@color/gris_2"
+                        android:lineSpacingExtra="0dp"
+                        android:includeFontPadding="false"/>
+                </LinearLayout>
+            </FrameLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:id="@+id/txtGuia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/gris_2" />
+
+            <TextView
+                android:id="@+id/txtDistrito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/darkPrimaryText" />
+
+            <TextView
+                android:id="@+id/txtDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/darkPrimaryText" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtHoraLlegadaEstimada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|top"
+                android:textSize="12sp"
+                android:textColor="@color/gris_2"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:orientation="horizontal"
+                android:gravity="bottom">
+
+                <LinearLayout
+                    android:id="@+id/btnImportePorCobrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="5dp"
+                    android:clickable="true">
+
+                    <LinearLayout
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_circle_importe"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/lblSimboloMoneda"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:textColor="@color/yellow" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/imgTipoEnvio"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="2dp"
+                    android:scaleType="centerInside"
+                    android:background="@null"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:minWidth="20dp"
+                    android:background="@drawable/bg_icon_entrega"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblPiezas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="@color/lightPrimaryText" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/darkDividers" />
+
+</LinearLayout>
