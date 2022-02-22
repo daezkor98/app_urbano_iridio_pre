@@ -7,38 +7,33 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.EstadoRuta;
 import com.urbanoexpress.iridio.model.entity.GestionLlamada;
+import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.Imagen;
 import com.urbanoexpress.iridio.model.entity.LogErrorSync;
 import com.urbanoexpress.iridio.model.entity.MotivoDescarga;
 import com.urbanoexpress.iridio.model.entity.Ruta;
-import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.TrackLocation;
 import com.urbanoexpress.iridio.model.interactor.ConsideracionesImportantesRutaInteractor;
 import com.urbanoexpress.iridio.model.interactor.DataSyncInteractor;
@@ -72,6 +67,12 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mick on 26/07/16.
@@ -171,7 +172,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
             ArrayList<ManifiestoItem> data = new ArrayList<>();
 
-            for (Ruta ruta: manifiestos) {
+            for (Ruta ruta : manifiestos) {
                 ManifiestoItem manifiestoItem = new ManifiestoItem(ruta.getIdManifiesto(), "");
                 data.add(manifiestoItem);
             }
@@ -480,9 +481,9 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                                             }
                                         });*/
 
-                                        //validateSolicitaKilometrajeRequest(EstadoRuta.Estado.FINALIZADO);
+                                    //validateSolicitaKilometrajeRequest(EstadoRuta.Estado.FINALIZADO);
                                     //} else {
-                                        terminarRuta();
+                                    terminarRuta();
                                     //}
                                 }
                             }
@@ -518,9 +519,9 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                                         }
                                     });*/
 
-                                    //validateSolicitaKilometrajeRequest(EstadoRuta.Estado.FINALIZADO);
+                                //validateSolicitaKilometrajeRequest(EstadoRuta.Estado.FINALIZADO);
                                 //} else {
-                                    terminarRuta();
+                                terminarRuta();
                                 //}
                             }
                         }
@@ -613,8 +614,8 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            activity.runOnUiThread(() -> BaseModalsView.showProgressDialog(view.getContextView(),
-                    R.string.text_terminando_ruta));
+            activity.runOnUiThread(() ->
+                    BaseModalsView.showProgressDialog(view.getContextView(), R.string.text_terminando_ruta));
         }
 
         @Override
@@ -663,7 +664,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link RutaPendientePresenter#rutaIniciadaReceiver}
      */
     private void sendOnRutaIniciadaReceiver() {
@@ -673,7 +674,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link RutaPendientePresenter#rutaFinalizadaReceiver}
      * {@link RutaGestionadaPresenter#rutaFinalizadaReceiver}
      * {@link RutaPresenter#rutaFinalizadaReceiver}
@@ -685,7 +686,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link RutaPendientePresenter#manifiestoEliminadoReceiver}
      */
     private void sendOnManifiestoEliminadoReceiver(String idManifiesto) {
@@ -745,7 +746,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                                 manifiestos.get(position).getIdManifiesto());
                         Log.d(TAG, "Total rutas: " + rutas.size());
 
-                        for (Ruta ruta: rutas) {
+                        for (Ruta ruta : rutas) {
                             Log.d(TAG, "Guia: " + ruta.getGuia());
                             ruta.setEliminado(Data.Delete.YES);
                             ruta.save();
@@ -853,7 +854,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                 idLineaNegocio += estadoRutaCierre.get(i).getLineaNegocio();
             } else {
                 idRutas += estadoRutaCierre.get(i).getIdRuta() + "|";
-                idLineaNegocio  += estadoRutaCierre.get(i).getLineaNegocio() + "|";
+                idLineaNegocio += estadoRutaCierre.get(i).getLineaNegocio() + "|";
             }
         }
 
@@ -906,9 +907,9 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                                                     iniciarTerminarRutaDelDiaDialog.show(
                                                             activity.getSupportFragmentManager(), IniciarTerminarRutaDelDiaDialog.TAG);
                                                 } else {*/
-                                                    msgResId = R.string.activity_ruta_message_ruta_iniciada_exitosamente;
-                                                    newEstadoRuta(EstadoRuta.Estado.INICIADO);
-                                                    sendOnRutaIniciadaReceiver();
+                                            msgResId = R.string.activity_ruta_message_ruta_iniciada_exitosamente;
+                                            newEstadoRuta(EstadoRuta.Estado.INICIADO);
+                                            sendOnRutaIniciadaReceiver();
                                                 /*}
                                             } catch (JSONException ex) {
                                                 ex.printStackTrace();
@@ -941,7 +942,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                                     iniciarTerminarRutaDelDiaDialog.show(
                                             activity.getSupportFragmentManager(), IniciarTerminarRutaDelDiaDialog.TAG);
                                 } else {*/
-                                    terminarRuta();
+                                terminarRuta();
                                 //}
                             }
                         } else {
@@ -1031,7 +1032,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                     /*if (checkSolicitarKilometraje()) {
                         validateSolicitaKilometrajeRequest(EstadoRuta.Estado.FINALIZADO);
                     } else {*/
-                        terminarRuta();
+                    terminarRuta();
                     //}
                 })
                 .show();
@@ -1081,7 +1082,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
         interactor.getMotivos(params, callback);
     }
 
-    private void saveMotivos(JSONArray data) throws JSONException{
+    private void saveMotivos(JSONArray data) throws JSONException {
         JSONObject jsonObject;
 
         motivoNoHuboTiempoItems = new String[data.length()];
@@ -1126,7 +1127,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link ForzarCierreRutaHelper#sendOnRutaFinalizadaReceiver()}
      */
     private final BroadcastReceiver rutaIniciadaReceiver = new BroadcastReceiver() {
@@ -1152,7 +1153,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link ForzarCierreRutaHelper#sendOnRutaFinalizadaReceiver()}
      */
     private final BroadcastReceiver rutaFinalizadaReceiver = new BroadcastReceiver() {
@@ -1184,7 +1185,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link TransferirGuiaDialog#sendTransferenciaGuiaFinalizadaAction}
      */
     private final BroadcastReceiver transferenciaGuiaFinalizadaReceiver = new BroadcastReceiver() {
@@ -1196,7 +1197,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link CodeScannerImpl#sendOnResultScannListener}
      */
     private final BroadcastReceiver resultScannReceiver = new BroadcastReceiver() {
@@ -1261,9 +1262,9 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
             Log.d(TAG, "Total estado ruta: " + totalEstadoRutas);
 
             //if (totalEstadoRutas == 0) {
-                Log.d(TAG, "Load Rutas Pendientes");
-                totalRutasPendientes = interactor.getTotalRutasPendientes();
-                Log.d(TAG, "Total rutas pendientes: " + totalRutasPendientes);
+            Log.d(TAG, "Load Rutas Pendientes");
+            totalRutasPendientes = interactor.getTotalRutasPendientes();
+            Log.d(TAG, "Total rutas pendientes: " + totalRutasPendientes);
             //}
             return null;
         }

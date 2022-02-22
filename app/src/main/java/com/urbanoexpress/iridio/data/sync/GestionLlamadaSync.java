@@ -166,7 +166,8 @@ public class GestionLlamadaSync extends DataSyncModel<GestionLlamada> {
                         };
 
                         dataSyncInteractor.uploadGestionLlamada(params, callback);
-                    } catch (JSONException ex) {
+                    }
+                    catch (JSONException ex) {
                         ex.printStackTrace();
                         finishSync();
                         LogErrorSync errorSync = new LogErrorSync(

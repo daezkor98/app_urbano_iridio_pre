@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio.presenter;
 
 import android.util.Log;
+
 import com.android.volley.VolleyError;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.urbanoexpress.iridio.R;
@@ -11,6 +12,7 @@ import com.urbanoexpress.iridio.util.CommonUtils;
 import com.urbanoexpress.iridio.util.constant.Country;
 import com.urbanoexpress.iridio.util.network.Connection;
 import com.urbanoexpress.iridio.view.ConfigPhoneView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

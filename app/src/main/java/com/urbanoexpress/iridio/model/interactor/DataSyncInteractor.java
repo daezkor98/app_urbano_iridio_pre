@@ -4,27 +4,26 @@ import android.content.Context;
 
 import com.android.volley.VolleyError;
 import com.orm.util.NamingHelper;
-
-import org.json.JSONObject;
-
-import java.util.List;
-
 import com.urbanoexpress.iridio.data.rest.ApiRequest;
 import com.urbanoexpress.iridio.data.rest.ApiRest;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.EstadoRuta;
 import com.urbanoexpress.iridio.model.entity.GestionLlamada;
+import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.Imagen;
 import com.urbanoexpress.iridio.model.entity.IncidenteRuta;
 import com.urbanoexpress.iridio.model.entity.PlanDeViaje;
 import com.urbanoexpress.iridio.model.entity.Ruta;
 import com.urbanoexpress.iridio.model.entity.RutaEliminada;
-import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.SecuenciaRuta;
 import com.urbanoexpress.iridio.model.entity.TrackLocation;
 import com.urbanoexpress.iridio.model.interactor.callback.RequestCallback;
 import com.urbanoexpress.iridio.util.Session;
 import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest;
+
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by mick on 02/08/16.
@@ -39,15 +38,15 @@ public class DataSyncInteractor {
 
     public static void uploadEstadoRuta(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_rou_id",         params[0]);
-        ApiRequest.getInstance().putParams("vp_rou_estado",     params[1]);
-        ApiRequest.getInstance().putParams("vp_gps_px",         params[2]);
-        ApiRequest.getInstance().putParams("vp_gps_py",         params[3]);
-        ApiRequest.getInstance().putParams("vp_fecha",          params[4]);
-        ApiRequest.getInstance().putParams("vp_hora",           params[5]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[6]);
-        ApiRequest.getInstance().putParams("id_user",           params[7]);
-        ApiRequest.getInstance().putParams("imei",              params[8]);
+        ApiRequest.getInstance().putParams("vp_rou_id", params[0]);
+        ApiRequest.getInstance().putParams("vp_rou_estado", params[1]);
+        ApiRequest.getInstance().putParams("vp_gps_px", params[2]);
+        ApiRequest.getInstance().putParams("vp_gps_py", params[3]);
+        ApiRequest.getInstance().putParams("vp_fecha", params[4]);
+        ApiRequest.getInstance().putParams("vp_hora", params[5]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[6]);
+        ApiRequest.getInstance().putParams("id_user", params[7]);
+        ApiRequest.getInstance().putParams("imei", params[8]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_ESTADO_RUTA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -65,30 +64,30 @@ public class DataSyncInteractor {
 
     public void uploadGuiaGestionada(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_doc_id",                 params[0]);
-        ApiRequest.getInstance().putParams("vp_mot_id",                 params[1]);
-        ApiRequest.getInstance().putParams("vp_fecha",                  params[2]);
-        ApiRequest.getInstance().putParams("vp_hora",                   params[3]);
-        ApiRequest.getInstance().putParams("vp_doc_px",                 params[4]);
-        ApiRequest.getInstance().putParams("vp_doc_py",                 params[5]);
-        ApiRequest.getInstance().putParams("vp_nombre",                 params[6]);
-        ApiRequest.getInstance().putParams("vp_nro_dni",                params[7]);
-        ApiRequest.getInstance().putParams("vp_num_pos",                params[8]);
-        ApiRequest.getInstance().putParams("vp_piezas",                 params[9]);
-        ApiRequest.getInstance().putParams("vp_peso",                   params[10]);
-        ApiRequest.getInstance().putParams("vp_guia_electronica",       params[11]);
-        ApiRequest.getInstance().putParams("vp_comentario",             params[12]);
-        ApiRequest.getInstance().putParams("vp_intento",                params[13]);
-        ApiRequest.getInstance().putParams("vp_recoleccion",            params[14]);
-        ApiRequest.getInstance().putParams("vp_tipo_zona",              params[15]);
-        ApiRequest.getInstance().putParams("vp_tipo_guia",              params[16]);
-        ApiRequest.getInstance().putParams("vp_tipo_direccion",         params[17]);
-        ApiRequest.getInstance().putParams("vp_tipo_medio_pago",        params[18]);
-        ApiRequest.getInstance().putParams("vp_mot_id_obs_entrega",     params[19]);
+        ApiRequest.getInstance().putParams("vp_doc_id", params[0]);
+        ApiRequest.getInstance().putParams("vp_mot_id", params[1]);
+        ApiRequest.getInstance().putParams("vp_fecha", params[2]);
+        ApiRequest.getInstance().putParams("vp_hora", params[3]);
+        ApiRequest.getInstance().putParams("vp_doc_px", params[4]);
+        ApiRequest.getInstance().putParams("vp_doc_py", params[5]);
+        ApiRequest.getInstance().putParams("vp_nombre", params[6]);
+        ApiRequest.getInstance().putParams("vp_nro_dni", params[7]);
+        ApiRequest.getInstance().putParams("vp_num_pos", params[8]);
+        ApiRequest.getInstance().putParams("vp_piezas", params[9]);
+        ApiRequest.getInstance().putParams("vp_peso", params[10]);
+        ApiRequest.getInstance().putParams("vp_guia_electronica", params[11]);
+        ApiRequest.getInstance().putParams("vp_comentario", params[12]);
+        ApiRequest.getInstance().putParams("vp_intento", params[13]);
+        ApiRequest.getInstance().putParams("vp_recoleccion", params[14]);
+        ApiRequest.getInstance().putParams("vp_tipo_zona", params[15]);
+        ApiRequest.getInstance().putParams("vp_tipo_guia", params[16]);
+        ApiRequest.getInstance().putParams("vp_tipo_direccion", params[17]);
+        ApiRequest.getInstance().putParams("vp_tipo_medio_pago", params[18]);
+        ApiRequest.getInstance().putParams("vp_mot_id_obs_entrega", params[19]);
         ApiRequest.getInstance().putParams("vp_comentario_obs_entrega", params[20]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",          params[21]);
-        ApiRequest.getInstance().putParams("vp_user",                   params[22]);
-        ApiRequest.getInstance().putParams("vp_id_mac",                 params[23]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[21]);
+        ApiRequest.getInstance().putParams("vp_user", params[22]);
+        ApiRequest.getInstance().putParams("vp_id_mac", params[23]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_GUIA_GESTIONADA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -105,18 +104,18 @@ public class DataSyncInteractor {
     }
 
     public void uploadImagenDescarga(String[] params, MultipartJsonObjectRequest.DataPart data,
-                             final RequestCallback callback) {
+                                     final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_doc_id",             params[0]);
-        ApiRequest.getInstance().putParams("vp_imagen",             params[1]);
-        ApiRequest.getInstance().putParams("vp_tipo",               params[2]);
-        ApiRequest.getInstance().putParams("vp_fecha",              params[3]);
-        ApiRequest.getInstance().putParams("vp_hora",               params[4]);
-        ApiRequest.getInstance().putParams("vp_img_px",             params[5]);
-        ApiRequest.getInstance().putParams("vp_img_py",             params[6]);
-        ApiRequest.getInstance().putParams("id_user",               params[7]);
+        ApiRequest.getInstance().putParams("vp_doc_id", params[0]);
+        ApiRequest.getInstance().putParams("vp_imagen", params[1]);
+        ApiRequest.getInstance().putParams("vp_tipo", params[2]);
+        ApiRequest.getInstance().putParams("vp_fecha", params[3]);
+        ApiRequest.getInstance().putParams("vp_hora", params[4]);
+        ApiRequest.getInstance().putParams("vp_img_px", params[5]);
+        ApiRequest.getInstance().putParams("vp_img_py", params[6]);
+        ApiRequest.getInstance().putParams("id_user", params[7]);
         ApiRequest.getInstance().putParams("id_servicios_adjuntos", params[8]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",      params[9]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[9]);
         ApiRequest.getInstance().putData("uploadedfile", data);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_IMAGEN,
@@ -134,17 +133,17 @@ public class DataSyncInteractor {
     }
 
     public void uploadImagenParadaProgramada(String[] params, MultipartJsonObjectRequest.DataPart data,
-                                     final RequestCallback callback) {
+                                             final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_id_parada",          params[0]);
-        ApiRequest.getInstance().putParams("vp_imagen",             params[1]);
-        ApiRequest.getInstance().putParams("vp_tipo",               params[2]);
-        ApiRequest.getInstance().putParams("vp_fecha",              params[3]);
-        ApiRequest.getInstance().putParams("vp_hora",               params[4]);
-        ApiRequest.getInstance().putParams("vp_img_px",             params[5]);
-        ApiRequest.getInstance().putParams("vp_img_py",             params[6]);
-        ApiRequest.getInstance().putParams("id_user",               params[7]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",      params[9]);
+        ApiRequest.getInstance().putParams("vp_id_parada", params[0]);
+        ApiRequest.getInstance().putParams("vp_imagen", params[1]);
+        ApiRequest.getInstance().putParams("vp_tipo", params[2]);
+        ApiRequest.getInstance().putParams("vp_fecha", params[3]);
+        ApiRequest.getInstance().putParams("vp_hora", params[4]);
+        ApiRequest.getInstance().putParams("vp_img_px", params[5]);
+        ApiRequest.getInstance().putParams("vp_img_py", params[6]);
+        ApiRequest.getInstance().putParams("id_user", params[7]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[9]);
         ApiRequest.getInstance().putData("uploadedfile", data);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_IMAGEN_PARADA_PROGRAMADA,
@@ -162,21 +161,21 @@ public class DataSyncInteractor {
     }
 
     public void uploadIncidenteRuta(String[] params, MultipartJsonObjectRequest.DataPart data,
-                                             final RequestCallback callback) {
+                                    final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_id_ruta",            params[0]);
-        ApiRequest.getInstance().putParams("vp_id_mot_incidente",   params[1]);
-        ApiRequest.getInstance().putParams("vp_imagen",             params[2]);
-        ApiRequest.getInstance().putParams("vp_tipo",               params[3]);
-        ApiRequest.getInstance().putParams("vp_fecha",              params[4]);
-        ApiRequest.getInstance().putParams("vp_hora",               params[5]);
-        ApiRequest.getInstance().putParams("vp_comentarios",        params[6]);
-        ApiRequest.getInstance().putParams("vp_px",                 params[7]);
-        ApiRequest.getInstance().putParams("vp_py",                 params[8]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",      params[9]);
-        ApiRequest.getInstance().putParams("vp_id_user",            params[10]);
-        ApiRequest.getInstance().putParams("vp_id_mac",             params[11]);
-        ApiRequest.getInstance().putData("uploadedfile",        data);
+        ApiRequest.getInstance().putParams("vp_id_ruta", params[0]);
+        ApiRequest.getInstance().putParams("vp_id_mot_incidente", params[1]);
+        ApiRequest.getInstance().putParams("vp_imagen", params[2]);
+        ApiRequest.getInstance().putParams("vp_tipo", params[3]);
+        ApiRequest.getInstance().putParams("vp_fecha", params[4]);
+        ApiRequest.getInstance().putParams("vp_hora", params[5]);
+        ApiRequest.getInstance().putParams("vp_comentarios", params[6]);
+        ApiRequest.getInstance().putParams("vp_px", params[7]);
+        ApiRequest.getInstance().putParams("vp_py", params[8]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[9]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[10]);
+        ApiRequest.getInstance().putParams("vp_id_mac", params[11]);
+        ApiRequest.getInstance().putData("uploadedfile", data);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_INCIDENTE_RUTA,
                 ApiRequest.TypeParams.MULTIPART, new ApiRequest.ResponseListener() {
@@ -194,9 +193,9 @@ public class DataSyncInteractor {
 
     public void uploadTrackLocation(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_gps_tracking",   params[0]);
-        ApiRequest.getInstance().putParams("vp_id_mac",         params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",        params[2]);
+        ApiRequest.getInstance().putParams("vp_gps_tracking", params[0]);
+        ApiRequest.getInstance().putParams("vp_id_mac", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_GPS,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -214,11 +213,11 @@ public class DataSyncInteractor {
 
     public void uploadSecuenciaRuta(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_secuencia",  params[0]);
-        ApiRequest.getInstance().putParams("vp_segundos",   params[1]);
-        ApiRequest.getInstance().putParams("vp_metros",     params[2]);
-        ApiRequest.getInstance().putParams("vp_imei_cel",   params[3]);
-        ApiRequest.getInstance().putParams("vp_user",       params[4]);
+        ApiRequest.getInstance().putParams("vp_secuencia", params[0]);
+        ApiRequest.getInstance().putParams("vp_segundos", params[1]);
+        ApiRequest.getInstance().putParams("vp_metros", params[2]);
+        ApiRequest.getInstance().putParams("vp_imei_cel", params[3]);
+        ApiRequest.getInstance().putParams("vp_user", params[4]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_SECUENCIA_RUTA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -236,9 +235,9 @@ public class DataSyncInteractor {
 
     public void uploadSecuenciaRutaRural(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_secuencia",  params[0]);
-        ApiRequest.getInstance().putParams("device_phone",  params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",    params[2]);
+        ApiRequest.getInstance().putParams("vp_secuencia", params[0]);
+        ApiRequest.getInstance().putParams("device_phone", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_SECUENCIA_RUTA_RURAL,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -256,9 +255,9 @@ public class DataSyncInteractor {
 
     public void uploadGestionLlamada(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_gestion_llamadas",   params[0]);
-        ApiRequest.getInstance().putParams("vp_id_mac",             params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",            params[2]);
+        ApiRequest.getInstance().putParams("vp_gestion_llamadas", params[0]);
+        ApiRequest.getInstance().putParams("vp_id_mac", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_GESTION_LLAMADA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -276,12 +275,12 @@ public class DataSyncInteractor {
 
     public void syncNuevasGuias(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_id_ruta",        params[0]);
-        ApiRequest.getInstance().putParams("imei",              params[1]);
-        ApiRequest.getInstance().putParams("guias",             params[2]);
-        ApiRequest.getInstance().putParams("linea_valores",     params[3]);
-        ApiRequest.getInstance().putParams("linea_logistica",   params[4]);
-        ApiRequest.getInstance().putParams("id_user",           params[5]);
+        ApiRequest.getInstance().putParams("vp_id_ruta", params[0]);
+        ApiRequest.getInstance().putParams("imei", params[1]);
+        ApiRequest.getInstance().putParams("guias", params[2]);
+        ApiRequest.getInstance().putParams("linea_valores", params[3]);
+        ApiRequest.getInstance().putParams("linea_logistica", params[4]);
+        ApiRequest.getInstance().putParams("id_user", params[5]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.SYNC_NUEVAS_GUIAS,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -299,9 +298,9 @@ public class DataSyncInteractor {
 
     public void verifyGuiasPendientesEliminadas(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_guias",      params[0]);
-        ApiRequest.getInstance().putParams("device_phone",  params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",    params[2]);
+        ApiRequest.getInstance().putParams("vp_guias", params[0]);
+        ApiRequest.getInstance().putParams("device_phone", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.VERIFY_GUIAS_PENDIENTES_ELIMINADAS,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -329,7 +328,7 @@ public class DataSyncInteractor {
     public List<EstadoRuta> selectEstadoRutasNoEliminados() {
         List<EstadoRuta> estadoRuta = EstadoRuta.find(EstadoRuta.class,
                 NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
-                NamingHelper.toSQLNameDefault("eliminado") + " = ?" ,
+                        NamingHelper.toSQLNameDefault("eliminado") + " = ?",
                 Session.getUser().getIdUsuario(), Data.Delete.NO + "");
 
         return estadoRuta;
@@ -380,7 +379,7 @@ public class DataSyncInteractor {
     public List<Imagen> selectAllImagenDescarga() {
         List<Imagen> imagenes = Imagen.find(Imagen.class,
                 NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
-                NamingHelper.toSQLNameDefault("clasificacion") + " = ? and " +
+                        NamingHelper.toSQLNameDefault("clasificacion") + " = ? and " +
                         NamingHelper.toSQLNameDefault("dataSync") + " = ?",
                 Session.getUser().getIdUsuario(), Imagen.Tipo.GESTION_GUIA + "",
                 Data.Sync.PENDING + "");
