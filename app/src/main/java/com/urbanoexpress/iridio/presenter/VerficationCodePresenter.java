@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.tasks.Task;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio.data.rest.ApiRequest;
@@ -205,10 +206,10 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         }
     }
 
-    private class ConfigCountryTask extends AsyncTask<String, Void, String> {
+    private class ConfigCountryTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             switch (isoCountry) {
                 case "cl":
                     Preferences.getInstance().edit().putInt("country", Country.CHILE);
@@ -226,7 +227,7 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 fragment = RequestPermissionFragment.newInstance();

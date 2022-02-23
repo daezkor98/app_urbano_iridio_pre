@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.Imagen;
@@ -349,6 +350,7 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
 //        descargaEntregaView.notifyGaleryAllItemChanged();
     }
 
+    //TODO -> check replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
@@ -377,16 +379,16 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
 
     }
 
-    private class ProcessImageFromStorageTask extends AsyncTask<Intent, Void, Boolean> {
+    private class ProcessImageFromStorageTask extends AsyncTaskCoroutine<Intent, Boolean> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             BaseModalsView.showProgressDialog(activity, R.string.text_cargando_imagen);
         }
 
         @Override
-        protected Boolean doInBackground(Intent... intents) {
+        public Boolean doInBackground(Intent... intents) {
             //Log.d(TAG, "TIME 1: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             //return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
             if (selectedIndexTypeImageResultImageFromStorage == 1) {
@@ -431,7 +433,7 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
         }
 
         @Override
-        protected void onPostExecute(Boolean status) {
+        public void onPostExecute(Boolean status) {
             super.onPostExecute(status);
             //Log.d(TAG, "TIME 3: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             BaseModalsView.hideProgressDialog();

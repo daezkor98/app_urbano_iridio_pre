@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
 import com.urbanoexpress.iridio.model.entity.LogErrorSync;
 import com.urbanoexpress.iridio.model.entity.Pieza;
@@ -181,7 +182,7 @@ public class EliminarGuiasPendientesSync extends DataSyncModel<Ruta> {
         }
     }
 
-    private class EliminarGuiasTask extends AsyncTask<String, Void, String> {
+    private class EliminarGuiasTask extends AsyncTaskCoroutine<String, String> {
 
         private JSONArray guias;
 
@@ -190,7 +191,7 @@ public class EliminarGuiasPendientesSync extends DataSyncModel<Ruta> {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             try {
                 for (int i=0; i < guias.length(); i++) {
                     if (guias.getJSONObject(i).getString("estado").equalsIgnoreCase("S")) {
@@ -224,7 +225,7 @@ public class EliminarGuiasPendientesSync extends DataSyncModel<Ruta> {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             nextData();
             executeSync();

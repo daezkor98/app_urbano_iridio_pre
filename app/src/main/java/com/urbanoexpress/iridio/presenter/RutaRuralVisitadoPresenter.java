@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
 import com.urbanoexpress.iridio.model.entity.Pieza;
@@ -135,7 +136,7 @@ public class RutaRuralVisitadoPresenter extends BaseModalsView {
                 .unregisterReceiver(buscarGuiaReceiver);
     }
 
-    private class LoadGETask extends AsyncTask<String, Void, Boolean> {
+    private class LoadGETask extends AsyncTaskCoroutine<String, Boolean> {
 
         private boolean showMsgNoHayGuiasGestionadas = false;
 
@@ -144,12 +145,12 @@ public class RutaRuralVisitadoPresenter extends BaseModalsView {
         }
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.setVisibilitySwipeRefreshLayout(true);
         }
 
-        protected Boolean doInBackground(String... urls) {
+        public Boolean doInBackground(String... urls) {
             dbRuta = interactor.selectRutasVisitadas();
 
             rutaItems = new ArrayList<>();
@@ -217,7 +218,7 @@ public class RutaRuralVisitadoPresenter extends BaseModalsView {
             return true;
         }
 
-        protected void onPostExecute(Boolean result) {
+        public void onPostExecute(Boolean result) {
             view.showRutasGestionadas(rutaItems);
             view.setVisibilitySwipeRefreshLayout(false);
             if (rutaItems.size() > 0) {

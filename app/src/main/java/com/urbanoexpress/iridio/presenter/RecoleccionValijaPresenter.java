@@ -19,6 +19,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.android.volley.VolleyError;
 import com.google.android.material.snackbar.Snackbar;
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
@@ -257,15 +258,15 @@ public class RecoleccionValijaPresenter extends BaseModalsView implements OnClic
         }
     }
 
-    class SaveGestionTask extends AsyncTask<String, Void, String> {
+    class SaveGestionTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             showProgressDialog(view.getContextView(), R.string.text_gestionando_recoleccion);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             saveGestionGE();
             saveFormularioRecoleccion();
             checkUploadDataSyncImages();
@@ -274,7 +275,7 @@ public class RecoleccionValijaPresenter extends BaseModalsView implements OnClic
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendOnDescargaFinalizadaReceiver();
             hideProgressDialog();

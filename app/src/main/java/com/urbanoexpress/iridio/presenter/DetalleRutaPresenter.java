@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
@@ -811,7 +812,7 @@ public class DetalleRutaPresenter {
         }
     }
 
-    private class SaveNumeroTelefonoTask extends AsyncTask<String, Void, String> {
+    private class SaveNumeroTelefonoTask extends AsyncTaskCoroutine<String, String> {
 
         private String phone;
         private int type, position;
@@ -823,7 +824,7 @@ public class DetalleRutaPresenter {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             Ruta g = RutaPendienteInteractor.selectRuta(ruta.getIdServicio(), ruta.getLineaNegocio());
 
             if (g != null) {
@@ -857,7 +858,7 @@ public class DetalleRutaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             if (type == 1) {
                 view.showTelefonos(telefonoItems);

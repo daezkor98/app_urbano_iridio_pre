@@ -19,6 +19,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.databinding.ModalCodigoQrRutaBinding;
 import com.urbanoexpress.iridio.util.MetricsUtils;
 
@@ -52,7 +53,7 @@ public class CodigoQRRutaDialog extends DialogFragment {
         new GenerateCodeQRTask(getArguments().getString("idRuta")).execute();
     }
 
-    private class GenerateCodeQRTask extends AsyncTask<String, Void, Bitmap> {
+    private class GenerateCodeQRTask extends AsyncTaskCoroutine<String, Bitmap> {
         private String value = "";
 
         public GenerateCodeQRTask(String value) {
@@ -60,7 +61,7 @@ public class CodigoQRRutaDialog extends DialogFragment {
         }
 
         @Override
-        protected Bitmap doInBackground(String... strings) {
+        public Bitmap doInBackground(String... strings) {
             QRCodeWriter writer = new QRCodeWriter();
             Bitmap bitmap = null;
             try {
@@ -83,7 +84,7 @@ public class CodigoQRRutaDialog extends DialogFragment {
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap) {
+        public void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
             Drawable drawable = new BitmapDrawable(getResources(), bitmap);
             binding.progressBar.setVisibility(View.GONE);

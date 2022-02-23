@@ -16,6 +16,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.IncidenteRuta;
 import com.urbanoexpress.iridio.ui.RequestPermissionActivity;
@@ -180,21 +181,21 @@ public class ReportarIncidentePresenter {
         incidente.save();
     }
 
-    class SaveIncidenteTask extends AsyncTask<String, Void, String> {
+    class SaveIncidenteTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             BaseModalsView.showProgressDialog(view.getContextView(), R.string.text_gestionando_guia);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             registerIncidente();
             return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             BaseModalsView.hideProgressDialog();
 

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.Ruta;
@@ -259,15 +260,15 @@ public class TransferirGuiaPresenter {
         checkedFiltros = new boolean[]{true, true, true, true, true, true, true, true, true};
     }
 
-    private class LoadGETask extends AsyncTask<String, Void, Boolean> {
+    private class LoadGETask extends AsyncTaskCoroutine<String, Boolean> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog();
         }
 
-        protected Boolean doInBackground(String... urls) {
+        public Boolean doInBackground(String... urls) {
             dbGuias = selectGuias();
 
             items = new ArrayList<>();
@@ -322,7 +323,7 @@ public class TransferirGuiaPresenter {
             return true;
         }
 
-        protected void onPostExecute(Boolean result) {
+        public void onPostExecute(Boolean result) {
             view.showGuias(items);
             view.dismissProgressDialog();
         }

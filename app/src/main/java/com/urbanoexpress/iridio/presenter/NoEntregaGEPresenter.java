@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -678,15 +679,15 @@ public class NoEntregaGEPresenter {
         LocalBroadcastManager.getInstance(AndroidApplication.getAppContext()).sendBroadcast(intent);
     }
 
-    private class SaveGestionTask extends AsyncTask<String, Void, String> {
+    private class SaveGestionTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog(R.string.text_gestionando_guia);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             saveGestionGE();
             checkUploadDataSyncImages();
             if (ModelUtils.isGuiaEntrega(rutas.get(0).getTipo())) {
@@ -700,13 +701,14 @@ public class NoEntregaGEPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             view.dismiss();
             sendOnDescargaFinalizadaReceiver();
         }
     }
 
+    //TODO -> find replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
@@ -729,18 +731,18 @@ public class NoEntregaGEPresenter {
         }
     }
 
-    private class ProcessImageFromStorageTask extends AsyncTask<Intent, Void, Boolean> {
+    private class ProcessImageFromStorageTask extends AsyncTaskCoroutine<Intent, Boolean> {
 
         private String msgError = "Lo sentimos, ocurrió un error al seleccionar la imagen.";
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog(R.string.text_cargando_imagen);
         }
 
         @Override
-        protected Boolean doInBackground(Intent... intents) {
+        public Boolean doInBackground(Intent... intents) {
             //Log.d(TAG, "TIME 1: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             //return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
             String dateTimeMetaData = getDateTimeMetaDataFromUri(intents[0].getData());
@@ -855,7 +857,7 @@ public class NoEntregaGEPresenter {
         }
 
         @Override
-        protected void onPostExecute(Boolean status) {
+        public void onPostExecute(Boolean status) {
             super.onPostExecute(status);
             //Log.d(TAG, "TIME 3: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             view.dismissProgressDialog();

@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio.databinding.ModalTransferirGuiaBinding;
@@ -314,9 +315,9 @@ public class TransferirGuiaDialog extends DialogFragment implements OnClickItemL
         TransferirGuiaInteractor.transferirGuias(params, callback);
     }
 
-    private class DeleteGuiasTransferidasTask extends AsyncTask<String, Void, String> {
+    private class DeleteGuiasTransferidasTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
 
             Log.d(TAG, "Eliminar guias transferidas: " + guias.length);
             for (String idServicio : guias) {
@@ -332,7 +333,7 @@ public class TransferirGuiaDialog extends DialogFragment implements OnClickItemL
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendTransferenciaGuiaFinalizadaAction();
             BaseModalsView.hideProgressDialog();

@@ -11,6 +11,7 @@ import java.util.Arrays;
 /**
  * Created by mick on 19/05/16.
  */
+//TODO: find replacememt
 public class TaskPing extends AsyncTask<Object, Integer, ArrayList> {
 
     @Override

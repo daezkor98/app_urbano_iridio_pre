@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
@@ -263,16 +264,16 @@ public class RecolectaGEPresenter extends BaseModalsView implements OnClickItemG
         }
     }
 
-    class SaveGestionGuiaTask extends AsyncTask<String, Void, String> {
+    class SaveGestionGuiaTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             showProgressDialog(recolectaView.getContextView(), R.string.text_gestionando_guia);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             saveGestionGE();
             saveFormularioRecoleccion();
             checkUploadDataSyncImages();
@@ -281,7 +282,7 @@ public class RecolectaGEPresenter extends BaseModalsView implements OnClickItemG
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendOnDescargaFinalizadaReceiver();
             hideProgressDialog();
@@ -289,16 +290,16 @@ public class RecolectaGEPresenter extends BaseModalsView implements OnClickItemG
         }
     }
 
-    class SaveGestionGuiaModoGuiaManualTask extends AsyncTask<String, Void, String> {
+    class SaveGestionGuiaModoGuiaManualTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             showProgressDialog(recolectaView.getContextView(), R.string.text_gestionando_guia);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             saveGestionGE();
             saveFormularioRecoleccion();
             checkUploadDataSyncImages();
@@ -306,7 +307,7 @@ public class RecolectaGEPresenter extends BaseModalsView implements OnClickItemG
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             hideProgressDialog();
             final AppCompatActivity activity = (AppCompatActivity) recolectaView.getContextView();
@@ -331,22 +332,22 @@ public class RecolectaGEPresenter extends BaseModalsView implements OnClickItemG
         }
     }
 
-    class SaveEstadoGestionModoGuiaManualTask extends AsyncTask<String, Void, String> {
+    class SaveEstadoGestionModoGuiaManualTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             showProgressDialog(recolectaView.getContextView(), R.string.text_gestionando_guia);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             updateEstadoGestionGE(DescargaRuta.Entrega.FINALIZADO);
             return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendOnDescargaFinalizadaReceiver();
             hideProgressDialog();

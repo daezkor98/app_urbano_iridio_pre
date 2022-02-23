@@ -8,6 +8,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.NavigationMenuModel;
 import com.urbanoexpress.iridio.model.entity.MenuApp;
@@ -152,9 +153,9 @@ public class NavigationMenuPresenter {
         }
     }
 
-    private class LoadMenuTask extends AsyncTask<String, Void, String> {
+    private class LoadMenuTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             Session.getUser();
             menuItems = new ArrayList<>();
             menuAppDB = MenuApp.listAll(MenuApp.class);
@@ -190,7 +191,7 @@ public class NavigationMenuPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             view.showMainMenu(menuItems);
             buildSideMenu();

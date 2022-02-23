@@ -8,6 +8,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -182,16 +183,16 @@ public class ActionMenuRutaPendienteHelper extends BaseModalsView {
         new GuardarOrdenGuiasTask().execute();
     }
 
-    private class GuardarOrdenGuiasTask extends AsyncTask<String, Void, String> {
+    private class GuardarOrdenGuiasTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog(R.string.fragment_ruta_pendiente_message_ordenando_guias);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             int counterSecuencia = rutasSeleccionadas.size() + 1;
 
             for (int i = 0; i < rutaItems.size(); i++) {
@@ -209,7 +210,7 @@ public class ActionMenuRutaPendienteHelper extends BaseModalsView {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             view.hideActionMode();
             sendOnGuardarOrdenGuiasReceiver();
             super.onPostExecute(s);

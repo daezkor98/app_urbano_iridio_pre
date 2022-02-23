@@ -14,6 +14,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.android.volley.VolleyError;
 import com.google.android.material.snackbar.Snackbar;
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.Imagen;
@@ -181,21 +182,21 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
         }
     }
 
-    class SaveGestionTask extends AsyncTask<String, Void, String> {
+    class SaveGestionTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             BaseModalsView.showProgressDialog(view.getContextView(), R.string.text_agregando_observacion_gestion_entrega);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             checkUploadDataSyncImages();
             return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendDataObservacionGestionEntregaReceiver();
             BaseModalsView.hideProgressDialog();
@@ -479,6 +480,7 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
         view.notifyMotivosAllItemChanged();
     }
 
+    //TODO : find replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();

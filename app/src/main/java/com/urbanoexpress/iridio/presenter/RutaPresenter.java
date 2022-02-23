@@ -24,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -609,23 +610,23 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
         new TerminarRutaTask().execute();
     }
 
-    private class TerminarRutaTask extends AsyncTask<String, Void, String> {
+    private class TerminarRutaTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             activity.runOnUiThread(() ->
                     BaseModalsView.showProgressDialog(view.getContextView(), R.string.text_terminando_ruta));
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             newEstadoRuta(EstadoRuta.Estado.FINALIZADO);
             return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendDataTerminarRuta();
         }
@@ -1218,7 +1219,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
         }
     };
 
-    private class DeleteDatosRutaTask extends AsyncTask<String, Void, String> {
+    private class DeleteDatosRutaTask extends AsyncTaskCoroutine<String, String> {
 
         private int motivoEliminarDatosRuta = 0;
 
@@ -1227,13 +1228,13 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             ForzarCierreRutaHelper.deleteAllDataRuta(view.getContextView());
             return "";
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendOnRutaFinalizadaReceiver();
 
@@ -1250,13 +1251,13 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
         }
     }
 
-    private class ConfigUIEstadoRutaTask extends AsyncTask<String, Void, String> {
+    private class ConfigUIEstadoRutaTask extends AsyncTaskCoroutine<String, String> {
 
         private long totalEstadoRutas = 0;
         private long totalRutasPendientes = 0;
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             Log.d(TAG, "Load Estado Ruta");
             totalEstadoRutas = interactor.getTotalAllEstadoRuta();
             Log.d(TAG, "Total estado ruta: " + totalEstadoRutas);
@@ -1270,7 +1271,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             FloatingActionButton fab = (FloatingActionButton)
                     view.baseFindViewById(R.id.fabIniciarTerminarRuta);

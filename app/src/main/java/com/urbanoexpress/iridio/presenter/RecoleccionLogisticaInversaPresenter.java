@@ -9,6 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -670,16 +671,16 @@ public class RecoleccionLogisticaInversaPresenter {
         LocalBroadcastManager.getInstance(AndroidApplication.getAppContext()).sendBroadcast(intent);
     }
 
-    private class SaveGestionTask extends AsyncTask<String, Void, String> {
+    private class SaveGestionTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog(R.string.text_gestionando_recoleccion);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             saveGestionGE();
             saveFormularioRecoleccion();
             checkUploadDataSyncImages();
@@ -688,13 +689,14 @@ public class RecoleccionLogisticaInversaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             view.dismiss();
             sendOnDescargaFinalizadaReceiver();
         }
     }
 
+    //TODO: find replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         @Override

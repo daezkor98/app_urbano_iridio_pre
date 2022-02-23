@@ -15,6 +15,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -334,7 +335,7 @@ public class RutaRuralPresenter implements OnClickItemListener {
         }
     };
 
-    private class DeleteDatosRutaTask extends AsyncTask<String, Void, String> {
+    private class DeleteDatosRutaTask extends AsyncTaskCoroutine<String, String> {
 
         private int motivoEliminarDatosRuta = 0;
 
@@ -343,13 +344,13 @@ public class RutaRuralPresenter implements OnClickItemListener {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             ForzarCierreRutaHelper.deleteAllDataRuta(view.getViewContext());
             return "";
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
 
             if (motivoEliminarDatosRuta == MOTIVO_CERRAR_RUTA) {

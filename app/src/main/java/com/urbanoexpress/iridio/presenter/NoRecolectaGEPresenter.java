@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
@@ -187,15 +188,15 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
         }
     }
 
-    class SaveGestionTask extends AsyncTask<String, Void, String> {
+    class SaveGestionTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             showProgressDialog(noRecolectaView.getContextView(), R.string.text_gestionando_recoleccion);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             saveGestionGE();
             checkUploadDataSyncImages();
             updateEstadoGestionGE(DescargaRuta.Recoleccion.FINALIZADO);
@@ -203,7 +204,7 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendOnDescargaFinalizadaReceiver();
             hideProgressDialog();
@@ -630,6 +631,7 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
         LocalBroadcastManager.getInstance(noRecolectaView.getContextView()).sendBroadcast(intent);
     }
 
+    //TODO: find replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();

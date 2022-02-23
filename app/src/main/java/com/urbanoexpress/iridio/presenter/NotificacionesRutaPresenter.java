@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Ruta;
 import com.urbanoexpress.iridio.model.interactor.NotificacionesRutaInteractor;
@@ -244,7 +245,7 @@ public class NotificacionesRutaPresenter {
         }
     }
 
-    private class TaskMarcarNotificacionLeido extends AsyncTask<String, Void, String> {
+    private class TaskMarcarNotificacionLeido extends AsyncTaskCoroutine<String, String> {
 
         private Ruta guia;
 
@@ -255,7 +256,7 @@ public class NotificacionesRutaPresenter {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             if (notificacionRutaItems.get(positionSelectedNotificacion).getTotalLeido() == 0) {
 
                 if (Session.getUser() != null) {
@@ -272,7 +273,7 @@ public class NotificacionesRutaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             if (notificacionRutaItems.get(positionSelectedNotificacion).getTotalLeido() == 0) {
                 if (Session.getUser() != null) {

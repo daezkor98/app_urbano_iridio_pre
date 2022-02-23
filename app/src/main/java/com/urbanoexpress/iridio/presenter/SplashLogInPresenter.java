@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.ui.MainActivity;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.MenuApp;
@@ -122,17 +123,17 @@ public class SplashLogInPresenter implements RequestCallback {
         CommonUtils.vibrateDevice(view.getViewContext(), 100);
     }
 
-    private class ProcessLogInDataTask extends AsyncTask<JSONObject, Void, Boolean> {
+    private class ProcessLogInDataTask extends AsyncTaskCoroutine<JSONObject, Boolean> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog(R.string.act_login_login_title_iniciando_sesion,
                     R.string.act_login_login_msg_procesando_datos);
         }
 
         @Override
-        protected Boolean doInBackground(JSONObject... jsonObjects) {
+        public Boolean doInBackground(JSONObject... jsonObjects) {
             try {
                 JSONObject data = jsonObjects[0].getJSONObject("data");
                 saveUserProfile(data.getJSONObject("userProfile"));
@@ -166,7 +167,7 @@ public class SplashLogInPresenter implements RequestCallback {
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             view.dismissProgressDialog();
 

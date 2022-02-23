@@ -15,6 +15,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -372,25 +374,25 @@ public class CustomSiliCompressor {
         }
     }
 
-    class ImageCompressionAsyncTask extends AsyncTask<String, Void, String> {
+    class ImageCompressionAsyncTask extends AsyncTaskCoroutine<String, String> {
 
         ProgressDialog mProgressDialog;
 
         public ImageCompressionAsyncTask(Context context) { }
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        public String doInBackground(String... params) {
             String filePath = compressImage(params[0]);
             return filePath;
         }
 
         @Override
-        protected void onPostExecute(String s) { }
+        public void onPostExecute(String s) { }
     }
 
 }

@@ -2,6 +2,7 @@ package com.urbanoexpress.iridio.presenter;
 
 import android.os.AsyncTask;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.interactor.InformacionRutaInteractor;
 import com.urbanoexpress.iridio.view.InformacionRutaView;
@@ -40,7 +41,7 @@ public class InformacionRutaPresenter {
         new LoadDatosRuta(false).execute();
     }
 
-    private class LoadDatosRuta extends AsyncTask<String, Void, String> {
+    private class LoadDatosRuta extends AsyncTaskCoroutine<String, String> {
 
         private boolean showProgressDialog;
 
@@ -49,7 +50,7 @@ public class InformacionRutaPresenter {
         }
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             if (showProgressDialog) {
                 view.showProgressDialog();
@@ -57,7 +58,7 @@ public class InformacionRutaPresenter {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             totalGuias = interactor.getTotalGuias();
             totalGuiasPendientes = interactor.getTotalGuiasPendientes();
             totalGuiasGestionados = interactor.getTotalGuiasGestionadas();
@@ -73,7 +74,7 @@ public class InformacionRutaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             view.setTotalGuias(String.valueOf(totalGuias));
             view.setTotalPendientes(String.valueOf(totalGuiasPendientes));

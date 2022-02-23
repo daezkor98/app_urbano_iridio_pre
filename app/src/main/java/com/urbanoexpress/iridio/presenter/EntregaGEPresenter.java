@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.data.local.PreferencesHelper;
@@ -1632,15 +1633,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     };
 
-    class SaveGestionTask extends AsyncTask<String, Void, String> {
+    class SaveGestionTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog(R.string.text_gestionando_guia);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             LocalDateTime localDateTime = LocalDateTime.now();
             String fecha = DateTimeFormatter.ofPattern("dd/MM/yyyy").format(localDateTime);
             String hora = DateTimeFormatter.ofPattern("HH:mm:ss").format(localDateTime);
@@ -1678,13 +1679,14 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             view.dismiss();
             sendOnDescargaFinalizadaReceiver();
         }
     }
 
+    //TODO -> check replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
@@ -1707,18 +1709,18 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    private class ProcessImageFromStorageTask extends AsyncTask<Intent, Void, Boolean> {
+    private class ProcessImageFromStorageTask extends AsyncTaskCoroutine<Intent, Boolean> {
 
         private String msgError = "Lo sentimos, ocurrió un error al seleccionar la imagen.";
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog(R.string.text_cargando_imagen);
         }
 
         @Override
-        protected Boolean doInBackground(Intent... intents) {
+        public Boolean doInBackground(Intent... intents) {
             //Log.d(TAG, "TIME 1: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             //return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
             String dateTimeMetaData = getDateTimeMetaDataFromUri(intents[0].getData());
@@ -1833,7 +1835,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
 
         @Override
-        protected void onPostExecute(Boolean status) {
+        public void onPostExecute(Boolean status) {
             super.onPostExecute(status);
             //Log.d(TAG, "TIME 3: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             view.dismissProgressDialog();

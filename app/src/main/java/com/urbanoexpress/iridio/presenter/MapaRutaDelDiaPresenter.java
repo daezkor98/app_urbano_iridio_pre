@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.android.volley.VolleyError;
 import com.google.android.gms.maps.model.LatLng;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.Ruta;
@@ -197,19 +198,19 @@ public class MapaRutaDelDiaPresenter {
         }
     }
 
-    private class LoadGuiasOnMapTask extends AsyncTask<String, Void, String> {
+    private class LoadGuiasOnMapTask extends AsyncTaskCoroutine<String, String> {
 
         private int totalGuiasSinCoordenadas = 0;
         private int totalGuiasSinGestionar = 0;
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog();
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             guias = interactor.selectGuiasMapaDistribucion();
 
             for (int i = 0; i < guias.size(); i++) {
@@ -249,7 +250,7 @@ public class MapaRutaDelDiaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             if (totalGuiasSinCoordenadas == 0) {
                 view.setVisibilityFabGuiasSinCoordenadas(View.GONE);
@@ -269,16 +270,16 @@ public class MapaRutaDelDiaPresenter {
         }
     }
 
-    private class ShowGuiasPendientesSinCoordenadasTask extends AsyncTask<String, Void, ArrayList<Ruta>> {
+    private class ShowGuiasPendientesSinCoordenadasTask extends AsyncTaskCoroutine<String, ArrayList<Ruta>> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog();
         }
 
         @Override
-        protected ArrayList<Ruta> doInBackground(String... strings) {
+        public ArrayList<Ruta> doInBackground(String... strings) {
             List<Ruta> guias = interactor.selectRutasPendientes();
 
             guiaSinCoordenadasItems = new ArrayList<>();
@@ -300,7 +301,7 @@ public class MapaRutaDelDiaPresenter {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Ruta> items) {
+        public void onPostExecute(ArrayList<Ruta> items) {
             view.dismissProgressDialog();
             GuiasPendientesSinCoordenadasDialog dialog = new GuiasPendientesSinCoordenadasDialog();
             Bundle bundle = new Bundle();
@@ -314,10 +315,10 @@ public class MapaRutaDelDiaPresenter {
         }
     }
 
-    private class LoadListGuiasTask extends AsyncTask<Ruta, Void, String> {
+    private class LoadListGuiasTask extends AsyncTaskCoroutine<Ruta, String> {
 
         @Override
-        protected String doInBackground(Ruta... strings) {
+        public String doInBackground(Ruta... strings) {
             Ruta guia = RutaPendienteInteractor.selectRuta(
                     strings[0].getIdServicio(), strings[0].getLineaNegocio());
 
@@ -333,22 +334,22 @@ public class MapaRutaDelDiaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             view.displayListGuias(guiaItems);
             super.onPostExecute(s);
         }
     }
 
-    private class UpdateCoordenadaGETask extends AsyncTask<String, Void, String> {
+    private class UpdateCoordenadaGETask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog();
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             Ruta guia = RutaPendienteInteractor.selectRuta(
                     guiaSeleccionada.getIdServicio(), guiaSeleccionada.getLineaNegocio());
 
@@ -361,7 +362,7 @@ public class MapaRutaDelDiaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             updateCoordenadaGuia = false;
             view.dismissProgressDialog();
             view.hideMarkerSelector();
@@ -371,16 +372,16 @@ public class MapaRutaDelDiaPresenter {
         }
     }
 
-    private class ShowRutearGuiasTask extends AsyncTask<String, Void, ArrayList<Ruta>> {
+    private class ShowRutearGuiasTask extends AsyncTaskCoroutine<String, ArrayList<Ruta>> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog();
         }
 
         @Override
-        protected ArrayList<Ruta> doInBackground(String... strings) {
+        public ArrayList<Ruta> doInBackground(String... strings) {
             guias = interactor.selectRutasPendientes();
 
             countRuteoGuias = 0;
@@ -403,7 +404,7 @@ public class MapaRutaDelDiaPresenter {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Ruta> items) {
+        public void onPostExecute(ArrayList<Ruta> items) {
             rutearGuias = true;
             view.dismissProgressDialog();
             view.setVisibilityBoxRuteoGuias(View.VISIBLE);
@@ -412,16 +413,16 @@ public class MapaRutaDelDiaPresenter {
         }
     }
 
-    private class SaveRuteoGuiasTask extends AsyncTask<String, Void, String> {
+    private class SaveRuteoGuiasTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.showProgressDialog();
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
 
             for (int i = 0; i < guiasRuteadas.size(); i++) {
                 if (!guiasRuteadas.get(i)) {
@@ -434,7 +435,7 @@ public class MapaRutaDelDiaPresenter {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             rutearGuias = false;
             view.dismissProgressDialog();
             view.setVisibilityBoxRuteoGuias(View.GONE);

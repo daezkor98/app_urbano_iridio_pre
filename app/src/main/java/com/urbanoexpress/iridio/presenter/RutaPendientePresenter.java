@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
@@ -371,12 +372,12 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         interactor.getRutas(params, callback);
     }
 
-    private class SaveGETask extends AsyncTask<JSONObject, Void, String> {
+    private class SaveGETask extends AsyncTaskCoroutine<JSONObject, String> {
 
         JSONObject response;
 
         @Override
-        protected String doInBackground(JSONObject... jsonObjects) {
+        public String doInBackground(JSONObject... jsonObjects) {
             response = jsonObjects[0];
 
             try {
@@ -402,7 +403,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             new LoadGETask(false, false).execute();
         }
@@ -1329,7 +1330,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         return 0;
     }
 
-    private class LoadGETask extends AsyncTask<String, Void, Boolean> {
+    private class LoadGETask extends AsyncTaskCoroutine<String, Boolean> {
 
         private boolean showMsgDialogNoHayRutaPendiente = false;
 
@@ -1341,12 +1342,12 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         }
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.setVisibilitySwipeRefreshLayout(true);
         }
 
-        protected Boolean doInBackground(String... urls) {
+        public Boolean doInBackground(String... urls) {
             dbRuta = interactor.selectRutasPendientes();
 
             isMostrarAlerta = ConsideracionesImportantesRutaInteractor.isMostrarAlerta();
@@ -1448,7 +1449,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             return true;
         }
 
-        protected void onPostExecute(Boolean result) {
+        public void onPostExecute(Boolean result) {
             setTitleActivity();
             showAlerta();
             view.showDatosRutasPendientes(rutaItems);

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.databinding.BottomSheetGestionDevolucionGuiaBinding;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -165,7 +166,7 @@ public class GestionDevolucionGuiaBottomSheet extends BottomSheetDialogFragment 
         LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }
 
-    private class DevolverGuiaTask extends AsyncTask<String, Void, String> {
+    private class DevolverGuiaTask extends AsyncTaskCoroutine<String, String> {
 
         private Context context;
         private String idServicio;
@@ -178,7 +179,7 @@ public class GestionDevolucionGuiaBottomSheet extends BottomSheetDialogFragment 
         }
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             if (context != null) {
                 BaseModalsView.showProgressDialog(context, R.string.text_espere_un_momento);
@@ -186,7 +187,7 @@ public class GestionDevolucionGuiaBottomSheet extends BottomSheetDialogFragment 
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             DescargaRuta descargaRuta = RutaPendienteInteractor.selectDescargaRuta(idServicio, lineaNegocio);
             if (descargaRuta != null) {
                 /*descargaRuta.setProcesoDescarga(DescargaRuta.Entrega.FINALIZADO);
@@ -236,7 +237,7 @@ public class GestionDevolucionGuiaBottomSheet extends BottomSheetDialogFragment 
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             BaseModalsView.hideProgressDialog();
             sendOnDescargaFinalizadaReceiver();

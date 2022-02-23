@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.databinding.ModalIniciarTerminarRutaDelDiaBinding;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -410,10 +411,10 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
         interactor.uploadEstadoRutaKilometraje(params, callback);
     }
 
-    private class NewEstadoRutaTask extends AsyncTask<String, Void, String> {
+    private class NewEstadoRutaTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             switch (estadoRuta) {
                 case EstadoRuta.Estado.INICIADO:
@@ -426,28 +427,28 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             newEstadoRuta();
             return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             sendDataEstadoRuta();
         }
     }
 
-    private class DeleteDatosRutaTask extends AsyncTask<String, Void, String> {
+    private class DeleteDatosRutaTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             ForzarCierreRutaHelper.deleteAllDataRuta(getActivity());
             return "";
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             dismissProgressDialog();
             showToast(R.string.activity_ruta_message_ruta_finalizado_exitosamente);

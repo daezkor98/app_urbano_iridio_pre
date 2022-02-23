@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.data.rest.ApiRest;
@@ -235,14 +236,14 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
         interactor.getGuiasRutaRural(params, callback);
     }
 
-    private class SaveGuiasTask extends AsyncTask<JSONObject, Void, String> {
+    private class SaveGuiasTask extends AsyncTaskCoroutine<JSONObject, String> {
 
         private JSONObject response;
         private String msgErrorData = "";
         private String msgErrorJSON = "";
 
         @Override
-        protected String doInBackground(JSONObject... jsonObjects) {
+        public String doInBackground(JSONObject... jsonObjects) {
             response = jsonObjects[0];
 
             try {
@@ -260,7 +261,7 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             if (!msgErrorData.isEmpty()) {
                 view.showToast(msgErrorData);
@@ -479,7 +480,7 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
         }
     }
 
-    private class ShowGuiasTask extends AsyncTask<String, Void, Boolean> {
+    private class ShowGuiasTask extends AsyncTaskCoroutine<String, Boolean> {
 
         private boolean showMsgDialogNoHayRutaPendiente;
 
@@ -491,12 +492,12 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
         }
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.setVisibilitySwipeRefreshLayout(true);
         }
 
-        protected Boolean doInBackground(String... urls) {
+        public Boolean doInBackground(String... urls) {
             dbRuta = interactor.selectRutasPendientes();
 
             isMostrarAlerta = ConsideracionesImportantesRutaInteractor.isMostrarAlerta();
@@ -572,7 +573,7 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
             return true;
         }
 
-        protected void onPostExecute(Boolean result) {
+        public void onPostExecute(Boolean result) {
             showAlerta();
             view.showDatosRutasPendientes(rutaItems);
 

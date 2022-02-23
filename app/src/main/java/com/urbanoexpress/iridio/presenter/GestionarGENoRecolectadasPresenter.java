@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
@@ -576,6 +577,7 @@ public class GestionarGENoRecolectadasPresenter extends BaseModalsView implement
         LocalBroadcastManager.getInstance(view.getContextView()).sendBroadcast(intent);
     }
 
+    //TODO -> Check replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
@@ -604,16 +606,16 @@ public class GestionarGENoRecolectadasPresenter extends BaseModalsView implement
 
     }
 
-    private class ClearCacheImageTask extends AsyncTask<String, Void, String> {
+    private class ClearCacheImageTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             showProgressDialog(view.getContextView(), R.string.text_espere_un_momento);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             for (int i = 0; i < cacheImages.size(); i++) {
                 //Log.d(TAG, "ELIMINANDO CAHCE IMAGEN: " + cacheImages.get(i).getPath() + cacheImages.get(i).getName());
                 FileUtils.deleteFile(cacheImages.get(i).getPath() + cacheImages.get(i).getName());
@@ -622,7 +624,7 @@ public class GestionarGENoRecolectadasPresenter extends BaseModalsView implement
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             hideProgressDialog();
             closeDialog();

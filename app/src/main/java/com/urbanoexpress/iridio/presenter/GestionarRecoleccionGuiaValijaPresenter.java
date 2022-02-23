@@ -17,6 +17,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
@@ -191,15 +192,15 @@ public class GestionarRecoleccionGuiaValijaPresenter implements OnClickItemGaler
         }
     }
 
-    class SaveGestionTask extends AsyncTask<String, Void, String> {
+    class SaveGestionTask extends AsyncTaskCoroutine<String, String> {
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             BaseModalsView.showProgressDialog(view.getContextView(), R.string.text_gestionando_recoleccion);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             saveGestionGE();
             saveFormularioRecoleccion();
             checkUploadDataSyncImages();
@@ -207,7 +208,7 @@ public class GestionarRecoleccionGuiaValijaPresenter implements OnClickItemGaler
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             BaseModalsView.hideProgressDialog();
             closeDialog();
@@ -543,6 +544,7 @@ public class GestionarRecoleccionGuiaValijaPresenter implements OnClickItemGaler
                 Imagen.Tipo.GESTION_GUIA + "");
     }
 
+    //TODO -> check replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
@@ -571,16 +573,16 @@ public class GestionarRecoleccionGuiaValijaPresenter implements OnClickItemGaler
 
     }
 
-    private class ClearCacheImageTask extends AsyncTask<String, Void, String> {
+    private class ClearCacheImageTask extends AsyncTaskCoroutine<String, String> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             BaseModalsView.showProgressDialog(view.getContextView(), R.string.text_espere_un_momento);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             for (int i = 0; i < cacheImages.size(); i++) {
                 //Log.d(TAG, "ELIMINANDO CACHE IMAGEN: " + cacheImages.get(i).getPath() + cacheImages.get(i).getName());
                 FileUtils.deleteFile(cacheImages.get(i).getPath() + cacheImages.get(i).getName());
@@ -589,7 +591,7 @@ public class GestionarRecoleccionGuiaValijaPresenter implements OnClickItemGaler
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute(s);
             BaseModalsView.hideProgressDialog();
             closeDialog();

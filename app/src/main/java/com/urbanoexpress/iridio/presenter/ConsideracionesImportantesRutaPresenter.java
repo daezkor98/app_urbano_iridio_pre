@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import androidx.core.content.ContextCompat;
 import android.view.View;
 
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.Ruta;
@@ -118,15 +119,15 @@ public class ConsideracionesImportantesRutaPresenter implements RutaAdapter.OnCl
         }
     }
 
-    private class LoadGETask extends AsyncTask<String, Void, Boolean> {
+    private class LoadGETask extends AsyncTaskCoroutine<String, Boolean> {
 
         @Override
-        protected void onPreExecute() {
+        public void onPreExecute() {
             super.onPreExecute();
             view.setVisibilitySwipeRefreshLayout(true);
         }
 
-        protected Boolean doInBackground(String... urls) {
+        public Boolean doInBackground(String... urls) {
             dbRuta = ConsideracionesImportantesRutaInteractor.selectRutasImportantes();
 
             totalRecoleccionesExpress = ConsideracionesImportantesRutaInteractor.getTotalRecoleccionesExpress();
@@ -202,7 +203,7 @@ public class ConsideracionesImportantesRutaPresenter implements RutaAdapter.OnCl
             return true;
         }
 
-        protected void onPostExecute(Boolean result) {
+        public void onPostExecute(Boolean result) {
             view.showDatosRutas(rutaItems);
             view.showTotalRecoleccionesExpress(totalRecoleccionesExpress);
             view.showTotalGuiasRequerimiento(totalGuiasRequerimiento);
