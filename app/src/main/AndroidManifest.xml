@@ -13,6 +13,7 @@
 
         <activity
             android:name=".ui.InitActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
@@ -23,35 +24,41 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
+            android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MainActivity" />
         <activity
             android:name=".ui.GoogleMapActivity"
+            android:exported="false"
             android:label="@string/title_activity_google_map"
             android:parentActivityName=".ui.PlanDeViajeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.PlanDeViajeActivity"
+            android:exported="false"
             android:label="@string/title_activity_plan_de_viaje"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.ParadaProgramadaActivity"
+            android:exported="false"
             android:label="@string/title_activity_parada_programada"
             android:parentActivityName=".ui.PlanDeViajeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.QRScannerActivity"
+            android:exported="false"
             android:label="@string/title_activity_qrscanner"
             android:parentActivityName=".ui.ParadaProgramadaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Base" />
         <activity
             android:name=".ui.RutaActivity"
+            android:exported="false"
             android:label="@string/title_activity_ruta"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
@@ -62,29 +69,34 @@
         </activity>
         <activity
             android:name=".ui.ResumenRutaActivity"
+            android:exported="false"
             android:label="@string/title_activity_resumen_ruta"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.ResumenRutaRuralActivity"
+            android:exported="false"
             android:label="@string/title_activity_resumen_ruta"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.FirmarActivity"
+            android:exported="false"
             android:parentActivityName=".ui.DetalleRutaRuralActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.GenerarManifiestoActivity"
+            android:exported="false"
             android:label="@string/activity_generar_man_title_generar_manifiesto"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.RutaRuralActivity"
+            android:exported="false"
             android:label="@string/title_activity_ruta_rural"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
@@ -95,107 +107,127 @@
         </activity>
         <activity
             android:name=".ui.DetalleRutaRuralActivity"
+            android:exported="false"
             android:label="@string/title_activity_detalle_ruta"
             android:parentActivityName=".ui.RutaRuralActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.AcercaDeActivity"
+            android:exported="false"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.ConfiguracionActivity"
+            android:exported="false"
             android:label="@string/title_activity_configuracion"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.LogErrorSyncActivity"
+            android:exported="false"
             android:label="@string/title_activity_registro_errores"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.ManifestarGuiaActivity"
+            android:exported="false"
             android:label="@string/title_activity_manifestar_guia"
             android:parentActivityName=".ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.InformacionRutaActivity"
+            android:exported="false"
             android:label="@string/title_activity_informacion_ruta"
             android:parentActivityName=".ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.RequestPermissionActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.SplashScreen" />
         <activity
             android:name=".ui.TransferirGuiaActivity"
+            android:exported="false"
             android:label="@string/title_activity_transferir_guia"
             android:parentActivityName=".ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.TurnOnGPSActivity"
+            android:exported="false"
             android:label="@string/title_activity_turn_on_gps"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.MapaRutaDelDiaActivity"
+            android:exported="false"
             android:parentActivityName=".ui.RutaActivity"
             android:theme="@style/AppTheme.MapRutaDelDiaActivity" />
         <activity
             android:name=".ui.ForgotPasswordActivity"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.FiltrarGuiaActivity"
+            android:exported="false"
             android:label="@string/title_activity_filtrar_guia"
             android:parentActivityName=".ui.TransferirGuiaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.ReportarIncidenteActivity"
+            android:exported="false"
             android:label="@string/title_activity_google_map"
             android:parentActivityName=".ui.GoogleMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ReportarIncidenciaActivity" />
         <activity
             android:name=".ui.ConsideracionesImportantesRutaActivity"
+            android:exported="false"
             android:label="@string/title_activity_consideraciones_importantes_ruta"
             android:parentActivityName=".ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.NotificacionesRutaActivity"
+            android:exported="false"
             android:label="@string/title_activity_notificaciones_ruta"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.UserProfileActivity"
+            android:exported="false"
             android:parentActivityName=".ui.ConfiguracionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.UserCredentialActivity"
+            android:exported="false"
             android:parentActivityName=".ui.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MapRutaDelDiaActivity" />
         <activity
             android:name=".ui.ShareProfileQRCodeActivity"
+            android:exported="false"
             android:parentActivityName=".ui.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.ChangePasswordActivity"
+            android:exported="false"
             android:parentActivityName=".ui.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
             android:name=".ui.RecolectarValijaActivity"
+            android:exported="false"
             android:parentActivityName=".ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
@@ -251,7 +283,9 @@
             android:name=".services.DataSyncService"
             android:exported="false"
             android:persistent="true" />
-        <service android:name=".util.firebase.MyFirebaseMessagingService">
+        <service
+            android:name=".util.firebase.MyFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -280,6 +314,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
