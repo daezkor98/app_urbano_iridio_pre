@@ -2,7 +2,6 @@ package com.urbanoexpress.iridio.presenter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +39,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -481,12 +479,13 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
     }
 
     //TODO : find replacement
-    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+    private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        public Boolean doInBackground(Void... params) {
             Log.d(TAG, "doInBackground");
 
             List<Imagen> dbImagenes = selectAllImages();
@@ -501,7 +500,7 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             Log.d(TAG, "onPostExecute");
             showGaleria();

@@ -6,23 +6,47 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.android.volley.VolleyError;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import com.google.android.gms.location.LocationServices;
-
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import android.util.Log;
-
-import com.android.volley.VolleyError;
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio.AsyncTaskCoroutine;
+import com.urbanoexpress.iridio.R;
+import com.urbanoexpress.iridio.application.AndroidApplication;
+import com.urbanoexpress.iridio.model.entity.Data;
+import com.urbanoexpress.iridio.model.entity.DescargaRuta;
+import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
+import com.urbanoexpress.iridio.model.entity.Imagen;
+import com.urbanoexpress.iridio.model.entity.MotivoDescarga;
+import com.urbanoexpress.iridio.model.entity.Ruta;
+import com.urbanoexpress.iridio.model.interactor.RutaPendienteInteractor;
+import com.urbanoexpress.iridio.model.interactor.callback.RequestCallback;
+import com.urbanoexpress.iridio.model.util.ModelUtils;
+import com.urbanoexpress.iridio.ui.adapter.model.GalleryButtonItem;
+import com.urbanoexpress.iridio.ui.adapter.model.GalleryPhotoItem;
+import com.urbanoexpress.iridio.ui.adapter.model.GalleryWrapperItem;
+import com.urbanoexpress.iridio.ui.model.MotivoDescargaItem;
+import com.urbanoexpress.iridio.util.CameraUtils;
+import com.urbanoexpress.iridio.util.CommonUtils;
+import com.urbanoexpress.iridio.util.CustomSiliCompressor;
+import com.urbanoexpress.iridio.util.FileUtils;
+import com.urbanoexpress.iridio.util.FileUtilss;
+import com.urbanoexpress.iridio.util.LocationUtils;
+import com.urbanoexpress.iridio.util.MyLocation;
+import com.urbanoexpress.iridio.util.Preferences;
+import com.urbanoexpress.iridio.view.DescargaNoEntregaView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,32 +69,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.urbanoexpress.iridio.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio.R;
-import com.urbanoexpress.iridio.application.AndroidApplication;
-import com.urbanoexpress.iridio.model.entity.Data;
-import com.urbanoexpress.iridio.model.entity.DescargaRuta;
-import com.urbanoexpress.iridio.model.entity.Imagen;
-import com.urbanoexpress.iridio.model.entity.MotivoDescarga;
-import com.urbanoexpress.iridio.model.entity.Ruta;
-import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
-import com.urbanoexpress.iridio.model.interactor.RutaPendienteInteractor;
-import com.urbanoexpress.iridio.model.interactor.callback.RequestCallback;
-import com.urbanoexpress.iridio.model.util.ModelUtils;
-import com.urbanoexpress.iridio.ui.adapter.model.GalleryButtonItem;
-import com.urbanoexpress.iridio.ui.adapter.model.GalleryPhotoItem;
-import com.urbanoexpress.iridio.ui.adapter.model.GalleryWrapperItem;
-import com.urbanoexpress.iridio.ui.model.MotivoDescargaItem;
-import com.urbanoexpress.iridio.util.CameraUtils;
-import com.urbanoexpress.iridio.util.CommonUtils;
-import com.urbanoexpress.iridio.util.CustomSiliCompressor;
-import com.urbanoexpress.iridio.util.FileUtils;
-import com.urbanoexpress.iridio.util.FileUtilss;
-import com.urbanoexpress.iridio.util.LocationUtils;
-import com.urbanoexpress.iridio.util.MyLocation;
-import com.urbanoexpress.iridio.util.Preferences;
-import com.urbanoexpress.iridio.view.DescargaNoEntregaView;
 
 /**
  * Created by mick on 25/07/16.
@@ -709,10 +707,11 @@ public class NoEntregaGEPresenter {
     }
 
     //TODO -> find replacement
-    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+    private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        public Boolean doInBackground(Void... params) {
             List<Imagen> images = selectAllImages();
 
             for (Imagen imagen : images) {
@@ -725,7 +724,7 @@ public class NoEntregaGEPresenter {
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             showGaleria();
         }

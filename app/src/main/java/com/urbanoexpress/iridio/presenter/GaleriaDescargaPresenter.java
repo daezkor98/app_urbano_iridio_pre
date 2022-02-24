@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
@@ -19,22 +18,6 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import com.orm.util.NamingHelper;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
@@ -53,6 +36,21 @@ import com.urbanoexpress.iridio.util.LocationUtils;
 import com.urbanoexpress.iridio.util.Preferences;
 import com.urbanoexpress.iridio.view.BaseModalsView;
 import com.urbanoexpress.iridio.view.GaleriaDescargaView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mick on 08/08/16.
@@ -350,12 +348,13 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
     }
 
     //TODO -> Check replacement
-    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+    private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        public Boolean doInBackground(Void... params) {
             Log.d(TAG, "doInBackground");
 
             List<Imagen> dbImagenes = selectAllImages();
@@ -370,7 +369,7 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             Log.d(TAG, "onPostExecute");
             showGaleria();

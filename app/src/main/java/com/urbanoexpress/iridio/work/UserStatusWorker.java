@@ -85,7 +85,6 @@ public class UserStatusWorker extends Worker {
             if (apiResponse.getUser().getStatus().equalsIgnoreCase("inactive")) {
                 CommonUtils.deleteUserData();
                 Session.clearSession();
-
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() -> {
                     Log.d(TAG, "Worker clear all tasks: " + apiResponse);
@@ -95,7 +94,8 @@ public class UserStatusWorker extends Worker {
                     Intent intent = new Intent(getApplicationContext(), InitActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getApplicationContext().startActivity(intent);
+                    //getApplicationContext().startActivity(intent);
+                    //TODO this line causes logout
                 });
 
                 WorkManager.getInstance(getApplicationContext()).cancelUniqueWork(UserStatusWorker.TAG);

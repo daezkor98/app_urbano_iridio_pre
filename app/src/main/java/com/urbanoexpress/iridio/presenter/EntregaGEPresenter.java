@@ -9,64 +9,35 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.android.volley.VolleyError;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import com.google.android.gms.location.LocationServices;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-
-import com.android.volley.VolleyError;
 import com.orm.util.NamingHelper;
-
-import org.apache.commons.lang3.text.WordUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.application.AndroidApplication;
 import com.urbanoexpress.iridio.data.local.PreferencesHelper;
-import com.urbanoexpress.iridio.data.rest.ApiRest;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
+import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.Imagen;
 import com.urbanoexpress.iridio.model.entity.MotivoDescarga;
 import com.urbanoexpress.iridio.model.entity.Pieza;
 import com.urbanoexpress.iridio.model.entity.Ruta;
-import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.TipoDireccion;
 import com.urbanoexpress.iridio.model.interactor.RutaPendienteInteractor;
 import com.urbanoexpress.iridio.model.interactor.callback.RequestCallback;
@@ -95,6 +66,30 @@ import com.urbanoexpress.iridio.util.ValidationUtils;
 import com.urbanoexpress.iridio.util.constant.Country;
 import com.urbanoexpress.iridio.util.constant.LocalAction;
 import com.urbanoexpress.iridio.view.DescargaEntregaView;
+
+import org.apache.commons.lang3.text.WordUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by mick on 14/07/16.
@@ -1687,10 +1682,11 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     //TODO -> check replacement
-    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+    private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        public Boolean doInBackground(Void... params) {
             List<Imagen> images = selectAllImages();
 
             for (Imagen imagen : images) {
@@ -1703,7 +1699,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             showGalerias();
         }

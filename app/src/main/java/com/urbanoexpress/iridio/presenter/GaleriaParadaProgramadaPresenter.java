@@ -5,11 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.orm.util.NamingHelper;
 import com.urbanoexpress.iridio.AsyncTaskCoroutine;
@@ -351,12 +351,13 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
     }
 
     //TODO -> check replacement
-    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+    private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        public Boolean doInBackground(Void... params) {
             Log.d(TAG, "doInBackground");
 
             List<Imagen> dbImagenes = selectAllImages();
@@ -371,7 +372,7 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             Log.d(TAG, "onPostExecute");
             showGaleria();

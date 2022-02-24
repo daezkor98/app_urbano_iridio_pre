@@ -1,40 +1,27 @@
 package com.urbanoexpress.iridio.presenter;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.DialogFragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.android.volley.VolleyError;
+import com.google.android.material.snackbar.Snackbar;
 import com.orm.util.NamingHelper;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.model.entity.Data;
 import com.urbanoexpress.iridio.model.entity.DescargaRuta;
+import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.entity.Imagen;
 import com.urbanoexpress.iridio.model.entity.MotivoDescarga;
 import com.urbanoexpress.iridio.model.entity.Ruta;
-import com.urbanoexpress.iridio.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio.model.interactor.RutaPendienteInteractor;
 import com.urbanoexpress.iridio.model.interactor.callback.RequestCallback;
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper;
@@ -49,6 +36,18 @@ import com.urbanoexpress.iridio.util.LocationUtils;
 import com.urbanoexpress.iridio.util.Preferences;
 import com.urbanoexpress.iridio.view.BaseModalsView;
 import com.urbanoexpress.iridio.view.NoRecolectaView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mick on 18/08/16.
@@ -632,12 +631,13 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
     }
 
     //TODO: find replacement
-    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
+    private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        public Boolean doInBackground(Void... params) {
             Log.d(TAG, "doInBackground");
 
             List<Imagen> dbImagenes = selectAllImages();
@@ -652,7 +652,7 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             Log.d(TAG, "onPostExecute");
             showGaleria();

@@ -2,6 +2,7 @@ package com.urbanoexpress.iridio.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -34,6 +35,8 @@ public class InitActivity extends BaseActivity implements InitView {
         if (presenter == null) {
             presenter = new InitPresenter(this);
         }
+
+        Log.i("TAG", "onCreate: ");
     }
 
     @Override

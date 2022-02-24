@@ -97,6 +97,7 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
                 .setConstraints(constraints)
                 .build();
 
+        //TODO: makes app logout
         workManager.enqueueUniquePeriodicWork(
                 UserStatusWorker.TAG, ExistingPeriodicWorkPolicy.KEEP, workRequest);
 
