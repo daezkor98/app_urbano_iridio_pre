@@ -46,15 +46,15 @@ public class UserStatusWorker extends Worker {
         super(context, workerParams);
     }
 
+    //TODO verificar comparacion de version code del servicio "verifyUserSession" para la actualizacion
     @NonNull
     @Override
     public Result doWork() {
-        Log.d(TAG, "Worker works");
+        Log.d(TAG, "doWork()");
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
         UrbanoApiManager.setApiBaseUrl(ApiRest.buildUrbanoApiBaseUrl(
                 preferencesHelper.getApiEnvironment(), preferencesHelper.getCountry()));
         UrbanoApiManager urbanoApiManager = new UrbanoApiManager(getApplicationContext());
-        Log.d(TAG, "Worker url: " + urbanoApiManager.getApiBaseUrl());
 
         PackageInfo packageInfo = CommonUtils.getPackageInfo(getApplicationContext());
 
@@ -62,7 +62,7 @@ public class UserStatusWorker extends Worker {
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("username", "")
                 .addFormDataPart("app_version_name", packageInfo.versionName)
-                .addFormDataPart("app_version_code",  String.valueOf(packageInfo.versionCode))
+                .addFormDataPart("app_version_code", String.valueOf(packageInfo.versionCode))
                 .addFormDataPart("device_phone", Session.getUser().getDevicePhone())
                 .addFormDataPart("device_model", Build.MODEL)
                 .addFormDataPart("device_version_os", Build.VERSION.RELEASE)
@@ -76,26 +76,25 @@ public class UserStatusWorker extends Worker {
             Response<VerifyUserSessionEntity> response = callSync.execute();
             VerifyUserSessionEntity apiResponse = response.body();
 
-            Log.d(TAG, "Worker response: " + apiResponse);
-
             if (apiResponse.getApp().isUpdateRequired()) {
                 displayNotification(apiResponse.getApp().getLatestVersionName());
             }
 
+            //Validates if user is inactive to close user session and show Login
             if (apiResponse.getUser().getStatus().equalsIgnoreCase("inactive")) {
                 CommonUtils.deleteUserData();
                 Session.clearSession();
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() -> {
-                    Log.d(TAG, "Worker clear all tasks: " + apiResponse);
+
                     getApplicationContext().stopService(
                             new Intent(getApplicationContext(), DataSyncService.class));
 
                     Intent intent = new Intent(getApplicationContext(), InitActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //getApplicationContext().startActivity(intent);
-                    //TODO this line causes logout
+
+                    getApplicationContext().startActivity(intent);
                 });
 
                 WorkManager.getInstance(getApplicationContext()).cancelUniqueWork(UserStatusWorker.TAG);

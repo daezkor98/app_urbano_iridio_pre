@@ -1,12 +1,8 @@
 package com.urbanoexpress.iridio.presenter;
 
-import android.os.AsyncTask;
+import static com.urbanoexpress.iridio.model.NavigationMenuModel.TypeAction;
 
 import android.util.Log;
-
-import org.apache.commons.lang3.text.WordUtils;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.urbanoexpress.iridio.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio.R;
@@ -19,7 +15,10 @@ import com.urbanoexpress.iridio.util.Preferences;
 import com.urbanoexpress.iridio.util.Session;
 import com.urbanoexpress.iridio.view.NavigationMenuView;
 
-import static com.urbanoexpress.iridio.model.NavigationMenuModel.TypeAction;
+import org.apache.commons.lang3.text.WordUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mick on 21/06/16.
@@ -42,6 +41,29 @@ public class NavigationMenuPresenter {
     public void init() {
         loadUserProfile();
         new LoadMenuTask().execute();
+    }
+
+    private void buildSideMenu() {
+
+        MenuAppHelper menuAppHelper;
+        sideMenuItems = new ArrayList<>();
+
+        for (int i = 0, idItem = 0; i < menuAppDB.size(); i++, idItem++) {
+            menuAppHelper = MenuAppHelper.buildMenu(menuAppDB.get(i).getMenuClass());
+
+            view.addMenuSideMenu(1, idItem, idItem, menuAppDB.get(i).getNombre(),
+                    menuAppHelper.getIcon());
+
+            sideMenuItems.add(new NavigationMenuModel.Builder(TypeAction.INTENT, menuAppHelper.getCls())
+                    .setTitle(menuAppDB.get(i).getNombre())
+                    .setIcon(menuAppHelper.getIcon())
+                    .build());
+        }
+
+        addDefaultSideMenu();
+
+        Log.d(TAG, "TOTAL DB MENU: " + menuAppDB.size());
+        Log.d(TAG, "TOTAL ITEMS MENU: " + sideMenuItems.size());
     }
 
     public void onItemSideMenuClick(int position) {
@@ -82,28 +104,6 @@ public class NavigationMenuPresenter {
             ex.printStackTrace();
             view.showMessageMenuNotAvailible();
         }
-    }
-
-    private void buildSideMenu() {
-        MenuAppHelper menuAppHelper;
-        sideMenuItems = new ArrayList<>();
-
-        for (int i = 0, idItem = 0; i < menuAppDB.size(); i++, idItem++) {
-            menuAppHelper = MenuAppHelper.buildMenu(menuAppDB.get(i).getMenuClass());
-
-            view.addMenuSideMenu(1, idItem, idItem, menuAppDB.get(i).getNombre(),
-                    menuAppHelper.getIcon());
-
-            sideMenuItems.add(new NavigationMenuModel.Builder(TypeAction.INTENT, menuAppHelper.getCls())
-                    .setTitle(menuAppDB.get(i).getNombre())
-                    .setIcon(menuAppHelper.getIcon())
-                    .build());
-        }
-
-        addDefaultSideMenu();
-
-        Log.d(TAG, "TOTAL DB MENU: " + menuAppDB.size());
-        Log.d(TAG, "TOTAL ITEMS MENU: " + sideMenuItems.size());
     }
 
     private void addDefaultSideMenu() {
@@ -153,6 +153,7 @@ public class NavigationMenuPresenter {
         }
     }
 
+    //Task
     private class LoadMenuTask extends AsyncTaskCoroutine<String, String> {
         @Override
         public String doInBackground(String... strings) {
