@@ -27,7 +27,8 @@ public abstract class BaseActivity2 extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
-        toolbar.setNavigationOnClickListener(v -> finish());
+//        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());//TODO check change
     }
 
     public void showMessageNotConnectedToNetwork() {

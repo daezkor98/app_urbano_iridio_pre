@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/generalRevenueFragment">
+
+    <fragment
+        android:id="@+id/generalRevenueFragment"
+        android:name="com.urbanoexpress.iridio.ui.fragment.GeneralRevenueFragment"
+        android:label="fragment_general_revenue"
+        tools:layout="@layout/fragment_general_revenue">
+        <action
+            android:id="@+id/action_generalRevenueFragment_to_weekRevenueFragment"
+            app:destination="@id/weekRevenueFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/weekRevenueFragment"
+        android:name="com.urbanoexpress.iridio.ui.fragment.WeekRevenueFragment"
+        android:label="fragment_week_revenue"
+        tools:layout="@layout/fragment_week_revenue" />
+</navigation>
