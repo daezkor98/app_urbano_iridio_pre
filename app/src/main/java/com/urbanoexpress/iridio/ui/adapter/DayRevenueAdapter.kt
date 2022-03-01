@@ -14,9 +14,7 @@ class DayRevenueAdapter : RecyclerView.Adapter<DayRevenueAdapter.ViewHolder>() {
     inner class ViewHolder(val bind: RowRevenueDayBinding) : RecyclerView.ViewHolder(bind.root) {
 
         init {
-/*            bind.itemParent.setOnClickListener {
 
-            }*/
         }
     }
 

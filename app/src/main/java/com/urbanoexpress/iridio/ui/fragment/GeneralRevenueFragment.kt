@@ -1,13 +1,16 @@
 package com.urbanoexpress.iridio.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentGeneralRevenueBinding
 import com.urbanoexpress.iridio.ui.BaseActivity2
-import com.urbanoexpress.iridio.ui.adapter.RevenueWeeksAdapter
+import com.urbanoexpress.iridio.ui.adapter.WeeksRevenueAdapter
 
 
 class GeneralRevenueFragment : BaseFragment2() {
@@ -36,7 +39,17 @@ class GeneralRevenueFragment : BaseFragment2() {
     }
 
     private fun setupView() {
-        bind.rvWeeks.adapter = RevenueWeeksAdapter()
+
+        bind.rvWeeks.adapter = WeeksRevenueAdapter().apply {
+            this.onItemClick = this@GeneralRevenueFragment::handleItemClick
+        }
     }
 
+    private fun handleItemClick(index: Int) {
+
+        Log.i("TAG", "handleItemClick: $index")
+        val args = bundleOf()
+
+        findNavController().navigate(R.id.action_generalRevenueFragment_to_weekRevenueFragment, args)
+    }
 }

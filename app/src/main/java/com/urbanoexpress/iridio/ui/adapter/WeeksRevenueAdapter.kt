@@ -4,18 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urbanoexpress.iridio.databinding.RowRevenueWeekBinding
+import com.urbanoexpress.iridio.urbanocore.OnItemClick
+import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 
 
 /**
  * Created by Brandon Quintanilla on February/28/2022.
  */
-class RevenueWeeksAdapter : RecyclerView.Adapter<RevenueWeeksAdapter.ViewHolder>() {
+class WeeksRevenueAdapter : RecyclerView.Adapter<WeeksRevenueAdapter.ViewHolder>() {
+
+    var onItemClick: OnItemClick = null
 
     inner class ViewHolder(val bind: RowRevenueWeekBinding) : RecyclerView.ViewHolder(bind.root) {
 
         init {
-            bind.itemParent.setOnClickListener {
-
+            bind.itemParent.onExclusiveClick {
+                onItemClick?.invoke(layoutPosition)
             }
         }
     }

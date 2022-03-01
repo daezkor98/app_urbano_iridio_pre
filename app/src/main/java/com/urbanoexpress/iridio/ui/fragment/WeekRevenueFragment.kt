@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.urbanoexpress.iridio.databinding.FragmentWeekRevenueBinding
+import com.urbanoexpress.iridio.ui.adapter.DayRevenueAdapter
 
 class WeekRevenueFragment : BaseFragment2() {
 
@@ -18,10 +19,16 @@ class WeekRevenueFragment : BaseFragment2() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
+
         bind = FragmentWeekRevenueBinding.inflate(inflater, container, false)
 
+        setupView()
+
         return bind.root
+    }
+
+    private fun setupView() {
+        bind.rvDays.adapter = DayRevenueAdapter()
     }
 }

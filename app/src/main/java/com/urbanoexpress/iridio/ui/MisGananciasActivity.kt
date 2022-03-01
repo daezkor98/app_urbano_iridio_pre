@@ -21,7 +21,7 @@ class MisGananciasActivity : BaseActivity2() {
         bind = ActivityMisGananciasBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
-        setupToolbar(bind.toolbar)
+        setupToolbar(bind.toolbar)//TODO checkColor
     }
 
     private fun openPDFPicker() {
