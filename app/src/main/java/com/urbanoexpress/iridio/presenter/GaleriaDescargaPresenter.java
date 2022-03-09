@@ -347,8 +347,6 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
 //        descargaEntregaView.notifyGaleryAllItemChanged();
     }
 
-    //TODO -> Check replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();

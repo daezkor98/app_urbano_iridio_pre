@@ -77,6 +77,10 @@ public final class ApiRest {
         String SYNC_NUEVAS_GUIAS                        = "api-apps/iridio/syncNuevasGuiasRutaDelDia";
         String VALIDATE_VERSION_APP                     = "api-apps/iridio/validateVersionAppV2";
 
+        String GET_MY_REVENUES = "api-apps/iridio/MisGanancias";
+        String GET_WEEK_DETAIL = "api-apps/iridio/SemanaDetail";
+
+
         interface Google {
             String DISTANCE_MATRIX  = "api-apps/iridio/googleDistanceMatrix";
             String DIRECTIONS       = "api-apps/iridio/googleDirections";
@@ -89,6 +93,10 @@ public final class ApiRest {
             apiRest = new ApiRest();
         }
         return apiRest;
+    }
+
+    public static String url(String endpoint){
+        return ApiRest.getInstance().apiBaseUrl + endpoint;
     }
 
     public void setApiBaseUrl(BaseUrl url) {

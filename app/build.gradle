@@ -1,4 +1,4 @@
-plugins{
+plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
@@ -119,10 +119,10 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
 
-    //Utils
-    implementation 'com.google.code.gson:gson:2.9.0'
-
     //Lifecycle
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+
+    //Utils
+    implementation 'com.google.code.gson:gson:2.9.0'
 }

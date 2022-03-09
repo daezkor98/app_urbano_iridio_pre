@@ -1324,8 +1324,6 @@ public class RecoleccionCounterPresenter {
         }
     }
 
-    //TODO: find replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         @Override

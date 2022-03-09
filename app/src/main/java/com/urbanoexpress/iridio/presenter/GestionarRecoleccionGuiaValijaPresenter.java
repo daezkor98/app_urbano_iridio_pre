@@ -543,8 +543,6 @@ public class GestionarRecoleccionGuiaValijaPresenter implements OnClickItemGaler
                 Imagen.Tipo.GESTION_GUIA + "");
     }
 
-    //TODO -> check replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();

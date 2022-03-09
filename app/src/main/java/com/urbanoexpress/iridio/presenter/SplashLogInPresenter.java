@@ -339,6 +339,7 @@ public class SplashLogInPresenter implements RequestCallback {
                 jsonObject = data.getJSONObject(i);
 
                 if (validarNivelMenu(jsonObject.getInt("nivel"))) {
+                    //TODO check how drawer menu items are saved
                     menuAppDB = new MenuApp(
                             Preferences.getInstance().getString("idUsuario", ""),
                             jsonObject.getString("id_menu"),

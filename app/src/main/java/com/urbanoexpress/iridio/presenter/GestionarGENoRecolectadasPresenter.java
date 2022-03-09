@@ -577,9 +577,7 @@ public class GestionarGENoRecolectadasPresenter extends BaseModalsView implement
         LocalBroadcastManager.getInstance(view.getContextView()).sendBroadcast(intent);
     }
 
-    //TODO -> Check replacement
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();
 

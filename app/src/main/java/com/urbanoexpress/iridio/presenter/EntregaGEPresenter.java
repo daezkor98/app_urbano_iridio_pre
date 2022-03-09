@@ -1681,8 +1681,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    //TODO -> check replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         @Override

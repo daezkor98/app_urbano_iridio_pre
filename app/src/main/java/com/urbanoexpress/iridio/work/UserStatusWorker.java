@@ -82,7 +82,8 @@ public class UserStatusWorker extends Worker {
 
             //Validates if user is inactive to close user session and show Login
             if (apiResponse.getUser().getStatus().equalsIgnoreCase("inactive")) {
-                CommonUtils.deleteUserData();
+                //TODO fix
+/*                CommonUtils.deleteUserData();
                 Session.clearSession();
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() -> {
@@ -97,7 +98,7 @@ public class UserStatusWorker extends Worker {
                     getApplicationContext().startActivity(intent);
                 });
 
-                WorkManager.getInstance(getApplicationContext()).cancelUniqueWork(UserStatusWorker.TAG);
+                WorkManager.getInstance(getApplicationContext()).cancelUniqueWork(UserStatusWorker.TAG);*/
             }
 
             return Result.success();

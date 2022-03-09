@@ -1,0 +1,14 @@
+package com.urbanoexpress.iridio.urbanocore
+
+import com.google.gson.Gson
+
+
+/**
+ * Created by Brandon Quintanilla on March/02/2022.
+ */
+//ST for Singleton Tools
+object ST {
+
+   val gson = Gson()
+
+}

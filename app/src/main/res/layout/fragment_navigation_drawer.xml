@@ -6,7 +6,7 @@
     android:background="@color/lightPrimaryText"
     android:translationZ="20dp"
     android:elevation="20dp">
-
+<!--TODO UNUSED?-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"

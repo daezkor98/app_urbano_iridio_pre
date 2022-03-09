@@ -1,12 +1,11 @@
 package com.urbanoexpress.iridio.presenter;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.orm.util.NamingHelper;
 import com.urbanoexpress.iridio.AsyncTaskCoroutine;
@@ -474,7 +473,7 @@ public class RecoleccionLogisticaInversaPresenter {
                 return false;
             }*/
 
-        int sobre, valija, paquete,  otros;
+        int sobre, valija, paquete, otros;
 
         sobre = view.getTextFormSobre().isEmpty() ? 0 : Integer.parseInt(view.getTextFormSobre());
         valija = view.getTextFormValija().isEmpty() ? 0 : Integer.parseInt(view.getTextFormValija());
@@ -658,7 +657,7 @@ public class RecoleccionLogisticaInversaPresenter {
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link com.urbanoexpress.iridio.presenter.DetalleRutaPresenter#descargaFinalizadaReceiver}
      * {@link com.urbanoexpress.iridio.presenter.RutaPendientePresenter#descargaFinalizadaReceiver}
      * {@link com.urbanoexpress.iridio.presenter.RutaGestionadaPresenter#descargaFinalizadaReceiver}
@@ -696,12 +695,10 @@ public class RecoleccionLogisticaInversaPresenter {
         }
     }
 
-    //TODO: find replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
-    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Void, Boolean> {
+    private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        public Boolean doInBackground(Void... params) {
             List<Imagen> images = selectAllImages();
 
             for (Imagen imagen : images) {
@@ -714,7 +711,7 @@ public class RecoleccionLogisticaInversaPresenter {
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             showGalerias();
         }

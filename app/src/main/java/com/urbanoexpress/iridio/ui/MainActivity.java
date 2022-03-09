@@ -5,17 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
-
-import com.bumptech.glide.Glide;
-import com.google.android.material.navigation.NavigationView;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import android.os.Bundle;
-
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,13 +27,8 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
+import com.bumptech.glide.Glide;
+import com.google.android.material.navigation.NavigationView;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.databinding.ActivityMainBinding;
 import com.urbanoexpress.iridio.model.NavigationMenuModel;
@@ -200,10 +197,12 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
 
         headerMenuView = getLayoutInflater().inflate(R.layout.navigation_header_main, null);
         binding.navigationView.addHeaderView(headerMenuView);
+
         Glide.with(MainActivity.this)
                 .load(R.drawable.bg_header_navigation)
                 .centerCrop()
                 .into((ImageView) headerMenuView.findViewById(R.id.imgBGHeader));
+
         binding.navigationView.setNavigationItemSelectedListener(this);
 
         headerMenuView.findViewById(R.id.nav_header_container).setOnClickListener(v -> {
@@ -279,15 +278,20 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
     }
 
     @Override
-    public void loadUserProfile(String typeUser, String userName) {
+    public void setDrawerHeader(String typeUser, String userName) {
         ((TextView) headerMenuView.findViewById(R.id.txtTipoUsuario)).setText(typeUser);
         ((TextView) headerMenuView.findViewById(R.id.txtNomApeUsuario)).setText(userName);
     }
 
     @Override
-    public void showMainMenu(List<NavigationMenuModel> menus) {
-        MainMenuAdapter adapter = new MainMenuAdapter(this, menus);
+    public void showMainMenu(List<NavigationMenuModel> menuItems) {
+
+//        Log.i("TAG", "showMainMenu: " + new Gson().toJson(menuItems));
+        Log.i("TAG", "showMainMenu: " + menuItems.toString());
+
+        MainMenuAdapter adapter = new MainMenuAdapter(this, menuItems);
         adapter.setListener(MainActivity.this);
+
         binding.rvMenu.setAdapter(adapter);
     }
 
@@ -381,7 +385,7 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link NotificacionesRutaPresenter#handleDataNotificaciones}
      */
     private final BroadcastReceiver refrescarContadorNotificacionesReceiver = new BroadcastReceiver() {

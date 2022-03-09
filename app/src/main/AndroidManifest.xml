@@ -47,11 +47,13 @@
             android:name=".ui.MisGananciasActivity"
             android:exported="true">
 
+<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
 
         </activity>
         <activity
@@ -59,11 +61,12 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.SplashScreen">
-            <!-- TODO: Enable <intent-filter>
+            <!-- TODO: Enable -->
+            <intent-filter>
                  <action android:name="android.intent.action.MAIN" />
 
                  <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>-->
+             </intent-filter>
         </activity>
         <activity
             android:name=".ui.MainActivity"

@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio.model.interactor;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 
@@ -35,6 +36,12 @@ public class SplashLogInInteractor {
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
             @Override
             public void onResponse(JSONObject response) {
+                try{
+                    Log.i(TAG, "onResponse: " + response.getJSONObject("data").getJSONArray("userMenu").toString());
+                }catch (Exception e){
+                    Log.e(TAG, "onResponse: ",e );
+                }
+
                 callback.onSuccess(response);
             }
 

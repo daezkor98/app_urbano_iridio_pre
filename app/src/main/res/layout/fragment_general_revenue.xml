@@ -20,11 +20,12 @@
             android:gravity="center"
             android:text="S/ 400"
             android:textColor="@color/red_1"
-            android:textSize="35dp"
+            android:textSize="44dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/tvWeekSub"
@@ -34,6 +35,17 @@
             app:layout_constraintEnd_toEndOf="@id/tvWeekRevenue"
             app:layout_constraintStart_toStartOf="@id/tvWeekRevenue"
             app:layout_constraintTop_toBottomOf="@id/tvWeekRevenue" />
+
+        <ImageView
+            android:id="@+id/img_hand_money"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/icon_hand_money"
+            app:layout_constraintEnd_toEndOf="@id/tvWeekSub"
+            app:layout_constraintStart_toStartOf="@id/tvWeekSub"
+            app:layout_constraintTop_toBottomOf="@id/tvWeekSub"
+            app:tint="@color/black" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardWeeksTitle"
@@ -45,7 +57,7 @@
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvWeekSub">
+            app:layout_constraintTop_toBottomOf="@id/img_hand_money">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

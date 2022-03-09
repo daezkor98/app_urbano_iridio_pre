@@ -630,8 +630,6 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
         LocalBroadcastManager.getInstance(noRecolectaView.getContextView()).sendBroadcast(intent);
     }
 
-    //TODO: find replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();

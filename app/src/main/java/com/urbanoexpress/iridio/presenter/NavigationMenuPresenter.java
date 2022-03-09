@@ -37,10 +37,26 @@ public class NavigationMenuPresenter {
 
         Preferences.getInstance().init(view.getViewContext(), "UserProfile");
     }
-    
+
     public void init() {
-        loadUserProfile();
-        new LoadMenuTask().execute();
+        setDrawerHeader();
+        new QueryDrawerMenuTask().execute();
+    }
+
+    private void setDrawerHeader() {
+        String tipoUsuario = Preferences.getInstance()
+                .getString("tipoUsuario", "")
+                .equals("I") ? "Interno" : "Externo";
+
+        String nombreUsuario = "";
+
+        if (Preferences.getInstance().getString("nombre", "").length() > 0) {
+            nombreUsuario = WordUtils.capitalize(Preferences.getInstance().getString("nombre", "").toLowerCase());
+        } else {
+            nombreUsuario = Preferences.getInstance().getString("usuario", "");
+        }
+
+        view.setDrawerHeader(tipoUsuario, nombreUsuario);
     }
 
     private void buildSideMenu() {
@@ -107,6 +123,7 @@ public class NavigationMenuPresenter {
     }
 
     private void addDefaultSideMenu() {
+
         int indexMenu = sideMenuItems.size();
 
         view.addMenuSideMenu(2, indexMenu, indexMenu, "Configuración",
@@ -128,21 +145,6 @@ public class NavigationMenuPresenter {
                 .build());
     }
 
-    private void loadUserProfile() {
-        String tipoUsuario = Preferences.getInstance().getString("tipoUsuario", "")
-                .equals("I") ? "Interno" : "Externo";
-        String nombreUsuario = "";
-
-        if (Preferences.getInstance().getString("nombre", "").length() > 0) {
-            nombreUsuario = WordUtils.capitalize(
-                    Preferences.getInstance().getString("nombre", "").toLowerCase());
-        } else {
-            nombreUsuario = Preferences.getInstance().getString("usuario", "");
-        }
-
-        view.loadUserProfile(tipoUsuario, nombreUsuario);
-    }
-
     public void updateBadgeTotalNotifications() {
         for (int i = 0; i < menuItems.size(); i++) {
             if (MenuAppHelper.isMenuNotificaciones(menuItems.get(i).getCls())) {
@@ -154,15 +156,18 @@ public class NavigationMenuPresenter {
     }
 
     //Task
-    private class LoadMenuTask extends AsyncTaskCoroutine<String, String> {
+    private class QueryDrawerMenuTask extends AsyncTaskCoroutine<String, String> {
         @Override
         public String doInBackground(String... strings) {
             Session.getUser();
             menuItems = new ArrayList<>();
             menuAppDB = MenuApp.listAll(MenuApp.class);
 
+            // Here we transform MenuApp register to a NavigationMenuModel
             for (int i = 0; i < menuAppDB.size(); i++) {
+
                 if (MenuAppHelper.isValidMenu(menuAppDB.get(i).getMenuClass())) {
+
                     MenuAppHelper menuAppHelper = MenuAppHelper.buildMenu(menuAppDB.get(i).getMenuClass());
 
                     String badge = "";

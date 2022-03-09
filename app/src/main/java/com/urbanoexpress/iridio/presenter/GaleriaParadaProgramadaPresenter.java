@@ -350,8 +350,6 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
 //        descargaEntregaView.notifyGaleryAllItemChanged();
     }
 
-    //TODO -> check replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();

@@ -478,8 +478,6 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
         view.notifyMotivosAllItemChanged();
     }
 
-    //TODO : find replacement
-//    private class VerifyExistImagesOnDeviceTask extends AsyncTask<Void, Integer, Boolean> {
     private class VerifyExistImagesOnDeviceTask extends AsyncTaskCoroutine<Void, Boolean> {
 
         private final String TAG = VerifyExistImagesOnDeviceTask.class.getSimpleName();

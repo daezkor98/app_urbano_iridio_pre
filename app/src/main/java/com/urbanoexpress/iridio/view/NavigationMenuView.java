@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface NavigationMenuView extends BaseView2 {
 
-    void loadUserProfile(String typeUser, String userName);
+    void setDrawerHeader(String typeUser, String userName);
     void showMainMenu(List<NavigationMenuModel> menus);
     void notifyMainMenuItemChanged(int position);
     void initializeServices();
