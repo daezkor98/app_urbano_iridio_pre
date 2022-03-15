@@ -10,6 +10,7 @@ import com.urbanoexpress.iridio.ui.ResumenRutaActivity;
 import com.urbanoexpress.iridio.ui.ResumenRutaRuralActivity;
 import com.urbanoexpress.iridio.ui.RutaActivity;
 import com.urbanoexpress.iridio.ui.RutaRuralActivity;
+import com.urbanoexpress.iridio.urbanocore.values.Menu;
 
 /**
  * Created by mick on 24/05/16.
@@ -41,19 +42,19 @@ public class MenuAppHelper {
     }
 
     public static MenuAppHelper buildMenu(String menuClass) {
-        if (menuClass.equalsIgnoreCase("plan_de_viaje")) {
+        if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
             return new MenuAppHelper(PlanDeViajeActivity.class, R.drawable.ic_truck_grey);
-        } else if (menuClass.equalsIgnoreCase("ruta_del_dia")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)) {
             return new MenuAppHelper(RutaActivity.class, R.drawable.ic_truck_grey);
-        } else if (menuClass.equalsIgnoreCase("ruta_gestor")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
             return new MenuAppHelper(RutaRuralActivity.class, R.drawable.ic_truck_grey);
-        } else if (menuClass.equalsIgnoreCase("resumen_ruta")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RESUMEN_RUTA)) {
             return new MenuAppHelper(ResumenRutaActivity.class, R.drawable.ic_library_books_grey);
-        } else if (menuClass.equalsIgnoreCase("ruta_express")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_EXPRESS)) {
             return new MenuAppHelper(ResumenRutaRuralActivity.class, R.drawable.ic_library_books_grey);
-        } else if (menuClass.equalsIgnoreCase("notificaciones")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.NOTIFICACIONES)) {
             return new MenuAppHelper(NotificacionesRutaActivity.class, R.drawable.ic_bell_grey);
-        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.MIS_GANANCIAS)) {
             return new MenuAppHelper(MisGananciasActivity.class, R.drawable.ic_coin);
         } else {
             return new MenuAppHelper(null, R.drawable.ic_code_tags_grey);
@@ -61,18 +62,18 @@ public class MenuAppHelper {
     }
 
     public static String buildDescription(Context context, String menuClass) {
-        if (menuClass.equalsIgnoreCase("plan_de_viaje")) {
+        if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
             return context.getString(R.string.text_menu_plan_de_viaje);
-        } else if (menuClass.equalsIgnoreCase("ruta_del_dia")
-                || menuClass.equalsIgnoreCase("ruta_gestor")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)
+                || menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
             return context.getString(R.string.text_menu_ruta_del_dia);
-        } else if (menuClass.equalsIgnoreCase("resumen_ruta")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RESUMEN_RUTA)) {
             return context.getString(R.string.text_menu_resumen_ruta);
-        } else if (menuClass.equalsIgnoreCase("ruta_express")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_EXPRESS)) {
             return context.getString(R.string.text_menu_ruta_del_dia);
-        } else if (menuClass.equalsIgnoreCase("notificaciones")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.NOTIFICACIONES)) {
             return context.getString(R.string.text_menu_notificaciones);
-        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.MIS_GANANCIAS)) {
             return context.getString(R.string.text_menu_ganancias);
         } else {
             return "No definido.";
@@ -80,18 +81,18 @@ public class MenuAppHelper {
     }
 
     public static int builIDResIconLinear(String menuClass) {
-        if (menuClass.equalsIgnoreCase("plan_de_viaje")) {
+        if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
             return R.drawable.ic_linear_truck;
-        } else if (menuClass.equalsIgnoreCase("ruta_del_dia")
-                || menuClass.equalsIgnoreCase("ruta_gestor")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)
+                || menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
             return R.drawable.ic_linear_car;
-        } else if (menuClass.equalsIgnoreCase("resumen_ruta")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RESUMEN_RUTA)) {
             return R.drawable.ic_linear_clipboard;
-        } else if (menuClass.equalsIgnoreCase("ruta_express")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_EXPRESS)) {
             return R.drawable.ic_linear_car;
-        } else if (menuClass.equalsIgnoreCase("notificaciones")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.NOTIFICACIONES)) {
             return R.drawable.ic_linear_alarm;
-        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.MIS_GANANCIAS)) {
             return R.drawable.coin;
         } else {
             return 0;
@@ -99,19 +100,19 @@ public class MenuAppHelper {
     }
 
     public static boolean isValidMenu(String menuClass) {
-        if (menuClass.equalsIgnoreCase("plan_de_viaje")) {
+        if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
             return true;
-        } else if (menuClass.equalsIgnoreCase("ruta_del_dia")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)) {
             return true;
-        } else if (menuClass.equalsIgnoreCase("ruta_gestor")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
             return true;
-        } else if (menuClass.equalsIgnoreCase("resumen_ruta")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RESUMEN_RUTA)) {
             return true;
-        } else if (menuClass.equalsIgnoreCase("ruta_express")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_EXPRESS)) {
             return true;
-        } else if (menuClass.equalsIgnoreCase("notificaciones")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.NOTIFICACIONES)) {
             return true;
-        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
+        } else if (menuClass.equalsIgnoreCase(Menu.MIS_GANANCIAS)) {
             return true;
         } else {
             return false;

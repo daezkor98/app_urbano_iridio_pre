@@ -11,6 +11,6 @@ object Menu {
     const val RUTA_DEL_DIA = "ruta_del_dia"
     const val RESUMEN_RUTA = "resumen_ruta"
     const val RUTA_EXPRESS = "ruta_express"
-    const val MIS_GANANCIAS = "my_revenue"
     const val NOTIFICACIONES = "notificaciones"
+    const val MIS_GANANCIAS = "my_revenue"
 }
