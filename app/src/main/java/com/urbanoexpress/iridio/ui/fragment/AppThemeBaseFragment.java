@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio.ui.fragment;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,7 +16,9 @@ public abstract class AppThemeBaseFragment extends BaseFragment2 implements Base
     public void dismissProgressDialog() {
         try {
             getViewProgress().setVisibility(View.GONE);
+
         } catch (NullPointerException ex) {
+            Log.e("TAG", "dismissProgressDialog: ",ex );
             ex.printStackTrace();
         }
     }
@@ -25,6 +28,7 @@ public abstract class AppThemeBaseFragment extends BaseFragment2 implements Base
         try {
             getViewProgress().setVisibility(View.VISIBLE);
         } catch (NullPointerException ex) {
+            Log.e("TAG", "showProgressDialog: ",ex );
             ex.printStackTrace();
         }
     }

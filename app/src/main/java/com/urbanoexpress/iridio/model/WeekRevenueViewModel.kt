@@ -15,6 +15,5 @@ class WeekRevenueViewModel : BaseViewModel() {
         val param = HashMap<String, Any>()
         val data = MisGananciasInteractor.getSemanaDetail(param)
 
-        Log.i("TAG", "fethcData: " + ST.gson.toJson(data))
     }
 }

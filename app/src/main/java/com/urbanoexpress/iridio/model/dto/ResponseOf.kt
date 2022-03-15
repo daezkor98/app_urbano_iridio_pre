@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio.model.dto
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
@@ -13,6 +14,11 @@ class ResponseOf<DataType> {
     val data: DataType? = null
 }
 
-inline fun <reified T> JSONObject.transformToInstance(): T {
-    return Gson().fromJson<T>(this.toString(), object: TypeToken<T>(){}.type)
+inline fun <reified T> JSONObject.toInstance(): T? {
+    return try {
+        Gson().fromJson<T>(this.toString(), object : TypeToken<T>() {}.type)//TODO use singleton
+    } catch (e: Exception) {
+        Log.e("TAG", "toInstance: $this", e)
+        null
+    }
 }

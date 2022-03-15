@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urbanoexpress.iridio.databinding.RowRevenueWeekBinding
+import com.urbanoexpress.iridio.model.dto.Period
 import com.urbanoexpress.iridio.urbanocore.OnItemClick
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 
@@ -14,6 +15,12 @@ import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 class WeeksRevenueAdapter : RecyclerView.Adapter<WeeksRevenueAdapter.ViewHolder>() {
 
     var onItemClick: OnItemClick = null
+
+    var periods: ArrayList<Period> = ArrayList()
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
 
     inner class ViewHolder(val bind: RowRevenueWeekBinding) : RecyclerView.ViewHolder(bind.root) {
 
@@ -32,8 +39,10 @@ class WeeksRevenueAdapter : RecyclerView.Adapter<WeeksRevenueAdapter.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        val period = periods[position]
+        holder.bind.tvDaysIntervalBegg.text = "Desde: ${period.beggningDay}"
+        holder.bind.tvDaysIntervalEnd.text = "Hasta: ${period.endingDay}"
+        holder.bind.tvRevenue.text = "S/ ${period.weekPeriodRevenue}"
     }
-
-    override fun getItemCount(): Int = 4 //TODO replace
+    override fun getItemCount(): Int = periods.size
 }

@@ -31,7 +31,7 @@
             android:id="@+id/tvWeekSub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Semana actual"
+            android:text="Periodo actual"
             app:layout_constraintEnd_toEndOf="@id/tvWeekRevenue"
             app:layout_constraintStart_toStartOf="@id/tvWeekRevenue"
             app:layout_constraintTop_toBottomOf="@id/tvWeekRevenue" />
@@ -68,7 +68,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Semana actual"
+                    android:text="Periodos previos"
                     android:textSize="16dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -90,4 +90,5 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--    <include android:id="@+id/progress_layout" layout="@layout/progressbar_layout" />-->
 </androidx.core.widget.NestedScrollView>

@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentGeneralRevenueBinding
 import com.urbanoexpress.iridio.model.GeneralRevenueViewModel
 import com.urbanoexpress.iridio.ui.BaseActivity2
 import com.urbanoexpress.iridio.ui.adapter.WeeksRevenueAdapter
+import com.urbanoexpress.iridio.urbanocore.values.AK
+import java.lang.Exception
 
 /**
  * Created by Brandon Quintanilla on March/01/2022.
@@ -31,7 +34,24 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     private fun observeViewModel() {
 
-        gananciasVM.fetchMisGanancias()
+        gananciasVM.isLoadingLD.observe(this) { isLoading ->
+            if (isLoading) {
+                //TODO
+                //               showProgressDialog()
+/*                requireActivity()
+                    .findViewById<View>(R.id.progress_lay)
+                    .findViewById<View>(R.id.progress_layout)
+                    .visibility =  View.VISIBLE*/
+            } else {
+//                dismissProgressDialog()
+            }
+        }
+
+        gananciasVM.generalRevenueDataLD.observe(this) {
+            Log.i("TAG", "observeViewModel: " + Gson().toJson(it))
+            bind.tvWeekRevenue.text = "S/ ${it.periodRevenue}"
+            periodAdaper.periods = it.prevPeriod!!
+        }
     }
 
     override fun onCreateView(
@@ -51,21 +71,32 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         return bind.root
     }
 
-    private fun setupView() {
+    lateinit var periodAdaper: WeeksRevenueAdapter
 
-        bind.rvWeeks.adapter = WeeksRevenueAdapter().apply {
+    private fun setupView() {
+        periodAdaper = WeeksRevenueAdapter().apply {
             this.onItemClick = this@GeneralRevenueFragment::handleItemClick
         }
+
+        bind.rvWeeks.adapter = periodAdaper
+
+        gananciasVM.fetchMisGanancias()//TODO manage one time fetch data
     }
 
     private fun handleItemClick(index: Int) {
 
-        Log.i("TAG", "handleItemClick: $index")
-        val args = bundleOf()
+        try {
 
-        findNavController().navigate(
-            R.id.action_generalRevenueFragment_to_weekRevenueFragment,
-            args
-        )
+            val args = bundleOf(
+                AK.PERIOD to periodAdaper.periods[index]
+            )
+
+            findNavController().navigate(
+                R.id.action_generalRevenueFragment_to_weekRevenueFragment,
+                args)
+
+        } catch (e: Exception) {
+            Log.e("TAG", "handleItemClick: " + e.message, e)
+        }
     }
 }

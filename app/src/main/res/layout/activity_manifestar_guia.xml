@@ -83,5 +83,9 @@
         app:layout_anchor="@id/rvPiezas"
         app:layout_anchorGravity="end|bottom"/>
 
-    <include android:id="@+id/progress_layout" layout="@layout/progressbar_layout" />
+    <include android:id="@+id/progressbar_layout"
+        layout="@layout/progressbar_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

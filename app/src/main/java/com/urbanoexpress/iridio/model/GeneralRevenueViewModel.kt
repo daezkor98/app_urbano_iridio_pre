@@ -1,10 +1,9 @@
 package com.urbanoexpress.iridio.model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.urbanoexpress.iridio.model.dto.GeneralRevenue
 import com.urbanoexpress.iridio.model.interactor.BaseViewModel
 import com.urbanoexpress.iridio.model.interactor.MisGananciasInteractor
-import com.urbanoexpress.iridio.urbanocore.ST
 
 
 /**
@@ -13,17 +12,13 @@ import com.urbanoexpress.iridio.urbanocore.ST
 
 class GeneralRevenueViewModel : BaseViewModel() {
 
-//    var misGananciasInteractor = MisGananciasInteractor()
-
-    val misGananciasLD = MutableLiveData<Throwable>()
+    val generalRevenueDataLD = MutableLiveData<GeneralRevenue>()
 
     fun fetchMisGanancias() = executeIO {
 
         val param = HashMap<String, Any>()
         val data = MisGananciasInteractor.getMisGanancias(param)
-        Log.i("TAG", "fethcData: " + ST.gson.toJson(data))
-        //TODO
-//        ST
+        generalRevenueDataLD.postValue(data)
     }
 
 }
