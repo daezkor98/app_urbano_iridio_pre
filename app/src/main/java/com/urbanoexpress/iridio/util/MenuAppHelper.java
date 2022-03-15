@@ -3,6 +3,7 @@ package com.urbanoexpress.iridio.util;
 import android.content.Context;
 
 import com.urbanoexpress.iridio.R;
+import com.urbanoexpress.iridio.ui.MisGananciasActivity;
 import com.urbanoexpress.iridio.ui.NotificacionesRutaActivity;
 import com.urbanoexpress.iridio.ui.PlanDeViajeActivity;
 import com.urbanoexpress.iridio.ui.ResumenRutaActivity;
@@ -52,6 +53,8 @@ public class MenuAppHelper {
             return new MenuAppHelper(ResumenRutaRuralActivity.class, R.drawable.ic_library_books_grey);
         } else if (menuClass.equalsIgnoreCase("notificaciones")) {
             return new MenuAppHelper(NotificacionesRutaActivity.class, R.drawable.ic_bell_grey);
+        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
+            return new MenuAppHelper(MisGananciasActivity.class, R.drawable.ic_coin);
         } else {
             return new MenuAppHelper(null, R.drawable.ic_code_tags_grey);
         }
@@ -69,6 +72,8 @@ public class MenuAppHelper {
             return context.getString(R.string.text_menu_ruta_del_dia);
         } else if (menuClass.equalsIgnoreCase("notificaciones")) {
             return context.getString(R.string.text_menu_notificaciones);
+        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
+            return context.getString(R.string.text_menu_ganancias);
         } else {
             return "No definido.";
         }
@@ -86,6 +91,8 @@ public class MenuAppHelper {
             return R.drawable.ic_linear_car;
         } else if (menuClass.equalsIgnoreCase("notificaciones")) {
             return R.drawable.ic_linear_alarm;
+        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
+            return R.drawable.coin;
         } else {
             return 0;
         }
@@ -103,6 +110,8 @@ public class MenuAppHelper {
         } else if (menuClass.equalsIgnoreCase("ruta_express")) {
             return true;
         } else if (menuClass.equalsIgnoreCase("notificaciones")) {
+            return true;
+        } else if (menuClass.equalsIgnoreCase("my_revenue")) {
             return true;
         } else {
             return false;

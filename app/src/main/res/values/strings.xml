@@ -449,6 +449,7 @@
     <string name="text_menu_resumen_ruta">Información detallada de tu ruta (total de guías, tiempo en ruta, etc.).</string>
     <string name="text_menu_plan_de_viaje">Marca tus llegadas y salidas en las paradas programadas.</string>
     <string name="text_menu_notificaciones">Aqui puedes ver todas tus notificaciones, no te olvides leerlos.</string>
+    <string name="text_menu_ganancias">Aqui puedes ver tu reporte de ganancias y subir tu RH</string>
     <string name="title_activity_qrscanner">QRScannerActivity</string>
     <string name="text_gregar_a_ruta">Agregar a ruta</string>
     <string name="text_dot">&#8226;</string>

@@ -2,6 +2,7 @@ package com.urbanoexpress.iridio.presenter;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 
@@ -181,6 +182,7 @@ public class SplashLogInPresenter implements RequestCallback {
         }
 
         private void saveUserProfile(JSONObject data) throws JSONException, NullPointerException {
+
             Preferences.getInstance().edit()
                     .putString("idUsuario", data.getString("id_user"))
                     .putString("usuario", data.getString("usuario"))
