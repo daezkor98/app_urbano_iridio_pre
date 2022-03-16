@@ -45,7 +45,7 @@ class WeekRevenueFragment : BaseFragment2() {
     lateinit var dayAdapter: DayRevenueAdapter
 
     private fun setupView() {
-        val perd = arguments?.get(AK.PERIOD) as Period
+        val perd = arguments?.get(AK.SELECTED_PERIOD) as Period
 
         bind.tvWeekRevenue.text = "S/ ${perd.weekPeriodRevenue}"
 

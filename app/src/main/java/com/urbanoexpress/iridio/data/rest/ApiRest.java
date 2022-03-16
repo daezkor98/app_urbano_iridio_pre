@@ -80,7 +80,6 @@ public final class ApiRest {
         String GET_MY_REVENUES = "api-apps/iridio/MisGanancias";
         String GET_WEEK_DETAIL = "api-apps/iridio/SemanaDetail";
 
-
         interface Google {
             String DISTANCE_MATRIX  = "api-apps/iridio/googleDistanceMatrix";
             String DIRECTIONS       = "api-apps/iridio/googleDirections";

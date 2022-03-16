@@ -16,9 +16,13 @@ class GeneralRevenueViewModel : BaseViewModel() {
 
     fun fetchMisGanancias() = executeIO {
 
-        val param = HashMap<String, Any>()
+        //TODO no enviar parametros en duro
+        val param = mapOf(
+            "vp_per_id" to "5446",
+            "vp_periodo" to "3"
+        )
+
         val data = MisGananciasInteractor.getMisGanancias(param)
         generalRevenueDataLD.postValue(data)
     }
-
 }

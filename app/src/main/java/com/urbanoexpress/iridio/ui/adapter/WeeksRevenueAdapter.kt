@@ -8,7 +8,6 @@ import com.urbanoexpress.iridio.model.dto.Period
 import com.urbanoexpress.iridio.urbanocore.OnItemClick
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 
-
 /**
  * Created by Brandon Quintanilla on February/28/2022.
  */

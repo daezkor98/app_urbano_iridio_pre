@@ -13,8 +13,8 @@ import com.urbanoexpress.iridio.databinding.FragmentGeneralRevenueBinding
 import com.urbanoexpress.iridio.model.GeneralRevenueViewModel
 import com.urbanoexpress.iridio.ui.BaseActivity2
 import com.urbanoexpress.iridio.ui.adapter.WeeksRevenueAdapter
+import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 import com.urbanoexpress.iridio.urbanocore.values.AK
-import java.lang.Exception
 
 /**
  * Created by Brandon Quintanilla on March/01/2022.
@@ -75,28 +75,63 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     private fun setupView() {
         periodAdaper = WeeksRevenueAdapter().apply {
-            this.onItemClick = this@GeneralRevenueFragment::handleItemClick
+            this.onItemClick = ::handleItemClick
+            bind.rvWeeks.adapter = this
+        }
+        //TODO manage one time fetch data
+
+        configUI()
+
+        gananciasVM.fetchMisGanancias()
+    }
+
+    private fun configUI() {
+        //TODO validate by period states
+        if (true) {
+
+            bind.btnRegistrarFac.onExclusiveClick {
+
+                val approvedPeriods = 1
+//                val approvedPeriods  = periodAdaper.periods.countWith { item -> item.processState == "APROVVED" }//TODO use in UI confing
+
+                if (approvedPeriods == 1)
+                {
+                    val args = bundleOf(
+                        AK.SELECTED_PERIOD to periodAdaper.periods.find { item -> item.processState == "APROVVED" }
+                    )
+
+                    findNavController().navigate(
+                        R.id.action_generalRevenueFragment_to_registroFacturaFragment,
+                        args
+                    )
+                } else {
+                    val args = bundleOf(
+                        AK.PERIODS to periodAdaper.periods.map { item -> item.processState == "APROVVED" }
+                    )
+
+                    //TODO call selectionView
+                    findNavController().navigate(
+                        R.id.action_generalRevenueFragment_to_selectPeriodFragment,
+                        args
+                    )
+                }
+            }
+
+        } else {
+            bind.btnRegistrarFac.isEnabled = false
         }
 
-        bind.rvWeeks.adapter = periodAdaper
-
-        gananciasVM.fetchMisGanancias()//TODO manage one time fetch data
     }
 
     private fun handleItemClick(index: Int) {
 
-        try {
+        val args = bundleOf(
+            AK.SELECTED_PERIOD to periodAdaper.periods[index]
+        )
 
-            val args = bundleOf(
-                AK.PERIOD to periodAdaper.periods[index]
-            )
-
-            findNavController().navigate(
-                R.id.action_generalRevenueFragment_to_weekRevenueFragment,
-                args)
-
-        } catch (e: Exception) {
-            Log.e("TAG", "handleItemClick: " + e.message, e)
-        }
+        findNavController().navigate(
+            R.id.action_generalRevenueFragment_to_weekRevenueFragment,
+            args
+        )
     }
 }

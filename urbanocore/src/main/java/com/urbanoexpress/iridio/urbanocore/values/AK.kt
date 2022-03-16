@@ -6,5 +6,6 @@ package com.urbanoexpress.iridio.urbanocore.values
  */
 //Argument Keys
 object AK {
-    const val PERIOD = "PERIOD"
+    const val SELECTED_PERIOD = "PERIOD"
+    const val PERIODS = "PERIODS"
 }

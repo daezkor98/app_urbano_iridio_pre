@@ -17,3 +17,4 @@ data class Period(
     val processState: String?,
     val weekPeriodRevenue: String?
 ) : Serializable
+//TODO PERIOD STATE

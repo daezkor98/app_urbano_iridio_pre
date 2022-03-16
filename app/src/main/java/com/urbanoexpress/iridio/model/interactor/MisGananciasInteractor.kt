@@ -19,20 +19,22 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-
 /**
  * Created by Brandon Quintanilla on March/02/2022.
  */
 object MisGananciasInteractor {
 
-    suspend fun getMisGanancias(params: HashMap<String, Any>) =
+    suspend fun getMisGanancias(params: Map<String, String>) =
         suspendCoroutine<GeneralRevenue> { continuation ->
             ApiRequest.getInstance().newParams()
+            ApiRequest.getInstance().putAllParams(params)
             ApiRequest.getInstance().request(
                 ApiRest.url(GET_MY_REVENUES), FORM_DATA, object : ResponseListener {
                     override fun onResponse(response: JSONObject) {
 
                         try {
+
+                            Log.i("TAG", "onResponse: $response")
 
                             val instance = response.toInstance<ResponseOf<GeneralRevenue>>()
 

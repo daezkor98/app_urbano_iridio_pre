@@ -10,6 +10,6 @@ fun View.onExclusiveClick(action: (v: View) -> Unit) {
     setOnClickListener { v ->
         isEnabled = false
         action(v)
-        postDelayed({ isEnabled = true }, 700)
+        postDelayed({ isEnabled = true }, 900)
     }
 }

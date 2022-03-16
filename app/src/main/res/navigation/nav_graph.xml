@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_generalRevenueFragment_to_weekRevenueFragment"
             app:destination="@id/weekRevenueFragment" />
+        <action
+            android:id="@+id/action_generalRevenueFragment_to_registroFacturaFragment"
+            app:destination="@id/registroFacturaFragment" />
+        <action
+            android:id="@+id/action_generalRevenueFragment_to_selectPeriodFragment"
+            app:destination="@id/selectPeriodFragment" />
     </fragment>
 
     <fragment
@@ -20,4 +26,20 @@
         android:name="com.urbanoexpress.iridio.ui.fragment.WeekRevenueFragment"
         android:label="fragment_week_revenue"
         tools:layout="@layout/fragment_week_revenue" />
+
+    <fragment
+        android:id="@+id/registroFacturaFragment"
+        android:name="com.urbanoexpress.iridio.ui.fragment.RegistroFacturaFragment"
+        android:label="fragment_registro_factura"
+        tools:layout="@layout/fragment_registro_factura" />
+    <fragment
+        android:id="@+id/selectPeriodFragment"
+        android:name="com.urbanoexpress.iridio.ui.fragment.SelectPeriodFragment"
+        android:label="fragment_select_period"
+        tools:layout="@layout/fragment_select_period" >
+        <action
+            android:id="@+id/action_selectPeriodFragment_to_registroFacturaFragment"
+            app:destination="@id/registroFacturaFragment" />
+    </fragment>
+
 </navigation>

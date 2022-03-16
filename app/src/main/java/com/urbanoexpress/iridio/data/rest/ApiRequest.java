@@ -108,6 +108,10 @@ public class ApiRequest {
         requestParamsData = new HashMap<String, MultipartJsonObjectRequest.DataPart>();
     }
 
+    public void putAllParams(Map<String, String> params) {
+        requestParams.putAll(params);
+    }
+
     public void putParams(String key, String value) {
         requestParams.put(key, value);
     }
