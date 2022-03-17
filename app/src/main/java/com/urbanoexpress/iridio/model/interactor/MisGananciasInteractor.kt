@@ -66,6 +66,7 @@ object MisGananciasInteractor {
                         try {
                               Log.i("TAG", "fetchWeekDetail 11: " + response)
 
+//                            val instance = response.toInstance<ResponseOf<WeekRevenue>>()
                             val instance = response.toInstance<ResponseOf<WeekRevenue>>()
 
                             instance?.data.ifSafe {
@@ -86,3 +87,4 @@ object MisGananciasInteractor {
                 })
         }
 }
+

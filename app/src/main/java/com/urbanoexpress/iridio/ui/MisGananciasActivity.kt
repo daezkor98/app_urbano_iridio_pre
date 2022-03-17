@@ -24,7 +24,7 @@ class MisGananciasActivity : BaseActivity2() {
         setupToolbar(bind.toolbar)//TODO checkColor
     }
 
-    private fun openPDFPicker() {
+/*    private fun openPDFPicker() {
         val intentPDF = Intent(Intent.ACTION_GET_CONTENT)
         intentPDF.type = "application/pdf"
         intentPDF.addCategory(Intent.CATEGORY_OPENABLE)
@@ -48,6 +48,5 @@ class MisGananciasActivity : BaseActivity2() {
 //                showToast("Lo sentimos, la imagen no fue seleccionada correctamente.")
             }
         }
-    }
-
+    }*/
 }

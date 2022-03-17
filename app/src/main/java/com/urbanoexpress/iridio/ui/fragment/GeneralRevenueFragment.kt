@@ -1,18 +1,17 @@
 package com.urbanoexpress.iridio.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentGeneralRevenueBinding
 import com.urbanoexpress.iridio.model.GeneralRevenueViewModel
 import com.urbanoexpress.iridio.ui.BaseActivity2
-import com.urbanoexpress.iridio.ui.adapter.WeeksRevenueAdapter
+import com.urbanoexpress.iridio.ui.adapter.PeriodsRevenueAdapter
+import com.urbanoexpress.iridio.ui.dialogs.FacturaPeriodoResumenDialog
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 import com.urbanoexpress.iridio.urbanocore.values.AK
 
@@ -48,9 +47,9 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         }
 
         gananciasVM.generalRevenueDataLD.observe(this) {
-            Log.i("TAG", "observeViewModel: " + Gson().toJson(it))
-            bind.tvWeekRevenue.text = "S/ ${it.periodRevenue}"
-            periodAdaper.periods = it.prevPeriod!!
+            val curr = it.Periods?.get(0)?.monto
+            bind.tvWeekRevenue.text = "S/ ${curr}"
+            periodsAdaper.periods = it.Periods?.filter { item -> item.periodo!! > 0 }!!
         }
     }
 
@@ -71,10 +70,10 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         return bind.root
     }
 
-    lateinit var periodAdaper: WeeksRevenueAdapter
+    lateinit var periodsAdaper: PeriodsRevenueAdapter
 
     private fun setupView() {
-        periodAdaper = WeeksRevenueAdapter().apply {
+        periodsAdaper = PeriodsRevenueAdapter().apply {
             this.onItemClick = ::handleItemClick
             bind.rvWeeks.adapter = this
         }
@@ -94,10 +93,9 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
                 val approvedPeriods = 1
 //                val approvedPeriods  = periodAdaper.periods.countWith { item -> item.processState == "APROVVED" }//TODO use in UI confing
 
-                if (approvedPeriods == 1)
-                {
+                if (approvedPeriods == 1) {
                     val args = bundleOf(
-                        AK.SELECTED_PERIOD to periodAdaper.periods.find { item -> item.processState == "APROVVED" }
+                        AK.SELECTED_PERIOD to periodsAdaper.periods.find { item -> item.processState == "APROVVED" }
                     )
 
                     findNavController().navigate(
@@ -106,7 +104,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
                     )
                 } else {
                     val args = bundleOf(
-                        AK.PERIODS to periodAdaper.periods.map { item -> item.processState == "APROVVED" }
+                        AK.PERIODS to periodsAdaper.periods.map { item -> item.processState == "APROVVED" }
                     )
 
                     //TODO call selectionView
@@ -120,18 +118,28 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         } else {
             bind.btnRegistrarFac.isEnabled = false
         }
-
     }
 
     private fun handleItemClick(index: Int) {
 
+        val dialog = FacturaPeriodoResumenDialog.getInstance(
+            periodsAdaper.periods[index],
+            ::navigateToDetail
+        )
+        dialog.show(childFragmentManager, "RESS")
+    }
+
+    fun navigateToDetail() {
+//TODO navigate and call service
         val args = bundleOf(
-            AK.SELECTED_PERIOD to periodAdaper.periods[index]
+            AK.SELECTED_PERIOD to periodsAdaper.periods[0]
         )
 
         findNavController().navigate(
-            R.id.action_generalRevenueFragment_to_weekRevenueFragment,
+//            R.id.action_generalRevenueFragment_to_weekRevenueFragment,
+            R.id.action_generalRevenueFragment_to_periodDetailFragment,
             args
         )
+
     }
 }

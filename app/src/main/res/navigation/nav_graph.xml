@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_generalRevenueFragment_to_selectPeriodFragment"
             app:destination="@id/selectPeriodFragment" />
+        <action
+            android:id="@+id/action_generalRevenueFragment_to_periodDetailFragment"
+            app:destination="@id/periodDetailFragment" />
     </fragment>
 
     <fragment
@@ -36,10 +39,16 @@
         android:id="@+id/selectPeriodFragment"
         android:name="com.urbanoexpress.iridio.ui.fragment.SelectPeriodFragment"
         android:label="fragment_select_period"
-        tools:layout="@layout/fragment_select_period" >
+        tools:layout="@layout/fragment_select_period">
         <action
             android:id="@+id/action_selectPeriodFragment_to_registroFacturaFragment"
             app:destination="@id/registroFacturaFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/periodDetailFragment"
+        android:name="com.urbanoexpress.iridio.ui.fragment.PeriodDetailFragment"
+        android:label="fragment_period_detail"
+        tools:layout="@layout/fragment_period_detail" />
 
 </navigation>

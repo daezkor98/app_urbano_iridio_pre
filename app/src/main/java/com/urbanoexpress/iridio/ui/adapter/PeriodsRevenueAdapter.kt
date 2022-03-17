@@ -11,11 +11,11 @@ import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 /**
  * Created by Brandon Quintanilla on February/28/2022.
  */
-class WeeksRevenueAdapter : RecyclerView.Adapter<WeeksRevenueAdapter.ViewHolder>() {
+class PeriodsRevenueAdapter : RecyclerView.Adapter<PeriodsRevenueAdapter.ViewHolder>() {
 
     var onItemClick: OnItemClick = null
 
-    var periods: ArrayList<Period> = ArrayList()
+    var periods: List<Period> = ArrayList()
         set(value) {
             field = value
             this.notifyDataSetChanged()
@@ -39,8 +39,8 @@ class WeeksRevenueAdapter : RecyclerView.Adapter<WeeksRevenueAdapter.ViewHolder>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val period = periods[position]
-        holder.bind.tvDaysIntervalBegg.text = "Desde: ${period.beggningDay}"
-        holder.bind.tvDaysIntervalEnd.text = "Hasta: ${period.endingDay}"
+        holder.bind.tvDaysIntervalBegg.text = "Desde: ${period.fecha_inicio}"
+        holder.bind.tvDaysIntervalEnd.text = "Hasta: ${period.fecha_fin}"
         holder.bind.tvRevenue.text = "S/ ${period.weekPeriodRevenue}"
     }
     override fun getItemCount(): Int = periods.size

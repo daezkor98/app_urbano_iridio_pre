@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.dialogs.FacturaPeriodoResumenDialog">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Periodo"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/lightPrimaryText" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_30"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.32"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_60"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.65"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lbl_guias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="GUIAS"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/guide_60"
+            app:layout_constraintStart_toStartOf="@id/guide_30"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lbl_dinero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="MONTO"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide_60"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider_header"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/darkDividers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lbl_guias" />
+
+        <TextView
+            android:id="@+id/lbl_entregas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:text="ENTREGAS"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_header" />
+
+        <TextView
+            android:id="@+id/tv_entregas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/lbl_entregas"
+            app:layout_constraintEnd_toEndOf="@id/guide_60"
+            app:layout_constraintStart_toStartOf="@id/guide_30"
+            app:layout_constraintTop_toTopOf="@id/lbl_entregas" />
+
+        <TextView
+            android:id="@+id/tv_monto_entregas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S/ 100"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_entregas"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide_60"
+            app:layout_constraintTop_toTopOf="@id/tv_entregas" />
+
+        <TextView
+            android:id="@+id/lbl_visitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:text="VISITAS"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lbl_entregas" />
+
+        <TextView
+            android:id="@+id/tv_visitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/lbl_visitas"
+            app:layout_constraintEnd_toEndOf="@id/guide_60"
+            app:layout_constraintStart_toStartOf="@id/guide_30"
+            app:layout_constraintTop_toTopOf="@id/lbl_visitas" />
+
+        <TextView
+            android:id="@+id/tv_monto_visitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="S/ 10"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/darkPrimaryText"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_visitas"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide_60"
+            app:layout_constraintTop_toTopOf="@id/tv_visitas" />
+
+        <com.urbanoexpress.iridio.ui.widget.GoDetailBtn
+            android:id="@+id/btn_godetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide_60"
+            app:layout_constraintTop_toBottomOf="@id/tv_monto_visitas" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
