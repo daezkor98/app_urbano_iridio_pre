@@ -185,6 +185,7 @@ public class SplashLogInPresenter implements RequestCallback {
 
             Preferences.getInstance().edit()
                     .putString("idUsuario", data.getString("id_user"))
+                    .putString("idPer", data.getString("per_id"))
                     .putString("usuario", data.getString("usuario"))
                     .putString("nombre", data.getString("nombre"))
                     .putString("tipoUsuario", data.getString("usr_tipo"))

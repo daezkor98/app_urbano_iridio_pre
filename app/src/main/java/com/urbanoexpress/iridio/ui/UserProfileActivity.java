@@ -235,7 +235,8 @@ public class UserProfileActivity extends AppThemeBaseActivity implements UserPro
                         try {
                             Uri imageUri = result.getData().getData();
                             Bitmap bitmap = getBitmapFromSelectedImage(imageUri);
-                            bitmap = ImageRotator.rotateImageIfRequired(this, bitmap, imageUri);
+                            //TODO ImageRotator is failling
+//                            bitmap = ImageRotator.rotateImageIfRequired(this, bitmap, imageUri);
                             presenter.onPickImageResultOK(bitmap);
                         } catch (FileNotFoundException ex) {
                             ex.printStackTrace();

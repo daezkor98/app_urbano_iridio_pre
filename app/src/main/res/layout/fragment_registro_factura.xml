@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.RegistroFacturaFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -120,17 +120,20 @@
                         app:layout_constraintEnd_toStartOf="@id/tv_sub_file"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-<!--TODO: add button-->
-                    <ImageButton
+
+                    <ImageView
                         android:id="@+id/btn_add_file"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/ripple_simple_transparent"
                         android:contentDescription="Agregar Archivo"
                         android:elevation="7dp"
-                        android:src="@drawable/ic_account_white"
+                        android:padding="5dp"
+                        android:src="@drawable/addfile"
                         app:layout_constraintEnd_toEndOf="@id/tv_sub_file"
                         app:layout_constraintStart_toStartOf="@id/tv_sub_file"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/red_1" />
 
                     <TextView
                         android:id="@+id/tv_sub_file"
@@ -141,12 +144,10 @@
                         android:text="(Adjuntar archivo)"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_add_file"
-                        />
+                        app:layout_constraintTop_toBottomOf="@id/btn_add_file" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/btn_enviar"

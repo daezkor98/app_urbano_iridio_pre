@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urbanoexpress.iridio.databinding.RowRevenueWeekBinding
 import com.urbanoexpress.iridio.model.dto.Period
+import com.urbanoexpress.iridio.model.dto.certEstadosMap
 import com.urbanoexpress.iridio.urbanocore.OnItemClick
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 
@@ -40,8 +41,10 @@ class PeriodsRevenueAdapter : RecyclerView.Adapter<PeriodsRevenueAdapter.ViewHol
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val period = periods[position]
         holder.bind.tvDaysIntervalBegg.text = "Desde: ${period.fecha_inicio}"
+        holder.bind.tvEstado.text = "${certEstadosMap[period.cert_estado]}"
         holder.bind.tvDaysIntervalEnd.text = "Hasta: ${period.fecha_fin}"
-        holder.bind.tvRevenue.text = "S/ ${period.weekPeriodRevenue}"
+        holder.bind.tvRevenue.text = "S/ ${period.monto}"
     }
+
     override fun getItemCount(): Int = periods.size
 }

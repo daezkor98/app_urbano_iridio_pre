@@ -49,4 +49,17 @@ class MisGananciasActivity : BaseActivity2() {
             }
         }
     }*/
+
+    private  fun testtt(){
+        val resolver = applicationContext.contentResolver
+
+// "rw" for read-and-write;
+// "rwt" for truncating or overwriting existing file contents.
+        val readOnlyMode = "r"
+        /*
+        resolver.openFileDescriptor(content-uri, readOnlyMode).use { pfd ->
+            // Perform operations on "pfd".
+        }
+        */
+    }
 }

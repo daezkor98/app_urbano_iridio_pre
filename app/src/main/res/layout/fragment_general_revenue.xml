@@ -24,11 +24,12 @@
 
             <TextView
                 android:id="@+id/tvWeekRevenue"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:gravity="center"
-                android:text="S/ 400"
+                android:paddingHorizontal="15dp"
+                android:text="S/ 0.00"
                 android:textColor="@color/red_1"
                 android:textSize="44dp"
                 android:textStyle="bold"
@@ -41,7 +42,8 @@
                 android:id="@+id/tvWeekSub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Periodo actual"
+                android:padding="8dp"
+                android:text="Esta semana"
                 app:layout_constraintEnd_toEndOf="@id/tvWeekRevenue"
                 app:layout_constraintStart_toStartOf="@id/tvWeekRevenue"
                 app:layout_constraintTop_toBottomOf="@id/tvWeekRevenue" />
@@ -50,7 +52,6 @@
                 android:id="@+id/img_hand_money"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="15dp"
                 android:src="@drawable/icon_hand_money"
                 app:layout_constraintEnd_toEndOf="@id/tvWeekSub"
                 app:layout_constraintStart_toStartOf="@id/tvWeekSub"
@@ -111,5 +112,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/progress_layout"
+        layout="@layout/progressbar_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

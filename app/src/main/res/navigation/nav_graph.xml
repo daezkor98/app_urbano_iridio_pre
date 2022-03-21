@@ -24,6 +24,7 @@
             app:destination="@id/periodDetailFragment" />
     </fragment>
 
+    <!--TODO REMOVE?-->
     <fragment
         android:id="@+id/weekRevenueFragment"
         android:name="com.urbanoexpress.iridio.ui.fragment.WeekRevenueFragment"
@@ -35,6 +36,7 @@
         android:name="com.urbanoexpress.iridio.ui.fragment.RegistroFacturaFragment"
         android:label="fragment_registro_factura"
         tools:layout="@layout/fragment_registro_factura" />
+
     <fragment
         android:id="@+id/selectPeriodFragment"
         android:name="com.urbanoexpress.iridio.ui.fragment.SelectPeriodFragment"

@@ -7,20 +7,23 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.urbanoexpress.iridio.databinding.ModalFacturaPeriodoResumenBinding
 import com.urbanoexpress.iridio.model.dto.Period
-import com.urbanoexpress.iridio.urbanocore.SimpleEvent
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio.urbanocore.values.AK
+
+typealias PeridoEvent = ((Period) -> Unit)
 
 class FacturaPeriodoResumenDialog : BaseDialogFragment() {
 
     lateinit var bind: ModalFacturaPeriodoResumenBinding
 
-    lateinit var onVerMas: SimpleEvent
+    lateinit var onVerMas: PeridoEvent
+
+    var period: Period? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-/*            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)*/
+            period = it.getSerializable(AK.SELECTED_PERIOD) as Period?
         }
     }
 
@@ -28,23 +31,36 @@ class FacturaPeriodoResumenDialog : BaseDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
 
-//        return inflater.inflate(R.layout.modal_factura_periodo_resumen, container, false)
         bind = ModalFacturaPeriodoResumenBinding.inflate(inflater, container, false)
+
+        period?.let {
+            //TODO format prices
+            bind.tvEntregas.text = it.entregas.toString()
+            bind.tvMontoEntregas.text = "S/ ${it.monto_entregas}"
+            bind.tvVisitas.text = it.no_entregas.toString()
+            bind.tvMontoVisitas.text = "S/ ${it.monto_no_entregas}"
+        }
+
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bind.btnGodetail.onExclusiveClick { onVerMas.invoke() }
+        bind.btnGodetail.onExclusiveClick {
+            period?.let {
+                onVerMas.invoke(it)
+            }
+        }
     }
 
     companion object {
 
-        fun getInstance(period: Period, onVerMas: SimpleEvent): FacturaPeriodoResumenDialog {
+        fun getInstance(period: Period, onVerMas: PeridoEvent): FacturaPeriodoResumenDialog {
             val dialog = FacturaPeriodoResumenDialog()
-            dialog.arguments = bundleOf("" to "")
+            dialog.arguments = bundleOf(AK.SELECTED_PERIOD to period)
             dialog.onVerMas = onVerMas
             return dialog
         }

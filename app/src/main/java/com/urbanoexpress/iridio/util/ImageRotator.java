@@ -22,6 +22,11 @@ public class ImageRotator {
      * @return The resulted Bitmap after manipulation
      */
     public static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri imageUri) throws IOException {
+
+//        return img;
+
+
+
         ExifInterface exif;
 
         if (Build.VERSION.SDK_INT > 23) {

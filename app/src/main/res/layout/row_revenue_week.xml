@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
-    android:foreground="@drawable/ripple_simple_transparent"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:elevation="10dp"
+    android:foreground="@drawable/ripple_simple_transparent"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,12 +31,24 @@
             android:id="@+id/tvDaysInterval_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="Feb 17 - Feb 24"
             android:textSize="17dp"
-            android:layout_marginTop="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvDaysInterval_begg" />
+
+        <TextView
+            android:id="@+id/tvEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EST"
+            android:textSize="16dp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@id/imgArrow"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toEndOf="@id/tvDaysInterval_end"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvRevenue"
@@ -49,7 +61,7 @@
             app:layout_constraintEnd_toStartOf="@id/imgArrow"
             app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintStart_toEndOf="@id/tvDaysInterval_end"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvEstado" />
 
         <ImageView
             android:id="@+id/imgArrow"

@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.15" />
+            app:layout_constraintGuide_percent="0.2"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_60"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Feb 18"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guide_20"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="50"
             android:textColor="@color/red_1"
-            android:textSize="20dp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_entregados_monto"
             app:layout_constraintStart_toStartOf="@id/guide_20"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:text="S/ 380"
             android:textColor="@color/red_1"
-            android:textSize="20dp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guide_60"
             app:layout_constraintStart_toEndOf="@+id/tv_entregados_guias"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="20"
             android:textColor="@color/red_1"
-            android:textSize="20dp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_visitados_monto"
             app:layout_constraintStart_toEndOf="@id/guide_60"
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:text="S/ 50"
             android:textColor="@color/red_1"
-            android:textSize="20dp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_visitados_guias"

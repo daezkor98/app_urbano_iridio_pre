@@ -9,6 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentGeneralRevenueBinding
 import com.urbanoexpress.iridio.model.GeneralRevenueViewModel
+import com.urbanoexpress.iridio.model.dto.CERT_ESTADO.APROBADO
+import com.urbanoexpress.iridio.model.dto.Period
 import com.urbanoexpress.iridio.ui.BaseActivity2
 import com.urbanoexpress.iridio.ui.adapter.PeriodsRevenueAdapter
 import com.urbanoexpress.iridio.ui.dialogs.FacturaPeriodoResumenDialog
@@ -22,8 +24,9 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentGeneralRevenueBinding
 
-    //TODO inject
-    val gananciasVM = GeneralRevenueViewModel()
+    val gananciasVM = GeneralRevenueViewModel()    //TODO inject
+
+    lateinit var periodsAdaper: PeriodsRevenueAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,25 +34,23 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         observeViewModel()
     }
 
+    lateinit var currentPeriod: Period
     private fun observeViewModel() {
 
         gananciasVM.isLoadingLD.observe(this) { isLoading ->
             if (isLoading) {
-                //TODO
-                //               showProgressDialog()
-/*                requireActivity()
-                    .findViewById<View>(R.id.progress_lay)
-                    .findViewById<View>(R.id.progress_layout)
-                    .visibility =  View.VISIBLE*/
+                showProgressDialog()
             } else {
-//                dismissProgressDialog()
+                dismissProgressDialog()
             }
         }
 
         gananciasVM.generalRevenueDataLD.observe(this) {
-            val curr = it.Periods?.get(0)?.monto
-            bind.tvWeekRevenue.text = "S/ ${curr}"
-            periodsAdaper.periods = it.Periods?.filter { item -> item.periodo!! > 0 }!!
+
+            currentPeriod = it.Periods?.get(0)!!
+            val currentAmount = currentPeriod.monto
+            bind.tvWeekRevenue.text = "S/ ${currentAmount}"
+            periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0 }
         }
     }
 
@@ -70,47 +71,49 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         return bind.root
     }
 
-    lateinit var periodsAdaper: PeriodsRevenueAdapter
-
     private fun setupView() {
+
         periodsAdaper = PeriodsRevenueAdapter().apply {
             this.onItemClick = ::handleItemClick
             bind.rvWeeks.adapter = this
         }
-        //TODO manage one time fetch data
 
         configUI()
 
         gananciasVM.fetchMisGanancias()
     }
 
+    private fun onCurrentPeriodClick() {
+        val dialog = FacturaPeriodoResumenDialog.getInstance(
+            currentPeriod,
+            ::navigateToDetail
+        )
+        dialog.show(childFragmentManager, "RESS")
+    }
+
     private fun configUI() {
-        //TODO validate by period states
-        if (true) {
+
+        bind.tvWeekRevenue.onExclusiveClick { onCurrentPeriodClick() }
+        bind.tvWeekSub.onExclusiveClick { onCurrentPeriodClick() }
+
+        val areApproved =
+            periodsAdaper.periods.filter { item -> item.cert_estado == APROBADO.state_id }
+
+        if (areApproved.isNotEmpty()) {
 
             bind.btnRegistrarFac.onExclusiveClick {
 
-                val approvedPeriods = 1
-//                val approvedPeriods  = periodAdaper.periods.countWith { item -> item.processState == "APROVVED" }//TODO use in UI confing
-
-                if (approvedPeriods == 1) {
-                    val args = bundleOf(
-                        AK.SELECTED_PERIOD to periodsAdaper.periods.find { item -> item.processState == "APROVVED" }
-                    )
+                if (areApproved.size == 1) {
 
                     findNavController().navigate(
                         R.id.action_generalRevenueFragment_to_registroFacturaFragment,
-                        args
+                        bundleOf(AK.SELECTED_PERIOD to areApproved[0])
                     )
                 } else {
-                    val args = bundleOf(
-                        AK.PERIODS to periodsAdaper.periods.map { item -> item.processState == "APROVVED" }
-                    )
 
-                    //TODO call selectionView
                     findNavController().navigate(
                         R.id.action_generalRevenueFragment_to_selectPeriodFragment,
-                        args
+                        bundleOf(AK.PERIODS to areApproved)
                     )
                 }
             }
@@ -129,17 +132,15 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         dialog.show(childFragmentManager, "RESS")
     }
 
-    fun navigateToDetail() {
-//TODO navigate and call service
+    fun navigateToDetail(period: Period) {
+
         val args = bundleOf(
-            AK.SELECTED_PERIOD to periodsAdaper.periods[0]
+            AK.SELECTED_PERIOD to period
         )
 
         findNavController().navigate(
-//            R.id.action_generalRevenueFragment_to_weekRevenueFragment,
             R.id.action_generalRevenueFragment_to_periodDetailFragment,
             args
         )
-
     }
 }

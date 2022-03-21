@@ -10,10 +10,11 @@ import com.urbanoexpress.iridio.data.rest.ApiRest.Api.GET_MY_REVENUES
 import com.urbanoexpress.iridio.data.rest.ApiRest.Api.GET_WEEK_DETAIL
 import com.urbanoexpress.iridio.model.dto.GeneralRevenue
 import com.urbanoexpress.iridio.model.dto.ResponseOf
-import com.urbanoexpress.iridio.model.dto.WeekRevenue
+import com.urbanoexpress.iridio.model.dto.RevenueDay
 import com.urbanoexpress.iridio.model.dto.toInstance
 import com.urbanoexpress.iridio.urbanocore.ifNull
 import com.urbanoexpress.iridio.urbanocore.ifSafe
+import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest
 import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -24,7 +25,27 @@ import kotlin.coroutines.suspendCoroutine
  */
 object MisGananciasInteractor {
 
-    suspend fun getMisGanancias(params: Map<String, String>) =
+    suspend fun uploadFacturaPDF(
+        params: Map<String, String>,
+        data: MultipartJsonObjectRequest.DataPart?
+    ): Boolean =
+        suspendCoroutine<Boolean> { continuation ->
+            ApiRequest.getInstance().newParams()
+            ApiRequest.getInstance().putAllParams(params)
+            ApiRequest.getInstance().putData("file", data)
+            ApiRequest.getInstance().request(ApiRest.Api.UPLOAD_FACTURA_MOTORIZADO,
+                ApiRequest.TypeParams.MULTIPART, object : ResponseListener {
+                    override fun onResponse(response: JSONObject) {
+                        continuation.resume(true)
+                    }
+
+                    override fun onErrorResponse(error: VolleyError) {
+                        continuation.resume(false)
+                    }
+                })
+        }
+
+    suspend fun getMisGanancias(params: Map<String, String?>) =
         suspendCoroutine<GeneralRevenue> { continuation ->
             ApiRequest.getInstance().newParams()
             ApiRequest.getInstance().putAllParams(params)
@@ -33,8 +54,6 @@ object MisGananciasInteractor {
                     override fun onResponse(response: JSONObject) {
 
                         try {
-
-                            Log.i("TAG", "onResponse: $response")
 
                             val instance = response.toInstance<ResponseOf<GeneralRevenue>>()
 
@@ -55,26 +74,20 @@ object MisGananciasInteractor {
                 })
         }
 
-    suspend fun getSemanaDetail(param: HashMap<String, Any>) =
-        suspendCoroutine<WeekRevenue> { continuation ->
+    suspend fun getSemanaDetail(params: Map<String, String>) =
+        suspendCoroutine<List<RevenueDay>> { continuation ->
             ApiRequest.getInstance().newParams()
-//        ApiRequest.getInstance().putParams("username", params[0])
+            ApiRequest.getInstance().putAllParams(params)
             ApiRequest.getInstance().request(
                 ApiRest.url(GET_WEEK_DETAIL), FORM_DATA, object : ResponseListener {
                     override fun onResponse(response: JSONObject) {
-
                         try {
-                              Log.i("TAG", "fetchWeekDetail 11: " + response)
-
-//                            val instance = response.toInstance<ResponseOf<WeekRevenue>>()
-                            val instance = response.toInstance<ResponseOf<WeekRevenue>>()
-
+                            val instance = response.toInstance<ResponseOf<List<RevenueDay>>>()
                             instance?.data.ifSafe {
                                 continuation.resume(it)
                             }.ifNull {
                                 continuation.resumeWithException(Exception("No hay data"))//TODO
                             }
-
 
                         } catch (e: Exception) {
                             continuation.resumeWithException(e)

@@ -178,4 +178,8 @@
 
     <style name="Theme.MyApp.BottomSheetDialog" parent="Widget.BottomSheet.Dialog" />
 
+    <style name="RoundedCornersDialog" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">15dp</item>
+    </style>
+
 </resources>

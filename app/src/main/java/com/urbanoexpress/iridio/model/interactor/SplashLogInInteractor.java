@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.urbanoexpress.iridio.data.rest.ApiRequest;
 import com.urbanoexpress.iridio.data.rest.ApiRest;
 import com.urbanoexpress.iridio.model.interactor.callback.RequestCallback;
+import com.urbanoexpress.iridio.urbanocore.DevUtilsKt;
 import com.urbanoexpress.iridio.util.Preferences;
 
 /**
@@ -36,11 +37,9 @@ public class SplashLogInInteractor {
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
             @Override
             public void onResponse(JSONObject response) {
-                try{
-                    Log.i(TAG, "onResponse: " + response.getJSONObject("data").getJSONArray("userMenu").toString());
-                }catch (Exception e){
-                    Log.e(TAG, "onResponse: ",e );
-                }
+
+                //DevUtilsKt.logJson(response,"LOGINNNN");
+                //response.getJSONObject("data").getJSONArray("userMenu").toString()
 
                 callback.onSuccess(response);
             }

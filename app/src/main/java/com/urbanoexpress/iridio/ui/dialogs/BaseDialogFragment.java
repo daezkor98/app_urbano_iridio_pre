@@ -3,8 +3,15 @@ package com.urbanoexpress.iridio.ui.dialogs;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.urbanoexpress.iridio.R;
@@ -14,6 +21,19 @@ import com.urbanoexpress.iridio.ui.helpers.ModalInterface;
 import com.urbanoexpress.iridio.util.CommonUtils;
 
 public abstract class BaseDialogFragment extends DialogFragment implements ModalInterface {
+
+    @Override
+    public int getTheme() {
+        return R.style.RoundedCornersDialog;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     private ProgressDialog progressDialog = null;
 

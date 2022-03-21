@@ -69,6 +69,7 @@ public class UserProfilePresenter {
         view.openCamera(photoCapture);
     }
 
+    //TODO encontrar como es que se setea el byte data en PrepareDataPhotoObserver
     public void onPhotoCaptureResultOK() {
         view.showProgressDialog();
         prepareDataImageFile(photoCapture, new PrepareDataPhotoObserver(photoCapture.getName()));
@@ -168,6 +169,10 @@ public class UserProfilePresenter {
     }
 
     private void requestUploadPhotoUserProfile(String fileName, byte[] data) {
+
+        //Log.i("TAG", "requestUploadPhotoUserProfile: " +  data.length);
+        //Si se optiene datos 218754/41279 bytelength
+
         if (Connectivity.isConnected(view.getViewContext())) {
             RequestCallback callback = new RequestCallback() {
                 @Override
@@ -262,7 +267,7 @@ public class UserProfilePresenter {
         compositeDisposable.add(observable.subscribeWith(observer));
     }
 
-    private class PrepareDataPhotoObserver extends DisposableSingleObserver<byte[]> {
+     private class PrepareDataPhotoObserver extends DisposableSingleObserver<byte[]> {
 
         private String imageName;
 

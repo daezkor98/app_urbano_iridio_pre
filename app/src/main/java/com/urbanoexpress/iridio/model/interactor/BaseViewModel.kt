@@ -3,6 +3,7 @@ package com.urbanoexpress.iridio.model.interactor
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.urbanoexpress.iridio.urbanocore.logException
 import kotlinx.coroutines.*
 
 /**
@@ -23,7 +24,7 @@ open class BaseViewModel : ViewModel() {
                     isLoadingLD.postValue(true)
                     runOnThreadWithScope(this)
                 } catch (ex: Exception) {
-                    ex.printStackTrace()
+                    ex.logException("executeIO")
                     exceptionLD.postValue(ex)
                 } finally {
                     isLoadingLD.postValue(false)
