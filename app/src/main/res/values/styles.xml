@@ -182,4 +182,12 @@
         <item name="dialogCornerRadius">15dp</item>
     </style>
 
+    <style name="UrbRadioButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:buttonTint">@color/red_1</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
 </resources>

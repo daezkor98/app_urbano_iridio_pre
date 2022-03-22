@@ -16,12 +16,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentRegistroFacturaBinding
 import com.urbanoexpress.iridio.model.RegistrarFacturaViewModel
+import com.urbanoexpress.iridio.model.dto.Period
+import com.urbanoexpress.iridio.ui.BaseActivity
+import com.urbanoexpress.iridio.ui.dialogs.DatePickerDailogFragment
+import com.urbanoexpress.iridio.ui.dialogs.FileTypePickerDialog
+import com.urbanoexpress.iridio.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio.urbanocore.values.AK
+import com.urbanoexpress.iridio.urbanocore.values.getCurrentDay
 import com.urbanoexpress.iridio.util.CameraUtils
 import com.urbanoexpress.iridio.util.CommonUtils
 import com.urbanoexpress.iridio.util.FileUtils
@@ -39,18 +46,52 @@ import java.io.IOException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class RegistroFacturaFragment : Fragment() {
+class RegistroFacturaFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentRegistroFacturaBinding
 
     val facturaVM = RegistrarFacturaViewModel()
 
+    var period: Period? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             //TODO amount
-
+//            bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[0])
+            period = it.getSerializable(AK.SELECTED_PERIOD) as Period?
         }
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+
+        facturaVM.isLoadingLD.observe(this) { isLoading ->
+            if (isLoading) {
+                showProgressDialog()
+            } else {
+                dismissProgressDialog()
+            }
+        }
+
+        facturaVM.uploadFacturaResultLD.observe(this) { wasSuccesful ->
+
+            if (wasSuccesful) {
+                val messageDialog = MessageDialog.newInstance("Factura registrada")
+                messageDialog.completion = ::onFacturaPosted
+                messageDialog.show(childFragmentManager, "messageD")
+            } else {
+                //TODO: move to string resource
+                val messageDialog = MessageDialog
+                    .newInstance("Lo sentimos, ocurrió un error al registrar su factura. Intentelo nuevamente")
+                messageDialog.show(childFragmentManager, "messageD")
+            }
+        }
+    }
+
+    private fun onFacturaPosted() {
+        findNavController().popBackStack()
     }
 
     override fun onCreateView(
@@ -59,6 +100,7 @@ class RegistroFacturaFragment : Fragment() {
     ): View {
         bind = FragmentRegistroFacturaBinding.inflate(inflater, container, false)
         configUI()
+
         return bind.root
     }
 
@@ -75,7 +117,8 @@ class RegistroFacturaFragment : Fragment() {
             bind.tfNumeroFactura.error = null
         }
 
-        if (fechaFact.isEmpty()) {
+//        if (fechaFact.isEmpty()) {
+        if (false) {//TODO fix
             bind.tfFechaFactura.error = "Complete fecha"
             return false
         } else {
@@ -103,40 +146,132 @@ if (uriPath == null) {
 
     private fun configUI() {
 
+        bind.etFechaFactura.setText(getCurrentDay())
+
+        bind.etFechaFactura.setOnClickListener {
+
+            val newFragment = DatePickerDailogFragment.newInstance()
+            newFragment.dateListener =
+                DatePickerDailogFragment.OnDatePickerDailogFragmentListener { view, year, month, dayOfMonth ->
+                    Log.i("TAG", "Listener: " + year + "-" + month + "-" + dayOfMonth)
+                    //TODO
+                }
+            newFragment.show(childFragmentManager, "datePicker")
+        }
+
         bind.btnEnviar.onExclusiveClick {
 
             if (dataValid()) {
                 val numFact = bind.tfNumeroFactura.editText?.text.toString()
                 val fechaFact = bind.tfFechaFactura.editText?.text.toString()
                 val montoFact = bind.tfMontoFac.editText?.text.toString()
-                facturaVM.postFactura(numFact, fechaFact, montoFact, imageBytes)
+//                facturaVM.postFactura(numFact, fechaFact, montoFact, imageBytes)
+                facturaVM.postFactura(numFact, fechaFact, montoFact, period?.liquidacion!!, pdfData)
             }
-
         }
-
+/*
+*TODO
+* Licencia
+* SOAT
+* Foto de perfil - No
+* */
         bind.btnAddFile.onExclusiveClick {
-            positionSelectedOptionEditPhoto = 0
-            val options = arrayOf("Tomar foto", "Seleccionar foto")
-            ModalHelper.getBuilderAlertDialog(requireContext())
-                .setTitle("Adjuntar imagen")
-                .setSingleChoiceItems(
-                    options, 0
-                ) { dialog: DialogInterface?, which: Int ->
-                    positionSelectedOptionEditPhoto = which
-                }
-                .setPositiveButton(R.string.text_continuar) { dialog, which ->
-                    if (positionSelectedOptionEditPhoto == 0) {
-                        onTakePhotoClick()
-                    } else if (positionSelectedOptionEditPhoto == 1) {
-                        openGallery()
-                    }
-                }
-                .setNegativeButton(R.string.text_cancelar, null)
-                .show()
+//            showFilePickerDialog()
+            openPDFPicker()
+            //showImagePickerDialog()
         }
+    }
+
+    private fun showFilePickerDialog() {
+        val diagg = FileTypePickerDialog.newInstance()
+        diagg.show(childFragmentManager, "32135")
+    }
+
+    private fun showImagePickerDialog() {
+
+        positionSelectedOptionEditPhoto = 0
+        val options = arrayOf("Tomar foto", "Seleccionar foto")
+        ModalHelper.getBuilderAlertDialog(requireContext())
+            .setTitle("Adjuntar imagen")
+            .setSingleChoiceItems(
+                options, 0
+            ) { dialog: DialogInterface?, which: Int ->
+                positionSelectedOptionEditPhoto = which
+            }
+            .setPositiveButton(R.string.text_continuar) { dialog, which ->
+                if (positionSelectedOptionEditPhoto == 0) {
+                    onTakePhotoClick()
+                } else if (positionSelectedOptionEditPhoto == 1) {
+                    openGallery()
+                }
+            }
+            .setNegativeButton(R.string.text_cancelar, null)
+            .show()
 
     }
 
+    /**********************************************************************************************************************/
+    /*Pick PDF */
+    private fun openPDFPicker() {
+        val intentPDF = Intent(Intent.ACTION_GET_CONTENT)
+//        val intentPDF = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intentPDF.type = "application/pdf"
+
+        intentPDF.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        intentPDF.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        // intent.type = "image/*"
+        intentPDF.addCategory(Intent.CATEGORY_OPENABLE)
+        startPdfPickerForResult.launch(Intent.createChooser(intentPDF, "Select Picture"))
+    }
+
+    var pdfData: ByteArray? = null
+
+    private val startPdfPickerForResult = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == BaseActivity.RESULT_OK) {
+            if (result.data != null && result.data!!.data != null) {
+                try {
+
+                    val pdfUri = result.data!!.data!!
+                    val resolver = requireContext().applicationContext.contentResolver
+
+                    // "rw" for read-and-write;
+                    // "rwt" for truncating or overwriting existing file contents.
+/*                    val readOnlyMode = "r"
+                    resolver.openFileDescriptor(pdfUri, readOnlyMode).use { pfdFile ->
+                        // Perform operations on "pfd".
+                        Log.i("TAG", "startPdfPickerForResult: " + pfdFile?.statSize)
+                        Log.i("TAG", "startPdfPickerForResult: " + pfdFile?.fileDescriptor)
+                    }
+                    */
+
+                    resolver.openInputStream(pdfUri).use { pdfStream ->
+                        // Perform operations on "stream".
+                        //val mBytes= pdfStream?.readBytes()
+                        pdfData = pdfStream?.readBytes() ?: ByteArray(0)
+                        Log.i("TAG", "startPdfPickerForResult: " + pdfData?.size)
+                        Log.i("TAG", "startPdfPickerForResult: $pdfData")
+                    }
+
+/*                    val path = requireContext().getUriPath(imageUri)
+                    uriPath = path*/
+
+//                    bind.tvFileName.text = path.split("/").last()
+
+                } catch (ex: FileNotFoundException) {
+                    ex.printStackTrace()
+                } catch (ex: IOException) {
+                    ex.printStackTrace()
+                }
+            } else {
+//                showToast("Lo sentimos, la imagen no fue seleccionada correctamente.")
+            }
+        }
+    }
+
+
+    //añadir dias
     /***********************************************************************************************************************/
     /*Select Images Funcs*/
     /**

@@ -1,19 +1,18 @@
 package com.urbanoexpress.iridio.model.interactor
 
-import android.util.Log
 import com.android.volley.VolleyError
 import com.urbanoexpress.iridio.data.rest.ApiRequest
 import com.urbanoexpress.iridio.data.rest.ApiRequest.ResponseListener
 import com.urbanoexpress.iridio.data.rest.ApiRequest.TypeParams.FORM_DATA
 import com.urbanoexpress.iridio.data.rest.ApiRest
-import com.urbanoexpress.iridio.data.rest.ApiRest.Api.GET_MY_REVENUES
-import com.urbanoexpress.iridio.data.rest.ApiRest.Api.GET_WEEK_DETAIL
+import com.urbanoexpress.iridio.data.rest.ApiRest.Api.*
 import com.urbanoexpress.iridio.model.dto.GeneralRevenue
 import com.urbanoexpress.iridio.model.dto.ResponseOf
 import com.urbanoexpress.iridio.model.dto.RevenueDay
 import com.urbanoexpress.iridio.model.dto.toInstance
 import com.urbanoexpress.iridio.urbanocore.ifNull
 import com.urbanoexpress.iridio.urbanocore.ifSafe
+import com.urbanoexpress.iridio.urbanocore.logString
 import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -29,11 +28,11 @@ object MisGananciasInteractor {
         params: Map<String, String>,
         data: MultipartJsonObjectRequest.DataPart?
     ): Boolean =
-        suspendCoroutine<Boolean> { continuation ->
+        suspendCoroutine { continuation ->
             ApiRequest.getInstance().newParams()
             ApiRequest.getInstance().putAllParams(params)
             ApiRequest.getInstance().putData("file", data)
-            ApiRequest.getInstance().request(ApiRest.Api.UPLOAD_FACTURA_MOTORIZADO,
+            ApiRequest.getInstance().request(ApiRest.url(UPLOAD_FACTURA_MOTORIZADO),
                 ApiRequest.TypeParams.MULTIPART, object : ResponseListener {
                     override fun onResponse(response: JSONObject) {
                         continuation.resume(true)
@@ -54,6 +53,8 @@ object MisGananciasInteractor {
                     override fun onResponse(response: JSONObject) {
 
                         try {
+
+                            response.logString("getMisGanancias")
 
                             val instance = response.toInstance<ResponseOf<GeneralRevenue>>()
 

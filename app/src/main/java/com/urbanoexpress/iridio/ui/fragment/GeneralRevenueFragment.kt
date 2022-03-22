@@ -51,9 +51,13 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
             val currentAmount = currentPeriod.monto
             bind.tvWeekRevenue.text = "S/ ${currentAmount}"
             periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0 }
+            areApproved = periodsAdaper.periods
+                .filter { item -> item.cert_estado == APROBADO.state_id }
+            bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
         }
     }
 
+    lateinit var areApproved: List<Period>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -91,36 +95,41 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         dialog.show(childFragmentManager, "RESS")
     }
 
+
     private fun configUI() {
 
         bind.tvWeekRevenue.onExclusiveClick { onCurrentPeriodClick() }
         bind.tvWeekSub.onExclusiveClick { onCurrentPeriodClick() }
 
-        val areApproved =
-            periodsAdaper.periods.filter { item -> item.cert_estado == APROBADO.state_id }
 
-        if (areApproved.isNotEmpty()) {
+//        areApproved.logJson("areApproved")
 
-            bind.btnRegistrarFac.onExclusiveClick {
+//        if (true) {
+//        if (areApproved.isNotEmpty()) {
 
-                if (areApproved.size == 1) {
+        bind.btnRegistrarFac.onExclusiveClick {
 
-                    findNavController().navigate(
-                        R.id.action_generalRevenueFragment_to_registroFacturaFragment,
-                        bundleOf(AK.SELECTED_PERIOD to areApproved[0])
-                    )
-                } else {
+            if (areApproved.size == 1) {
+//                if (true) {
 
-                    findNavController().navigate(
-                        R.id.action_generalRevenueFragment_to_selectPeriodFragment,
-                        bundleOf(AK.PERIODS to areApproved)
-                    )
-                }
+                findNavController().navigate(
+                    //TODO Approve a period for enable factura button
+                    R.id.action_generalRevenueFragment_to_registroFacturaFragment,
+                    bundleOf(AK.SELECTED_PERIOD to areApproved[0])
+//                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[0])
+                )
+            } else {
+
+                findNavController().navigate(
+                    R.id.action_generalRevenueFragment_to_selectPeriodFragment,
+                    bundleOf(AK.PERIODS to areApproved)
+                )
             }
-
-        } else {
-            bind.btnRegistrarFac.isEnabled = false
         }
+
+/*        } else {
+            bind.btnRegistrarFac.isEnabled = false
+        }*/
     }
 
     private fun handleItemClick(index: Int) {

@@ -22,6 +22,7 @@ import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.google.gson.Gson;
 import com.urbanoexpress.iridio.R;
 import com.urbanoexpress.iridio.data.entity.VerifyUserSessionEntity;
 import com.urbanoexpress.iridio.data.local.PreferencesHelper;
@@ -75,6 +76,9 @@ public class UserStatusWorker extends Worker {
         try {
             Response<VerifyUserSessionEntity> response = callSync.execute();
             VerifyUserSessionEntity apiResponse = response.body();
+
+            //TODO REMOVE
+            Log.i(TAG, "doWork VerifyUserSessionEntity : "+  new Gson().toJson(apiResponse));
 
             if (apiResponse.getApp().isUpdateRequired()) {
                 displayNotification(apiResponse.getApp().getLatestVersionName());

@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio.model
 
+import androidx.lifecycle.MutableLiveData
 import com.urbanoexpress.iridio.model.interactor.BaseViewModel
 import com.urbanoexpress.iridio.model.interactor.MisGananciasInteractor
 import com.urbanoexpress.iridio.util.Preferences
@@ -11,28 +12,41 @@ import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest
  */
 class RegistrarFacturaViewModel : BaseViewModel() {
 
-    fun postFactura(numFact: String, fechaFact: String, montoFact: String, imageBytes: ByteArray?) =
-        executeIO {
+    val uploadFacturaResultLD: MutableLiveData<Boolean> = MutableLiveData()
 
-/*            val map = mapOf(
-                "vp_fac_fecha" to "04-03-2022",
-                "vp_fac_numero" to "99999",
-                "vp_id_user" to "1",
-                "vp_prov_codigo" to "143"
-            )*/
+    fun postFactura(
+        numFact: String,
+        fechaFact: String,
+        montoFact: String,//TODO
+        certID: String,
+        imageBytes: ByteArray?
+    ) =
+        executeIO {
 
             val userID = Preferences.getInstance().getString("idUsuario", "")!!
             val codigoProvincia = Preferences.getInstance().getString("codigoProvincia", "")!!
+            val idPer = Preferences.getInstance().getString("idPer", "")!!
 
             val map = mapOf(
                 "vp_fac_fecha" to fechaFact,
                 "vp_fac_numero" to numFact,
+                "vp_fac_sub_tot" to montoFact,
+                "ext" to "pdf",
                 "vp_id_user" to userID,
-                "vp_prov_codigo" to codigoProvincia
+                "vp_prov_codigo" to codigoProvincia,
+                "vp_cert_id" to certID,
+                "vp_per_id" to idPer
             )
 
-            val imagen = MultipartJsonObjectRequest.DataPart("file", imageBytes, "image/png")
+            val imagen =
+                MultipartJsonObjectRequest.DataPart(
+                    "Factura-22-03-22",
+                    imageBytes,
+                    "application/pdf"
+                )
+//                MultipartJsonObjectRequest.DataPart("Factura-22-03-22", imageBytes, "image/png")
 
-            MisGananciasInteractor.uploadFacturaPDF(map, imagen)
+            val isSuccess = MisGananciasInteractor.uploadFacturaPDF(map, imagen)
+            uploadFacturaResultLD.postValue(isSuccess)
         }
 }

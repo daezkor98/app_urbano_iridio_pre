@@ -8,4 +8,5 @@ package com.urbanoexpress.iridio.urbanocore.values
 object AK {
     const val SELECTED_PERIOD = "PERIOD"
     const val PERIODS = "PERIODS"
+    const val MESSAGE = "MESSAGE"
 }

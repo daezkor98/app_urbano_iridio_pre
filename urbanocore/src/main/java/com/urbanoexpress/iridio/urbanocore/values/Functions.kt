@@ -1,5 +1,8 @@
 package com.urbanoexpress.iridio.urbanocore.values
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 /**
  * Created by Brandon Quintanilla on March/21/2022.
@@ -16,4 +19,17 @@ private fun generateImageName(prefix: String): String {
     }
     return photoName*/
     return ""
+}
+
+/*Dates*/
+const val DATE_FORMAT = "dd/MM/yyyy"
+
+fun getCurrentDay(): String {
+    val date = Calendar.getInstance().time
+    val df = getDateFormatter().format(date)
+    return df.toString()
+}
+
+fun getDateFormatter(): SimpleDateFormat {
+    return SimpleDateFormat(DATE_FORMAT, Locale.US)
 }

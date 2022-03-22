@@ -2,6 +2,7 @@ package com.urbanoexpress.iridio.ui.dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
@@ -10,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.urbanoexpress.iridio.R;
+
+import java.util.Calendar;
 
 public class DatePickerDailogFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
@@ -28,6 +31,21 @@ public class DatePickerDailogFragment extends DialogFragment
         return fragment;
     }
 
+    /**
+     * Returns a DatePicker setted on today
+     */
+    public static DatePickerDailogFragment newInstance() {
+        DatePickerDailogFragment fragment = new DatePickerDailogFragment();
+        final Calendar c = Calendar.getInstance();
+        Bundle args = new Bundle();
+        args.putInt("year", c.get(Calendar.YEAR));
+        args.putInt("month", c.get(Calendar.MONTH));
+        args.putInt("dayOfMonth", c.get(Calendar.DAY_OF_MONTH));
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +60,16 @@ public class DatePickerDailogFragment extends DialogFragment
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new DatePickerDialog(getActivity(),
+        DatePickerDialog mDiag = new DatePickerDialog(getActivity(),
                 R.style.date_picker_theme, this, year, month - 1, dayOfMonth);
+        mDiag.setOnShowListener(arg0 -> {
+            mDiag.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.red_1));
+            mDiag.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
+        });
+        return mDiag;
     }
+
+    public OnDatePickerDailogFragmentListener dateListener;
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -52,6 +77,8 @@ public class DatePickerDailogFragment extends DialogFragment
             if (getActivity() instanceof OnDatePickerDailogFragmentListener) {
                 ((OnDatePickerDailogFragmentListener) getActivity()).onDateSet(
                         view, year, month + 1, dayOfMonth);
+            } else {
+                dateListener.onDateSet(view, year, month + 1, dayOfMonth);
             }
         }
     }

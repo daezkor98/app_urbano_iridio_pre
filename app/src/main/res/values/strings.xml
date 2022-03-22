@@ -405,6 +405,7 @@
     <string name="text_cargando">Cargando&#8230;</string>
     <string name="text_cargando_imagen">Cargando imagen&#8230;</string>
     <string name="text_cancelar">Cancelar</string>
+    <string name="text_hecho">Hecho</string>
     <string name="text_ver_ubicacion">Ver ubicación</string>
     <string name="text_confirmar">Confirmar</string>
     <string name="text_continuar">Continuar</string>

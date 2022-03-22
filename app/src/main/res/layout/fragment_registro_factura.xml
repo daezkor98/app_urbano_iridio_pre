@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.RegistroFacturaFragment">
 
+    <include
+        android:id="@+id/progress_layout"
+        layout="@layout/progressbar_layout" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"

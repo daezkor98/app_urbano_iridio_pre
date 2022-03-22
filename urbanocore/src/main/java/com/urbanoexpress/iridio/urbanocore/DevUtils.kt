@@ -18,6 +18,10 @@ fun Any?.logJson(tag: String = "TAG") = devFunction {
     ST.gson.toJson(this).longlog(tag)
 }
 
+fun Any?.logString(tag: String = "TAG") = devFunction {
+    this.toString().longlog(tag)
+}
+
 fun String.longlog(tag: String = "#Brandon") = devFunction {
     val maxLogSize = 1000
     this.chunked(maxLogSize).forEach { Log.v(tag, it) }

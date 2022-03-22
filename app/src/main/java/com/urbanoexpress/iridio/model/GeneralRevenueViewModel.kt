@@ -16,17 +16,11 @@ class GeneralRevenueViewModel : BaseViewModel() {
 
     fun fetchMisGanancias() = executeIO {
 
-        //TODO no enviar parametros en duro
-        val userID = Preferences.getInstance().getString("idUsuario", "")
+//        val userID = Preferences.getInstance().getString("idUsuario", "")
         val idPer = Preferences.getInstance().getString("idPer", "")
-
-
-        idPer?.longlog("fetchMisGanancias")
 
         val param = mapOf(
             "vp_per_id" to idPer
-//            "vp_per_id" to "5446"
-//            "vp_per_id" to userID
         )
 
         val data = MisGananciasInteractor.getMisGanancias(param)
