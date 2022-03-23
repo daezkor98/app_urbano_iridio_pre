@@ -125,4 +125,7 @@ dependencies {
 
     //Utils
     implementation 'com.google.code.gson:gson:2.9.0'
+
+    //PDF
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }

@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentRegistroFacturaBinding
@@ -27,7 +28,8 @@ import com.urbanoexpress.iridio.ui.dialogs.DatePickerDailogFragment
 import com.urbanoexpress.iridio.ui.dialogs.FileTypePickerDialog
 import com.urbanoexpress.iridio.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper
-import com.urbanoexpress.iridio.urbanocore.logJson
+import com.urbanoexpress.iridio.urbanocore.ifNull
+import com.urbanoexpress.iridio.urbanocore.ifSafe
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 import com.urbanoexpress.iridio.urbanocore.values.*
 import com.urbanoexpress.iridio.util.CameraUtils
@@ -107,7 +109,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 
         when (period?.cert_estado) {
             CERT_ESTADO.EN_PROCESO.state_id -> {
-                findNavController().popBackStack()
+                  findNavController().popBackStack()
             }
             CERT_ESTADO.LIQUIDADO.state_id -> {
                 prepareForEdition()
@@ -183,6 +185,8 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 
     private fun prepareForEdition() {
 
+        bind.tvFileName.text = fileName
+
         bind.etMontoFact.isEnabled = false
         bind.etMontoFact.setText(period?.monto.toString())
 
@@ -211,6 +215,17 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 //            showFilePickerDialog()
             openPDFPicker()
             //showImagePickerDialog()
+        }
+
+        bind.tvFileName.onExclusiveClick {
+            pdfUri.ifSafe {
+                findNavController().navigate(
+                    R.id.action_registroFacturaFragment_to_pdfViewerFragment,
+                    bundleOf("PDFURI" to pdfUri)
+                )
+            }.ifNull {
+                showToast("Seleccione un documento")
+            }
         }
     }
 
@@ -274,11 +289,17 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         }
     }
 
-    //TODO add a PDF Viewer
+    var pdfUri: Uri? = null
+    var fileName: String = ""
+
     private fun handleFileURI(pdfUri: Uri) = secureFunc() {
+        this.pdfUri = pdfUri
         pdfData = requireContext().readFileBytes(pdfUri)
-        val fileName = requireContext().getFileName(pdfUri) ?: "Archivo adjunto"
-        bind.tvFileName.text = fileName
+        fileName = requireContext().getFileName(pdfUri) ?: "Archivo adjunto"
+        bind.tvFileName.apply {
+            text = fileName
+            paint?.isUnderlineText = true
+        }
     }
 
     //añadir dias

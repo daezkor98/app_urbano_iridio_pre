@@ -101,11 +101,16 @@
                     <TextView
                         android:id="@+id/tv_file_name"
                         android:layout_width="0dp"
+                        android:layout_marginEnd="15dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:foreground="@drawable/ripple_simple_transparent"
+                        android:paddingHorizontal="5dp"
+                        android:paddingVertical="4dp"
                         android:text=""
                         android:textColor="@color/blue_1"
-                        app:layout_constraintEnd_toStartOf="@id/tv_sub_file"
+                        android:textSize="17dp"
+                        app:layout_constraintEnd_toStartOf="@id/btn_add_file"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

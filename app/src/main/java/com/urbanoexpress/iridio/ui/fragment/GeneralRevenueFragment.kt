@@ -53,11 +53,12 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
             periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0 }
             areApproved = periodsAdaper.periods
                 .filter { item -> item.cert_estado == APROBADO.state_id }
-            bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
+//            bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
         }
     }
 
     lateinit var areApproved: List<Period>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,7 +80,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
         periodsAdaper = PeriodsRevenueAdapter().apply {
             this.onItemClick = ::handleItemClick
-            bind.rvWeeks.adapter = this
+            bind.rvWeeks.adapter = this@apply
         }
 
         configUI()
@@ -104,18 +105,20 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         bind.btnRegistrarFac.onExclusiveClick {
 
 //            if (areApproved.size == 1) {
-            if (true) {
+            if (false) {
 
-                findNavController().navigate(
+                findNavController()
+                    .navigate(
                     R.id.action_generalRevenueFragment_to_registroFacturaFragment,
 //                    bundleOf(AK.SELECTED_PERIOD to areApproved.single() )//TODO
-                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[0])
+                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[1])
                 )
             } else {
 
                 findNavController().navigate(
                     R.id.action_generalRevenueFragment_to_selectPeriodFragment,
-                    bundleOf(AK.PERIODS to areApproved)
+                    //bundleOf(AK.PERIODS to areApproved)
+                    bundleOf(AK.PERIODS to periodsAdaper.periods)
                 )
             }
         }

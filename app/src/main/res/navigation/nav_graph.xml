@@ -37,6 +37,9 @@
         android:label="fragment_registro_factura"
         tools:layout="@layout/fragment_registro_factura" >
 
+        <action
+            android:id="@+id/action_registroFacturaFragment_to_pdfViewerFragment"
+            app:destination="@id/pdfViewerFragment" />
     </fragment>
 
     <fragment
@@ -54,5 +57,11 @@
         android:name="com.urbanoexpress.iridio.ui.fragment.PeriodDetailFragment"
         android:label="fragment_period_detail"
         tools:layout="@layout/fragment_period_detail" />
+
+    <fragment
+        android:id="@+id/pdfViewerFragment"
+        android:name="com.urbanoexpress.iridio.ui.fragment.PdfViewerFragment"
+        android:label="fragment_pdf_viewer"
+        tools:layout="@layout/fragment_pdf_viewer" />
 
 </navigation>
