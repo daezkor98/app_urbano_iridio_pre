@@ -9,6 +9,7 @@ import com.urbanoexpress.iridio.databinding.RowRevenueDayBinding
 /**
  * Created by Brandon Quintanilla on February/28/2022.
  */
+/*TODO: Remove*/
 class DayRevenueAdapter : RecyclerView.Adapter<DayRevenueAdapter.ViewHolder>() {
 
     inner class ViewHolder(val bind: RowRevenueDayBinding) : RecyclerView.ViewHolder(bind.root) {

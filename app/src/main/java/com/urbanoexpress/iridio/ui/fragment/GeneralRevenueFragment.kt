@@ -90,7 +90,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
     private fun onCurrentPeriodClick() {
         val dialog = FacturaPeriodoResumenDialog.getInstance(
             currentPeriod,
-            ::navigateToDetail
+            ::navigateToPeriodDetail
         )
         dialog.show(childFragmentManager, "RESS")
     }
@@ -101,22 +101,15 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         bind.tvWeekRevenue.onExclusiveClick { onCurrentPeriodClick() }
         bind.tvWeekSub.onExclusiveClick { onCurrentPeriodClick() }
 
-
-//        areApproved.logJson("areApproved")
-
-//        if (true) {
-//        if (areApproved.isNotEmpty()) {
-
         bind.btnRegistrarFac.onExclusiveClick {
 
-            if (areApproved.size == 1) {
-//                if (true) {
+//            if (areApproved.size == 1) {
+            if (true) {
 
                 findNavController().navigate(
-                    //TODO Approve a period for enable factura button
                     R.id.action_generalRevenueFragment_to_registroFacturaFragment,
-                    bundleOf(AK.SELECTED_PERIOD to areApproved[0])
-//                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[0])
+//                    bundleOf(AK.SELECTED_PERIOD to areApproved.single() )//TODO
+                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[0])
                 )
             } else {
 
@@ -126,22 +119,18 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
                 )
             }
         }
-
-/*        } else {
-            bind.btnRegistrarFac.isEnabled = false
-        }*/
     }
 
     private fun handleItemClick(index: Int) {
 
         val dialog = FacturaPeriodoResumenDialog.getInstance(
             periodsAdaper.periods[index],
-            ::navigateToDetail
+            ::navigateToPeriodDetail
         )
         dialog.show(childFragmentManager, "RESS")
     }
 
-    fun navigateToDetail(period: Period) {
+    fun navigateToPeriodDetail(period: Period) {
 
         val args = bundleOf(
             AK.SELECTED_PERIOD to period

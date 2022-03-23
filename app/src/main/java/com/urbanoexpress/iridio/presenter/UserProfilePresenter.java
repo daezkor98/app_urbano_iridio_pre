@@ -69,7 +69,6 @@ public class UserProfilePresenter {
         view.openCamera(photoCapture);
     }
 
-    //TODO encontrar como es que se setea el byte data en PrepareDataPhotoObserver
     public void onPhotoCaptureResultOK() {
         view.showProgressDialog();
         prepareDataImageFile(photoCapture, new PrepareDataPhotoObserver(photoCapture.getName()));

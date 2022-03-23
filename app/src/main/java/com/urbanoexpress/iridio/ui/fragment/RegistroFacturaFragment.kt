@@ -20,15 +20,16 @@ import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentRegistroFacturaBinding
 import com.urbanoexpress.iridio.model.RegistrarFacturaViewModel
+import com.urbanoexpress.iridio.model.dto.CERT_ESTADO
 import com.urbanoexpress.iridio.model.dto.Period
 import com.urbanoexpress.iridio.ui.BaseActivity
 import com.urbanoexpress.iridio.ui.dialogs.DatePickerDailogFragment
 import com.urbanoexpress.iridio.ui.dialogs.FileTypePickerDialog
 import com.urbanoexpress.iridio.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper
+import com.urbanoexpress.iridio.urbanocore.logJson
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
-import com.urbanoexpress.iridio.urbanocore.values.AK
-import com.urbanoexpress.iridio.urbanocore.values.getCurrentDay
+import com.urbanoexpress.iridio.urbanocore.values.*
 import com.urbanoexpress.iridio.util.CameraUtils
 import com.urbanoexpress.iridio.util.CommonUtils
 import com.urbanoexpress.iridio.util.FileUtils
@@ -46,6 +47,12 @@ import java.io.IOException
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/*
+*TODO
+* Licencia
+* SOAT
+* Foto de perfil - No
+* */
 class RegistroFacturaFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentRegistroFacturaBinding
@@ -57,8 +64,6 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            //TODO amount
-//            bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[0])
             period = it.getSerializable(AK.SELECTED_PERIOD) as Period?
         }
 
@@ -99,9 +104,43 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentRegistroFacturaBinding.inflate(inflater, container, false)
-        configUI()
+
+        when (period?.cert_estado) {
+            CERT_ESTADO.EN_PROCESO.state_id -> {
+                findNavController().popBackStack()
+            }
+            CERT_ESTADO.LIQUIDADO.state_id -> {
+                prepareForEdition()
+                if (this.period?.fac_id != "0") {
+                    showPreviousFactData()
+                }
+            }
+            CERT_ESTADO.APROBADO.state_id -> {
+                showPreviousFactData()
+                disableEdition()
+            }
+            CERT_ESTADO.FACTURADO.state_id -> {
+                showPreviousFactData()
+                disableEdition()
+            }
+        }
 
         return bind.root
+    }
+
+    private fun disableEdition() {
+        bind.etNumeroFact.isEnabled = false
+        bind.etFechaFactura.isEnabled = false
+        bind.etMontoFact.isEnabled = false
+        bind.btnAddFile.isEnabled = false
+        bind.btnEnviar.isEnabled = false
+
+    }
+
+    private fun showPreviousFactData() {
+        bind.etNumeroFact.setText(period?.fac_numero)
+        bind.etFechaFactura.setText(period?.fac_fecha)
+        bind.etMontoFact.setText(period?.fac_total)
     }
 
     private fun dataValid(): Boolean {
@@ -117,8 +156,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
             bind.tfNumeroFactura.error = null
         }
 
-//        if (fechaFact.isEmpty()) {
-        if (false) {//TODO fix
+        if (fechaFact.isEmpty()) {
             bind.tfFechaFactura.error = "Complete fecha"
             return false
         } else {
@@ -132,29 +170,30 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
             bind.tfMontoFac.error = null
         }
 
-/*        TODO validate the file
-if (uriPath == null) {
+        if (pdfData == null) {
             hideKeyboard()
             showSnackBar("Adjunte archivo")
             return false
-        }*/
+        }
 
         return true
     }
 
     var positionSelectedOptionEditPhoto = 0
 
-    private fun configUI() {
+    private fun prepareForEdition() {
 
+        bind.etMontoFact.isEnabled = false
+        bind.etMontoFact.setText(period?.monto.toString())
+
+        bind.etFechaFactura.isEnabled = false
         bind.etFechaFactura.setText(getCurrentDay())
-
-        bind.etFechaFactura.setOnClickListener {
+        bind.etFechaFactura.onExclusiveClick {
 
             val newFragment = DatePickerDailogFragment.newInstance()
             newFragment.dateListener =
                 DatePickerDailogFragment.OnDatePickerDailogFragmentListener { view, year, month, dayOfMonth ->
-                    Log.i("TAG", "Listener: " + year + "-" + month + "-" + dayOfMonth)
-                    //TODO
+                    bind.etFechaFactura.setText("$dayOfMonth/$month/$year")
                 }
             newFragment.show(childFragmentManager, "datePicker")
         }
@@ -165,16 +204,9 @@ if (uriPath == null) {
                 val numFact = bind.tfNumeroFactura.editText?.text.toString()
                 val fechaFact = bind.tfFechaFactura.editText?.text.toString()
                 val montoFact = bind.tfMontoFac.editText?.text.toString()
-//                facturaVM.postFactura(numFact, fechaFact, montoFact, imageBytes)
                 facturaVM.postFactura(numFact, fechaFact, montoFact, period?.liquidacion!!, pdfData)
             }
         }
-/*
-*TODO
-* Licencia
-* SOAT
-* Foto de perfil - No
-* */
         bind.btnAddFile.onExclusiveClick {
 //            showFilePickerDialog()
             openPDFPicker()
@@ -182,6 +214,10 @@ if (uriPath == null) {
         }
     }
 
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+    /*****************************************************************************************/
+    /*****************************************************************************************/
     private fun showFilePickerDialog() {
         val diagg = FileTypePickerDialog.newInstance()
         diagg.show(childFragmentManager, "32135")
@@ -231,45 +267,19 @@ if (uriPath == null) {
     ) { result: ActivityResult ->
         if (result.resultCode == BaseActivity.RESULT_OK) {
             if (result.data != null && result.data!!.data != null) {
-                try {
-
-                    val pdfUri = result.data!!.data!!
-                    val resolver = requireContext().applicationContext.contentResolver
-
-                    // "rw" for read-and-write;
-                    // "rwt" for truncating or overwriting existing file contents.
-/*                    val readOnlyMode = "r"
-                    resolver.openFileDescriptor(pdfUri, readOnlyMode).use { pfdFile ->
-                        // Perform operations on "pfd".
-                        Log.i("TAG", "startPdfPickerForResult: " + pfdFile?.statSize)
-                        Log.i("TAG", "startPdfPickerForResult: " + pfdFile?.fileDescriptor)
-                    }
-                    */
-
-                    resolver.openInputStream(pdfUri).use { pdfStream ->
-                        // Perform operations on "stream".
-                        //val mBytes= pdfStream?.readBytes()
-                        pdfData = pdfStream?.readBytes() ?: ByteArray(0)
-                        Log.i("TAG", "startPdfPickerForResult: " + pdfData?.size)
-                        Log.i("TAG", "startPdfPickerForResult: $pdfData")
-                    }
-
-/*                    val path = requireContext().getUriPath(imageUri)
-                    uriPath = path*/
-
-//                    bind.tvFileName.text = path.split("/").last()
-
-                } catch (ex: FileNotFoundException) {
-                    ex.printStackTrace()
-                } catch (ex: IOException) {
-                    ex.printStackTrace()
-                }
+                handleFileURI(result.data!!.data!!)
             } else {
-//                showToast("Lo sentimos, la imagen no fue seleccionada correctamente.")
+                showToast("Lo sentimos, el archivo no fue seleccionada correctamente.")
             }
         }
     }
 
+    //TODO add a PDF Viewer
+    private fun handleFileURI(pdfUri: Uri) = secureFunc() {
+        pdfData = requireContext().readFileBytes(pdfUri)
+        val fileName = requireContext().getFileName(pdfUri) ?: "Archivo adjunto"
+        bind.tvFileName.text = fileName
+    }
 
     //añadir dias
     /***********************************************************************************************************************/
@@ -304,7 +314,7 @@ if (uriPath == null) {
                     val imageUri = result.data!!.data
                     val bitmap: Bitmap = getBitmapFromSelectedImage(imageUri!!)!!
                     //TODO ImageRotator is failling
-//                            bitmap = ImageRotator.rotateImageIfRequired(this, bitmap, imageUri);
+//                     bitmap = ImageRotator.rotateImageIfRequired(this, bitmap, imageUri);
                     //presenter.
                     onPickImageResultOK(bitmap)
                 } catch (ex: FileNotFoundException) {

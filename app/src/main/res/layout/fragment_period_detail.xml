@@ -1,177 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.PeriodDetailFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/progress_layout"
+        layout="@layout/progressbar_layout" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/progress_layout"
-            layout="@layout/progressbar_layout" />
-
-        <TextView
-            android:id="@+id/tv_tittle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:paddingVertical="8dp"
-            android:text="Periodo 10/03/22"
-            android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!--Header-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lay_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_tittle">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_20"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.2" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_60"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.6" />
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/lbl_entregados"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_tittle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Entregas"
-                android:textColor="@color/red_1"
-                android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="@id/guide_60"
-                app:layout_constraintStart_toEndOf="@id/guide_20"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/lbl_visitados"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Visitas"
-                android:textColor="@color/red_1"
-                android:textSize="16dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:paddingVertical="8dp"
+                android:text="Periodo 10/03/22"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guide_60"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--Separator-->
-            <View
-                android:id="@+id/divider_header"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+            <!--Header-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lay_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/darkDividers"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guide_20"
-                app:layout_constraintTop_toBottomOf="@id/lbl_entregados" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_tittle">
 
-            <Space
-                android:id="@+id/header_space"
-                android:layout_width="00dp"
-                android:layout_height="8dp"
-                app:layout_constraintEnd_toEndOf="@id/divider_header"
-                app:layout_constraintStart_toStartOf="@id/divider_header"
-                app:layout_constraintTop_toBottomOf="@id/divider_header" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_20"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.2" />
 
-            <View
-                android:id="@+id/divider_header_h"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:background="@color/darkDividers"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guide_60"
-                app:layout_constraintStart_toStartOf="@id/guide_60"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_60"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.6" />
 
-            <TextView
-                android:id="@+id/lbl_entregados_guias"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/lbl_entregados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Entregas"
+                    android:textColor="@color/red_1"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="@id/guide_60"
+                    app:layout_constraintStart_toEndOf="@id/guide_20"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lbl_visitados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Visitas"
+                    android:textColor="@color/red_1"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guide_60"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!--Separator-->
+                <View
+                    android:id="@+id/divider_header"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/darkDividers"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guide_20"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_entregados" />
+
+                <Space
+                    android:id="@+id/header_space"
+                    android:layout_width="00dp"
+                    android:layout_height="8dp"
+                    app:layout_constraintEnd_toEndOf="@id/divider_header"
+                    app:layout_constraintStart_toStartOf="@id/divider_header"
+                    app:layout_constraintTop_toBottomOf="@id/divider_header" />
+
+                <View
+                    android:id="@+id/divider_header_h"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:background="@color/darkDividers"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guide_60"
+                    app:layout_constraintStart_toStartOf="@id/guide_60"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lbl_entregados_guias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guias"
+                    android:textColor="@color/red_1"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/lbl_entregados_monto"
+                    app:layout_constraintHorizontal_bias="0.8"
+                    app:layout_constraintStart_toEndOf="@id/guide_20"
+                    app:layout_constraintTop_toBottomOf="@id/header_space" />
+
+                <TextView
+                    android:id="@+id/lbl_entregados_monto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monto"
+                    android:textColor="@color/red_1"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guide_60"
+                    app:layout_constraintStart_toEndOf="@id/lbl_entregados_guias"
+                    app:layout_constraintTop_toBottomOf="@id/header_space" />
+
+                <TextView
+                    android:id="@+id/lbl_visitados_guias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guias"
+                    android:textColor="@color/red_1"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/lbl_visitados_monto"
+                    app:layout_constraintHorizontal_bias="0.8"
+                    app:layout_constraintStart_toEndOf="@id/guide_60"
+                    app:layout_constraintTop_toBottomOf="@id/header_space" />
+
+                <TextView
+                    android:id="@+id/lbl_visitados_monto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monto"
+                    android:textColor="@color/red_1"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/lbl_visitados_guias"
+                    app:layout_constraintTop_toBottomOf="@id/header_space" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_days"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Guias"
-                android:textColor="@color/red_1"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/lbl_entregados_monto"
-                app:layout_constraintHorizontal_bias="0.8"
-                app:layout_constraintStart_toEndOf="@id/guide_20"
-                app:layout_constraintTop_toBottomOf="@id/header_space" />
-
-            <TextView
-                android:id="@+id/lbl_entregados_monto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monto"
-                android:textColor="@color/red_1"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guide_60"
-                app:layout_constraintStart_toEndOf="@id/lbl_entregados_guias"
-                app:layout_constraintTop_toBottomOf="@id/header_space" />
-
-            <TextView
-                android:id="@+id/lbl_visitados_guias"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Guias"
-                android:textColor="@color/red_1"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/lbl_visitados_monto"
-                app:layout_constraintHorizontal_bias="0.8"
-                app:layout_constraintStart_toEndOf="@id/guide_60"
-                app:layout_constraintTop_toBottomOf="@id/header_space" />
-
-            <TextView
-                android:id="@+id/lbl_visitados_monto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monto"
-                android:textColor="@color/red_1"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/lbl_visitados_guias"
-                app:layout_constraintTop_toBottomOf="@id/header_space" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lay_header"
+                tools:itemCount="10"
+                tools:listitem="@layout/row_revenue_period_detail" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_days"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
-            android:nestedScrollingEnabled="false"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lay_header"
-            tools:itemCount="10"
-            tools:listitem="@layout/row_revenue_period_detail" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>

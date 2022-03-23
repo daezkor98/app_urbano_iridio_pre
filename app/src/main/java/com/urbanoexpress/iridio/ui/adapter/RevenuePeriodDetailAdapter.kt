@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urbanoexpress.iridio.databinding.RowRevenuePeriodDetailBinding
 import com.urbanoexpress.iridio.model.dto.RevenueDay
+import com.urbanoexpress.iridio.model.dto.completeDays
 import com.urbanoexpress.iridio.urbanocore.values.weekDays
 
 /**
@@ -12,9 +13,10 @@ import com.urbanoexpress.iridio.urbanocore.values.weekDays
  */
 class RevenuePeriodDetailAdapter : RecyclerView.Adapter<RevenuePeriodDetailAdapter.ViewHolder>() {
 
-    var revenueDays: List<RevenueDay> = ArrayList()
+    var revenueDays: ArrayList<RevenueDay> = ArrayList()
         set(value) {
             field = value
+            revenueDays.completeDays()
             this.notifyDataSetChanged()
         }
 

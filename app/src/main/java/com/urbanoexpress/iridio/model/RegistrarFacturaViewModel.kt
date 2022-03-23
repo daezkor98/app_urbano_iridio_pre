@@ -17,7 +17,7 @@ class RegistrarFacturaViewModel : BaseViewModel() {
     fun postFactura(
         numFact: String,
         fechaFact: String,
-        montoFact: String,//TODO
+        montoFact: String,
         certID: String,
         imageBytes: ByteArray?
     ) =
@@ -42,9 +42,8 @@ class RegistrarFacturaViewModel : BaseViewModel() {
                 MultipartJsonObjectRequest.DataPart(
                     "Factura-22-03-22",
                     imageBytes,
-                    "application/pdf"
+                    "application/pdf"//TODO get dynacmi MIME
                 )
-//                MultipartJsonObjectRequest.DataPart("Factura-22-03-22", imageBytes, "image/png")
 
             val isSuccess = MisGananciasInteractor.uploadFacturaPDF(map, imagen)
             uploadFacturaResultLD.postValue(isSuccess)

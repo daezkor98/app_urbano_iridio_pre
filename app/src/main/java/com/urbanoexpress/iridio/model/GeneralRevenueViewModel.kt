@@ -16,7 +16,6 @@ class GeneralRevenueViewModel : BaseViewModel() {
 
     fun fetchMisGanancias() = executeIO {
 
-//        val userID = Preferences.getInstance().getString("idUsuario", "")
         val idPer = Preferences.getInstance().getString("idPer", "")
 
         val param = mapOf(

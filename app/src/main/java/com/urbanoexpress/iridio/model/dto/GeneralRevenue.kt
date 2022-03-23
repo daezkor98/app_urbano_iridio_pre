@@ -6,14 +6,12 @@ import java.io.Serializable
  * Created by Brandon Quintanilla on March/02/2022.
  */
 data class GeneralRevenue(
-    //val periodRevenue: Double?,
     val Periods: ArrayList<Period>?
 )
 
 data class Period(
     val fecha_inicio: String?,
     val fecha_fin: String?,
-//    val processState: String?,
     val periodo: Int?,
     val liquidacion: String?,
     val cert_estado: String?,
@@ -21,7 +19,11 @@ data class Period(
     val monto_entregas: Double?,
     val no_entregas: Int?,
     val monto_no_entregas: Double?,
-    val monto: Double?//, val weekPeriodRevenue: String?
+    val monto: Double?,
+    val fac_id: String,
+    val fac_numero: String,
+    val fac_total: String,
+    val fac_fecha: String
 ) : Serializable
 
 enum class CERT_ESTADO(val state_id: String) {

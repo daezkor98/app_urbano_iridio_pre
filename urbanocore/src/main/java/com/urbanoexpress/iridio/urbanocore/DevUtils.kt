@@ -23,12 +23,7 @@ fun Any?.logString(tag: String = "TAG") = devFunction {
 }
 
 fun String.longlog(tag: String = "#Brandon") = devFunction {
-    val maxLogSize = 1000
-    this.chunked(maxLogSize).forEach { Log.v(tag, it) }
+    val maxLogSize = 900
+    this.chunked(maxLogSize).forEach {segment-> Log.v(tag, "******************************\n$segment") }
 }
 
-//Pasar a utils
-fun Throwable.logException(TAG: String = "TAG") {
-    Log.e(TAG, "logException: " + this.message, this)
-    this.printStackTrace()
-}

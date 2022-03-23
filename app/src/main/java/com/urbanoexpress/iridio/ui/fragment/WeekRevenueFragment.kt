@@ -13,7 +13,7 @@ import com.urbanoexpress.iridio.urbanocore.values.AK
 /**
  * Created by Brandon Quintanilla on March/01/2022.
  */
-//TODO REMOVE?
+//TODO REMOVE
 class WeekRevenueFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentWeekRevenueBinding
