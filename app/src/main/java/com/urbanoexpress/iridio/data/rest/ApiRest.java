@@ -16,6 +16,7 @@ public final class ApiRest {
     private ApiRest() { }
 
     public interface Api {
+
         String CONFIG_PHONE                             = "api-apps/iridio/configPhone";
         String VALIDATE_VERIFICATION_CODE               = "api-apps/iridio/validateVerificationCode";
 

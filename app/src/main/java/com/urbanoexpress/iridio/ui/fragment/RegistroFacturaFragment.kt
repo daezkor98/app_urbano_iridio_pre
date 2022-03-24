@@ -28,10 +28,8 @@ import com.urbanoexpress.iridio.ui.dialogs.DatePickerDailogFragment
 import com.urbanoexpress.iridio.ui.dialogs.FileTypePickerDialog
 import com.urbanoexpress.iridio.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper
-import com.urbanoexpress.iridio.urbanocore.ifNull
-import com.urbanoexpress.iridio.urbanocore.ifSafe
-import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
-import com.urbanoexpress.iridio.urbanocore.values.*
+import com.urbanoexpress.iridio.urbanocore.*
+import com.urbanoexpress.iridio.urbanocore.values.AK
 import com.urbanoexpress.iridio.util.CameraUtils
 import com.urbanoexpress.iridio.util.CommonUtils
 import com.urbanoexpress.iridio.util.FileUtils
@@ -109,7 +107,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 
         when (period?.cert_estado) {
             CERT_ESTADO.EN_PROCESO.state_id -> {
-                  findNavController().popBackStack()
+                findNavController().popBackStack()
             }
             CERT_ESTADO.LIQUIDADO.state_id -> {
                 prepareForEdition()
@@ -234,7 +232,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
     /*****************************************************************************************/
     /*****************************************************************************************/
     private fun showFilePickerDialog() {
-        val diagg = FileTypePickerDialog.newInstance()
+        val diagg = FileTypePickerDialog.defaultInstance()
         diagg.show(childFragmentManager, "32135")
     }
 
@@ -390,7 +388,8 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
     private var photoCapture: File? = null
     private val photoDirPath = ""
 
-    open fun onTakePhotoClick() {
+
+    fun onTakePhotoClick() {
         photoCapture = FileUtils.generateFile(
             requireContext(), generateImageName(""), photoDirPath
         )

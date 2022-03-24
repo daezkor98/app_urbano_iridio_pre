@@ -1,4 +1,4 @@
-package com.urbanoexpress.iridio.urbanocore.values
+package com.urbanoexpress.iridio.urbanocore
 
 import android.content.Context
 import android.net.Uri
@@ -6,24 +6,14 @@ import android.provider.OpenableColumns
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 /**
  * Created by Brandon Quintanilla on March/21/2022.
  */
-
-//TODO reformat annotation
-private fun generateImageName(prefix: String): String {
-/*    val timeStamp =
-        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
-    var photoName = "Imagen_$timeStamp.jpg"
-    if (!prefix.isEmpty()) {
-        photoName = prefix + "_" + timeStamp + ".jpg"
-    }
-    return photoName*/
-    return ""
-}
 
 /*Dates*/
 const val DATE_FORMAT = "dd/MM/yyyy"

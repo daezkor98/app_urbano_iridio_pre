@@ -51,6 +51,9 @@ public class FileUtils {
         return baseDir;
     }
 
+    /**
+    * Generates a temp file reference
+    * */
     public static File generateFile(Context context, String fileName, String dirs) {
         String baseDir = makeDirectory(context, dirs);
         return new File(baseDir + fileName);

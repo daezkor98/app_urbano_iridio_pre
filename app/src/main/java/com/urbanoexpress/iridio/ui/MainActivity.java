@@ -36,6 +36,7 @@ import com.urbanoexpress.iridio.presenter.NavigationMenuPresenter;
 import com.urbanoexpress.iridio.presenter.NotificacionesRutaPresenter;
 import com.urbanoexpress.iridio.services.DataSyncService;
 import com.urbanoexpress.iridio.ui.adapter.MainMenuAdapter;
+import com.urbanoexpress.iridio.ui.dialogs.EncuestaTipoUsuarioDialog;
 import com.urbanoexpress.iridio.ui.dialogs.LogoutDialog;
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio.ui.interfaces.OnClickItemListener;
@@ -98,6 +99,11 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
                 UserStatusWorker.TAG, ExistingPeriodicWorkPolicy.KEEP, workRequest);
 
         new DateSystemHelper().validateDateSytem(this);
+
+        //TODO validate login flag
+        EncuestaTipoUsuarioDialog
+                .newInstance()
+                .show(getSupportFragmentManager(), "EncuestaTipoUsua");
 
         if (presenter == null) {
             presenter = new NavigationMenuPresenter(this);

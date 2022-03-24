@@ -24,7 +24,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentGeneralRevenueBinding
 
-    val gananciasVM = GeneralRevenueViewModel()    //TODO inject
+    val gananciasVM = GeneralRevenueViewModel()//TODO inject
 
     lateinit var periodsAdaper: PeriodsRevenueAdapter
 
@@ -105,7 +105,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         bind.btnRegistrarFac.onExclusiveClick {
 
 //            if (areApproved.size == 1) {
-            if (false) {
+            if (false) {//TODO fix
 
                 findNavController()
                     .navigate(

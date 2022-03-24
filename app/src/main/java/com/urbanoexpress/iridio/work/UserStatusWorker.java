@@ -30,6 +30,7 @@ import com.urbanoexpress.iridio.data.remote.urbano.UrbanoApiManager;
 import com.urbanoexpress.iridio.data.rest.ApiRest;
 import com.urbanoexpress.iridio.services.DataSyncService;
 import com.urbanoexpress.iridio.ui.InitActivity;
+import com.urbanoexpress.iridio.ui.dialogs.EncuestaTipoUsuarioDialog;
 import com.urbanoexpress.iridio.util.CommonUtils;
 import com.urbanoexpress.iridio.util.NotificationUtils;
 import com.urbanoexpress.iridio.util.Session;

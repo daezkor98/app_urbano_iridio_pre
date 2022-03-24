@@ -32,7 +32,8 @@ public class CameraUtils {
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(context,
-                    BuildConfig.APPLICATION_ID + ".provider", photoFile);
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    photoFile);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(photoFile);

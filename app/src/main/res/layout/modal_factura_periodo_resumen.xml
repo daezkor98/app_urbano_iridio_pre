@@ -165,7 +165,7 @@
             app:layout_constraintStart_toStartOf="@id/guide_60"
             app:layout_constraintTop_toTopOf="@id/tv_visitas" />
 
-        <com.urbanoexpress.iridio.ui.widget.GoDetailBtn
+        <com.urbanoexpress.iridio.ui.widget.ContinueArrowBtn
             android:id="@+id/btn_godetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -3,7 +3,7 @@ package com.urbanoexpress.iridio.model.interactor
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.urbanoexpress.iridio.urbanocore.values.logException
+import com.urbanoexpress.iridio.urbanocore.logException
 
 import kotlinx.coroutines.*
 
