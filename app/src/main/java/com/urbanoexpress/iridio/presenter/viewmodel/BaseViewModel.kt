@@ -1,4 +1,4 @@
-package com.urbanoexpress.iridio.model.interactor
+package com.urbanoexpress.iridio.presenter.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

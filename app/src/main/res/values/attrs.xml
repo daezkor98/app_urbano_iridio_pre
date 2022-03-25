@@ -23,4 +23,9 @@
         <attr name="text" format="string"/>
         <attr name="textSizeDp" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="FormFieldView">
+        <attr name="headerHint" format="string"/>
+    </declare-styleable>
+
 </resources>

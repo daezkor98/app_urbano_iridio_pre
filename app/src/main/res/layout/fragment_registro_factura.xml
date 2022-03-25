@@ -143,14 +143,14 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_enviar"
+                android:id="@+id/btn_registrar"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginVertical="10dp"
                 android:background="@drawable/ripple_button_default"
-                android:text="Enviar"
+                android:text="Registrar"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:textColor="@android:color/white" />
 

@@ -40,6 +40,7 @@ import com.urbanoexpress.iridio.ui.dialogs.EncuestaTipoUsuarioDialog;
 import com.urbanoexpress.iridio.ui.dialogs.LogoutDialog;
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio.ui.interfaces.OnClickItemListener;
+import com.urbanoexpress.iridio.urbanocore.values.Val;
 import com.urbanoexpress.iridio.util.DateSystemHelper;
 import com.urbanoexpress.iridio.util.InfoDevice;
 import com.urbanoexpress.iridio.util.LocationUtils;
@@ -84,6 +85,16 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
             new NotificationUtils(this).createChannels();
         }
 
+        validateLicenciaMotorizado();
+        launchValidatorWorker();
+
+        if (presenter == null) {
+            presenter = new NavigationMenuPresenter(this);
+            presenter.init();
+        }
+    }
+
+    private void launchValidatorWorker() {
         WorkManager workManager = WorkManager.getInstance(this);
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -99,15 +110,16 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
                 UserStatusWorker.TAG, ExistingPeriodicWorkPolicy.KEEP, workRequest);
 
         new DateSystemHelper().validateDateSytem(this);
+    }
 
-        //TODO validate login flag
-        EncuestaTipoUsuarioDialog
-                .newInstance()
-                .show(getSupportFragmentManager(), "EncuestaTipoUsua");
+    private void validateLicenciaMotorizado() {
 
-        if (presenter == null) {
-            presenter = new NavigationMenuPresenter(this);
-            presenter.init();
+        String mostrarEncuesta = Preferences.getInstance().getString("mostrarEncuesta", "");
+
+        if (mostrarEncuesta.equals(Val.TRUE)) {
+            EncuestaTipoUsuarioDialog
+                    .newInstance()
+                    .show(getSupportFragmentManager(), "EncuestaTipoUsua");
         }
     }
 

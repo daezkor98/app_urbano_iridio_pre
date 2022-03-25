@@ -20,10 +20,11 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentRegistroFacturaBinding
-import com.urbanoexpress.iridio.model.RegistrarFacturaViewModel
 import com.urbanoexpress.iridio.model.dto.CERT_ESTADO
 import com.urbanoexpress.iridio.model.dto.Period
+import com.urbanoexpress.iridio.presenter.viewmodel.RegistrarFacturaViewModel
 import com.urbanoexpress.iridio.ui.BaseActivity
+import com.urbanoexpress.iridio.ui.dialogs.DATE_PICKER_MODE
 import com.urbanoexpress.iridio.ui.dialogs.DatePickerDailogFragment
 import com.urbanoexpress.iridio.ui.dialogs.FileTypePickerDialog
 import com.urbanoexpress.iridio.ui.dialogs.MessageDialog
@@ -133,7 +134,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         bind.etFechaFactura.isEnabled = false
         bind.etMontoFact.isEnabled = false
         bind.btnAddFile.isEnabled = false
-        bind.btnEnviar.isEnabled = false
+        bind.btnRegistrar.isEnabled = false
 
     }
 
@@ -192,7 +193,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         bind.etFechaFactura.setText(getCurrentDay())
         bind.etFechaFactura.onExclusiveClick {
 
-            val newFragment = DatePickerDailogFragment.newInstance()
+            val newFragment = DatePickerDailogFragment.newInstance(DATE_PICKER_MODE.CALENDAR)
             newFragment.dateListener =
                 DatePickerDailogFragment.OnDatePickerDailogFragmentListener { view, year, month, dayOfMonth ->
                     bind.etFechaFactura.setText("$dayOfMonth/$month/$year")
@@ -200,7 +201,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
             newFragment.show(childFragmentManager, "datePicker")
         }
 
-        bind.btnEnviar.onExclusiveClick {
+        bind.btnRegistrar.onExclusiveClick {
 
             if (dataValid()) {
                 val numFact = bind.tfNumeroFactura.editText?.text.toString()

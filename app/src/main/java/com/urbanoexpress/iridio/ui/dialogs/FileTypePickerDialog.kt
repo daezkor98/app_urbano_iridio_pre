@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import com.urbanoexpress.iridio.databinding.ModalFileTypePickerBinding
+import com.urbanoexpress.iridio.urbanocore.DataCompletion
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 import com.urbanoexpress.iridio.urbanocore.values.AK
 import com.urbanoexpress.iridio.util.CameraUtils
@@ -39,9 +40,11 @@ class FileTypePickerDialog : BaseDialogFragment() {
 
     lateinit var bind: ModalFileTypePickerBinding
 
-    var pdfVisibility = View.VISIBLE
-    var pickImgVisibility = View.VISIBLE
-    var takePhotoVisibility = View.VISIBLE
+    var completion: DataCompletion? = null
+
+    private var pdfVisibility = View.VISIBLE
+    private var pickImgVisibility = View.VISIBLE
+    private var takePhotoVisibility = View.VISIBLE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,13 +116,19 @@ class FileTypePickerDialog : BaseDialogFragment() {
         prepareDataImageFile(photoCapture!!, photoCapture!!.name)
     }
 
+    lateinit var resultBytes: ByteArray
+
     private fun prepareDataImageFile(
         file: File,
         name: String//observer: RegistroFacturaFragment.TakedPhotoObserver<ByteArray?>
     ) {
-        val dataBytes: ByteArray = readFileToByteArray(file)
+//        val dataBytes: ByteArray = readFileToByteArray(file)
+        resultBytes = readFileToByteArray(file)
         //TODO
-        Log.i("TAG", "prepareDataImageFile  $name: " + dataBytes.size)
+        Log.i("TAG", "prepareDataImageFile  $name: " + resultBytes?.size)
+
+        completion?.invoke(resultBytes, name)
+        dismiss()
     }
 
     private fun readFileToByteArray(file: File): ByteArray {
@@ -198,8 +207,11 @@ class FileTypePickerDialog : BaseDialogFragment() {
         bitmap: Bitmap,
         name: String
     ) {
-        val bytesData = readBitmapToByteArray(bitmap, 20)//TODO asing data to instance
-        Log.i("TAG", "prepareDataImageFile  $name: " + bytesData.size)
+//        val bytesData = readBitmapToByteArray(bitmap, 20)//TODO asing data to instance
+        resultBytes = readBitmapToByteArray(bitmap, 20)//TODO asing data to instance
+        Log.i("TAG", "prepareDataImageFile  $name: " + resultBytes?.size)
+        completion?.invoke(resultBytes, name)
+        dismiss()
     }
 
     /*Builders*****************************************************************/

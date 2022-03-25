@@ -1,5 +1,7 @@
 package com.urbanoexpress.iridio.ui.dialogs;
 
+import static com.urbanoexpress.iridio.ui.dialogs.DATE_PICKER_MODE.CALENDAR;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -34,8 +36,9 @@ public class DatePickerDailogFragment extends DialogFragment
     /**
      * Returns a DatePicker setted on today
      */
-    public static DatePickerDailogFragment newInstance() {
+    public static DatePickerDailogFragment newInstance(DATE_PICKER_MODE mode) {
         DatePickerDailogFragment fragment = new DatePickerDailogFragment();
+        fragment.mode = mode;
         final Calendar c = Calendar.getInstance();
         Bundle args = new Bundle();
         args.putInt("year", c.get(Calendar.YEAR));
@@ -57,11 +60,27 @@ public class DatePickerDailogFragment extends DialogFragment
         }
     }
 
+    private DATE_PICKER_MODE mode = CALENDAR;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        DatePickerDialog mDiag = new DatePickerDialog(getActivity(),
-                R.style.date_picker_theme, this, year, month - 1, dayOfMonth);
+
+        int styleMode = 0;
+        switch (mode) {
+            case CALENDAR: {
+                styleMode = R.style.date_picker_theme;
+            }
+            break;
+            case SPINNER: {
+                styleMode = R.style.MySpinnerDatePickerStyle;
+            }
+            break;
+            default:
+        }
+
+        DatePickerDialog mDiag = new DatePickerDialog(getActivity(), styleMode, this, year, month - 1, dayOfMonth);
+
         mDiag.setOnShowListener(arg0 -> {
             mDiag.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.red_1));
             mDiag.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
@@ -87,3 +106,4 @@ public class DatePickerDailogFragment extends DialogFragment
         void onDateSet(DatePicker view, int year, int month, int dayOfMonth);
     }
 }
+

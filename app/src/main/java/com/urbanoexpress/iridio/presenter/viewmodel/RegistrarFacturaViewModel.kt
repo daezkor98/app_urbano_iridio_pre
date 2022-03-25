@@ -1,7 +1,6 @@
-package com.urbanoexpress.iridio.model
+package com.urbanoexpress.iridio.presenter.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.urbanoexpress.iridio.model.interactor.BaseViewModel
 import com.urbanoexpress.iridio.model.interactor.MisGananciasInteractor
 import com.urbanoexpress.iridio.util.Preferences
 import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest
@@ -13,6 +12,8 @@ import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest
 class RegistrarFacturaViewModel : BaseViewModel() {
 
     val uploadFacturaResultLD: MutableLiveData<Boolean> = MutableLiveData()
+
+    val gananciasInteractor = MisGananciasInteractor()
 
     fun postFactura(
         numFact: String,
@@ -31,7 +32,7 @@ class RegistrarFacturaViewModel : BaseViewModel() {
                 "vp_fac_fecha" to fechaFact,
                 "vp_fac_numero" to numFact,
                 "vp_fac_sub_tot" to montoFact,
-                "ext" to "pdf",
+                "ext" to "pdf",//TODO may be dynamic
                 "vp_id_user" to userID,
                 "vp_prov_codigo" to codigoProvincia,
                 "vp_cert_id" to certID,
@@ -40,12 +41,12 @@ class RegistrarFacturaViewModel : BaseViewModel() {
 
             val imagen =
                 MultipartJsonObjectRequest.DataPart(
-                    "Factura-22-03-22",
+                    "Factura",
                     imageBytes,
                     "application/pdf"//TODO get dynacmi MIME
                 )
 
-            val isSuccess = MisGananciasInteractor.uploadFacturaPDF(map, imagen)
+            val isSuccess = gananciasInteractor.uploadFacturaPDF(map, imagen)
             uploadFacturaResultLD.postValue(isSuccess)
         }
 }

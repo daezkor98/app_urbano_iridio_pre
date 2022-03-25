@@ -4,6 +4,8 @@ plugins {
     id 'com.google.firebase.crashlytics'
     id 'com.google.firebase.firebase-perf'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -128,4 +130,8 @@ dependencies {
 
     //PDF
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+    //Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_v"
+    kapt "com.google.dagger:hilt-compiler:$hilt_v"
 }

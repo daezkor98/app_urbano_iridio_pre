@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.urbanoexpress.iridio.databinding.FragmentWeekRevenueBinding
-import com.urbanoexpress.iridio.model.PeriodRevenueViewModel
+import com.urbanoexpress.iridio.presenter.viewmodel.PeriodRevenueViewModel
 import com.urbanoexpress.iridio.model.dto.Period
 import com.urbanoexpress.iridio.ui.adapter.DayRevenueAdapter
 import com.urbanoexpress.iridio.urbanocore.values.AK

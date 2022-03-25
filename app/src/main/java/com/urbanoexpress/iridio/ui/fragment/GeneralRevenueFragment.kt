@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentGeneralRevenueBinding
-import com.urbanoexpress.iridio.model.GeneralRevenueViewModel
+import com.urbanoexpress.iridio.presenter.viewmodel.GeneralRevenueViewModel
 import com.urbanoexpress.iridio.model.dto.CERT_ESTADO.APROBADO
 import com.urbanoexpress.iridio.model.dto.Period
 import com.urbanoexpress.iridio.ui.BaseActivity2

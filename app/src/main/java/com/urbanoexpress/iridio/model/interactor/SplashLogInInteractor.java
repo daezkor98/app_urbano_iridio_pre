@@ -38,7 +38,7 @@ public class SplashLogInInteractor {
             @Override
             public void onResponse(JSONObject response) {
 
-                //DevUtilsKt.logJson(response,"LOGINNNN");
+//                DevUtilsKt.logJson(response,"LOGINNNN");
                 //response.getJSONObject("data").getJSONArray("userMenu").toString()
 
                 callback.onSuccess(response);

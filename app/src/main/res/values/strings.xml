@@ -472,6 +472,9 @@
     <!--Mis Ganancias-->
     <string name="fragment_title">Mis Ganancias</string>
 
+    <!--Encuesta-->
+    <string name="motorizado_encuest">Encuesta Motorizado</string>
+
     <!---->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

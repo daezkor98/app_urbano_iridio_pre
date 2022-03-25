@@ -1,3 +1,4 @@
+@file:JvmName("Val")
 package com.urbanoexpress.iridio.urbanocore.values
 
 
@@ -14,7 +15,7 @@ object Menu {
     const val MIS_GANANCIAS = "my_revenue"
 }
 
-val weekDays: Map<Int,String> =  mapOf(
+val weekDays: Map<Int, String> = mapOf(
     0 to "Domingo",
     1 to "Lunes",
     2 to "Martes",
@@ -24,6 +25,9 @@ val weekDays: Map<Int,String> =  mapOf(
     6 to "Sábado",
 )
 
-object FragmentTAG{
+object FragmentTAG {
     //TODO
 }
+
+const val TRUE = "1"
+const val FALSE = "0"

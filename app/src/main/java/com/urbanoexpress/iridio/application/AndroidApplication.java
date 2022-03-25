@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.multidex.MultiDexApplication;
 
 import com.orm.SugarContext;
-
 import com.urbanoexpress.iridio.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio.data.remote.ApiEnvironment;
 import com.urbanoexpress.iridio.data.remote.BaseUrl;
@@ -14,9 +13,12 @@ import com.urbanoexpress.iridio.data.rest.ApiRest;
 import com.urbanoexpress.iridio.util.Preferences;
 import com.urbanoexpress.iridio.util.network.volley.ManagerVolley;
 
+import dagger.hilt.android.HiltAndroidApp;
+
 /**
  * Created by mick on 19/05/16.
  */
+@HiltAndroidApp
 public class AndroidApplication extends MultiDexApplication {
 
     private static Context appContext;

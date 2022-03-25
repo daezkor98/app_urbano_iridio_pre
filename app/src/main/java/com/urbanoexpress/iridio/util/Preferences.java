@@ -11,6 +11,7 @@ import java.util.Set;
 /**
  * Created by mick on 23/05/16.
  */
+//TODO desacoplar GlobalConfigApp - UserProfile and PreferencesHelper
 public class Preferences implements SharedPreferences {
 
     private static Preferences myPreferences;

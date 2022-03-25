@@ -21,7 +21,7 @@ import kotlin.coroutines.suspendCoroutine
 /**
  * Created by Brandon Quintanilla on March/02/2022.
  */
-object MisGananciasInteractor {
+class MisGananciasInteractor {
 
     suspend fun uploadFacturaPDF(
         params: Map<String, String>,

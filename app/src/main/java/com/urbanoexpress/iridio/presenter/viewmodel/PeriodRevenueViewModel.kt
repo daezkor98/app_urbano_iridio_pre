@@ -1,8 +1,7 @@
-package com.urbanoexpress.iridio.model
+package com.urbanoexpress.iridio.presenter.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.urbanoexpress.iridio.model.dto.RevenueDay
-import com.urbanoexpress.iridio.model.interactor.BaseViewModel
 import com.urbanoexpress.iridio.model.interactor.MisGananciasInteractor
 import com.urbanoexpress.iridio.util.Preferences
 
@@ -12,6 +11,8 @@ import com.urbanoexpress.iridio.util.Preferences
 class PeriodRevenueViewModel : BaseViewModel() {
 
     val periodDetailLD: MutableLiveData<ArrayList<RevenueDay>> = MutableLiveData()
+
+    val gananciasInteractor = MisGananciasInteractor()
 
     fun fetchWeekDetail(fechaInicio: String, fechaFin: String, certID: String) = executeIO {
 
@@ -26,7 +27,7 @@ class PeriodRevenueViewModel : BaseViewModel() {
             "vp_id_user" to userID
         )
 
-        val data = MisGananciasInteractor.getSemanaDetail(params)
+        val data = gananciasInteractor.getSemanaDetail(params)
 
         periodDetailLD.postValue(data)
     }

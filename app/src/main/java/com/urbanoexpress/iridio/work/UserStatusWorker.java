@@ -10,15 +10,12 @@ import android.content.pm.PackageInfo;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
-import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -28,9 +25,6 @@ import com.urbanoexpress.iridio.data.entity.VerifyUserSessionEntity;
 import com.urbanoexpress.iridio.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio.data.remote.urbano.UrbanoApiManager;
 import com.urbanoexpress.iridio.data.rest.ApiRest;
-import com.urbanoexpress.iridio.services.DataSyncService;
-import com.urbanoexpress.iridio.ui.InitActivity;
-import com.urbanoexpress.iridio.ui.dialogs.EncuestaTipoUsuarioDialog;
 import com.urbanoexpress.iridio.util.CommonUtils;
 import com.urbanoexpress.iridio.util.NotificationUtils;
 import com.urbanoexpress.iridio.util.Session;
@@ -79,7 +73,7 @@ public class UserStatusWorker extends Worker {
             VerifyUserSessionEntity apiResponse = response.body();
 
             //TODO REMOVE
-            Log.i(TAG, "doWork VerifyUserSessionEntity : "+  new Gson().toJson(apiResponse));
+            Log.i(TAG, "doWork VerifyUserSessionEntity : " + new Gson().toJson(apiResponse));
 
             if (apiResponse.getApp().isUpdateRequired()) {
                 displayNotification(apiResponse.getApp().getLatestVersionName());
@@ -88,7 +82,7 @@ public class UserStatusWorker extends Worker {
             //Validates if user is inactive to close user session and show Login
             if (apiResponse.getUser().getStatus().equalsIgnoreCase("inactive")) {
                 //TODO fix
-/*                CommonUtils.deleteUserData();
+                /*CommonUtils.deleteUserData();
                 Session.clearSession();
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() -> {

@@ -1,10 +1,8 @@
-package com.urbanoexpress.iridio.model
+package com.urbanoexpress.iridio.presenter.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.urbanoexpress.iridio.model.dto.GeneralRevenue
-import com.urbanoexpress.iridio.model.interactor.BaseViewModel
 import com.urbanoexpress.iridio.model.interactor.MisGananciasInteractor
-import com.urbanoexpress.iridio.urbanocore.longlog
 import com.urbanoexpress.iridio.util.Preferences
 
 /**
@@ -14,6 +12,8 @@ class GeneralRevenueViewModel : BaseViewModel() {
 
     val generalRevenueDataLD = MutableLiveData<GeneralRevenue>()
 
+    val gananciasInteractor = MisGananciasInteractor()
+
     fun fetchMisGanancias() = executeIO {
 
         val idPer = Preferences.getInstance().getString("idPer", "")
@@ -22,7 +22,7 @@ class GeneralRevenueViewModel : BaseViewModel() {
             "vp_per_id" to idPer
         )
 
-        val data = MisGananciasInteractor.getMisGanancias(param)
+        val data = gananciasInteractor.getMisGanancias(param)
         generalRevenueDataLD.postValue(data)
     }
 }
