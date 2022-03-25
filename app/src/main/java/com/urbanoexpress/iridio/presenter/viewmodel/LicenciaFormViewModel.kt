@@ -25,17 +25,38 @@ class LicenciaFormViewModel : BaseViewModel() {
             "vp_doc_caduca" to licenseExp,
             "vp_tdoc_id" to "1",//Tipo licencia = 1
             "vp_und_id" to "0",//Mock for future use
+            "hasImage" to "1",
             "vp_doc_estado" to "1"//Enabled
         )
 
         val imagen = MultipartJsonObjectRequest
             .DataPart(
-                "License",
+                "file",
                 imageBytes,
                 "image/jpg"
             )
 
         val success = motorizadoInteractor.uploadLicenciaMotorizado(params, imagen)
+        onRegisterSuccess.postValue(success)
+    }
+
+    fun notifyUserIsNotMotorizado() = executeIO {
+
+        val idPer = Preferences.getInstance().getString("idPer", "")!!
+        val idUsuario = Preferences.getInstance().getString("idUsuario", "")!!
+
+        val params = mapOf(
+            "vp_id_user" to idUsuario,
+            "vp_per_id" to idPer,
+//            "vp_doc_emision" to null,
+//            "vp_doc_caduca" to "",
+            "vp_tdoc_id" to "0",
+            "vp_und_id" to "0",
+            "hasImage" to "0",
+            "vp_doc_estado" to "1"
+        )
+
+        val success = motorizadoInteractor.notifyUserIsNotMotorizado(params)
         onRegisterSuccess.postValue(success)
     }
 }

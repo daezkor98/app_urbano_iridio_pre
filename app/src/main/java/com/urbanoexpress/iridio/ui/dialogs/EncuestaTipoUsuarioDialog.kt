@@ -4,23 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Toast
 import com.urbanoexpress.iridio.databinding.ModalEncuestaTipoUsuarioBinding
+import com.urbanoexpress.iridio.presenter.viewmodel.LicenciaFormViewModel
+import com.urbanoexpress.iridio.ui.MainActivity
 import com.urbanoexpress.iridio.ui.MotorizadoDocFormActivity
+import com.urbanoexpress.iridio.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio.util.Preferences
 
 /**
- * A simple [Fragment] subclass.
- * Use the [EncuestaTipoUsuarioDialog.newInstance] factory method to
- * create an instance of this fragment.
+ * Used to complete license data of "Motorizados"
  */
 class EncuestaTipoUsuarioDialog : BaseDialogFragment() {
 
     lateinit var bind: ModalEncuestaTipoUsuarioBinding
 
+    val licenciaMotorizadoVM = LicenciaFormViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.isCancelable = false
+
+        licenciaMotorizadoVM.onRegisterSuccess.observe(this)
+        {
+            Preferences
+                .getInstance()
+                .edit()
+                .putString("mostrarEncuesta", "0")//Should not request again
+                .apply()
+
+            val act = requireActivity() as MainActivity
+            act.dismissProgressDialog()
+            dismiss()
+        }
+
+        licenciaMotorizadoVM.exceptionLD.observe(this) {
+            ModalHelper.showToast(requireContext(), it.message, Toast.LENGTH_LONG)
+        }
     }
 
     override fun onCreateView(
@@ -31,20 +52,17 @@ class EncuestaTipoUsuarioDialog : BaseDialogFragment() {
         bind = ModalEncuestaTipoUsuarioBinding.inflate(inflater, container, false)
 
         bind.btnNoSoyMotorizado.onExclusiveClick {
-            //TODO call service that notifies user is not "motorizado"
-            dismiss()
+            licenciaMotorizadoVM.notifyUserIsNotMotorizado()
         }
         bind.btnGotoEncuesta.onExclusiveClick {
-            MotorizadoDocFormActivity.show(requireActivity())
             dismiss()
+            MotorizadoDocFormActivity.show(requireActivity())
         }
         return bind.root
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            EncuestaTipoUsuarioDialog().apply {
-            }
+        fun newInstance() = EncuestaTipoUsuarioDialog().apply {}
     }
 }

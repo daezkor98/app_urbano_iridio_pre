@@ -16,6 +16,7 @@ import com.urbanoexpress.iridio.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio.ui.widget.enableClickMode
 import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio.util.Preferences
 
 /*
 * Formulario para registro de Licencia de conducir
@@ -57,21 +58,28 @@ class MotorizadoDocFormActivity : BaseActivity2() {
             loading(it)
         }
 
+        licenciaMotorizadoVM.exceptionLD.observe(this) {
+            ModalHelper.showToast(this, it.message, Toast.LENGTH_LONG)
+        }
+
         licenciaMotorizadoVM.onRegisterSuccess.observe(this) {
             val messageDialog = MessageDialog.newInstance("Información registrada")
             messageDialog.completion = {
                 finish()
+                Preferences
+                    .getInstance()
+                    .edit()
+                    .putString("mostrarEncuesta", "0")//Should not request again
+                    .apply()
             }
             messageDialog.show(supportFragmentManager, "messageD")
         }
     }
 
-
     private fun configUI() {
 
         bind.fieldLicenciaEmit.setText("00/00/0000")
         bind.fieldLicenciaEmit.enableClickMode {
-
             val newFragment = DatePickerDailogFragment.newInstance(DATE_PICKER_MODE.SPINNER)
             newFragment.dateListener = DatePickerDailogFragment
                 .OnDatePickerDailogFragmentListener { view, year, month, dayOfMonth ->
@@ -79,7 +87,6 @@ class MotorizadoDocFormActivity : BaseActivity2() {
                 }
             newFragment.show(supportFragmentManager, "datePicker")
         }
-
 
         bind.fieldLicenciaExp.setText("00/00/0000")
         bind.fieldLicenciaExp.enableClickMode {
@@ -97,7 +104,7 @@ class MotorizadoDocFormActivity : BaseActivity2() {
 
         bind.btnRegistrar.onExclusiveClick {
 
-            val docEmit = bind.fieldLicenciaEmit.fieldText()//bind.fieldLicenciaEmit.text.toString()
+            val docEmit = bind.fieldLicenciaEmit.fieldText()
             val docExp = bind.fieldLicenciaExp.fieldText()
 
             if (areValid(docEmit, docExp)) {

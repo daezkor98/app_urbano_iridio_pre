@@ -38,7 +38,8 @@ class MisGananciasInteractor {
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-                        continuation.resume(false)
+//                        continuation.resumeWithException(error)
+                        continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
         }
@@ -56,16 +57,18 @@ class MisGananciasInteractor {
                                 ?.data.ifSafe {
                                     continuation.resume(it)
                                 }.ifNull {
-                                    continuation.resumeWithException(Exception("No hay data"))//TODO
+                                    continuation.resumeWithException(Exception("No tiene información"))//TODO
                                 }
 
                         } catch (e: Exception) {
-                            continuation.resumeWithException(e)
+//                            continuation.resumeWithException(e)
+                            continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                         }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-                        continuation.resumeWithException(error)
+//                        continuation.resumeWithException(error)
+                        continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
         }
@@ -82,16 +85,18 @@ class MisGananciasInteractor {
                             instance?.data.ifSafe {
                                 continuation.resume(it)
                             }.ifNull {
-                                continuation.resumeWithException(Exception("No hay data"))//TODO
+                                continuation.resumeWithException(Exception("No tiene información"))//TODO
                             }
 
                         } catch (e: Exception) {
-                            continuation.resumeWithException(e)
+//                            continuation.resumeWithException(e)
+                            continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                         }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-                        continuation.resumeWithException(error)
+//                        continuation.resumeWithException(error)
+                        continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
         }

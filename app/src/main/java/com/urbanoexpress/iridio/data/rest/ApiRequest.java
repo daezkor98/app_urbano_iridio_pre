@@ -18,7 +18,10 @@ import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest;
 /**
  * Created by mick on 20/05/16.
  */
+
 public class ApiRequest {
+
+    public final static String errorMessage = "Hubo un error y no se pudo procesar la solicitud.\nPor favor, inténtalo de nuevo.";
 
     private static final String TAG = ApiRequest.class.getSimpleName();
 

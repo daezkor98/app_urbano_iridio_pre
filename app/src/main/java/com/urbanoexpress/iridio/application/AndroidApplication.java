@@ -31,7 +31,7 @@ public class AndroidApplication extends MultiDexApplication {
         Preferences.getInstance().init(getApplicationContext(), "GlobalConfigApp");
 
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
-        int apiEnvironment = ApiEnvironment.DEVELOPMENT;
+        int apiEnvironment = ApiEnvironment.PRODUCTION;
         int country = Preferences.getInstance().getInt("country", -1);
 
         preferencesHelper.putApiEnvironment(apiEnvironment);

@@ -6,6 +6,7 @@ import com.urbanoexpress.iridio.data.rest.ApiRest
 import com.urbanoexpress.iridio.util.network.volley.MultipartJsonObjectRequest
 import org.json.JSONObject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 
@@ -28,8 +29,26 @@ class MotorizadoInteractor {
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-                        continuation.resume(false)
+//                        continuation.resumeWithException(error)
+                        continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
         }
+
+    suspend fun notifyUserIsNotMotorizado(
+        params: Map<String, String>
+    ): Boolean = suspendCoroutine { continuation ->
+        ApiRequest.getInstance().newParams()
+        ApiRequest.getInstance().putAllParams(params)
+        ApiRequest.getInstance().request(ApiRest.url(ApiRest.Api.UPLOAD_MOTORIZADO_LICENCE),
+            ApiRequest.TypeParams.FORM_DATA, object : ApiRequest.ResponseListener {
+                override fun onResponse(response: JSONObject) {
+                    continuation.resume(true)
+                }
+
+                override fun onErrorResponse(error: VolleyError) {
+                    continuation.resumeWithException(Exception(ApiRequest.errorMessage))
+                }
+            })
+    }
 }

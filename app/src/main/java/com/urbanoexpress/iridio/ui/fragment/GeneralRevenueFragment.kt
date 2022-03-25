@@ -8,9 +8,9 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio.R
 import com.urbanoexpress.iridio.databinding.FragmentGeneralRevenueBinding
-import com.urbanoexpress.iridio.presenter.viewmodel.GeneralRevenueViewModel
 import com.urbanoexpress.iridio.model.dto.CERT_ESTADO.APROBADO
 import com.urbanoexpress.iridio.model.dto.Period
+import com.urbanoexpress.iridio.presenter.viewmodel.GeneralRevenueViewModel
 import com.urbanoexpress.iridio.ui.BaseActivity2
 import com.urbanoexpress.iridio.ui.adapter.PeriodsRevenueAdapter
 import com.urbanoexpress.iridio.ui.dialogs.FacturaPeriodoResumenDialog
@@ -53,7 +53,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
             periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0 }
             areApproved = periodsAdaper.periods
                 .filter { item -> item.cert_estado == APROBADO.state_id }
-//            bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
+            bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
         }
     }
 
@@ -104,21 +104,21 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
         bind.btnRegistrarFac.onExclusiveClick {
 
-//            if (areApproved.size == 1) {
-            if (false) {//TODO fix
+            if (areApproved.size == 1) {
+//            if (false) {//TODO fix
 
                 findNavController()
                     .navigate(
-                    R.id.action_generalRevenueFragment_to_registroFacturaFragment,
-//                    bundleOf(AK.SELECTED_PERIOD to areApproved.single() )//TODO
-                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[1])
-                )
+                        R.id.action_generalRevenueFragment_to_registroFacturaFragment,
+                        bundleOf(AK.SELECTED_PERIOD to areApproved.single())//TODO
+//                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[1])
+                    )
             } else {
 
                 findNavController().navigate(
                     R.id.action_generalRevenueFragment_to_selectPeriodFragment,
-                    //bundleOf(AK.PERIODS to areApproved)
-                    bundleOf(AK.PERIODS to periodsAdaper.periods)
+                    bundleOf(AK.PERIODS to areApproved)
+//                    bundleOf(AK.PERIODS to periodsAdaper.periods)
                 )
             }
         }
