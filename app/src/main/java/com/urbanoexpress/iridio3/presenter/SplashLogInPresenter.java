@@ -138,6 +138,7 @@ public class SplashLogInPresenter implements RequestCallback {
                 saveUserProfile(data.getJSONObject("userProfile"));
             } catch (JSONException ex) {
                 ex.printStackTrace();
+                //TODO show messages on background
                 view.showToast(R.string.act_login_login_msg_error_datos_user_profile);
                 return false;
             }

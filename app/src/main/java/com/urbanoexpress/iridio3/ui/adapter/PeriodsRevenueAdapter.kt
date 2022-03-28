@@ -12,13 +12,22 @@ import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
 /**
  * Created by Brandon Quintanilla on February/28/2022.
  */
+
+/*
+* TODO :
+*  - "No trabajó e lugares vacios"
+*  - "Intercambiar el orden de las fechas"
+*  - "No completar en loas dias en el periodo en curso"
+*  - "No mostrar periodos con todo en cero"
+*  - Manejar el nuevo estado "pagado"
+* */
 class PeriodsRevenueAdapter : RecyclerView.Adapter<PeriodsRevenueAdapter.ViewHolder>() {
 
     var onItemClick: OnItemClick = null
 
     var periods: List<Period> = ArrayList()
         set(value) {
-            field = value
+            field = value.filter { it.monto!! > 0.1 }
             this.notifyDataSetChanged()
         }
 

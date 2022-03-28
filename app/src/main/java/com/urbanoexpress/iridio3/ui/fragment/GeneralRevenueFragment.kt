@@ -16,15 +16,18 @@ import com.urbanoexpress.iridio3.ui.adapter.PeriodsRevenueAdapter
 import com.urbanoexpress.iridio3.ui.dialogs.FacturaPeriodoResumenDialog
 import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Created by Brandon Quintanilla on March/01/2022.
  */
+@AndroidEntryPoint
 class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentGeneralRevenueBinding
 
     val gananciasVM = GeneralRevenueViewModel()//TODO inject
+    //var gananciasVM: GeneralRevenueViewModel by viewModels()
 
     lateinit var periodsAdaper: PeriodsRevenueAdapter
 
@@ -105,20 +108,16 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         bind.btnRegistrarFac.onExclusiveClick {
 
             if (areApproved.size == 1) {
-//            if (false) {//TODO fix
 
                 findNavController()
                     .navigate(
                         R.id.action_generalRevenueFragment_to_registroFacturaFragment,
-                        bundleOf(AK.SELECTED_PERIOD to areApproved.single())//TODO
-//                        bundleOf(AK.SELECTED_PERIOD to periodsAdaper.periods[1])
+                        bundleOf(AK.SELECTED_PERIOD to areApproved.single())
                     )
             } else {
-
                 findNavController().navigate(
                     R.id.action_generalRevenueFragment_to_selectPeriodFragment,
                     bundleOf(AK.PERIODS to areApproved)
-//                    bundleOf(AK.PERIODS to periodsAdaper.periods)
                 )
             }
         }
