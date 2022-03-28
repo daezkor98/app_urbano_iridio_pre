@@ -104,8 +104,8 @@ class MotorizadoDocFormActivity : BaseActivity2() {
 
         bind.btnRegistrar.onExclusiveClick {
 
-            val docEmit = bind.fieldLicenciaEmit.fieldText()
-            val docExp = bind.fieldLicenciaExp.fieldText()
+            val docEmit = bind.fieldLicenciaEmit.text()
+            val docExp = bind.fieldLicenciaExp.text()
 
             if (areValid(docEmit, docExp)) {
                 licenciaMotorizadoVM.postLicence(imageBytes, docEmit, docExp)

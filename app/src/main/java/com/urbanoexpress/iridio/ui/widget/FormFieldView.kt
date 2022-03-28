@@ -13,7 +13,7 @@ import com.urbanoexpress.iridio.urbanocore.onExclusiveClick
 
 
 /**
- *
+ * Utility Widget used to normalize form views and behavior
  */
 class FormFieldView(ctx: Context, attrs: AttributeSet) : ConstraintLayout(ctx, attrs) {
 
@@ -47,7 +47,7 @@ class FormFieldView(ctx: Context, attrs: AttributeSet) : ConstraintLayout(ctx, a
         et_field?.setText(text)
     }
 
-    fun fieldText(): String {
+    fun text(): String {
         return et_field?.text.toString()
     }
 
@@ -57,7 +57,7 @@ class FormFieldView(ctx: Context, attrs: AttributeSet) : ConstraintLayout(ctx, a
 }
 
 /**
- * Used when the form field needs to be clickeable
+ * Used when the form field needs to be clickeable and not editable
  * For example, when it is used as date field
  * */
 fun FormFieldView.enableClickMode(action: (v: View) -> Unit) {
