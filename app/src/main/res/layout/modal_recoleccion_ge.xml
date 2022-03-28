@@ -305,7 +305,7 @@
                                 android:textSize="12sp"
                                 android:text="PAQUETES" />
 
-                            <com.urbanoexpress.iridio.ui.widget.AdderButton
+                            <com.urbanoexpress.iridio3.ui.widget.AdderButton
                                 android:id="@+id/paquetes_adder_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
@@ -331,7 +331,7 @@
                                 android:textSize="12sp"
                                 android:text="SOBRES" />
 
-                            <com.urbanoexpress.iridio.ui.widget.AdderButton
+                            <com.urbanoexpress.iridio3.ui.widget.AdderButton
                                 android:id="@+id/sobres_adder_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
@@ -361,7 +361,7 @@
                                 android:textSize="12sp"
                                 android:text="VALIJAS" />
 
-                            <com.urbanoexpress.iridio.ui.widget.AdderButton
+                            <com.urbanoexpress.iridio3.ui.widget.AdderButton
                                 android:id="@+id/valijas_adder_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
@@ -387,7 +387,7 @@
                                 android:textSize="12sp"
                                 android:text="OTROS" />
 
-                            <com.urbanoexpress.iridio.ui.widget.AdderButton
+                            <com.urbanoexpress.iridio3.ui.widget.AdderButton
                                 android:id="@+id/otros_adder_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />

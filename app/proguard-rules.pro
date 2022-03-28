@@ -46,7 +46,7 @@
 ##--- End: Glide ----
 
 # Ensures entities remain un-obfuscated so table and columns are named correctly
--keep class com.urbanoexpress.iridio.model.entity.** { *; }
+-keep class com.urbanoexpress.iridio3.model.entity.** { *; }
 
 # Keep native methods
 -keepclassmembers class * {

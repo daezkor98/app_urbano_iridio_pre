@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Urbano - Iridio</string>
+    <string name="app_name">Urbano - New Iridio</string>
 
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
@@ -467,7 +467,7 @@
     <string name="urbano_pe_copy_right">© 2003-2020 URBANO EXPRESS PERU S.A.</string>
     <string name="title_activity_turn_on_gps">TurnOnGPSActivity</string>
 
-    <string name="default_notification_channel_id" translatable="false">com.urbanoexpress.iridio.channel.id.GENERAL_NOTIFICATIONS</string>
+    <string name="default_notification_channel_id" translatable="false">com.urbanoexpress.iridio3.channel.id.GENERAL_NOTIFICATIONS</string>
 
     <!--Mis Ganancias-->
     <string name="fragment_title">Mis Ganancias</string>

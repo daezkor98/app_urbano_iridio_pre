@@ -5,7 +5,7 @@
     android:id="@+id/activity_acerca_de"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urbanoexpress.iridio.ui.AcercaDeActivity"
+    tools:context="com.urbanoexpress.iridio3.ui.AcercaDeActivity"
     android:background="#ebebeb">
 
     <LinearLayout

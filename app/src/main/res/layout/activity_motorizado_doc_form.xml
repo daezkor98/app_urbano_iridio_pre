@@ -73,13 +73,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.urbanoexpress.iridio.ui.widget.FormFieldView
+                <com.urbanoexpress.iridio3.ui.widget.FormFieldView
                     android:id="@+id/field_licencia_emit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:headerHint="Fecha de expedición" />
 
-                <com.urbanoexpress.iridio.ui.widget.FormFieldView
+                <com.urbanoexpress.iridio3.ui.widget.FormFieldView
                     android:id="@+id/field_licencia_exp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

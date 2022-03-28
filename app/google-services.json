@@ -58,6 +58,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884191591532:android:0cca353b67191a509c6c49",
+        "android_client_info": {
+          "package_name": "com.urbanoexpress.iridio3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884191591532-eahibjt386hcff84hlq9a82721727rp6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3",
+            "certificate_hash": "765ba92a8bfc45d72eca9e3090f2c531347a7bc4"
+          }
+        },
+        {
+          "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCswdNIXdLvzlCecL43kNM1ZK6QfmC2YTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

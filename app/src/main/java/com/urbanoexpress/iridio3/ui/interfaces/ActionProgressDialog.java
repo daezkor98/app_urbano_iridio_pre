@@ -1,0 +1,8 @@
+package com.urbanoexpress.iridio3.ui.interfaces;
+
+public interface ActionProgressDialog {
+
+    void showProgressDialog(String message);
+    void showProgressDialog(String title, String message);
+    void dismissProgressDialog();
+}
