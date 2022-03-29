@@ -32,13 +32,13 @@ fun secureFunc(exceptionLD: MutableLiveData<Throwable>? = null, action: () -> Un
     } catch (e: Exception) {
         e.printStackTrace()
         exceptionLD?.postValue(e)
-        Log.e("secureFunc", "secureFunc: "+e.message, e)
+        Log.e("secureFunc", "secureFunc: " + e.message, e)
     }
 }
 
 //Pasar a utils
-fun Throwable.logException(TAG: String = "TAG") {
-    Log.e(TAG, "logException: " + this.message, this)
+fun Throwable.logException(whereTAG: String = "TAG") {
+    Log.e(whereTAG, "logException: " + this.message, this)
     this.printStackTrace()
 }
 

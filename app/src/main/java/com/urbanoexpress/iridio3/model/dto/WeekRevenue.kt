@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.model.dto
 
+import com.urbanoexpress.iridio3.urbanocore.extentions.moveItem
 import com.urbanoexpress.iridio3.urbanocore.ifNull
 
 
@@ -12,10 +13,11 @@ data class RevenueDay(
     val monto_entregas: Double?,
     val no_entregas: Int?,
     val monto_no_entregas: Double,
-    val dia_semana: Int?
+    val dia_semana: Int?,
+    var notWorkingMessage: String? = null
 )
 
-fun ArrayList<RevenueDay>.completeDays() {
+fun ArrayList<RevenueDay>.completeDays(): ArrayList<RevenueDay> {
     for (dayIndex in 0..6) {
         this
             .find { it.dia_semana == dayIndex }
@@ -24,15 +26,6 @@ fun ArrayList<RevenueDay>.completeDays() {
             }
     }
     this.sortBy { it.dia_semana }
-    this.moveItem(0,6)//In remote DB "Domingo" is 0 index
-}
-
-/**
- * from: index of element to move
- * to: resultant index
- * */
-fun <T> ArrayList<T>.moveItem(from:Int, to:Int){
-    val item= this[from]
-    this.removeAt(from)
-    this.add(to,item)
+    this.moveItem(from = 0, to = 6)//In remote DB "Domingo" is 0 index so it have to be 6
+    return this
 }

@@ -75,20 +75,20 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         bind = FragmentRegistroFacturaBinding.inflate(inflater, container, false)
 
         when (period?.cert_estado) {
-            CERT_ESTADO.EN_PROCESO.state_id -> {
+            CERT_ESTADO.EN_PROCESO.stateId -> {
                 findNavController().popBackStack()
             }
-            CERT_ESTADO.LIQUIDADO.state_id -> {
+            CERT_ESTADO.LIQUIDADO.stateId -> {
                 prepareForEdition()
                 if (this.period?.fac_id != "0") {
                     showPreviousFactData()
                 }
             }
-            CERT_ESTADO.APROBADO.state_id -> {
+            CERT_ESTADO.APROBADO.stateId -> {
                 showPreviousFactData()
                 disableEdition()
             }
-            CERT_ESTADO.FACTURADO.state_id -> {
+            CERT_ESTADO.FACTURADO.stateId -> {
                 showPreviousFactData()
                 disableEdition()
             }

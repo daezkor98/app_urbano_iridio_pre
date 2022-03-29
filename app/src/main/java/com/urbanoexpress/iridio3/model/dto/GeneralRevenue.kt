@@ -19,23 +19,25 @@ data class Period(
     val monto_entregas: Double?,
     val no_entregas: Int?,
     val monto_no_entregas: Double?,
-    val monto: Double?,
+    var monto: Double?,
     val fac_id: String,
     val fac_numero: String,
     val fac_total: String,
     val fac_fecha: String
 ) : Serializable
 
-enum class CERT_ESTADO(val state_id: String) {
-    EN_PROCESO("0"),
-    LIQUIDADO("1"),
-    APROBADO("2"),
-    FACTURADO("3")
+enum class CERT_ESTADO(val stateId: String, val stateName: String) {
+    EN_PROCESO("0", "En proceso"),
+    LIQUIDADO("1", "Liquidado"),
+    APROBADO("2", "Aprobado"),
+    FACTURADO("3", "Facturado"),
+    PAGADO("5", "Pagado")
 }
 
-val certEstadosMap: Map<String, String> = mapOf(
-    "0" to "En proceso",
-    "1" to "Liquidado",
-    "2" to "Aprobado",
-    "3" to "Facturado"
+val certEstadosMap: Map<String, CERT_ESTADO> = mapOf(
+    "0" to CERT_ESTADO.EN_PROCESO,
+    "1" to CERT_ESTADO.LIQUIDADO,
+    "2" to CERT_ESTADO.APROBADO,
+    "3" to CERT_ESTADO.FACTURADO,
+    "5" to CERT_ESTADO.PAGADO
 )

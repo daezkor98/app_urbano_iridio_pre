@@ -38,7 +38,6 @@ class MisGananciasInteractor {
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-//                        continuation.resumeWithException(error)
                         continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
@@ -61,13 +60,11 @@ class MisGananciasInteractor {
                                 }
 
                         } catch (e: Exception) {
-//                            continuation.resumeWithException(e)
                             continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                         }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-//                        continuation.resumeWithException(error)
                         continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
@@ -89,13 +86,11 @@ class MisGananciasInteractor {
                             }
 
                         } catch (e: Exception) {
-//                            continuation.resumeWithException(e)
                             continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                         }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-//                        continuation.resumeWithException(error)
                         continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })

@@ -5,7 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urbanoexpress.iridio3.databinding.RowRevenuePeriodDetailBinding
 import com.urbanoexpress.iridio3.model.dto.RevenueDay
-import com.urbanoexpress.iridio3.model.dto.completeDays
+import com.urbanoexpress.iridio3.urbanocore.assertText
+import com.urbanoexpress.iridio3.urbanocore.gone
+import com.urbanoexpress.iridio3.urbanocore.ifNotNull
+import com.urbanoexpress.iridio3.urbanocore.ifNull
 import com.urbanoexpress.iridio3.urbanocore.values.weekDays
 
 /**
@@ -13,10 +16,9 @@ import com.urbanoexpress.iridio3.urbanocore.values.weekDays
  */
 class RevenuePeriodDetailAdapter : RecyclerView.Adapter<RevenuePeriodDetailAdapter.ViewHolder>() {
 
-    var revenueDays: ArrayList<RevenueDay> = ArrayList()
+    var revenueDays: List<RevenueDay> = ArrayList()
         set(value) {
             field = value
-            revenueDays.completeDays()
             this.notifyDataSetChanged()
         }
 
@@ -39,10 +41,20 @@ class RevenuePeriodDetailAdapter : RecyclerView.Adapter<RevenuePeriodDetailAdapt
 
         val item = revenueDays[position]
         holder.bind.tvDay.text = "${weekDays[item.dia_semana]}"
-        holder.bind.tvEntregadosGuias.text = "${item.entregas}"
-        holder.bind.tvEntregadosMonto.text = "S/ ${item.monto_entregas}"
-        holder.bind.tvVisitadosGuias.text = "${item.no_entregas}"
-        holder.bind.tvVisitadosMonto.text = "S/ ${item.monto_no_entregas}"
+
+        item.notWorkingMessage.ifNull {
+            holder.bind.tvEntregadosGuias.assertText("${item.entregas}") //=
+            holder.bind.tvEntregadosMonto.assertText("S/ ${item.monto_entregas}")
+            holder.bind.tvVisitadosGuias.assertText("${item.no_entregas}")
+            holder.bind.tvVisitadosMonto.assertText("S/ ${item.monto_no_entregas}")
+            holder.bind.tvNoTrabajo.gone()
+        }.ifNotNull { msg ->
+            holder.bind.tvEntregadosGuias.gone()
+            holder.bind.tvEntregadosMonto.gone()
+            holder.bind.tvVisitadosGuias.gone()
+            holder.bind.tvVisitadosMonto.gone()
+            holder.bind.tvNoTrabajo.assertText(msg)
+        }
     }
 
     override fun getItemCount(): Int = revenueDays.size

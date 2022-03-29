@@ -15,11 +15,11 @@ import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
 
 /*
 * TODO :
-*  - "No trabajó e lugares vacios"
-*  - "Intercambiar el orden de las fechas"
-*  - "No completar en loas dias en el periodo en curso"
-*  - "No mostrar periodos con todo en cero"
-*  - Manejar el nuevo estado "pagado"
+*  - "No trabajó e lugares vacios de detalle"--
+*  - "Intercambiar el orden de las fechas"--
+*  - "No completar en loas dias en el periodo en curso"--
+*  - "No mostrar periodos con todo en cero"--
+*  - "Manejar el nuevo estado "pagado"--
 * */
 class PeriodsRevenueAdapter : RecyclerView.Adapter<PeriodsRevenueAdapter.ViewHolder>() {
 
@@ -27,7 +27,7 @@ class PeriodsRevenueAdapter : RecyclerView.Adapter<PeriodsRevenueAdapter.ViewHol
 
     var periods: List<Period> = ArrayList()
         set(value) {
-            field = value.filter { it.monto!! > 0.1 }
+            field = value
             this.notifyDataSetChanged()
         }
 
@@ -50,8 +50,8 @@ class PeriodsRevenueAdapter : RecyclerView.Adapter<PeriodsRevenueAdapter.ViewHol
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val period = periods[position]
         holder.bind.tvDaysIntervalBegg.text = "Desde: ${period.fecha_inicio}"
-        holder.bind.tvEstado.text = "${certEstadosMap[period.cert_estado]}"
         holder.bind.tvDaysIntervalEnd.text = "Hasta: ${period.fecha_fin}"
+        holder.bind.tvEstado.text = "${certEstadosMap[period.cert_estado]?.stateName}"
         holder.bind.tvRevenue.text = "S/ ${period.monto}"
     }
 

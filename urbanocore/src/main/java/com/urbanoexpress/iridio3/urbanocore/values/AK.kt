@@ -7,6 +7,7 @@ package com.urbanoexpress.iridio3.urbanocore.values
 //Argument Keys
 object AK {
     const val SELECTED_PERIOD = "PERIOD"
+    const val IS_CURRENT = "IS_CURRENT"
     const val PERIODS = "PERIODS"
     const val MESSAGE = "MESSAGE"
 

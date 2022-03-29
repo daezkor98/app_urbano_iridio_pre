@@ -10,7 +10,7 @@ import com.urbanoexpress.iridio3.model.dto.Period
 import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 
-typealias PeridoEvent = ((Period) -> Unit)
+typealias PeridoEvent = ((Period, Boolean) -> Unit)
 
 class FacturaPeriodoResumenDialog : BaseDialogFragment() {
 
@@ -18,12 +18,14 @@ class FacturaPeriodoResumenDialog : BaseDialogFragment() {
 
     lateinit var onVerMas: PeridoEvent
 
-    var period: Period? = null
+    private var period: Period? = null
+    private var isCurrentPeriod = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             period = it.getSerializable(AK.SELECTED_PERIOD) as Period?
+            isCurrentPeriod = it.getBoolean(AK.IS_CURRENT)
         }
     }
 
@@ -51,16 +53,20 @@ class FacturaPeriodoResumenDialog : BaseDialogFragment() {
 
         bind.btnGodetail.onExclusiveClick {
             period?.let {
-                onVerMas.invoke(it)
+                onVerMas.invoke(it, isCurrentPeriod)
             }
         }
     }
 
     companion object {
 
-        fun getInstance(period: Period, onVerMas: PeridoEvent): FacturaPeriodoResumenDialog {
+        fun getInstance(
+            period: Period,
+            isCurrent: Boolean,
+            onVerMas: PeridoEvent
+        ): FacturaPeriodoResumenDialog {
             val dialog = FacturaPeriodoResumenDialog()
-            dialog.arguments = bundleOf(AK.SELECTED_PERIOD to period)
+            dialog.arguments = bundleOf(AK.SELECTED_PERIOD to period, AK.IS_CURRENT to isCurrent)
             dialog.onVerMas = onVerMas
             return dialog
         }

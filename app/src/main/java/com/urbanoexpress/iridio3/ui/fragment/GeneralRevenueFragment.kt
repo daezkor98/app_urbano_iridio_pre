@@ -14,6 +14,7 @@ import com.urbanoexpress.iridio3.presenter.viewmodel.GeneralRevenueViewModel
 import com.urbanoexpress.iridio3.ui.BaseActivity2
 import com.urbanoexpress.iridio3.ui.adapter.PeriodsRevenueAdapter
 import com.urbanoexpress.iridio3.ui.dialogs.FacturaPeriodoResumenDialog
+import com.urbanoexpress.iridio3.urbanocore.goneIf
 import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,13 +50,15 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         }
 
         gananciasVM.generalRevenueDataLD.observe(this) {
-
             currentPeriod = it.Periods?.get(0)!!
-            val currentAmount = currentPeriod.monto
-            bind.tvWeekRevenue.text = "S/ ${currentAmount}"
-            periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0 }
-            areApproved = periodsAdaper.periods
-                .filter { item -> item.cert_estado == APROBADO.state_id }
+
+            bind.tvWeekRevenue.text = "S/ ${currentPeriod.monto}"
+            periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0 && item.monto!! > 0 }
+            // periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0}
+            areApproved =
+                periodsAdaper.periods.filter { item -> item.cert_estado == APROBADO.stateId }
+
+            this.bind.cardWeeksTitle.goneIf { periodsAdaper.periods.isEmpty() }
             bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
         }
     }
@@ -94,6 +97,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
     private fun onCurrentPeriodClick() {
         val dialog = FacturaPeriodoResumenDialog.getInstance(
             currentPeriod,
+            true,
             ::navigateToPeriodDetail
         )
         dialog.show(childFragmentManager, "RESS")
@@ -127,15 +131,17 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
         val dialog = FacturaPeriodoResumenDialog.getInstance(
             periodsAdaper.periods[index],
+            false,
             ::navigateToPeriodDetail
         )
         dialog.show(childFragmentManager, "RESS")
     }
 
-    fun navigateToPeriodDetail(period: Period) {
+    fun navigateToPeriodDetail(period: Period, isCurrent: Boolean) {
 
         val args = bundleOf(
-            AK.SELECTED_PERIOD to period
+            AK.SELECTED_PERIOD to period,
+            AK.IS_CURRENT to isCurrent
         )
 
         findNavController().navigate(

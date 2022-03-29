@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.urbanoexpress.iridio3.databinding.FragmentPeriodDetailBinding
-import com.urbanoexpress.iridio3.presenter.viewmodel.PeriodRevenueViewModel
 import com.urbanoexpress.iridio3.model.dto.Period
+import com.urbanoexpress.iridio3.model.dto.completeDays
+import com.urbanoexpress.iridio3.presenter.viewmodel.PeriodRevenueViewModel
 import com.urbanoexpress.iridio3.ui.adapter.RevenuePeriodDetailAdapter
+import com.urbanoexpress.iridio3.urbanocore.extentions.operateOver
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 
 class PeriodDetailFragment : AppThemeBaseFragment() {
@@ -16,12 +18,14 @@ class PeriodDetailFragment : AppThemeBaseFragment() {
 
     val periodDetailVM = PeriodRevenueViewModel()
     var period: Period? = null
+    var isCurrentPeriod = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             period = it.getSerializable(AK.SELECTED_PERIOD) as Period?
+            isCurrentPeriod = it.getBoolean(AK.IS_CURRENT)
         }
 
         observeViewModel()
@@ -37,7 +41,19 @@ class PeriodDetailFragment : AppThemeBaseFragment() {
         }
 
         periodDetailVM.periodDetailLD.observe(this) {
-            adapter.revenueDays = it
+            //if (period?.cert_estado == CERT_ESTADO.EN_PROCESO.stateId) {
+            if (isCurrentPeriod) {
+                adapter.revenueDays =
+                    it.operateOver(
+                        toThenThat = { item -> item.entregas == 0 && item.no_entregas == 0 },
+                        operate = { notWorkingMessage = "No trabajó" })
+            } else {
+                adapter.revenueDays =
+                    it.completeDays()
+                        .operateOver(
+                            toThenThat = { item -> item.entregas == 0 && item.no_entregas == 0 },
+                            operate = { notWorkingMessage = "No trabajó" })
+            }
         }
 
         period?.let {
