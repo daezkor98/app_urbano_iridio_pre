@@ -10,9 +10,9 @@
         android:name="com.urbanoexpress.iridio3.ui.fragment.GeneralRevenueFragment"
         android:label="fragment_general_revenue"
         tools:layout="@layout/fragment_general_revenue">
-        <action
+<!--        <action
             android:id="@+id/action_generalRevenueFragment_to_weekRevenueFragment"
-            app:destination="@id/weekRevenueFragment" />
+            app:destination="@id/weekRevenueFragment" />-->
         <action
             android:id="@+id/action_generalRevenueFragment_to_registroFacturaFragment"
             app:destination="@id/registroFacturaFragment" />
@@ -25,11 +25,11 @@
     </fragment>
 
     <!--TODO REMOVE?-->
-    <fragment
+<!--    <fragment
         android:id="@+id/weekRevenueFragment"
         android:name="com.urbanoexpress.iridio3.ui.fragment.WeekRevenueFragment"
         android:label="fragment_week_revenue"
-        tools:layout="@layout/fragment_week_revenue" />
+        tools:layout="@layout/fragment_week_revenue" />-->
 
     <fragment
         android:id="@+id/registroFacturaFragment"

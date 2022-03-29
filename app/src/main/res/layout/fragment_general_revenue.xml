@@ -23,6 +23,7 @@
             android:paddingVertical="15dp">
 
             <TextView
+                android:background="@drawable/ripple_simple_transparent"
                 android:id="@+id/tvWeekRevenue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

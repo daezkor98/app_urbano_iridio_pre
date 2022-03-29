@@ -3,14 +3,8 @@ package com.urbanoexpress.iridio3.presenter;
 import android.content.Intent;
 
 import com.android.volley.VolleyError;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.urbanoexpress.iridio3.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.ui.MainActivity;
 import com.urbanoexpress.iridio3.R;
 import com.urbanoexpress.iridio3.model.entity.MenuApp;
 import com.urbanoexpress.iridio3.model.entity.MotivoDescarga;
@@ -18,9 +12,14 @@ import com.urbanoexpress.iridio3.model.entity.TipoDireccion;
 import com.urbanoexpress.iridio3.model.entity.Usuario;
 import com.urbanoexpress.iridio3.model.interactor.SplashLogInInteractor;
 import com.urbanoexpress.iridio3.model.interactor.callback.RequestCallback;
+import com.urbanoexpress.iridio3.ui.MainActivity;
 import com.urbanoexpress.iridio3.util.CommonUtils;
 import com.urbanoexpress.iridio3.util.Preferences;
 import com.urbanoexpress.iridio3.view.SplashLogInView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by mick on 19/05/16.

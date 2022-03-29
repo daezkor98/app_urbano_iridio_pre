@@ -41,7 +41,6 @@ class PeriodDetailFragment : AppThemeBaseFragment() {
         }
 
         periodDetailVM.periodDetailLD.observe(this) {
-            //if (period?.cert_estado == CERT_ESTADO.EN_PROCESO.stateId) {
             if (isCurrentPeriod) {
                 adapter.revenueDays =
                     it.operateOver(

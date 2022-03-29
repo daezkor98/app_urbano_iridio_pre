@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urbanoexpress.iridio3.databinding.RowRevenuePeriodDetailBinding
 import com.urbanoexpress.iridio3.model.dto.RevenueDay
-import com.urbanoexpress.iridio3.urbanocore.assertText
-import com.urbanoexpress.iridio3.urbanocore.gone
-import com.urbanoexpress.iridio3.urbanocore.ifNotNull
-import com.urbanoexpress.iridio3.urbanocore.ifNull
+import com.urbanoexpress.iridio3.urbanocore.*
 import com.urbanoexpress.iridio3.urbanocore.values.weekDays
 
 /**
@@ -48,11 +45,13 @@ class RevenuePeriodDetailAdapter : RecyclerView.Adapter<RevenuePeriodDetailAdapt
             holder.bind.tvVisitadosGuias.assertText("${item.no_entregas}")
             holder.bind.tvVisitadosMonto.assertText("S/ ${item.monto_no_entregas}")
             holder.bind.tvNoTrabajo.gone()
+            holder.bind.dividerHeaderH.visisble()
         }.ifNotNull { msg ->
             holder.bind.tvEntregadosGuias.gone()
             holder.bind.tvEntregadosMonto.gone()
             holder.bind.tvVisitadosGuias.gone()
             holder.bind.tvVisitadosMonto.gone()
+            holder.bind.dividerHeaderH.gone()
             holder.bind.tvNoTrabajo.assertText(msg)
         }
     }

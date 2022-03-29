@@ -28,6 +28,10 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
+fun View.visisble() {
+    this.visibility = View.VISIBLE
+}
+
 fun View.goneIf(condition: () -> Boolean) {
     if (condition()) {
         this.visibility = View.GONE
