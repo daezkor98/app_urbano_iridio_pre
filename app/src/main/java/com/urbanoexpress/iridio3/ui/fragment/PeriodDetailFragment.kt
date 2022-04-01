@@ -12,6 +12,7 @@ import com.urbanoexpress.iridio3.ui.adapter.RevenuePeriodDetailAdapter
 import com.urbanoexpress.iridio3.urbanocore.extentions.operateOver
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 
+//TODO> agregar penalidades
 class PeriodDetailFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentPeriodDetailBinding

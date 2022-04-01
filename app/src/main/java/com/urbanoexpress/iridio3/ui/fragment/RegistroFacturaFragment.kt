@@ -19,6 +19,7 @@ import com.urbanoexpress.iridio3.ui.BaseActivity
 import com.urbanoexpress.iridio3.ui.dialogs.DATE_PICKER_MODE
 import com.urbanoexpress.iridio3.ui.dialogs.DatePickerDailogFragment
 import com.urbanoexpress.iridio3.ui.dialogs.MessageDialog
+import com.urbanoexpress.iridio3.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio3.urbanocore.*
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 
@@ -29,6 +30,8 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
     val facturaVM = RegistrarFacturaViewModel()
 
     var period: Period? = null
+
+    val NO_EXISTE = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,18 +82,38 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
                 findNavController().popBackStack()
             }
             CERT_ESTADO.LIQUIDADO.stateId -> {
-                prepareForEdition()
-                if (this.period?.fac_id != "0") {
-                    showPreviousFactData()
-                }
+                disableEdition()
+                ModalHelper
+                    .BottomPopup
+                    .Builder(
+                        bind.root, "Su pago se encuentra en proceso de aprobación"
+                    ).build().show()
             }
             CERT_ESTADO.APROBADO.stateId -> {
-                showPreviousFactData()
-                disableEdition()
+                prepareForEdition()
+                if (this.period?.fac_id != NO_EXISTE) {
+                    showPreviousFactData()
+                }
+
+                ModalHelper
+                    .BottomPopup
+                    .Builder(
+                        bind.root, "Adjunte su Recibo por Honorarios"
+                    ).build().show()
             }
             CERT_ESTADO.FACTURADO.stateId -> {
                 showPreviousFactData()
                 disableEdition()
+                ModalHelper.BottomPopup.Builder(
+                    bind.root, "Su pago está procesandose"
+                ).build().show()
+            }
+            CERT_ESTADO.PAGADO.stateId -> {
+                showPreviousFactData()
+                disableEdition()
+                ModalHelper.BottomPopup.Builder(
+                    bind.root, "El pago ha sido realizado"
+                ).build().show()
             }
         }
 
@@ -98,12 +121,11 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
     }
 
     private fun disableEdition() {
-        bind.etNumeroFact.isEnabled = false
-        bind.etFechaFactura.isEnabled = false
-        bind.etMontoFact.isEnabled = false
-        bind.btnAddFile.isEnabled = false
-        bind.btnRegistrar.isEnabled = false
-
+        bind.etNumeroFact.disable()
+        bind.etFechaFactura.disable()
+        bind.etMontoFact.disable()
+        bind.btnAddFile.disable()
+        bind.btnRegistrar.disable()
     }
 
     private fun showPreviousFactData() {
@@ -148,7 +170,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         return true
     }
 
-    var positionSelectedOptionEditPhoto = 0
+//    var positionSelectedOptionEditPhoto = 0
 
     private fun prepareForEdition() {
 

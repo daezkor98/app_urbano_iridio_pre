@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="COMENTARIOS"
+                        android:text="COMENTARIOS (Mínimo 10 carácteres)"
                         android:textColor="@color/gris"
                         android:textSize="12sp" />
 

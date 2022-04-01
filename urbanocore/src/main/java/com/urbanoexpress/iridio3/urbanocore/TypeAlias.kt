@@ -8,5 +8,3 @@ typealias OnItemClick = ((index: Int) -> Unit)?
 typealias SimpleEvent = (() -> Unit)
 
 typealias DataCompletion = ((bytes: ByteArray, filename: String) -> Unit)
-
-//typealias Condition = ((item: T) -> Boolean)

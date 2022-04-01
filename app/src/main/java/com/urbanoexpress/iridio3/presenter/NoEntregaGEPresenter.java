@@ -189,7 +189,7 @@ public class NoEntregaGEPresenter {
 
     public void onBtnSiguienteClick() {
         if (currentStep == STEPS.MOTIVO_NO_ENTREGA) {
-            if (validateSelectedMotivo()) {
+            if (validateSelectedMotivo() && validateMotivoDescription()) {
                 view.hideStepMotivos();
                 view.showStepGaleria();
                 view.setTextBtnSiguiente("Gestionar");
@@ -212,26 +212,32 @@ public class NoEntregaGEPresenter {
 
     @SuppressLint("MissingPermission")
     private void gestionarGuia() {
-        if (!validateFechaDispositivo()) { return; }
+        if (!validateFechaDispositivo()) {
+            return;
+        }
 
         if (showValidationMsgUltimaGestionEfectiva) {
             if (ModelUtils.isGuiaEntrega(rutas.get(0).getTipo())) {
-                if (!validateUltimaGestionEfectiva()) { return; }
+                if (!validateUltimaGestionEfectiva()) {
+                    return;
+                }
             }
         }
 
         if (showValidationMsgEstadoShipper) {
-            if (!validateEstadoShipper()) { return; }
+            if (!validateEstadoShipper()) {
+                return;
+            }
         }
 
         if (rutas.get(0).getTipoZona() == Ruta.ZONA.RURAL) {
             LocationServices.getFusedLocationProviderClient(AndroidApplication.getAppContext())
                     .getLastLocation().addOnCompleteListener(task -> {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            LocationUtils.setCurrentLocation(task.getResult());
-                        }
-                        new SaveGestionTask().execute();
-                    });
+                if (task.isSuccessful() && task.getResult() != null) {
+                    LocationUtils.setCurrentLocation(task.getResult());
+                }
+                new SaveGestionTask().execute();
+            });
             return;
         }
 
@@ -307,7 +313,7 @@ public class NoEntregaGEPresenter {
         }
     }
 
-    private void saveMotivos(JSONArray data) throws JSONException{
+    private void saveMotivos(JSONArray data) throws JSONException {
         JSONObject jsonObject;
         for (int i = 0; i < data.length(); i++) {
             jsonObject = data.getJSONObject(i);
@@ -517,7 +523,19 @@ public class NoEntregaGEPresenter {
         return true;
     }
 
+    private boolean validateMotivoDescription() {
+        String motivoDescrip = view.getTextComentarios();
+        if (motivoDescrip.length() > 9) {
+            return true;
+        }
+        view.showSnackBar(R.string.activity_detalle_ruta_message_motivo_no_descrito);
+        CommonUtils.vibrateDevice(view.getViewContext(), 100);
+        return false;
+    }
+
+
     private boolean validateSelectedMotivo() {
+
         if (selectedIndexMotivo >= 0) {
             return true;
         }
@@ -664,7 +682,7 @@ public class NoEntregaGEPresenter {
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link com.urbanoexpress.iridio3.presenter.DetalleRutaPresenter#descargaFinalizadaReceiver}
      * {@link com.urbanoexpress.iridio3.presenter.RutaPendientePresenter#descargaFinalizadaReceiver}
      * {@link com.urbanoexpress.iridio3.presenter.RutaGestionadaPresenter#descargaFinalizadaReceiver}

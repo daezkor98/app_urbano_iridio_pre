@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.GeneralRevenueFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.fragment.GeneralRevenueFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -23,11 +23,11 @@
             android:paddingVertical="15dp">
 
             <TextView
-                android:background="@drawable/ripple_simple_transparent"
                 android:id="@+id/tvWeekRevenue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:background="@drawable/ripple_simple_transparent"
                 android:gravity="center"
                 android:paddingHorizontal="15dp"
                 android:text="S/ 0.00"

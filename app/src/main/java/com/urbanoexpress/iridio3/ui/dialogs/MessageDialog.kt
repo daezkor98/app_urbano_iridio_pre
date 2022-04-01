@@ -12,7 +12,7 @@ import com.urbanoexpress.iridio3.urbanocore.values.AK
 
 /**
  * A simple [DialogFragment] that shows a message
- * and notifies with completion lamda
+ * and notifies with lambda completion
  */
 class MessageDialog : BaseDialogFragment() {
 

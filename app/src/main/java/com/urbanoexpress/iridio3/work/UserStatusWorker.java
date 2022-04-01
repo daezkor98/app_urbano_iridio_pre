@@ -72,9 +72,6 @@ public class UserStatusWorker extends Worker {
             Response<VerifyUserSessionEntity> response = callSync.execute();
             VerifyUserSessionEntity apiResponse = response.body();
 
-            //TODO REMOVE
-            Log.i(TAG, "doWork VerifyUserSessionEntity : " + new Gson().toJson(apiResponse));
-
             if (apiResponse.getApp().isUpdateRequired()) {
                 displayNotification(apiResponse.getApp().getLatestVersionName());
             }

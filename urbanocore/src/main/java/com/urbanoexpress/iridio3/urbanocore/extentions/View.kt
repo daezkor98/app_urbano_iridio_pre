@@ -37,3 +37,7 @@ fun View.goneIf(condition: () -> Boolean) {
         this.visibility = View.GONE
     }
 }
+
+fun View.disable(){
+    this.isEnabled =false
+}

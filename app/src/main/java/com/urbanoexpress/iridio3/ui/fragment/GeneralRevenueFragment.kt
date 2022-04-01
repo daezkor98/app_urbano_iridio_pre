@@ -30,7 +30,9 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
     val gananciasVM = GeneralRevenueViewModel()//TODO inject
     //var gananciasVM: GeneralRevenueViewModel by viewModels()
 
-    lateinit var periodsAdaper: PeriodsRevenueAdapter
+    lateinit var periodsAdapter: PeriodsRevenueAdapter
+
+    lateinit var currentPeriod: Period
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,6 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         observeViewModel()
     }
 
-    lateinit var currentPeriod: Period
     private fun observeViewModel() {
 
         gananciasVM.isLoadingLD.observe(this) { isLoading ->
@@ -53,12 +54,12 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
             currentPeriod = it.Periods?.get(0)!!
 
             bind.tvWeekRevenue.text = "S/ ${currentPeriod.monto}"
-            periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0 && item.monto!! > 0 }
+            periodsAdapter.periods = it.Periods.filter { item -> item.periodo!! > 0 && item.monto!! > 0 }
             // periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0}
             areApproved =
-                periodsAdaper.periods.filter { item -> item.cert_estado == APROBADO.stateId }
+                periodsAdapter.periods.filter { item -> item.cert_estado == APROBADO.stateId }
 
-            this.bind.cardWeeksTitle.goneIf { periodsAdaper.periods.isEmpty() }
+            this.bind.cardWeeksTitle.goneIf { periodsAdapter.periods.isEmpty() }
             bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
         }
     }
@@ -84,7 +85,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     private fun setupView() {
 
-        periodsAdaper = PeriodsRevenueAdapter().apply {
+        periodsAdapter = PeriodsRevenueAdapter().apply {
             this.onItemClick = ::handleItemClick
             bind.rvWeeks.adapter = this@apply
         }
@@ -130,7 +131,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
     private fun handleItemClick(index: Int) {
 
         val dialog = FacturaPeriodoResumenDialog.getInstance(
-            periodsAdaper.periods[index],
+            periodsAdapter.periods[index],
             false,
             ::navigateToPeriodDetail
         )

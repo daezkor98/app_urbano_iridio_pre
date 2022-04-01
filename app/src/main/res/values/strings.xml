@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Urbano - New Iridio</string>
+    <string name="app_name">Urbano - Iridio</string>
 
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
@@ -169,6 +169,7 @@
     <string name="activity_detalle_ruta_message_piezas_no_seleccionado">Debe seleccionar las piezas/bultos para realizar la gestión.</string>
     <string name="activity_detalle_ruta_message_producto_no_seleccionado">Debe seleccionar los productos a entregar para realizar la gestión.</string>
     <string name="activity_detalle_ruta_message_motivo_no_seleccionado">Debe seleccionar un motivo para realizar la gestión.</string>
+    <string name="activity_detalle_ruta_message_motivo_no_descrito">Por favor describa el motivo.</string>
     <string name="activity_detalle_ruta_message_tomar_al_menos_una_foto">Debe tomar una foto como mínimo para realizar la gestión.</string>
     <string name="activity_detalle_ruta_message_tomar_foto_voucher">Debe tomar una foto del voucher de pago para realizar la gestión.</string>
     <string name="activity_detalle_ruta_message_tipo_direccion_no_seleccionado">Debe seleccionar el tipo de dirección para realizar la gestión.</string>

@@ -15,7 +15,6 @@ fun <T> List<T>.operateOver(toThenThat: (item: T) -> Boolean, operate: T.() -> U
     return this
 }
 
-
 /**
  * OBS: The bettwen items usually gets moved
  * @param from index of element to move
