@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio3.R
 import com.urbanoexpress.iridio3.databinding.FragmentRegistroFacturaBinding
@@ -22,12 +23,14 @@ import com.urbanoexpress.iridio3.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio3.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio3.urbanocore.*
 import com.urbanoexpress.iridio3.urbanocore.values.AK
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistroFacturaFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentRegistroFacturaBinding
 
-    val facturaVM = RegistrarFacturaViewModel()
+    val facturaVM: RegistrarFacturaViewModel by viewModels()
 
     var period: Period? = null
 

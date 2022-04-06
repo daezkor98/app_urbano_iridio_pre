@@ -6,10 +6,7 @@ import com.urbanoexpress.iridio3.data.rest.ApiRequest.ResponseListener
 import com.urbanoexpress.iridio3.data.rest.ApiRequest.TypeParams.FORM_DATA
 import com.urbanoexpress.iridio3.data.rest.ApiRest
 import com.urbanoexpress.iridio3.data.rest.ApiRest.Api.*
-import com.urbanoexpress.iridio3.model.dto.GeneralRevenue
-import com.urbanoexpress.iridio3.model.dto.ResponseOf
-import com.urbanoexpress.iridio3.model.dto.RevenueDay
-import com.urbanoexpress.iridio3.model.dto.toInstance
+import com.urbanoexpress.iridio3.model.dto.*
 import com.urbanoexpress.iridio3.urbanocore.ifNull
 import com.urbanoexpress.iridio3.urbanocore.ifSafe
 import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest
@@ -34,6 +31,9 @@ class MisGananciasInteractor {
             ApiRequest.getInstance().request(ApiRest.url(UPLOAD_FACTURA_MOTORIZADO),
                 ApiRequest.TypeParams.MULTIPART, object : ResponseListener {
                     override fun onResponse(response: JSONObject) {
+                        response
+                            .toInstance<ResponseOf<Any>>()
+                            ?.wasSuccessful()
                         continuation.resume(true)
                     }
 
@@ -52,11 +52,12 @@ class MisGananciasInteractor {
                     override fun onResponse(response: JSONObject) {
 
                         try {
-                            response.toInstance<ResponseOf<GeneralRevenue>>()
-                                ?.data.ifSafe {
+                            response
+                                .toInstance<ResponseOf<GeneralRevenue>>()?.wasSuccessful()?.data
+                                .ifSafe {
                                     continuation.resume(it)
                                 }.ifNull {
-                                    continuation.resumeWithException(Exception("No tiene información"))//TODO
+                                    continuation.resumeWithException(Exception("No tiene información"))
                                 }
 
                         } catch (e: Exception) {
@@ -78,12 +79,13 @@ class MisGananciasInteractor {
                 ApiRest.url(GET_WEEK_DETAIL), FORM_DATA, object : ResponseListener {
                     override fun onResponse(response: JSONObject) {
                         try {
-                            val instance = response.toInstance<ResponseOf<ArrayList<RevenueDay>>>()
-                            instance?.data.ifSafe {
-                                continuation.resume(it)
-                            }.ifNull {
-                                continuation.resumeWithException(Exception("No tiene información"))//TODO
-                            }
+                            response
+                                .toInstance<ResponseOf<ArrayList<RevenueDay>>>()?.wasSuccessful()?.data
+                                .ifSafe {
+                                    continuation.resume(it)
+                                }.ifNull {
+                                    continuation.resumeWithException(Exception("No tiene información"))
+                                }
 
                         } catch (e: Exception) {
                             continuation.resumeWithException(Exception(ApiRequest.errorMessage))

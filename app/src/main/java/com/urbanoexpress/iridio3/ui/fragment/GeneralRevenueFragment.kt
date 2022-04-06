@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.urbanoexpress.iridio3.R
 import com.urbanoexpress.iridio3.databinding.FragmentGeneralRevenueBinding
@@ -27,8 +28,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentGeneralRevenueBinding
 
-    val gananciasVM = GeneralRevenueViewModel()//TODO inject
-    //var gananciasVM: GeneralRevenueViewModel by viewModels()
+    private val gananciasVM: GeneralRevenueViewModel by viewModels()
 
     lateinit var periodsAdapter: PeriodsRevenueAdapter
 
@@ -54,8 +54,8 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
             currentPeriod = it.Periods?.get(0)!!
 
             bind.tvWeekRevenue.text = "S/ ${currentPeriod.monto}"
-            periodsAdapter.periods = it.Periods.filter { item -> item.periodo!! > 0 && item.monto!! > 0 }
-            // periodsAdaper.periods = it.Periods.filter { item -> item.periodo!! > 0}
+            periodsAdapter.periods =
+                it.Periods.filter { item -> item.periodo!! > 0 && item.monto!! > 0 }
             areApproved =
                 periodsAdapter.periods.filter { item -> item.cert_estado == APROBADO.stateId }
 
@@ -103,7 +103,6 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         )
         dialog.show(childFragmentManager, "RESS")
     }
-
 
     private fun configUI() {
 

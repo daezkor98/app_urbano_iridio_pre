@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.urbanoexpress.iridio3.databinding.FragmentPeriodDetailBinding
 import com.urbanoexpress.iridio3.model.dto.Period
 import com.urbanoexpress.iridio3.model.dto.completeDays
@@ -11,13 +12,16 @@ import com.urbanoexpress.iridio3.presenter.viewmodel.PeriodRevenueViewModel
 import com.urbanoexpress.iridio3.ui.adapter.RevenuePeriodDetailAdapter
 import com.urbanoexpress.iridio3.urbanocore.extentions.operateOver
 import com.urbanoexpress.iridio3.urbanocore.values.AK
+import dagger.hilt.android.AndroidEntryPoint
 
 //TODO> agregar penalidades
+@AndroidEntryPoint
 class PeriodDetailFragment : AppThemeBaseFragment() {
 
     lateinit var bind: FragmentPeriodDetailBinding
 
-    val periodDetailVM = PeriodRevenueViewModel()
+    val periodDetailVM: PeriodRevenueViewModel by viewModels()
+
     var period: Period? = null
     var isCurrentPeriod = false
 

@@ -4,12 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import com.urbanoexpress.iridio3.model.interactor.MisGananciasInteractor
 import com.urbanoexpress.iridio3.util.Preferences
 import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest
-
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * Created by Brandon Quintanilla on March/21/2022.
  */
-class RegistrarFacturaViewModel : BaseViewModel() {
+@HiltViewModel
+class RegistrarFacturaViewModel @Inject constructor() : BaseViewModel() {
 
     val uploadFacturaResultLD: MutableLiveData<Boolean> = MutableLiveData()
 

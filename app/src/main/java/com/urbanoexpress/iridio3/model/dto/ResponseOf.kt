@@ -22,3 +22,11 @@ inline fun <reified T> JSONObject.toInstance(): T? {
         null
     }
 }
+
+fun <T> ResponseOf<T>.wasSuccessful(): ResponseOf<T> {
+    if (this.success!!) {
+        return this
+    } else {
+        throw  Exception("Solicitud fallida")
+    }
+}

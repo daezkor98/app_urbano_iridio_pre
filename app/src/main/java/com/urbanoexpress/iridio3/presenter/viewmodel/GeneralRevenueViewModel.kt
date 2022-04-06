@@ -3,6 +3,7 @@ package com.urbanoexpress.iridio3.presenter.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.urbanoexpress.iridio3.model.dto.GeneralRevenue
 import com.urbanoexpress.iridio3.model.interactor.MisGananciasInteractor
+import com.urbanoexpress.iridio3.urbanocore.logJson
 import com.urbanoexpress.iridio3.util.Preferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,6 +17,7 @@ class GeneralRevenueViewModel @Inject constructor() : BaseViewModel() {
     val generalRevenueDataLD = MutableLiveData<GeneralRevenue>()
 
     val gananciasInteractor = MisGananciasInteractor()
+
     fun fetchMisGanancias() = executeIO {
 
         val idPer = Preferences.getInstance().getString("idPer", "")
@@ -25,6 +27,7 @@ class GeneralRevenueViewModel @Inject constructor() : BaseViewModel() {
         )
 
         val data = gananciasInteractor.getMisGanancias(param)
+        data.logJson("fetchMisGanancias")
         generalRevenueDataLD.postValue(data)
     }
 }
