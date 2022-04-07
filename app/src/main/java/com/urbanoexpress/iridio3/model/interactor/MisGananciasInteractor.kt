@@ -9,6 +9,7 @@ import com.urbanoexpress.iridio3.data.rest.ApiRest.Api.*
 import com.urbanoexpress.iridio3.model.dto.*
 import com.urbanoexpress.iridio3.urbanocore.ifNull
 import com.urbanoexpress.iridio3.urbanocore.ifSafe
+import com.urbanoexpress.iridio3.urbanocore.logException
 import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -38,6 +39,7 @@ class MisGananciasInteractor {
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
+                        error.logException("volley: getMisGanancias")
                         continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
@@ -61,11 +63,13 @@ class MisGananciasInteractor {
                                 }
 
                         } catch (e: Exception) {
+                            e.logException("catch: getMisGanancias")
                             continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                         }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
+                        error.logException("volley: getMisGanancias")
                         continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })
@@ -88,11 +92,13 @@ class MisGananciasInteractor {
                                 }
 
                         } catch (e: Exception) {
+                            e.logException("catch: getSemanaDetail")
                             continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                         }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
+                        error.logException("volley: getSemanaDetail")
                         continuation.resumeWithException(Exception(ApiRequest.errorMessage))
                     }
                 })

@@ -204,9 +204,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
             }
         }
         bind.btnAddFile.onExclusiveClick {
-//            showFilePickerDialog()
             openPDFPicker()
-            //showImagePickerDialog()
         }
 
         bind.tvFileName.onExclusiveClick {
