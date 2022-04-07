@@ -21,6 +21,7 @@ import com.urbanoexpress.iridio3.ui.dialogs.DATE_PICKER_MODE
 import com.urbanoexpress.iridio3.ui.dialogs.DatePickerDailogFragment
 import com.urbanoexpress.iridio3.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio3.ui.helpers.ModalHelper
+import com.urbanoexpress.iridio3.ui.widget.enableClickMode
 import com.urbanoexpress.iridio3.urbanocore.*
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 import dagger.hilt.android.AndroidEntryPoint
@@ -125,7 +126,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 
     private fun disableEdition() {
         bind.etNumeroFact.disable()
-        bind.etFechaFactura.disable()
+        bind.fieldFechaFactura.disable()
         bind.etMontoFact.disable()
         bind.btnAddFile.disable()
         bind.btnRegistrar.disable()
@@ -133,14 +134,14 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 
     private fun showPreviousFactData() {
         bind.etNumeroFact.setText(period?.fac_numero)
-        bind.etFechaFactura.setText(period?.fac_fecha)
+        bind.fieldFechaFactura.setText(period?.fac_fecha!!)
         bind.etMontoFact.setText(period?.fac_total)
     }
 
     private fun dataValid(): Boolean {
 
         val numFact = bind.tfNumeroFactura.editText?.text!!
-        val fechaFact = bind.tfFechaFactura.editText?.text!!
+        val fechaFact = bind.fieldFechaFactura.text()
         val montoFact = bind.tfMontoFac.editText?.text!!
 
         if (numFact.isEmpty()) {
@@ -151,10 +152,10 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         }
 
         if (fechaFact.isEmpty()) {
-            bind.tfFechaFactura.error = "Complete fecha"
+            bind.fieldFechaFactura.inputError("Complete fecha")
             return false
         } else {
-            bind.tfFechaFactura.error = null
+            bind.fieldFechaFactura.inputError(null)
         }
 
         if (montoFact.isEmpty()) {
@@ -173,23 +174,17 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         return true
     }
 
-//    var positionSelectedOptionEditPhoto = 0
-
     private fun prepareForEdition() {
 
         bind.tvFileName.text = fileName
 
-        bind.etMontoFact.isEnabled = false
         bind.etMontoFact.setText(period?.monto.toString())
 
-        bind.etFechaFactura.isEnabled = false
-        bind.etFechaFactura.setText(getCurrentDay())
-        bind.etFechaFactura.onExclusiveClick {
-
+        bind.fieldFechaFactura.enableClickMode(withText = getCurrentDay()) {
             val newFragment = DatePickerDailogFragment.newInstance(DATE_PICKER_MODE.CALENDAR)
             newFragment.dateListener =
                 DatePickerDailogFragment.OnDatePickerDailogFragmentListener { view, year, month, dayOfMonth ->
-                    bind.etFechaFactura.setText("$dayOfMonth/$month/$year")
+                    bind.fieldFechaFactura.setText("$dayOfMonth/$month/$year")
                 }
             newFragment.show(childFragmentManager, "datePicker")
         }
@@ -198,7 +193,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 
             if (dataValid()) {
                 val numFact = bind.tfNumeroFactura.editText?.text.toString()
-                val fechaFact = bind.tfFechaFactura.editText?.text.toString()
+                val fechaFact = bind.fieldFechaFactura.text()
                 val montoFact = bind.tfMontoFac.editText?.text.toString()
                 facturaVM.postFactura(numFact, fechaFact, montoFact, period?.liquidacion!!, pdfData)
             }

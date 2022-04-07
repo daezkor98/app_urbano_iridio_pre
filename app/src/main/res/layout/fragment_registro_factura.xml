@@ -62,7 +62,7 @@
                         android:maxLength="20" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+<!--                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tf_fecha_factura"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,7 +75,12 @@
                         android:id="@+id/et_fecha_factura"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>-->
+                <com.urbanoexpress.iridio3.ui.widget.FormFieldView
+                    android:id="@+id/field_fecha_factura"
+                    android:layout_width="match_parent"
+                    app:headerHint="Fecha de Factura"
+                    android:layout_height="wrap_content"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tf_monto_fac"

@@ -60,8 +60,11 @@ class FormFieldView(ctx: Context, attrs: AttributeSet) : ConstraintLayout(ctx, a
  * Used when the form field needs to be clickeable and not editable
  * For example, when it is used as date field
  * */
-fun FormFieldView.enableClickMode(action: (v: View) -> Unit) {
+fun FormFieldView.enableClickMode(withText: String? = null, action: (v: View) -> Unit) {
     et_field?.isEnabled = false
     click_field?.visibility = View.VISIBLE
     click_field?.onExclusiveClick(action)
+    withText?.let {
+        setText(it)
+    }
 }
