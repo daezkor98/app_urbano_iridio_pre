@@ -103,8 +103,23 @@ public class ConfigPhonePresenter {
                 break;
         }
 
-        requestConfigPhone();
+        /*Code for testing use cases*/
+        String phone = view.getTextPhone();
+        if (GOOGLE_MOCK_PHONE.equals(phone)) {
+
+            view.navigateToVerficationCodeFragment(isoCountry, view.getTextPhone(), firebaseToken,true);
+
+            //Naviaget to login
+        } else {
+            requestConfigPhone();
+        }
+        /*End testing code*/
+        /*Delete test code and uncommet next line*/
+        /*requestConfigPhone();*/
     }
+
+    //TODO DELETE MOCK
+    final String GOOGLE_MOCK_PHONE = "937004446";
 
     private void requestConfigPhone() {
         ApiRequest.getInstance().newParams();
@@ -121,7 +136,7 @@ public class ConfigPhonePresenter {
                         try {
                             if (response.getBoolean("success")) {
                                 view.navigateToVerficationCodeFragment(isoCountry,
-                                        view.getTextPhone(), firebaseToken);
+                                        view.getTextPhone(), firebaseToken,false);
                             } else {
                                 view.showToast(response.getString("msg_error"));
                             }

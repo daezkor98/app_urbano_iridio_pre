@@ -17,8 +17,8 @@ import com.urbanoexpress.iridio3.data.rest.ApiRest;
 import com.urbanoexpress.iridio3.ui.fragment.LogInFragment;
 import com.urbanoexpress.iridio3.ui.fragment.RequestPermissionFragment;
 import com.urbanoexpress.iridio3.util.CommonUtils;
-import com.urbanoexpress.iridio3.util.SmsBroadcastReceiver;
 import com.urbanoexpress.iridio3.util.Preferences;
+import com.urbanoexpress.iridio3.util.SmsBroadcastReceiver;
 import com.urbanoexpress.iridio3.util.constant.Country;
 import com.urbanoexpress.iridio3.util.network.Connection;
 import com.urbanoexpress.iridio3.view.VerficationCodeView;
@@ -37,12 +37,20 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
     private SmsBroadcastReceiver smsBroadcast;
 
     public VerficationCodePresenter(VerficationCodeView view, String isoCountry, String phone,
-                                    String firebaseToken) {
+                                    String firebaseToken, boolean isGoogleMock) {
         this.view = view;
         this.isoCountry = isoCountry;
         this.phone = phone;
         this.firebaseToken = firebaseToken;
+
+        if (isGoogleMock) {
+            view.showProgressDialog();
+            requestValidateVerificationCode(GOOGLE_MOCK_CODE);
+        }
     }
+
+    //TODO DELETE
+    final String GOOGLE_MOCK_CODE = "656621";
 
     @Override
     public void onOTPReceived(String value) {
@@ -113,7 +121,7 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         if (validateCodes()) {
             if (Connection.hasNetworkConnectivity(view.getViewContext())) {
                 view.showProgressDialog();
-                requestValidateVerificationCode();
+                requestValidateVerificationCode(getJoinedVerificationCode());
             } else {
                 view.setEnabledButtonNext(true);
                 view.showMessageNotConnectedToNetwork();
@@ -128,7 +136,8 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
 
         Task<Void> task = client.startSmsRetriever();
 
-        task.addOnSuccessListener(aVoid -> { });
+        task.addOnSuccessListener(aVoid -> {
+        });
 
         task.addOnFailureListener(e -> view.showToast(e.getMessage()));
     }
@@ -162,11 +171,11 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         }
     }
 
-    private void requestValidateVerificationCode() {
+    private void requestValidateVerificationCode(String verificationCode) {
         if (Connection.hasNetworkConnectivity(view.getViewContext())) {
             ApiRequest.getInstance().newParams();
             ApiRequest.getInstance().putParams("device_phone", phone);
-            ApiRequest.getInstance().putParams("verification_code", getJoinedVerificationCode());
+            ApiRequest.getInstance().putParams("verification_code", verificationCode);
             ApiRequest.getInstance().putParams("firebase_token", firebaseToken);
             ApiRequest.getInstance().putParams("device_model", Build.MODEL);
             ApiRequest.getInstance().putParams("version_os", Build.VERSION.RELEASE);

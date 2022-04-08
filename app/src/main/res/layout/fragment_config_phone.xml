@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context=".ui.fragment.ConfigPhoneFragment">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
         android:background="@color/light_blue_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/content_layout"
-        app:layout_constraintHeight_percent="0.4"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.6">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,44 +38,44 @@
             android:padding="30dp">
 
             <TextView
-                android:text="Ingresa tu número de celular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:text="Ingresa tu número de celular"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/gris_2"
-                android:layout_marginBottom="20dp" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/llInputNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:background="@drawable/bg_input_default"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/select_country_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="10dp"
                     android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:background="?android:selectableItemBackground"
-                    android:theme="@style/selectableItemGrisStyle"
-                    android:clickable="true"
-                    android:focusable="true">
+                    android:theme="@style/selectableItemGrisStyle">
 
                     <ImageView
                         android:id="@+id/icon_flag"
                         android:layout_width="35dp"
                         android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:id="@+id/lbl_phone_prefix"
@@ -82,61 +83,63 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/gris_2"/>
+                        android:textColor="@color/gris_2" />
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_chevron_right_grey"
+                        android:rotation="90"
                         android:scaleType="centerInside"
-                        android:rotation="90"/>
+                        android:src="@drawable/ic_chevron_right_grey" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/darkDividers"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:background="@color/darkDividers" />
 
                 <EditText
                     android:id="@+id/txt_phone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:textColor="@color/gris_2"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:maxLength="9"
-                    android:theme="@style/color_theme_colorPrimary"/>
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/gris_2"
+                    android:theme="@style/color_theme_colorPrimary" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Enviaremos un mensaje a este número con un código de verificación."
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/gris_2"
-                android:text="Enviaremos un mensaje a este número con un código de verificación."/>
+                android:textColor="@color/gris_2" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/darkDividers"/>
+            android:background="@color/darkDividers" />
 
         <Button
-            style="@style/Widget.App.Button.TextButton"
             android:id="@+id/next_button"
+            style="@style/Widget.App.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/activity_horizontal_margin"
             android:layout_gravity="end"
-            android:text="@string/text_siguiente"/>
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:text="@string/text_siguiente" />
     </LinearLayout>
 
-    <include android:id="@+id/progress_layout" layout="@layout/progressbar_layout" />
+    <include
+        android:id="@+id/progress_layout"
+        layout="@layout/progressbar_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -154,9 +154,9 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
 
     @Override
     public void navigateToVerficationCodeFragment(String isoCountry, String phone,
-                                                  String firebaseToken) {
+                                                  String firebaseToken, Boolean isGoogleMock) {
         verificationCodeFragment = VerficationCodeFragment.newInstance(
-                isoCountry, phone, firebaseToken);
+                isoCountry, phone, firebaseToken, isGoogleMock);
 
         if (getLifecycle().getCurrentState().equals(Lifecycle.State.STARTED) ||
                 getLifecycle().getCurrentState().equals(Lifecycle.State.RESUMED)) {

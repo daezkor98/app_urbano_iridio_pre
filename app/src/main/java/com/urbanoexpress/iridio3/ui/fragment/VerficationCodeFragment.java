@@ -34,12 +34,13 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
     private VerficationCodePresenter presenter;
 
     public static VerficationCodeFragment newInstance(String isoCountry, String phone,
-                                                      String firebaseToken) {
+                                                      String firebaseToken, Boolean isGoogleMock) {
         VerficationCodeFragment fragment = new VerficationCodeFragment();
         Bundle args = new Bundle();
         args.putString("isoCountry", isoCountry);
         args.putString("phone", phone);
         args.putString("firebaseToken", firebaseToken);
+        args.putBoolean("isGoogleMock", isGoogleMock);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +53,9 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
             presenter = new VerficationCodePresenter(this,
                     getArguments().getString("isoCountry"),
                     getArguments().getString("phone"),
-                    getArguments().getString("firebaseToken"));
+                    getArguments().getString("firebaseToken"),
+                    getArguments().getBoolean("isGoogleMock")
+            );
         }
     }
 

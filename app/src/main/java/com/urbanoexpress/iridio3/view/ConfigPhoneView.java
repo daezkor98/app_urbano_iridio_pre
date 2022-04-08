@@ -17,5 +17,5 @@ public interface ConfigPhoneView extends BaseView2 {
     void showMessageNotConnectedToNetwork();
 
     void navigateToChoiseCountryBottomSheet();
-    void navigateToVerficationCodeFragment(String isoCountry, String phone, String firebaseToken);
+    void navigateToVerficationCodeFragment(String isoCountry, String phone, String firebaseToken, Boolean isGoogleMock);
 }
