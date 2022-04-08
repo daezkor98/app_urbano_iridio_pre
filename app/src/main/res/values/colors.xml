@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d13339</color>
-    <color name="colorPrimaryDark">#b4292e</color>
+<!--    <color name="colorPrimary">#d13339</color>
+    <color name="colorPrimaryDark">#b4292e</color>-->
+    <color name="colorPrimary">#790F37</color>
+    <color name="colorPrimaryDark">#790F37</color>
     <color name="colorAccent">#448AFF</color>
     <color name="colorAccentDark">#2979FF</color>
     <color name="statusBarColor">#20000000</color>
+
+    <color name="oneee">#790F37</color>
+    <color name="twooo">#393738</color>
 
     <color name="colorBlackUrbano">#262324</color>
     <color name="colorBlackDarkUrbano">#191717</color>
@@ -16,7 +21,8 @@
 
     <color name="red_1">#ba151d</color>
     <color name="red_2">#f18589</color>
-    <color name="red_3">#e93e46</color>
+<!--    <color name="red_3">#e93e46</color>-->
+    <color name="red_3">#F7790F37</color>
     <color name="gris">#6f7072</color>
     <color name="gris_1">#3E3636</color>
     <color name="gris_2">#262324</color>
@@ -85,8 +91,7 @@
 
     <color name="notify_new">#20187bcf</color>
 
-    <color name="white_overlay">#F3F3F3</color>
-
+<!--    <color name="white_overlay">#F3F3F3</color>-->
     <color name="search_layover_bg">#80000000</color>
 
     <color name="colorStatesMaterialButton">@color/color_states_materialbutton</color>
