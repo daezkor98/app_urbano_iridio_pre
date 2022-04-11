@@ -46,7 +46,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:background="@color/gris_1"
+            android:background="@color/white"
             android:padding="40dp">
 
             <TextView
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="Es necesario encender el GPS, para el correcto funcionamiento de la aplicación."
                 android:textSize="16sp"
-                android:textColor="@color/lightPrimaryText"/>
+                android:textColor="@color/black_2"/>
 
             <View
                 android:layout_width="match_parent"
@@ -85,6 +85,9 @@
                 android:layout_height="50dp"
                 android:text="@string/text_enciende_gps"
                 android:textColor="@color/lightPrimaryText" />
+
         </LinearLayout>
+
     </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

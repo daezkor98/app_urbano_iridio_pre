@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="130dp"
             android:layout_height="45dp"
-            android:src="@drawable/logo_urbano_lema_white"
-            android:scaleType="fitXY"
             android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/logo_urbano_lema_white" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:src="@drawable/bg_city_shader"
+            android:layout_gravity="bottom"
             android:scaleType="centerCrop"
-            android:layout_gravity="bottom"/>
+            android:src="@drawable/bg_city_shader" />
 
         <ImageView
             android:layout_width="70dp"
             android:layout_height="110dp"
-            android:src="@drawable/bg_hand_padlock"
-            android:scaleType="fitXY"
             android:layout_gravity="bottom|right"
-            android:layout_marginRight="30dp"/>
+            android:layout_marginRight="30dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_hand_padlock" />
 
     </FrameLayout>
 
+    <!--android:background="@color/gris_1"-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/white"
         android:orientation="vertical"
-        android:background="@color/gris_1"
         android:padding="40dp">
 
         <TextView
@@ -48,25 +49,26 @@
             android:layout_height="wrap_content"
             android:text="¡Requerimos tu"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="permiso!"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="25dp" />
 
+        <!--android:textColor="@color/lightPrimaryText"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Vamos a solicitarle algunos permisos que son necesarios para el correcto funcionamiento de la aplicación."
-            android:textSize="16sp"
-            android:textColor="@color/lightPrimaryText"/>
+            android:textColor="@color/black_2"
+            android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
@@ -74,11 +76,11 @@
 
         <Button
             android:id="@+id/btnOtorgarAcceso"
-            android:theme="@style/Button.Red"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/text_otorgar_acceso"
-            android:textColor="@color/lightPrimaryText" />
+            android:textColor="@color/lightPrimaryText"
+            android:theme="@style/Button.Red" />
 
     </LinearLayout>
 

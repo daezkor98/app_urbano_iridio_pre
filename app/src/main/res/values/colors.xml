@@ -3,13 +3,15 @@
 <!--    <color name="colorPrimary">#d13339</color>
     <color name="colorPrimaryDark">#b4292e</color>-->
     <color name="colorPrimary">#790F37</color>
-    <color name="colorPrimaryDark">#790F37</color>
+    <color name="colorPrimaryDark">#5E0D2B</color>
     <color name="colorAccent">#448AFF</color>
     <color name="colorAccentDark">#2979FF</color>
     <color name="statusBarColor">#20000000</color>
 
-    <color name="oneee">#790F37</color>
-    <color name="twooo">#393738</color>
+<!--    <color name="new-primary">#790F37</color>
+    <color name="urbano-gray">#393738</color>-->
+
+    <color name="colorUrbanoGrey">#393738</color>
 
     <color name="colorBlackUrbano">#262324</color>
     <color name="colorBlackDarkUrbano">#191717</color>
