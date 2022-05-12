@@ -6,5 +6,7 @@ package com.urbanoexpress.iridio3.urbanocore
  */
 typealias OnItemClick = ((index: Int) -> Unit)?
 typealias SimpleEvent = (() -> Unit)
+typealias DataEvent<T> = ((T) -> Unit)
+typealias ThrowableEvent = ((Throwable) -> Unit)
 
 typealias DataCompletion = ((bytes: ByteArray, filename: String) -> Unit)

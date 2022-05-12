@@ -123,7 +123,7 @@ public class RutaRuralPresenter implements OnClickItemListener {
         }
     }
 
-    public void onActionManifestarGuia() {
+/*    public void onActionManifestarGuia() {
         long totalGuias = interactor.getTotalRutasPendientes();
 
         if (totalGuias == 0) {
@@ -137,7 +137,7 @@ public class RutaRuralPresenter implements OnClickItemListener {
 
         activity.startActivity(new Intent(activity, ManifestarGuiaActivity.class));
         activity.overridePendingTransition(R.anim.slide_enter_from_right, R.anim.not_slide);
-    }
+    }*/
 
     public void onActionConsideracionesImportantes() {
         long totalPendientes = interactor.getTotalRutasPendientes();
@@ -182,7 +182,7 @@ public class RutaRuralPresenter implements OnClickItemListener {
         }
     }
 
-    public void onActionEditarPlaca() {
+/*    public void onActionEditarPlaca() {
         // Debe haber rutas pendientes
         // No debe haber ruta iniciada
         long totalEstadoRutas = interactor.getTotalAllEstadoRuta();
@@ -198,7 +198,7 @@ public class RutaRuralPresenter implements OnClickItemListener {
         } else {
             view.showToast(R.string.activity_ruta_message_ruta_iniciada_editar_placa);
         }
-    }
+    }*/
 
     public void onActionCodigoQRRuta() {
         List<Ruta> pendientes = interactor.selectRutasPendientes();
@@ -223,6 +223,7 @@ public class RutaRuralPresenter implements OnClickItemListener {
         long totalPendientes = interactor.getTotalRutasPendientes();
         long totalGestionados = interactor.getTotalRutasGestionadas();
 
+//        if (true) {
         if (totalPendientes > 0 || totalGestionados > 0) {
             activity.startActivity(new Intent(activity, MapaRutaDelDiaActivity.class));
             activity.overridePendingTransition(R.anim.slide_enter_from_right, R.anim.not_slide);

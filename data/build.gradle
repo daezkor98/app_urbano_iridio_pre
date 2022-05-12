@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+
     compileSdk 31
 
     defaultConfig {

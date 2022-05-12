@@ -41,6 +41,7 @@ class EncuestaTipoUsuarioDialog : BaseDialogFragment() {
 
         licenciaMotorizadoVM.exceptionLD.observe(this) {
             ModalHelper.showToast(requireContext(), it.message, Toast.LENGTH_LONG)
+            dismiss()
         }
     }
 

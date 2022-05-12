@@ -5,15 +5,14 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.urbanoexpress.iridio3.util.network.volley.CustomJsonObjectRequest;
+import com.urbanoexpress.iridio3.util.network.volley.ManagerVolley;
+import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.urbanoexpress.iridio3.util.network.volley.CustomJsonObjectRequest;
-import com.urbanoexpress.iridio3.util.network.volley.ManagerVolley;
-import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest;
 
 /**
  * Created by mick on 20/05/16.
@@ -34,13 +33,18 @@ public class ApiRequest {
         int MULTIPART = 1;
     }
 
-    private ApiRequest() {}
+    private ApiRequest() {
+    }
 
     public static synchronized ApiRequest getInstance() {
         if (apiRequest == null) {
             apiRequest = new ApiRequest();
         }
         return apiRequest;
+    }
+
+    public void requestForm(String enpoint, final ResponseListener responseListener) {
+        request(ApiRest.withEndpoint(enpoint), TypeParams.FORM_DATA, responseListener);
     }
 
     public void request(String url, int typeParams, final ResponseListener responseListener) {
@@ -111,7 +115,14 @@ public class ApiRequest {
         requestParamsData = new HashMap<String, MultipartJsonObjectRequest.DataPart>();
     }
 
+    //TOOD use putNewParans
+    @Deprecated()
     public void putAllParams(Map<String, String> params) {
+        requestParams.putAll(params);
+    }
+
+    public void putNewParams(Map<String, String> params) {
+        newParams();
         requestParams.putAll(params);
     }
 
@@ -125,6 +136,7 @@ public class ApiRequest {
 
     public interface ResponseListener {
         void onResponse(JSONObject response);
+
         void onErrorResponse(VolleyError error);
     }
 }

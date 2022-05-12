@@ -48,8 +48,6 @@ class LicenciaFormViewModel : BaseViewModel() {
         val params = mapOf(
             "vp_id_user" to idUsuario,
             "vp_per_id" to idPer,
-//            "vp_doc_emision" to null,
-//            "vp_doc_caduca" to "",
             "vp_tdoc_id" to "0",
             "vp_und_id" to "0",
             "hasImage" to "0",

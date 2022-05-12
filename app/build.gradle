@@ -10,6 +10,14 @@ plugins {
 
 android {
 
+    signingConfigs {
+        release {
+            storeFile file('D:\\UrbanoApps\\credentials\\Key Store\\Iridio3\\urbano-iridio3.jks')
+            storePassword 'Urb44an0-3'
+            keyPassword 'Urb44an0-3'
+            keyAlias 'iridio3'
+        }
+    }
     compileSdkVersion 32
 
     defaultConfig {
@@ -21,6 +29,7 @@ android {
         multiDexEnabled true
         resConfigs 'es'
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.release
     }
 
     dependenciesInfo {

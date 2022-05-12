@@ -99,7 +99,7 @@ public final class ApiRest {
         return apiRest;
     }
 
-    public static String url(String endpoint) {
+    public static String withEndpoint(String endpoint) {
         return ApiRest.getInstance().apiBaseUrl + endpoint;
     }
 

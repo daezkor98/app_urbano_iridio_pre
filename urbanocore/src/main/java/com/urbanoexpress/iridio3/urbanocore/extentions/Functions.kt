@@ -1,8 +1,5 @@
-package com.urbanoexpress.iridio3.urbanocore
+package com.urbanoexpress.iridio3.urbanocore.extentions
 
-import android.content.Context
-import android.net.Uri
-import android.provider.OpenableColumns
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import java.text.SimpleDateFormat
@@ -40,21 +37,4 @@ fun secureFunc(exceptionLD: MutableLiveData<Throwable>? = null, action: () -> Un
 fun Throwable.logException(whereTAG: String = "TAG") {
     Log.e(whereTAG, "logException: " + this.message, this)
     this.printStackTrace()
-}
-
-/*URI*/
-fun Context.readFileBytes(uri: Uri): ByteArray {
-    return this.applicationContext.contentResolver.openInputStream(uri).use { pdfStream ->
-        pdfStream?.readBytes() ?: ByteArray(0)
-    }
-}
-
-fun Context.getFileName(uri: Uri): String? {
-    return uri.let { returnUri ->
-        this.applicationContext.contentResolver.query(returnUri, null, null, null, null)
-    }?.use { cursor ->
-        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-        cursor.moveToFirst()
-        cursor.getString(nameIndex)
-    }
 }

@@ -3,7 +3,7 @@ package com.urbanoexpress.iridio3.presenter.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.urbanoexpress.iridio3.urbanocore.logException
+import com.urbanoexpress.iridio3.urbanocore.extentions.logException
 
 import kotlinx.coroutines.*
 
@@ -24,7 +24,7 @@ open class BaseViewModel : ViewModel() {
                 try {
                     isLoadingLD.postValue(true)
                     runOnThreadWithScope(this)
-                } catch (ex: Exception) {
+                } catch (ex: Throwable) {
                     ex.logException("executeIO")
                     exceptionLD.postValue(ex)
                 } finally {
