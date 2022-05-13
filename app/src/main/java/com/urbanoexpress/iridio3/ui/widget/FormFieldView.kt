@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.urbanoexpress.iridio3.R
-import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 
 
 /**

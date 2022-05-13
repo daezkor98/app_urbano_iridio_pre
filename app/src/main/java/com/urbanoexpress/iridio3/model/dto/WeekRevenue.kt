@@ -1,7 +1,7 @@
 package com.urbanoexpress.iridio3.model.dto
 
 import com.urbanoexpress.iridio3.urbanocore.extentions.moveItem
-import com.urbanoexpress.iridio3.urbanocore.ifNull
+import com.urbanoexpress.iridio3.urbanocore.extentions.ifNull
 
 
 /**

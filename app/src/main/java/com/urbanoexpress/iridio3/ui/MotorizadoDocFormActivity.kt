@@ -17,7 +17,7 @@ import com.urbanoexpress.iridio3.ui.dialogs.FileTypePickerDialog
 import com.urbanoexpress.iridio3.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio3.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio3.ui.widget.enableClickMode
-import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 import com.urbanoexpress.iridio3.util.Preferences
 
 /*

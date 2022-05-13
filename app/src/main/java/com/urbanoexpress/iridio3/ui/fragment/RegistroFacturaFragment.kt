@@ -22,11 +22,7 @@ import com.urbanoexpress.iridio3.ui.dialogs.DatePickerDailogFragment
 import com.urbanoexpress.iridio3.ui.dialogs.MessageDialog
 import com.urbanoexpress.iridio3.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio3.ui.widget.enableClickMode
-import com.urbanoexpress.iridio3.urbanocore.*
-import com.urbanoexpress.iridio3.urbanocore.extentions.getCurrentDay
-import com.urbanoexpress.iridio3.urbanocore.extentions.getFileName
-import com.urbanoexpress.iridio3.urbanocore.extentions.readFileBytes
-import com.urbanoexpress.iridio3.urbanocore.extentions.secureFunc
+import com.urbanoexpress.iridio3.urbanocore.extentions.*
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 import dagger.hilt.android.AndroidEntryPoint
 

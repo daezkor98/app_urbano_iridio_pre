@@ -10,7 +10,7 @@ import com.urbanoexpress.iridio3.presenter.viewmodel.LicenciaFormViewModel
 import com.urbanoexpress.iridio3.ui.MainActivity
 import com.urbanoexpress.iridio3.ui.MotorizadoDocFormActivity
 import com.urbanoexpress.iridio3.ui.helpers.ModalHelper
-import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 import com.urbanoexpress.iridio3.util.Preferences
 
 /**

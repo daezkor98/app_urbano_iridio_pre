@@ -7,7 +7,7 @@ import com.urbanoexpress.iridio3.databinding.RowRevenueWeekBinding
 import com.urbanoexpress.iridio3.model.dto.Period
 import com.urbanoexpress.iridio3.model.dto.certEstadosMap
 import com.urbanoexpress.iridio3.urbanocore.OnItemClick
-import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 
 /**
  * Created by Brandon Quintanilla on February/28/2022.

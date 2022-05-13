@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.urbanoexpress.iridio3.databinding.RowRevenuePeriodDetailBinding
 import com.urbanoexpress.iridio3.model.dto.RevenueDay
-import com.urbanoexpress.iridio3.urbanocore.*
+import com.urbanoexpress.iridio3.urbanocore.extentions.*
 import com.urbanoexpress.iridio3.urbanocore.values.weekDays
 
 /**

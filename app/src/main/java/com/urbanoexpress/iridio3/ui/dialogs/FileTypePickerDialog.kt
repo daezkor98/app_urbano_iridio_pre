@@ -18,7 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import com.urbanoexpress.iridio3.databinding.ModalFileTypePickerBinding
 import com.urbanoexpress.iridio3.urbanocore.DataCompletion
-import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 import com.urbanoexpress.iridio3.util.CameraUtils
 import com.urbanoexpress.iridio3.util.CommonUtils

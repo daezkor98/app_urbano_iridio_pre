@@ -279,7 +279,7 @@
             android:value="2.1" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCswdNIXdLvzlCecL43kNM1ZK6QfmC2YTE" />
+            android:value="AIzaSyC2EI9V85Xl2C3sdIEW2lhST-HFCpzg0cY" />
         <meta-data
             android:name="DATABASE"
             android:value="urbano.db" />

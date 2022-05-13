@@ -10,55 +10,55 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
+            android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:transitionName="@string/transition_main_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:transitionName="@string/transition_main_body"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/googleMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/googleMap"
-            tools:context="com.urbanoexpress.iridio3.ui.GoogleMapActivity"
-            android:name="com.google.android.gms.maps.SupportMapFragment" />
+            tools:context="com.urbanoexpress.iridio3.ui.GoogleMapActivity" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabGestionarDespachos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_trolley_white"
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
+        android:src="@drawable/ic_trolley_white"
         android:visibility="invisible"
+        app:backgroundTint="@color/colorBlackUrbano"
         app:fabSize="normal"
         app:layout_anchor="@id/googleMap"
-        app:backgroundTint="@color/colorBlackUrbano"
-        app:layout_anchorGravity="bottom"/>
+        app:layout_anchorGravity="bottom" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="bottom|end"
+        android:background="@android:color/transparent"
         android:gravity="center_horizontal"
-        android:background="@android:color/transparent">
+        android:orientation="vertical">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -71,8 +71,8 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_navigation_red"
             android:visibility="invisible"
-            app:fabSize="mini"
-            app:backgroundTint="@color/lightPrimaryText"/>
+            app:backgroundTint="@color/lightPrimaryText"
+            app:fabSize="mini" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabNotificarIncidente"
@@ -84,123 +84,123 @@
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_alert_white"
             android:visibility="invisible"
-            app:fabSize="normal"
-            app:backgroundTint="@color/colorPrimary" />
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="normal" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#fff">
-
-    <LinearLayout
-        android:id="@+id/container_toolbar"
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#fff">
 
-        <include layout="@layout/main_toolbar" />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/container_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <FrameLayout
-        android:transitionName="@string/transition_main_body"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#f1f1f1">
+            <include layout="@layout/main_toolbar" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <fragment
+        <FrameLayout
+            android:transitionName="@string/transition_main_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#f1f1f1">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/googleMap"
-                    tools:context="com.urbanoexpress.iridio3.ui.GoogleMapActivity"
-                    android:name="com.google.android.gms.maps.SupportMapFragment" />
-            </LinearLayout>
+                    android:orientation="vertical">
+                    <fragment
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/googleMap"
+                        tools:context="com.urbanoexpress.iridio3.ui.GoogleMapActivity"
+                        android:name="com.google.android.gms.maps.SupportMapFragment" />
+                </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabSettingsMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:background="@color/darkPrimaryText"/>
-
-            <com.getbase.floatingactionbutton.FloatingActionsMenu
-                android:id="@+id/famMap"
+                <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabSettingsMap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_addButtonColorNormal="@color/colorPrimary"
-                fab:fab_addButtonColorPressed="@color/colorPrimaryDark"
-                fab:fab_addButtonPlusIconColor="@color/lightPrimaryText"
-                fab:fab_addButtonSize="normal"
-                fab:fab_size="normal"
-                fab:fab_labelStyle="@style/fab_menu_labels_style_black"
-                fab:fab_labelsPosition="left"
                 android:layout_gravity="bottom|end"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginRight="7dp">
+                android:layout_margin="@dimen/fab_margin"
+                android:background="@color/darkPrimaryText"/>
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabMapTrafico"
+                <com.getbase.floatingactionbutton.FloatingActionsMenu
+                    android:id="@+id/famMap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tag="inactive"
-                    fab:fab_colorNormal="@color/lightPrimaryText"
-                    fab:fab_plusIconColor="@color/colorPrimary"
-                    fab:fab_colorPressed="@color/gris_3"
-                    fab:fab_icon="@drawable/ic_traffic_light_grey"
-                    fab:fab_size="mini"
-                    fab:fab_title="@string/fab_menu_map_trafico"/>
+                    fab:fab_addButtonColorNormal="@color/colorPrimary"
+                    fab:fab_addButtonColorPressed="@color/colorPrimaryDark"
+                    fab:fab_addButtonPlusIconColor="@color/lightPrimaryText"
+                    fab:fab_addButtonSize="normal"
+                    fab:fab_size="normal"
+                    fab:fab_labelStyle="@style/fab_menu_labels_style_black"
+                    fab:fab_labelsPosition="left"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="7dp">
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabMapSatelite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="inactive"
-                    fab:fab_colorNormal="@color/lightPrimaryText"
-                    fab:fab_plusIconColor="@color/colorPrimary"
-                    fab:fab_colorPressed="@color/gris_3"
-                    fab:fab_icon="@drawable/ic_satellite_grey"
-                    fab:fab_size="mini"
-                    fab:fab_title="@string/fab_menu_map_satelite"/>
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabMapTrafico"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="inactive"
+                        fab:fab_colorNormal="@color/lightPrimaryText"
+                        fab:fab_plusIconColor="@color/colorPrimary"
+                        fab:fab_colorPressed="@color/gris_3"
+                        fab:fab_icon="@drawable/ic_traffic_light_grey"
+                        fab:fab_size="mini"
+                        fab:fab_title="@string/fab_menu_map_trafico"/>
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabMapRelieve"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="inactive"
-                    fab:fab_colorNormal="@color/lightPrimaryText"
-                    fab:fab_plusIconColor="@color/colorPrimary"
-                    fab:fab_colorPressed="@color/gris_3"
-                    fab:fab_icon="@drawable/ic_terrain_grey"
-                    fab:fab_title="@string/fab_menu_map_relieve"
-                    fab:fab_size="mini"/>
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabMapSatelite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="inactive"
+                        fab:fab_colorNormal="@color/lightPrimaryText"
+                        fab:fab_plusIconColor="@color/colorPrimary"
+                        fab:fab_colorPressed="@color/gris_3"
+                        fab:fab_icon="@drawable/ic_satellite_grey"
+                        fab:fab_size="mini"
+                        fab:fab_title="@string/fab_menu_map_satelite"/>
 
-                <com.getbase.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabMapHibrido"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="inactive"
-                    fab:fab_colorNormal="@color/lightPrimaryText"
-                    fab:fab_plusIconColor="@color/colorPrimary"
-                    fab:fab_colorPressed="@color/gris_3"
-                    fab:fab_icon="@drawable/ic_earth_grey"
-                    fab:fab_title="@string/fab_menu_map_hibrido"
-                    fab:fab_size="mini"/>
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabMapRelieve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="inactive"
+                        fab:fab_colorNormal="@color/lightPrimaryText"
+                        fab:fab_plusIconColor="@color/colorPrimary"
+                        fab:fab_colorPressed="@color/gris_3"
+                        fab:fab_icon="@drawable/ic_terrain_grey"
+                        fab:fab_title="@string/fab_menu_map_relieve"
+                        fab:fab_size="mini"/>
 
-            </com.getbase.floatingactionbutton.FloatingActionsMenu>
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fabMapHibrido"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="inactive"
+                        fab:fab_colorNormal="@color/lightPrimaryText"
+                        fab:fab_plusIconColor="@color/colorPrimary"
+                        fab:fab_colorPressed="@color/gris_3"
+                        fab:fab_icon="@drawable/ic_earth_grey"
+                        fab:fab_title="@string/fab_menu_map_hibrido"
+                        fab:fab_size="mini"/>
 
-    </FrameLayout>
+                </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-</LinearLayout>-->
+        </FrameLayout>
+
+    </LinearLayout>-->

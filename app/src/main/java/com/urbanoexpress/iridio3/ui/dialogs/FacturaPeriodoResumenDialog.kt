@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import com.urbanoexpress.iridio3.databinding.ModalFacturaPeriodoResumenBinding
 import com.urbanoexpress.iridio3.model.dto.Period
-import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 
 typealias PeridoEvent = ((Period, Boolean) -> Unit)

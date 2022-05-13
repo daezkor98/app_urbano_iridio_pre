@@ -8,6 +8,8 @@ import com.urbanoexpress.iridio3.data.rest.ApiRest
 import com.urbanoexpress.iridio3.data.rest.ApiRest.Api.*
 import com.urbanoexpress.iridio3.model.dto.*
 import com.urbanoexpress.iridio3.urbanocore.*
+import com.urbanoexpress.iridio3.urbanocore.extentions.ifNull
+import com.urbanoexpress.iridio3.urbanocore.extentions.ifSafe
 import com.urbanoexpress.iridio3.urbanocore.extentions.logException
 import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest
 import org.json.JSONObject

@@ -223,7 +223,6 @@ public class RutaRuralPresenter implements OnClickItemListener {
         long totalPendientes = interactor.getTotalRutasPendientes();
         long totalGestionados = interactor.getTotalRutasGestionadas();
 
-//        if (true) {
         if (totalPendientes > 0 || totalGestionados > 0) {
             activity.startActivity(new Intent(activity, MapaRutaDelDiaActivity.class));
             activity.overridePendingTransition(R.anim.slide_enter_from_right, R.anim.not_slide);

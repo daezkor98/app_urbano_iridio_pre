@@ -15,8 +15,8 @@ import com.urbanoexpress.iridio3.presenter.viewmodel.GeneralRevenueViewModel
 import com.urbanoexpress.iridio3.ui.BaseActivity2
 import com.urbanoexpress.iridio3.ui.adapter.PeriodsRevenueAdapter
 import com.urbanoexpress.iridio3.ui.dialogs.FacturaPeriodoResumenDialog
-import com.urbanoexpress.iridio3.urbanocore.goneIf
-import com.urbanoexpress.iridio3.urbanocore.onExclusiveClick
+import com.urbanoexpress.iridio3.urbanocore.extentions.goneIf
+import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 import dagger.hilt.android.AndroidEntryPoint
 
