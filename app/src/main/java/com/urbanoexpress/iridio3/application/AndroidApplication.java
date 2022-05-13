@@ -21,6 +21,7 @@ import dagger.hilt.android.HiltAndroidApp;
 @HiltAndroidApp
 public class AndroidApplication extends MultiDexApplication {
 
+    //TODO add version name in drawer
     private static Context appContext;
 
     @Override

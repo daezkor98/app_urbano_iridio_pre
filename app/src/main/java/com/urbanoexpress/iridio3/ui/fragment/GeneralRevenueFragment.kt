@@ -42,6 +42,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     private fun observeViewModel() {
 
+        //TODO add onError livedAta
         gananciasVM.isLoadingLD.observe(this) { isLoading ->
             if (isLoading) {
                 showProgressDialog()
@@ -109,10 +110,10 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
         bind.tvWeekRevenue.onExclusiveClick { onCurrentPeriodClick() }
         bind.tvWeekSub.onExclusiveClick { onCurrentPeriodClick() }
 
+        //TODO make a secure exclusiveClick
         bind.btnRegistrarFac.onExclusiveClick {
 
             if (areApproved.size == 1) {
-
                 findNavController()
                     .navigate(
                         R.id.action_generalRevenueFragment_to_registroFacturaFragment,
