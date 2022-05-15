@@ -15,7 +15,8 @@ class RegistrarFacturaViewModel @Inject constructor() : BaseViewModel() {
 
     val uploadFacturaResultLD: MutableLiveData<Boolean> = MutableLiveData()
 
-    val gananciasInteractor = MisGananciasInteractor()
+    //    val gananciasInteractor = MisGananciasInteractor()
+    val gananciasInteractor by lazy { MisGananciasInteractor() }
 
     fun postFactura(
         numFact: String,
@@ -47,6 +48,7 @@ class RegistrarFacturaViewModel @Inject constructor() : BaseViewModel() {
                 "application/pdf"
             )
 
+//        val isSuccess = MisGananciasInteractor.uploadFacturaPDF(map, imagen)
         val isSuccess = gananciasInteractor.uploadFacturaPDF(map, imagen)
         uploadFacturaResultLD.postValue(isSuccess)
     }

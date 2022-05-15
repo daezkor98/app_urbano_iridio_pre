@@ -7,11 +7,11 @@ import com.urbanoexpress.iridio3.model.dto.ResponseOf
 import com.urbanoexpress.iridio3.model.dto.toInstance
 import com.urbanoexpress.iridio3.model.dto.validate
 import com.urbanoexpress.iridio3.model.dto.wasSuccessful
+import com.urbanoexpress.iridio3.urbanocore.secureSuspendCoroutine
 import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest
 import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 
 /**
@@ -22,7 +22,7 @@ class MotorizadoInteractor {
     suspend fun uploadLicenciaMotorizado(
         params: Map<String, String>,
         data: MultipartJsonObjectRequest.DataPart?
-    ): Boolean = suspendCoroutine { continuation ->
+    ): Boolean = secureSuspendCoroutine { continuation ->
         ApiRequest.getInstance().newParams()
         ApiRequest.getInstance().putAllParams(params)
         ApiRequest.getInstance().putData("file", data)
@@ -43,7 +43,7 @@ class MotorizadoInteractor {
 
     suspend fun notifyUserIsNotMotorizado(
         params: Map<String, String>
-    ): Boolean = suspendCoroutine { continuation ->
+    ): Boolean = secureSuspendCoroutine { continuation ->
         ApiRequest.getInstance().newParams()
         ApiRequest.getInstance().putAllParams(params)
         ApiRequest.getInstance().request(ApiRest.withEndpoint(ApiRest.Api.UPLOAD_MOTORIZADO_LICENCE),

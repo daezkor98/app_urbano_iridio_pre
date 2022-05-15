@@ -6,6 +6,8 @@ package com.urbanoexpress.iridio3.urbanocore
  */
 typealias OnItemClick = ((index: Int) -> Unit)?
 typealias SimpleEvent = (() -> Unit)
+typealias Condition = (() -> Boolean)
+typealias ConditionOver<T> = ((T) -> Boolean?)
 typealias DataEvent<T> = ((T) -> Unit)
 typealias ThrowableEvent = ((Throwable) -> Unit)
 

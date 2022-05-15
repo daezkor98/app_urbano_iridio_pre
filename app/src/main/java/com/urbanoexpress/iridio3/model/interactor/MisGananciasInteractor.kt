@@ -3,30 +3,29 @@ package com.urbanoexpress.iridio3.model.interactor
 import com.android.volley.VolleyError
 import com.urbanoexpress.iridio3.data.rest.ApiRequest
 import com.urbanoexpress.iridio3.data.rest.ApiRequest.ResponseListener
-import com.urbanoexpress.iridio3.data.rest.ApiRequest.TypeParams.FORM_DATA
 import com.urbanoexpress.iridio3.data.rest.ApiRest
 import com.urbanoexpress.iridio3.data.rest.ApiRest.Api.*
 import com.urbanoexpress.iridio3.model.dto.*
-import com.urbanoexpress.iridio3.urbanocore.*
 import com.urbanoexpress.iridio3.urbanocore.extentions.ifNull
 import com.urbanoexpress.iridio3.urbanocore.extentions.ifSafe
 import com.urbanoexpress.iridio3.urbanocore.extentions.logException
+import com.urbanoexpress.iridio3.urbanocore.secureSuspendCoroutine
 import com.urbanoexpress.iridio3.util.network.volley.MultipartJsonObjectRequest
 import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Created by Brandon Quintanilla on March/02/2022.
  */
+//@Keep
 class MisGananciasInteractor {
 
     suspend fun uploadFacturaPDF(
         params: Map<String, String>,
         data: MultipartJsonObjectRequest.DataPart?
     ): Boolean =
-        suspendCoroutine { continuation ->
+        secureSuspendCoroutine { continuation ->
             ApiRequest.getInstance().newParams()
             ApiRequest.getInstance().putAllParams(params)
             ApiRequest.getInstance().putData("file", data)
@@ -47,66 +46,32 @@ class MisGananciasInteractor {
         }
 
     suspend fun getMisGanancias(params: Map<String, String?>) =
-        suspendCoroutine<GeneralRevenue> { continuation ->
-            ApiRequest.getInstance().newParams()
-            ApiRequest.getInstance().putAllParams(params)
-            ApiRequest.getInstance().request(
-                ApiRest.withEndpoint(GET_MY_REVENUES), FORM_DATA, object : ResponseListener {
+        secureSuspendCoroutine<GeneralRevenue> { continuation ->
+            ApiRequest
+                .getInstance()
+                .putNewParams(params)
+                .requestForm(GET_MY_REVENUES, object : ResponseListener {
                     override fun onResponse(response: JSONObject) {
 
-                        try {
-                            response
-                                .toInstance<ResponseOf<GeneralRevenue>>()?.wasSuccessful()?.data
-                                .ifSafe {
-                                    continuation.resume(it)
-                                }.ifNull {
-                                    continuation.resumeWithException(Exception("No tiene información"))
-                                }
-
-                        } catch (e: Exception) {
-                            e.logException("catch: getMisGanancias")
-                            continuation.resumeWithException(Exception(ApiRequest.errorMessage))
-                        }
+                        response
+                            .toInstance<ResponseOf<GeneralRevenue>>()
+                            ?.assertSuccess()
+                            .ifSafe { data ->
+                                continuation.resume(data)
+                            }.ifNull {
+                                continuation.resumeWithException(Exception("Sin datos disponibles"))
+                            }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
                         error.logException("volley: getMisGanancias")
-                        continuation.resumeWithException(Exception(ApiRequest.errorMessage))
+                        continuation.resumeWithException(error)
                     }
                 })
         }
 
-    /*suspend fun getSemanaDetail(params: Map<String, String>) =
-        suspendCoroutine<ArrayList<RevenueDay>> { continuation ->
-            ApiRequest.getInstance().newParams()
-            ApiRequest.getInstance().putAllParams(params)
-            ApiRequest.getInstance().request(
-                ApiRest.url(GET_WEEK_DETAIL), FORM_DATA, object : ResponseListener {
-                    override fun onResponse(response: JSONObject) {
-                        try {
-                            response
-                                .toInstance<ResponseOf<ArrayList<RevenueDay>>>()
-                                ?.wasSuccessful()?.data
-                                .ifSafe {
-                                    continuation.resume(it)
-                                }.ifNull {
-                                    continuation.resumeWithException(Exception("No tiene información"))
-                                }
-
-                        } catch (e: Exception) {
-                            e.logException("catch: getSemanaDetail")
-                            continuation.resumeWithException(Exception(ApiRequest.errorMessage))
-                        }
-                    }
-
-                    override fun onErrorResponse(error: VolleyError) {
-                        error.logException("volley: getSemanaDetail")
-                        continuation.resumeWithException(Exception(ApiRequest.errorMessage))
-                    }
-                })
-        }*/
     suspend fun getSemanaDetail(params: Map<String, String>) =
-        secureSuspendCoroutine<ArrayList<RevenueDay>> { resultHolder ->
+        secureSuspendCoroutine<ArrayList<RevenueDay>> { continuation ->
             ApiRequest.getInstance().putNewParams(params)
             ApiRequest.getInstance().requestForm(
                 GET_WEEK_DETAIL, object : ResponseListener {
@@ -115,14 +80,14 @@ class MisGananciasInteractor {
                             .toInstance<ResponseOf<ArrayList<RevenueDay>>>()
                             ?.assertSuccess()
                             .ifSafe {
-                                resultHolder.hold(it)
+                                continuation.resume(it)
                             }.ifNull {
-                                resultHolder.throwException(Exception("No tiene información"))
+                                continuation.resumeWithException(Exception("Sin datos disponibles"))
                             }
                     }
 
                     override fun onErrorResponse(error: VolleyError) {
-                        resultHolder.throwException(Exception(ApiRequest.errorMessage))
+                        continuation.resumeWithException(error)
                     }
                 })
         }

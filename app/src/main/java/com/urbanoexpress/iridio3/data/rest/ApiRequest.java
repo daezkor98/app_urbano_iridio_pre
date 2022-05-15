@@ -121,9 +121,10 @@ public class ApiRequest {
         requestParams.putAll(params);
     }
 
-    public void putNewParams(Map<String, String> params) {
+    public ApiRequest putNewParams(Map<String, String> params) {
         newParams();
         requestParams.putAll(params);
+        return this;
     }
 
     public void putParams(String key, String value) {

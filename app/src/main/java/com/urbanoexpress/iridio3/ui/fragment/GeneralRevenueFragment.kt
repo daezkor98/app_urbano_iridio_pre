@@ -15,10 +15,13 @@ import com.urbanoexpress.iridio3.presenter.viewmodel.GeneralRevenueViewModel
 import com.urbanoexpress.iridio3.ui.BaseActivity2
 import com.urbanoexpress.iridio3.ui.adapter.PeriodsRevenueAdapter
 import com.urbanoexpress.iridio3.ui.dialogs.FacturaPeriodoResumenDialog
+import com.urbanoexpress.iridio3.ui.dialogs.MessageDialog
+import com.urbanoexpress.iridio3.urbanocore.extentions.findMessage
 import com.urbanoexpress.iridio3.urbanocore.extentions.goneIf
 import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK
 import dagger.hilt.android.AndroidEntryPoint
+import java.net.UnknownHostException
 
 /**
  * Created by Brandon Quintanilla on March/01/2022.
@@ -42,7 +45,13 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     private fun observeViewModel() {
 
-        //TODO add onError livedAta
+        gananciasVM.exceptionLD.observe(this) {
+            print("findMessage() > " + it.javaClass.canonicalName)
+            print("findMessage() > " + (it is UnknownHostException))
+            val messageDialog = MessageDialog.newInstance("ERROR : " + it.findMessage())
+            messageDialog.show(childFragmentManager, "MsgDial")
+        }
+
         gananciasVM.isLoadingLD.observe(this) { isLoading ->
             if (isLoading) {
                 showProgressDialog()
@@ -62,6 +71,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
             this.bind.cardWeeksTitle.goneIf { periodsAdapter.periods.isEmpty() }
             bind.btnRegistrarFac.isEnabled = areApproved.isNotEmpty()
+            bind.tvWeekRevenue.isEnabled = true
         }
     }
 

@@ -7,12 +7,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MisGananciasActivity : BaseActivity2() {
 
-    lateinit var bind: ActivityMisGananciasBinding
+    val bind: ActivityMisGananciasBinding by lazy {
+        ActivityMisGananciasBinding.inflate(
+            layoutInflater
+        )
+    }
+//    lateinit var bind: ActivityMisGananciasBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        bind = ActivityMisGananciasBinding.inflate(layoutInflater)
+//        bind = ActivityMisGananciasBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
         setupToolbar(bind.toolbar)

@@ -20,8 +20,8 @@ inline fun <reified T> JSONObject.toInstance(): T? {
     return try {
         ST.gson.fromJson<T>(this.toString(), object : TypeToken<T>() {}.type)
     } catch (e: Exception) {
-        Log.e("TAG", "toInstance: $this", e)
-        null
+        print("toInstance() $this \n" + e.message)
+        throw Exception("Could´nt convert Json")
     }
 }
 
@@ -47,10 +47,14 @@ fun <T> ResponseOf<T>.validate(
     return this
 }
 
-fun <T> ResponseOf<T>.assertSuccess(): T? {
-    if (this.success!!) {
-        return this.data
-    } else {
-        throw  Exception("Solicitud fallida")
+fun <T> ResponseOf<T>?.assertSuccess(): T? {
+    if (this !=null){
+        if (this.success!!) {
+            return this.data
+        } else {
+            throw  Exception("Solicitud fallida")
+        }
+    }else{
+        throw Exception("Respuesta nula")
     }
 }

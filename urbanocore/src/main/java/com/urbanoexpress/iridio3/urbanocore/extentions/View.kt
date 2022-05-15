@@ -2,6 +2,8 @@ package com.urbanoexpress.iridio3.urbanocore.extentions
 
 import android.view.View
 import android.widget.TextView
+import com.urbanoexpress.iridio3.urbanocore.Condition
+import com.urbanoexpress.iridio3.urbanocore.ConditionOver
 
 
 /**
@@ -32,12 +34,22 @@ fun View.visisble() {
     this.visibility = View.VISIBLE
 }
 
-fun View.goneIf(condition: () -> Boolean) {
+fun View.goneIf(condition: Condition) {
     if (condition()) {
         this.visibility = View.GONE
     }
 }
 
-fun View.disable(){
-    this.isEnabled =false
+fun View.disable() {
+    this.isEnabled = false
 }
+
+fun <T> T.assert(message: String, required: ConditionOver<T>): T {
+    if (required(this) == true) {
+        return this
+    } else {
+        throw Exception(message)
+    }
+}
+
+

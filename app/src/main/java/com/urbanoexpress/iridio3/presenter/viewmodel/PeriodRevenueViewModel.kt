@@ -15,7 +15,8 @@ class PeriodRevenueViewModel @Inject constructor(): BaseViewModel() {
 
     val periodDetailLD: MutableLiveData<ArrayList<RevenueDay>> = MutableLiveData()
 
-    val gananciasInteractor = MisGananciasInteractor()
+//    val gananciasInteractor = MisGananciasInteractor()
+val gananciasInteractor by lazy { MisGananciasInteractor() }
 
     fun fetchWeekDetail(fechaInicio: String, fechaFin: String, certID: String) = executeIO {
 
@@ -30,6 +31,7 @@ class PeriodRevenueViewModel @Inject constructor(): BaseViewModel() {
             "vp_id_user" to userID
         )
 
+//        val data = MisGananciasInteractor.getSemanaDetail(params)
         val data = gananciasInteractor.getSemanaDetail(params)
 
         periodDetailLD.postValue(data)
