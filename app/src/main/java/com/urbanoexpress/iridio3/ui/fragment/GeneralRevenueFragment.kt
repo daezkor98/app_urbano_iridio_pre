@@ -46,8 +46,6 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
     private fun observeViewModel() {
 
         gananciasVM.exceptionLD.observe(this) {
-            print("findMessage() > " + it.javaClass.canonicalName)
-            print("findMessage() > " + (it is UnknownHostException))
             val messageDialog = MessageDialog.newInstance("ERROR : " + it.findMessage())
             messageDialog.show(childFragmentManager, "MsgDial")
         }

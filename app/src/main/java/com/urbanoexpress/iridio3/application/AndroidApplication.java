@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.orm.SugarContext;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.data.remote.ApiEnvironment;
@@ -21,13 +22,14 @@ import dagger.hilt.android.HiltAndroidApp;
 @HiltAndroidApp
 public class AndroidApplication extends MultiDexApplication {
 
-    //TODO add version name in drawer
     private static Context appContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         appContext = getApplicationContext();
+
+        setupCrashlytics();
 
         Preferences.getInstance().init(getApplicationContext(), "GlobalConfigApp");
 
@@ -56,5 +58,14 @@ public class AndroidApplication extends MultiDexApplication {
 
     public static Context getAppContext() {
         return appContext;
+    }
+
+    private void setupCrashlytics() {
+        String idUser = Preferences
+                .getInstance()
+                .init(getApplicationContext(), "UserProfile")
+                .getString("idUsuario", "");
+
+        FirebaseCrashlytics.getInstance().setCustomKey("idUsuario", idUser);
     }
 }

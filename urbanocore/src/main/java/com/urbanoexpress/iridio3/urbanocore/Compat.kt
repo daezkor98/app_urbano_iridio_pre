@@ -7,12 +7,12 @@ import kotlin.coroutines.suspendCoroutine
 
 /**
  * Created by Brandon Quintanilla on April/28/2022.
+ * There comes (old java - mvvm) compatibility code
  */
 
 /**
  *   Replacing old callbacks with suspend functions
  **/
-
 suspend fun <T> secureSuspendCoroutine(block: (Continuation<T>) -> Unit) =
     suspendCoroutine<T> { continuation ->
         try {
@@ -21,4 +21,3 @@ suspend fun <T> secureSuspendCoroutine(block: (Continuation<T>) -> Unit) =
             continuation.resumeWithException(t)
         }
     }
-/*************************************/

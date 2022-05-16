@@ -39,12 +39,6 @@ public class Preferences implements SharedPreferences {
         return getInstance();
     }
 
-    public Preferences init(Activity activity, String namePreferences, int mode) {
-        sharedPreferences = activity.getSharedPreferences(namePreferences, mode);
-        editor = sharedPreferences.edit();
-        return getInstance();
-    }
-
     @Override
     public Map<String, ?> getAll() {
         return sharedPreferences.getAll();
@@ -100,4 +94,9 @@ public class Preferences implements SharedPreferences {
     public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
 
     }
+}
+
+//PK: PreferencesKeys
+interface  PK{
+
 }

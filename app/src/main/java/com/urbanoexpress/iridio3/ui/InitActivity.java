@@ -35,8 +35,6 @@ public class InitActivity extends BaseActivity implements InitView {
         if (presenter == null) {
             presenter = new InitPresenter(this);
         }
-
-        Log.i("TAG", "onCreate: ");
     }
 
     @Override

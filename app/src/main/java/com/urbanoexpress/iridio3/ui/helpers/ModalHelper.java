@@ -30,12 +30,16 @@ public class ModalHelper {
         public static class Builder {
 
             private Snackbar snackbar;
-            private int actionTextColor = 0xFFD90B24;
-            private int backgroundColor = 0xFF0F1015;
+
+            private final int textColor;
+            private final int backgroundColor;
 
             public Builder(View view, String message) {
                 if (view != null) {
                     snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+                    textColor = view.getContext().getResources().getColor(R.color.white);
+                    backgroundColor = view.getContext().getResources().getColor(R.color.gris_2);
+
                 } else {
                     throw new IllegalArgumentException("Please provide a valid view.");
                 }
@@ -47,15 +51,15 @@ public class ModalHelper {
                 return this;
             }
 
-            public Builder setActionTextColor(int color) {
+/*            public Builder setActionTextColor(int color) {
                 actionTextColor = color;
                 return this;
-            }
+            }*/
 
-            public Builder setBackground(int color) {
+/*            public Builder setBackground(int color) {
                 backgroundColor = color;
                 return this;
-            }
+            }*/
 
             public Snackbar build() {
                 snackbar.setBackgroundTint(backgroundColor);
@@ -64,9 +68,9 @@ public class ModalHelper {
                         com.google.android.material.R.id.snackbar_text);
                 snackbar_text.setMaxLines(10);
 
-                TextView snackbar_action = snackbar.getView().findViewById(
-                        com.google.android.material.R.id.snackbar_action);
-                snackbar_action.setTextColor(actionTextColor);
+                snackbar.setTextColor(textColor);
+                snackbar.setActionTextColor(textColor);
+                snackbar.setBackgroundTint(backgroundColor);
 
                 return snackbar;
             }
