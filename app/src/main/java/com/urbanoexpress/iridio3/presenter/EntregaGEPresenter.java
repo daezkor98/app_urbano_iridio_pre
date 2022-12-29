@@ -117,7 +117,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     private List<GalleryWrapperItem> galeriaDomicilio = new ArrayList<>();
 
     private ArrayList<DescargaRuta> descargaRutas = new ArrayList<>();
-    private ArrayList<Ruta> rutas;//
+    private ArrayList<Ruta> rutas;//Es la ruta seleccionada, usualmente contiene un solo item
 
     private File photoCapture;
 
@@ -275,7 +275,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             view.notifyPiezaItemChanged(position);
 
             setVisibilityContainerMsgEntregaParcial();
-        } else {
+        } else if(piezaItems.get(position).isBarcodeScanningIsMandatory()){
+            view.showSnackBar(R.string.activity_detalle_ruta_msg_scan_pieza);
+            CommonUtils.vibrateDevice(view.getViewContext(), 100);
+        }else {
             view.showSnackBar(R.string.activity_detalle_ruta_msg_no_puede_seleccionar_pieza);
             CommonUtils.vibrateDevice(view.getViewContext(), 100);
         }
@@ -643,6 +646,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 if (pieza.getChkEstado().equals(CHK_ENTREGA)) selectable = false;
                 if (pieza.getChkEstado().equals(CHK_ENTREGA_DEVOLUCION)) selectable = false;
                 if (pieza.getChkEstado().equals("6") && pieza.getEstadoManifiesto() != 1) selectable = false;
+                if (barcodeScanningIsMandatory) selectable = false;
 
                 piezaItems.add(new PiezaItem(
                         pieza.getIdPieza(),
@@ -1618,7 +1622,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 boolean isPCKFound = false;
                 for (int i = 0; i < piezaItems.size(); i++) {
                     if (piezaItems.get(i).getBarra().equals(intent.getStringExtra("value"))) {
-                        if (piezaItems.get(i).isSelectable()) {
+                        if (piezaItems.get(i).isSelectable() || piezaItems.get(i).isBarcodeScanningIsMandatory()) {
                             isPCKFound = true;
                             pckReadFromScanner = true;
                             piezaItems.get(i).setSelected(true);

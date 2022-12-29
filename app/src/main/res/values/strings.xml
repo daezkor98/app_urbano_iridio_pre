@@ -176,7 +176,8 @@
     <string name="activity_detalle_ruta_message_tipo_medio_pago_no_seleccionado">Debe seleccionar el tipo de medio de pago para realizar la gestión.</string>
     <string name="activity_detalle_ruta_message_descarga_finalizado_exitosamente">La gestión de la guía se ha finalizado exitosamente.</string>
     <string name="activity_detalle_ruta_message_recoleccion_finalizado_exitosamente">La gestión de la recolección se ha finalizado exitosamente.</string>
-    <string name="activity_detalle_ruta_msg_no_puede_seleccionar_pieza">No puedes seleccionar el producto.</string>
+    <string name="activity_detalle_ruta_msg_no_puede_seleccionar_pieza">No puedes seleccionar el producto</string>
+    <string name="activity_detalle_ruta_msg_scan_pieza">Escanea el código de barras del producto.</string>
     <string name="activity_detalle_ruta_title_eliminar_galeria">Eliminar Imagen</string>
     <string name="activity_detalle_ruta_message_eliminar_galeria">¿Está seguro de que quiere eliminar esta foto?</string>
     <string name="activity_detalle_ruta_message_eliminar_cargo">¿Está seguro de que quiere eliminar la foto del cargo?</string>

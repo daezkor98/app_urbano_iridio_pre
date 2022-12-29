@@ -40,6 +40,7 @@ public interface DescargaEntregaView extends BaseV5View {
     void showTipoMedioPago(ArrayList<String> tipoMedioPago);
 
     void setVisibilityContainerMsgEntregaParcial(int visible);
+    void setVisibilityWarningScanBarcodeMandatory(int visible);
     void setVisibilityLayoutInputRecibidoPor(int visible);
     void setVisibilityLayoutInputTipoDocIndentidad(int visible);
     void setVisibilityLayoutInputDocIndentidad(int visible);

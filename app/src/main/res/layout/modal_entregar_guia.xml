@@ -683,15 +683,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!---->
     <!--@warning_barcode_mandatory is only visible when the control param requires it-->
     <com.urbanoexpress.iridio3.util.components.message.WarningMessage
-        android:id="@+id/warning_barcode_mandatory"
+        android:id="@+id/warning_scan_barcode_mandatory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:warningText="@string/mandatory_barcode_scanning" />
 
-    <!---->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"

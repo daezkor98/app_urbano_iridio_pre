@@ -299,6 +299,11 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     }
 
     @Override
+    public void setVisibilityWarningScanBarcodeMandatory(int visible) {
+        binding.warningScanBarcodeMandatory.setVisibility(visible);
+    }
+
+    @Override
     public void setVisibilityLayoutInputRecibidoPor(int visible) {
         binding.layoutInputRecibidoPor.setVisibility(visible);
     }
