@@ -112,7 +112,8 @@ public class ManifestarGuiaPresenter implements PiezasAdapter.OnPiezaListener {
                             pck.getString("pck_fecha"),
                             pck.getString("pck_ruta").equalsIgnoreCase("s"),
                             false,
-                            !pck.getString("pck_ruta").equals("16")
+                            !pck.getString("pck_ruta").equals("16"),
+                            false
                     )
             );
         }

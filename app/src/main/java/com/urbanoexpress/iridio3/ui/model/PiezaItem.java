@@ -11,9 +11,10 @@ public class PiezaItem {
     private boolean onMyRoute;
     private boolean selected;
     private boolean selectable;
+    private boolean barcodeScanningIsMandatory;
 
     public PiezaItem(String idPieza, String idServicioGuia, String barra, String chk, String estado,
-                     String fecha, boolean onMyRoute, boolean selected, boolean selectable) {
+                     String fecha, boolean onMyRoute, boolean selected, boolean selectable, boolean barcodeScanningIsMandatory) {
         this.idPieza = idPieza;
         this.idServicioGuia = idServicioGuia;
         this.barra = barra;
@@ -23,6 +24,7 @@ public class PiezaItem {
         this.onMyRoute = onMyRoute;
         this.selected = selected;
         this.selectable = selectable;
+        this.barcodeScanningIsMandatory = barcodeScanningIsMandatory;
     }
 
     public String getIdPieza() {
@@ -95,5 +97,13 @@ public class PiezaItem {
 
     public void setSelectable(boolean selectable) {
         this.selectable = selectable;
+    }
+
+    public boolean isBarcodeScanningIsMandatory() {
+        return barcodeScanningIsMandatory;
+    }
+
+    public void setBarcodeScanningIsMandatory(boolean barcodeScanningIsMandatory) {
+        this.barcodeScanningIsMandatory = barcodeScanningIsMandatory;
     }
 }

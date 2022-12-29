@@ -628,11 +628,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     private void loadDataPiezas() {
+
+        boolean barcodeScanningIsMandatory =  true;
+
         for (Ruta ruta: rutas) {
             List<Pieza> piezas = rutaPendienteInteractor.selectPiezas(ruta.getIdServicio(),
                     ruta.getLineaNegocio());
 
             boolean selected = piezas.size() == 1;
+            barcodeScanningIsMandatory &= (ruta.getFlagScanPck().equals("1") && piezas.size() < 9);
 
             for (Pieza pieza: piezas) {
                 boolean selectable = true;
@@ -649,11 +653,16 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                         pieza.getFechaEstado(),
                         pieza.getEstadoManifiesto() == 1,
                         selected,
-                        selectable));
+                        selectable,
+                        barcodeScanningIsMandatory));
             }
         }
 
         view.showPiezas(piezaItems);
+
+        if(barcodeScanningIsMandatory){
+            view.setVisibilityWarningScanBarcodeMandatory(View.VISIBLE);
+        }
     }
 
     private void loadDataProductosAEntregar() {

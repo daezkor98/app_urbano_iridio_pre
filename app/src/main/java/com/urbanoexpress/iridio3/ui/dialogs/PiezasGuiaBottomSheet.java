@@ -108,6 +108,7 @@ public class PiezasGuiaBottomSheet extends BottomSheetDialogFragment {
                         pieza.getFechaEstado(),
                         pieza.getEstadoManifiesto() == 1,
                         false,
+                        false,
                         false));
             }
 
