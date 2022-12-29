@@ -285,7 +285,7 @@
             android:value="urbano.db" />
         <meta-data
             android:name="VERSION"
-            android:value="52" />
+            android:value="53" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />

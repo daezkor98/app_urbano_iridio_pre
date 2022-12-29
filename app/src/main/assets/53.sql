@@ -1,0 +1,1 @@
+ALTER TABLE Ruta ADD flagScanPck VARCHAR;

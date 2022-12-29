@@ -6,33 +6,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.VolleyError;
 import com.orm.util.NamingHelper;
-
-import org.apache.commons.text.WordUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import com.urbanoexpress.iridio3.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.R;
 import com.urbanoexpress.iridio3.model.entity.Data;
@@ -62,6 +46,22 @@ import com.urbanoexpress.iridio3.util.Session;
 import com.urbanoexpress.iridio3.util.constant.LocalAction;
 import com.urbanoexpress.iridio3.view.BaseModalsView;
 import com.urbanoexpress.iridio3.view.RutaPendienteView;
+
+import org.apache.commons.text.WordUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mick on 22/06/16.
@@ -784,7 +784,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             instant = instant.plus(addMinutosRefrigerio(horarioAproximado), ChronoUnit.MINUTES);
             horarioAproximado = Date.from(instant);
 
-            Log.d(TAG, "HORA CALCULADA ("+ new SimpleDateFormat("h:mm a").format(horarioAproximado) +") POSITION: " + k);
+            Log.d(TAG, "HORA CALCULADA (" + new SimpleDateFormat("h:mm a").format(horarioAproximado) + ") POSITION: " + k);
 
             positionPreviuos = k;
 
@@ -1060,12 +1060,12 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 // Actualizar los contadores
                 new Thread(() -> {
                     for (int i = 0; i < dbRuta.size(); i++) {
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA ("+ dbRuta.get(i).getGuia() +") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
 
                         dbRuta.get(i).setSecuencia((i + 1) + "");
                         rutaItems.get(i).setCounterItem((i + 1) + "");
 
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA ("+ dbRuta.get(i).getGuia() +") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
 
                         dbRuta.get(i).save();
                     }
@@ -1175,19 +1175,19 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             try {
                 if (dbRuta != null) {
                     for (int i = 0; i < dbRuta.size(); i++) {
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA ("+ dbRuta.get(i).getGuia() +") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
 
                         dbRuta.get(i).setSecuencia((i + 1) + "");
                         rutaItems.get(i).setCounterItem((i + 1) + "");
 
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA ("+ dbRuta.get(i).getGuia() +") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
 
                         horarioAproximado = calculateTimeArriveGE(i, previousPositionGuia, horarioAproximado);
                         Instant instant = Instant.ofEpochMilli(horarioAproximado.getTime());
                         instant = instant.plus(addMinutosRefrigerio(horarioAproximado), ChronoUnit.MINUTES);
                         horarioAproximado = Date.from(instant);
 
-                        Log.d(TAG, "HORA CALCULADA ("+ new SimpleDateFormat("h:mm a").format(horarioAproximado) +") POSITION: " + i);
+                        Log.d(TAG, "HORA CALCULADA (" + new SimpleDateFormat("h:mm a").format(horarioAproximado) + ") POSITION: " + i);
 
                         previousPositionGuia = i;
 
@@ -1229,10 +1229,10 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             if (CommonUtils.isValidCoords(LocationUtils.getLatitude(), LocationUtils.getLongitude())) {
                 if (CommonUtils.isValidCoords(dbRuta.get(currentPosition).getGpsLatitude(),
                         dbRuta.get(currentPosition).getGpsLongitude())) {
-                    latitudeFrom    = LocationUtils.getLatitude();
-                    longitudeFrom   = LocationUtils.getLongitude();
-                    latitudeTo      = Double.parseDouble(dbRuta.get(currentPosition).getGpsLatitude());
-                    longitudeTo     = Double.parseDouble(dbRuta.get(currentPosition).getGpsLongitude());
+                    latitudeFrom = LocationUtils.getLatitude();
+                    longitudeFrom = LocationUtils.getLongitude();
+                    latitudeTo = Double.parseDouble(dbRuta.get(currentPosition).getGpsLatitude());
+                    longitudeTo = Double.parseDouble(dbRuta.get(currentPosition).getGpsLongitude());
 
                     int tiempoEstimado = (int) Math.ceil(MyLocation.calculateTimeBetweenTwoLocations(latitudeFrom,
                             longitudeFrom, latitudeTo, longitudeTo, 25));
@@ -1255,10 +1255,10 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                     dbRuta.get(previousPosition).getGpsLongitude()) &&
                     MyLocation.isValidLocations(dbRuta.get(currentPosition).getGpsLatitude(),
                             dbRuta.get(currentPosition).getGpsLongitude())) {
-                latitudeFrom    = Double.parseDouble(dbRuta.get(previousPosition).getGpsLatitude());
-                longitudeFrom   = Double.parseDouble(dbRuta.get(previousPosition).getGpsLongitude());
-                latitudeTo      = Double.parseDouble(dbRuta.get(currentPosition).getGpsLatitude());
-                longitudeTo     = Double.parseDouble(dbRuta.get(currentPosition).getGpsLongitude());
+                latitudeFrom = Double.parseDouble(dbRuta.get(previousPosition).getGpsLatitude());
+                longitudeFrom = Double.parseDouble(dbRuta.get(previousPosition).getGpsLongitude());
+                latitudeTo = Double.parseDouble(dbRuta.get(currentPosition).getGpsLatitude());
+                longitudeTo = Double.parseDouble(dbRuta.get(currentPosition).getGpsLongitude());
 
                 int tiempoEstimado = (int) Math.ceil(MyLocation.calculateTimeBetweenTwoLocations(latitudeFrom,
                         longitudeFrom, latitudeTo, longitudeTo, 25));
@@ -1520,7 +1520,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 //        return getRutaByID(dbRuta, jsonRuta.getString("id_servicio"), jsonRuta.getString("linea_negocio")) != null;
     }
 
-    private boolean existeRutasPendientes(JSONArray jsonRutas) throws JSONException{
+    private boolean existeRutasPendientes(JSONArray jsonRutas) throws JSONException {
         if (jsonRutas.length() > 0) {
             if (jsonRutas.getJSONObject(0).getInt("error_sql") == 0) {
                 return true;
@@ -1571,7 +1571,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         boolean validateEstado = false;
 
         if (estadoRuta.size() > 0) {
-            for (EstadoRuta estado: estadoRuta) {
+            for (EstadoRuta estado : estadoRuta) {
                 if (estado.getEstado() == EstadoRuta.Estado.INICIADO) {
                     estados = 1;
                 }
@@ -1601,7 +1601,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link EntregaGEPresenter#sendOnDescargaFinalizadaReceiver}
      * {@link NoEntregaGEPresenter#sendOnDescargaFinalizadaReceiver}
      * {@link RecolectaGEPresenter#sendOnDescargaFinalizadaReceiver}
@@ -1633,7 +1633,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link RutaPresenter#sendOnRutaIniciadaReceiver()}
      */
     private BroadcastReceiver rutaIniciadaReceiver = new BroadcastReceiver() {
@@ -1646,7 +1646,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link RutaPresenter#sendOnRutaFinalizadaReceiver}
      * {@link ForzarCierreRutaHelper#sendOnRutaFinalizadaReceiver}
      */
@@ -1659,7 +1659,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link RutaPresenter#sendOnManifiestoEliminadoReceiver}
      */
     private BroadcastReceiver manifiestoEliminadoReceiver = new BroadcastReceiver() {
@@ -1694,7 +1694,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link TransferirGuiaDialog#sendTransferenciaGuiaFinalizadaAction}
      */
     private BroadcastReceiver transferenciaGuiaFinalizadaReceiver = new BroadcastReceiver() {
@@ -1728,7 +1728,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link DefinirPosicionGuiaDialog#sendOnDefinirPosicionGuiaReceiver}
      */
     private BroadcastReceiver definirPosicionGuiaReceiver = new BroadcastReceiver() {
@@ -1743,7 +1743,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link ActionMenuRutaPendienteHelper#sendOnGuardarOrdenGuiasReceiver}
      */
     private BroadcastReceiver guardarOrdenGuiasReceiver = new BroadcastReceiver() {
@@ -1756,7 +1756,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link DetalleRutaPresenter#sendSincronizarNumeroTelefonoListaGuiasPendientesReceiver}
      */
     private BroadcastReceiver sincronizarNumeroTelefonoReceiver = new BroadcastReceiver() {
@@ -1777,7 +1777,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link RutaPresenter#resultScannReceiver}
      */
     private BroadcastReceiver buscarGuiaReceiver = new BroadcastReceiver() {
