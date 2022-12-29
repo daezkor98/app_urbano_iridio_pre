@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@android:color/white"
     android:orientation="vertical"
     android:theme="@style/color_theme_colorPrimary"
-    android:animateLayoutChanges="true">
+    tools:context="com.urbanoexpress.iridio3.ui.dialogs.EntregaGEDialog">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -15,38 +17,38 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:background="@color/colorPrimary"
-                android:gravity="center_vertical">
+                android:paddingRight="@dimen/activity_horizontal_margin">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Gestionar: Entrega"
-                    android:textColor="@android:color/white"/>
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/lblGuiaElectronica"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/white"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    android:ellipsize="marquee"
                     android:clickable="true"
+                    android:ellipsize="marquee"
                     android:focusable="true"
-                    android:focusableInTouchMode="true"/>
+                    android:focusableInTouchMode="true"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -58,10 +60,10 @@
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gris_11">
+                    android:background="@color/gris_11"
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -75,20 +77,20 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_gravity="center"
                             android:text="PIEZAS/BULTOS A ENTREGAR"
-                            android:textColor="@android:color/white"
-                            android:layout_gravity="center" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@android:color/white" />
 
                         <ImageButton
                             android:id="@+id/btnScanPCK"
-                            android:theme="@style/selectableItemWhiteStyle"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/ic_barcode_scan_white"
+                            android:layout_gravity="right|center_vertical"
                             android:background="?android:attr/selectableItemBackground"
                             android:scaleType="centerInside"
-                            android:layout_gravity="right|center_vertical" />
+                            android:src="@drawable/ic_barcode_scan_white"
+                            android:theme="@style/selectableItemWhiteStyle" />
                     </FrameLayout>
                 </LinearLayout>
 
@@ -96,22 +98,22 @@
                     android:id="@+id/rvPiezas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="vertical"
-                    android:fadeScrollbars="false" />
+                    android:fadeScrollbars="false"
+                    android:scrollbars="vertical" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/boxStepProductosEntregados"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/gris_11"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -120,33 +122,33 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_gravity="center"
                         android:text="PRODUCTOS A ENTREGAR"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvPremios"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="vertical"
                     android:fadeScrollbars="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:scrollbars="vertical" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/boxStepTipoEntrega"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gris_11">
+                    android:background="@color/gris_11"
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -160,20 +162,20 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_gravity="center"
                             android:text="TIPO DE ENTREGA"
-                            android:textColor="@android:color/white"
-                            android:layout_gravity="center" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@android:color/white" />
 
                         <ImageButton
                             android:id="@+id/btnUpdateMotivos"
-                            android:theme="@style/selectableItemWhiteStyle"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/ic_refresh_white"
+                            android:layout_gravity="right|center_vertical"
                             android:background="?android:attr/selectableItemBackground"
                             android:scaleType="centerInside"
-                            android:layout_gravity="right|center_vertical" />
+                            android:src="@drawable/ic_refresh_white"
+                            android:theme="@style/selectableItemWhiteStyle" />
                     </FrameLayout>
                 </LinearLayout>
 
@@ -181,23 +183,23 @@
                     android:id="@+id/lvMotivos"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="vertical"
                     android:fadeScrollbars="false"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:scrollbars="vertical" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/boxStepDatosEntrega"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/gris_11"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -206,179 +208,179 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_gravity="center"
                         android:text="DATOS DE LA ENTREGA"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="8dp">
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/layoutInputRecibidoPor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="RECIBIDO POR"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/gris"
                             android:layout_marginBottom="5dp"
+                            android:text="RECIBIDO POR"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/gris"
                             android:textSize="12sp" />
 
                         <EditText
                             android:id="@+id/txtNombre"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
+                            android:background="@android:color/transparent"
                             android:ems="10"
-                            android:textColor="@color/gris_2"
+                            android:inputType="textPersonName"
                             android:maxLength="60"
-                            android:background="@android:color/transparent"/>
+                            android:textColor="@color/gris_2" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputTipoDocIndentidad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="TIPO DOC. IDENTIDAD"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/gris"
                             android:layout_marginBottom="5dp"
-                            android:textSize="12sp"/>
+                            android:text="TIPO DOC. IDENTIDAD"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/gris"
+                            android:textSize="12sp" />
 
                         <Spinner
                             android:id="@+id/spinnerTipoDocIdentificacion"
-                            android:theme="@style/style_spinner_black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:dropDownSelector="@drawable/ripple_gris"
                             android:popupBackground="@color/lightPrimaryText"
-                            android:dropDownSelector="@drawable/ripple_gris" />
+                            android:theme="@style/style_spinner_black" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputDocIndentidad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="DOC. IDENTIDAD"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/gris"
                             android:layout_marginBottom="5dp"
-                            android:textSize="12sp"/>
+                            android:text="DOC. IDENTIDAD"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/gris"
+                            android:textSize="12sp" />
 
                         <EditText
                             android:id="@+id/txtDocIdentificacion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/gris_2"
+                            android:background="@android:color/transparent"
                             android:inputType="text|textCapCharacters"
                             android:maxLength="16"
-                            android:background="@android:color/transparent"/>
+                            android:textColor="@color/gris_2" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputTipoDireccion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="TIPO DIRECCIÓN"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/gris"
                             android:layout_marginBottom="5dp"
-                            android:textSize="12sp"/>
+                            android:text="TIPO DIRECCIÓN"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/gris"
+                            android:textSize="12sp" />
 
                         <Spinner
                             android:id="@+id/spinnerTipoDireccion"
-                            android:theme="@style/style_spinner_black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:dropDownSelector="@drawable/ripple_gris"
                             android:popupBackground="@color/lightPrimaryText"
-                            android:dropDownSelector="@drawable/ripple_gris" />
+                            android:theme="@style/style_spinner_black" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputTipoMedioPago"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="TIPO MEDIO DE PAGO"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/gris"
                             android:layout_marginBottom="5dp"
-                            android:textSize="12sp"/>
+                            android:text="TIPO MEDIO DE PAGO"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/gris"
+                            android:textSize="12sp" />
 
                         <Spinner
                             android:id="@+id/spinnerTipoMedioPago"
-                            android:theme="@style/style_spinner_black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:dropDownSelector="@drawable/ripple_gris"
                             android:popupBackground="@color/lightPrimaryText"
-                            android:dropDownSelector="@drawable/ripple_gris" />
+                            android:theme="@style/style_spinner_black" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputObservarEntrega"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="OBSERVAR ENTREGA"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/gris"
                             android:layout_marginBottom="5dp"
-                            android:textSize="12sp"/>
+                            android:text="OBSERVAR ENTREGA"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/gris"
+                            android:textSize="12sp" />
 
                         <RadioGroup
                             android:layout_width="match_parent"
@@ -389,16 +391,16 @@
                                 android:id="@+id/rBtnObservarEntrega"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="Si"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:text="Si" />
 
                             <RadioButton
                                 android:id="@+id/rBtnNoObservarEntrega"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="No"
                                 android:layout_weight="1"
-                                android:checked="true" />
+                                android:checked="true"
+                                android:text="No" />
                         </RadioGroup>
                     </LinearLayout>
 
@@ -406,40 +408,40 @@
                         android:id="@+id/layoutInputVoucher"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp"
                         android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="NUM. VOUCHER POS"
                             android:layout_gravity="center_vertical"
-                            android:textColor="@color/gris"
                             android:layout_marginBottom="5dp"
-                            android:textSize="12sp"/>
+                            android:text="NUM. VOUCHER POS"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/gris"
+                            android:textSize="12sp" />
 
                         <EditText
                             android:id="@+id/txtNumVoucherPOS"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:background="@android:color/transparent"
                             android:ems="10"
-                            android:textColor="@color/gris_2"
+                            android:inputType="number"
                             android:maxLength="25"
-                            android:background="@android:color/transparent"/>
+                            android:textColor="@color/gris_2" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutInputComentarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginBottom="8dp"
                         android:background="#F1F1F1"
+                        android:orientation="vertical"
                         android:padding="10dp">
 
                         <FrameLayout
@@ -450,8 +452,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:text="COMENTARIOS"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/gris"
                                 android:textSize="12sp" />
 
@@ -459,9 +461,9 @@
                                 android:id="@+id/lblContadorComentario"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="right|center_vertical"
                                 android:text="0/160"
                                 android:textColor="@color/gris_2"
-                                android:layout_gravity="right|center_vertical"
                                 android:textSize="12sp" />
                         </FrameLayout>
 
@@ -469,9 +471,9 @@
                             android:id="@+id/txtComentarios"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/gris_2"
+                            android:background="@android:color/transparent"
                             android:maxLength="160"
-                            android:background="@android:color/transparent"/>
+                            android:textColor="@color/gris_2" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -480,16 +482,16 @@
 
             <LinearLayout
                 android:id="@+id/boxStepFotosEntrega"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/gris_11"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -498,16 +500,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_gravity="center"
                         android:text="FOTOS DEL PRODUCTO"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvGaleriaFotos"
@@ -520,16 +522,16 @@
 
             <LinearLayout
                 android:id="@+id/boxStepFirmaEntrega"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/gris_11"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -538,16 +540,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_gravity="center"
                         android:text="FIRMA DEL CLIENTE"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvGaleriaFirma"
@@ -560,16 +562,16 @@
 
             <LinearLayout
                 android:id="@+id/boxStepFotoCargoEntrega"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/gris_11"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -579,16 +581,16 @@
                         android:id="@+id/lblTitleStepFotoCargo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_gravity="center"
                         android:text="FOTOS DEL CARGO"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvGaleriaCargo"
@@ -601,16 +603,16 @@
 
             <LinearLayout
                 android:id="@+id/boxStepFotosDomicilio"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/gris_11"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -619,16 +621,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_gravity="center"
                         android:text="FOTOS DEL DOMICILIO"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvGaleriaDomicilio"
@@ -658,48 +660,57 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/activity_vertical_margin"
+            android:layout_gravity="center_horizontal"
             android:gravity="center_vertical"
-            android:layout_gravity="center_horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_vertical_margin">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/ic_alert_white"
-                android:scaleType="centerInside"
                 android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_alert_white"
                 app:tint="@color/yellow_2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Al continuar realizarás una Entrega Parcial."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="@color/gris_2"
-                android:text="Al continuar realizarás una Entrega Parcial."/>
+                android:textColor="@color/gris_2" />
         </LinearLayout>
     </LinearLayout>
 
+    <!---->
+    <!--@warning_barcode_mandatory is only visible when the control param requires it-->
+    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+        android:id="@+id/warning_barcode_mandatory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:warningText="@string/mandatory_barcode_scanning" />
+
+    <!---->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
         android:gravity="center"
-        android:background="@color/colorPrimary">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnSiguiente"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:theme="@style/selectableItemWhiteStyle"
+            android:layout_gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/text_siguiente"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:text="@string/text_siguiente"
-            android:layout_gravity="center_vertical"
-            android:textAllCaps="true"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
+            android:theme="@style/selectableItemWhiteStyle" />
     </LinearLayout>
 </LinearLayout>

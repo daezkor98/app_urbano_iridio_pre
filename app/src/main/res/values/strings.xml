@@ -478,4 +478,5 @@
 
     <!---->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mandatory_barcode_scanning">Esta guía requiere escanear cada código de barras de manera obligatoria</string>
 </resources>
