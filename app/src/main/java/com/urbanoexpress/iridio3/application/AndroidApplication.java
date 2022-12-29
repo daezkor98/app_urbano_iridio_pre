@@ -6,6 +6,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.orm.SugarContext;
+import com.urbanoexpress.iridio3.BuildConfig;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.data.remote.ApiEnvironment;
 import com.urbanoexpress.iridio3.data.remote.BaseUrl;
@@ -34,7 +35,13 @@ public class AndroidApplication extends MultiDexApplication {
         Preferences.getInstance().init(getApplicationContext(), "GlobalConfigApp");
 
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
-        int apiEnvironment = ApiEnvironment.PRODUCTION;
+        int apiEnvironment;
+        if (BuildConfig.USE_PRODUCTION) {
+            apiEnvironment = ApiEnvironment.PRODUCTION;
+        } else {
+            apiEnvironment = ApiEnvironment.DEVELOPMENT;
+        }
+
         int country = Preferences.getInstance().getInt("country", -1);
 
         preferencesHelper.putApiEnvironment(apiEnvironment);

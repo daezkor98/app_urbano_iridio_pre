@@ -41,6 +41,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "Boolean", "USE_PRODUCTION", "false"
             firebaseCrashlytics {
                 mappingFileUploadEnabled false
             }
@@ -48,6 +49,7 @@ android {
         release {
             shrinkResources false
             minifyEnabled false
+            buildConfigField "Boolean", "USE_PRODUCTION", "true"
             //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             firebaseCrashlytics {
