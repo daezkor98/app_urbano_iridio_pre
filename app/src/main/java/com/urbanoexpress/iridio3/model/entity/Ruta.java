@@ -69,6 +69,7 @@ public class Ruta extends SugarRecord implements Serializable {
     private String descripcion;
     private String observaciones;
     private String secuenciaRuteo;
+    private String flagScanPck; // flag que indica si los items de la guía deben ser scaneados(el flag puede quedar sin efecto, ejm: cuando la guía cuenta con mas de 9 items)
     private int mostrarAlerta; // flag que indica si la guia/recoleccion debe ser alertada al usuario.
 
     private String idImagen;
@@ -100,7 +101,7 @@ public class Ruta extends SugarRecord implements Serializable {
                 String guiaRequerimientoCHK, String guiaRequerimientoMotivo, String guiaRequerimientoComentario,
                 String guiaRequerimientoHorario, String guiaRequerimientoNuevaDireccion,
                 String premiosGestionGuia, String firmaClienteGestionGuia, String minimoFotosProductoGestionGuia,
-                String descripcion, String observaciones, String secuenciaRuteo, int mostrarAlerta,
+                String descripcion, String observaciones, String secuenciaRuteo, String flagScanPck, int mostrarAlerta,
                 int estadoDescarga, int resultadoGestion, int eliminado, int dataValidate) {
         this.idUsuario = idUsuario;
         this.idServicio = idServicio;
@@ -160,6 +161,7 @@ public class Ruta extends SugarRecord implements Serializable {
         this.descripcion = descripcion;
         this.observaciones = observaciones;
         this.secuenciaRuteo = secuenciaRuteo;
+        this.flagScanPck = flagScanPck;
         this.mostrarAlerta = mostrarAlerta;
         this.estadoDescarga = estadoDescarga;
         this.resultadoGestion = resultadoGestion;
@@ -678,6 +680,10 @@ public class Ruta extends SugarRecord implements Serializable {
 
     public void setDataValidate(int dataValidate) {
         this.dataValidate = dataValidate;
+    }
+
+    public String getFlagScanPck() {
+        return flagScanPck;
     }
 
     public interface ZONA {

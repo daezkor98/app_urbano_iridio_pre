@@ -361,6 +361,7 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
                 jsonRuta.getString("descripcion"),
                 jsonRuta.getString("observacion"),
                 jsonRuta.getString("secuencia_ruteo"),
+                jsonRuta.getString("flag_scaneo_pck"),
                 Integer.parseInt(jsonRuta.getString("flag_alerta")),
                 Ruta.EstadoDescarga.PENDIENTE,
                 Ruta.ResultadoGestion.NO_DEFINIDO,

@@ -33,7 +33,7 @@ import java.util.List;
 public class SeleccionarGENoRecolectadasDialog extends DialogFragment
         implements RecoleccionGEAdapter.OnRecoleccionGEItemClickListener  {
 
-    public static final String TAG = "SeleccionarGENoRecolectadasDialog";
+    public static final String TAG = "SeleccionarGENoRecole";
 
     private ModalSeleccionarGeNoRecolectadasBinding binding;
     private List<RecoleccionGEItem> guiasElectronicasItems = new ArrayList<>();
@@ -153,6 +153,7 @@ public class SeleccionarGENoRecolectadasDialog extends DialogFragment
                                 "", // descripcion
                                 "", // observaciones
                                 "", // secuencia ruteo
+                                "",
                                 0, // mostrar alerta
                                 Ruta.EstadoDescarga.PENDIENTE,
                                 Ruta.ResultadoGestion.NO_DEFINIDO,
