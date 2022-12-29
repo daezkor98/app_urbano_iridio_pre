@@ -117,7 +117,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     private List<GalleryWrapperItem> galeriaDomicilio = new ArrayList<>();
 
     private ArrayList<DescargaRuta> descargaRutas = new ArrayList<>();
-    private ArrayList<Ruta> rutas;
+    private ArrayList<Ruta> rutas;//
 
     private File photoCapture;
 
@@ -266,6 +266,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         view.notifyPremioItemChanged(position);
     }
 
+    //check change
     @Override
     public void onPiezaClick(int position) {
         if (piezaItems.get(position).isSelectable()) {

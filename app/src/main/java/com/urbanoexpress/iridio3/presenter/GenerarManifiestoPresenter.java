@@ -112,7 +112,7 @@ public class GenerarManifiestoPresenter implements OnResultScannListener, OnActi
         view.notifyAllItemChanged();
     }
     
-    private void saveGuias() {
+/*    private void saveGuias() {
         for (String guia: codigos) {
             Ruta ruta = new Ruta(
                     Preferences.getInstance().getString("idUsuario", ""),
@@ -181,7 +181,7 @@ public class GenerarManifiestoPresenter implements OnResultScannListener, OnActi
             );
             ruta.save();
         }
-    }
+    }*/
 
     private void deleteItems() {
         Log.d(TAG, "DELETE ITEMS");

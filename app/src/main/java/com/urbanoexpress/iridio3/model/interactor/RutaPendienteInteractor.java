@@ -23,6 +23,7 @@ import com.urbanoexpress.iridio3.model.entity.Pieza;
 import com.urbanoexpress.iridio3.model.entity.Ruta;
 import com.urbanoexpress.iridio3.model.entity.TipoDireccion;
 import com.urbanoexpress.iridio3.model.interactor.callback.RequestCallback;
+import com.urbanoexpress.iridio3.urbanocore.DevUtilsKt;
 import com.urbanoexpress.iridio3.util.Preferences;
 import com.urbanoexpress.iridio3.util.Session;
 
@@ -50,6 +51,7 @@ public class RutaPendienteInteractor {
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        DevUtilsKt.logJson(response,"onResponse getGuiasRutaV4:");
                         callback.onSuccess(response);
                     }
 

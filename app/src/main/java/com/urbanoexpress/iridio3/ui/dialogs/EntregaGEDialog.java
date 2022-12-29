@@ -65,6 +65,9 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
 
     public EntregaGEDialog() { }
 
+    /**
+     * Factory method
+     * */
     public static EntregaGEDialog newInstance(ArrayList<Ruta> rutas, int numVecesGestionado) {
         EntregaGEDialog fragment = new EntregaGEDialog();
         Bundle args = new Bundle();
@@ -201,6 +204,7 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
         }
     }
 
+    //Items to display
     @Override
     public void showPiezas(List<PiezaItem> items) {
         try {
