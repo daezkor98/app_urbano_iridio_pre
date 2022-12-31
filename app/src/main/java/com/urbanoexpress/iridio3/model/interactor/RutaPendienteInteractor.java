@@ -51,7 +51,6 @@ public class RutaPendienteInteractor {
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        DevUtilsKt.logJson(response,"onResponse getGuiasRutaV4:");
                         callback.onSuccess(response);
                     }
 
