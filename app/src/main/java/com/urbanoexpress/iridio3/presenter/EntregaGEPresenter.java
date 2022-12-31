@@ -388,6 +388,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     loadMotivos();
                     currentStep = STEPS.TIPO_ENTREGA;
                 }
+                view.setVisibilityWarningScanBarcodeMandatory(View.GONE);
             }
             return;
         }
