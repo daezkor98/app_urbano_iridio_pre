@@ -106,20 +106,16 @@ public class ConfigPhonePresenter {
         /*Code for testing use cases*/
         String phone = view.getTextPhone();
         if (GOOGLE_MOCK_PHONE.equals(phone)) {
-
+            //The given number already has a OTP, so we do not generate another one
             view.navigateToVerficationCodeFragment(isoCountry, view.getTextPhone(), firebaseToken,true);
-
-            //Naviaget to login
         } else {
             requestConfigPhone();
         }
         /*End testing code*/
-        /*Delete test code and uncommet next line*/
-        /*requestConfigPhone();*/
     }
 
-    //TODO DELETE MOCK
-    final String GOOGLE_MOCK_PHONE = "937004446";
+    //GOOGLE MASTER NUMBER USED FOR REVISION AND TESTING
+    final String GOOGLE_MOCK_PHONE = "987654321"; // The corresponding OTP code is "572376"
 
     private void requestConfigPhone() {
         ApiRequest.getInstance().newParams();
