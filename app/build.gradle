@@ -24,8 +24,8 @@ android {
         applicationId 'com.urbanoexpress.iridio3'
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 111
-        versionName "2.25.13"
+        versionCode 112
+        versionName "2.25.14"
         multiDexEnabled true
         resConfigs 'es'
         vectorDrawables.useSupportLibrary = true
