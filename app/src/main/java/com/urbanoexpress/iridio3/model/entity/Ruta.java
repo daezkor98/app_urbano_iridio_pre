@@ -686,6 +686,10 @@ public class Ruta extends SugarRecord implements Serializable {
         return flagScanPck;
     }
 
+    public void setFlagScanPck(String flagScanPck) {
+        this.flagScanPck = flagScanPck;
+    }
+
     public interface ZONA {
         int URBANO = 100;
         int RURAL = 101;

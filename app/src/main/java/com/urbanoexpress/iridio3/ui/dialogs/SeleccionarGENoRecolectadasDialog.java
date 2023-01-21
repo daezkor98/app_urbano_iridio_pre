@@ -153,7 +153,7 @@ public class SeleccionarGENoRecolectadasDialog extends DialogFragment
                                 "", // descripcion
                                 "", // observaciones
                                 "", // secuencia ruteo
-                                "",
+                                "0", //flagScanPck
                                 0, // mostrar alerta
                                 Ruta.EstadoDescarga.PENDIENTE,
                                 Ruta.ResultadoGestion.NO_DEFINIDO,

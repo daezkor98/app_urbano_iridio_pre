@@ -228,6 +228,7 @@ public class RVEPhotoValijaPresenter {
         ruta.setIdServicio(model.getIdServicio().getValue());
         ruta.setTipo("R");
         ruta.setLineaNegocio("3");
+        ruta.setFlagScanPck("0");
         view.sendBroadcastGestionValijaFinalizada(new ArrayList<>(Arrays.asList(ruta)));
     }
 }

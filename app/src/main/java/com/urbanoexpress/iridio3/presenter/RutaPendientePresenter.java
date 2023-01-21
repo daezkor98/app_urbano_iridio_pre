@@ -801,6 +801,15 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
     }
 
     private void eliminarGuiaListaPendientes(JSONObject jsonRuta) throws JSONException {
+        String flag_scaneo_pck;
+        try {
+            flag_scaneo_pck = jsonRuta.getString("flag_scaneo_pck");
+            if (flag_scaneo_pck.equals("")) {
+                flag_scaneo_pck = "0";
+            }
+        } catch (Throwable t) {
+            flag_scaneo_pck = "0";
+        }
         Ruta ruta = new Ruta(
                 Preferences.getInstance().getString("idUsuario", ""),
                 jsonRuta.getString("id_servicio"),
@@ -860,7 +869,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 jsonRuta.getString("descripcion").toLowerCase(),
                 jsonRuta.getString("observacion").toLowerCase(),
                 jsonRuta.getString("secuencia_ruteo"),
-                jsonRuta.getString("flag_scaneo_pck"),
+                flag_scaneo_pck,
                 Integer.parseInt(jsonRuta.getString("flag_alerta")),
                 Ruta.EstadoDescarga.PENDIENTE,
                 Ruta.ResultadoGestion.NO_DEFINIDO,
@@ -872,6 +881,16 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
     }
 
     private void saveRuta(JSONObject jsonRuta) throws JSONException {
+        String flag_scaneo_pck;
+        try {
+            flag_scaneo_pck = jsonRuta.getString("flag_scaneo_pck");
+            if (flag_scaneo_pck.equals("")) {
+                flag_scaneo_pck = "0";
+            }
+        } catch (Throwable t) {
+            flag_scaneo_pck = "0";
+        }
+
         Ruta ruta = new Ruta(
                 Preferences.getInstance().getString("idUsuario", ""),
                 jsonRuta.getString("id_servicio"),
@@ -931,7 +950,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 jsonRuta.getString("descripcion").toLowerCase(),
                 jsonRuta.getString("observacion").toLowerCase(),
                 jsonRuta.getString("secuencia_ruteo"),
-                jsonRuta.getString("flag_scaneo_pck"),
+                flag_scaneo_pck,
                 Integer.parseInt(jsonRuta.getString("flag_alerta")),
                 Ruta.EstadoDescarga.PENDIENTE,
                 Ruta.ResultadoGestion.NO_DEFINIDO,
