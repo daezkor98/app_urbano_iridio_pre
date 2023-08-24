@@ -113,7 +113,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     private List<GalleryWrapperItem> galeria = new ArrayList<>();
     private List<GalleryWrapperItem> galeriaFirma = new ArrayList<>();
-    private List<GalleryWrapperItem> galeriaCargo = new ArrayList<>();
+    private List<GalleryWrapperItem> galeriaCargo = new ArrayList<>();//aqui
+
+    private List<GalleryWrapperItem> galeriaComprobantePago = new ArrayList<>();//aqui
     private List<GalleryWrapperItem> galeriaDomicilio = new ArrayList<>();
 
     private ArrayList<DescargaRuta> descargaRutas = new ArrayList<>();
@@ -159,7 +161,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         FOTOS_PRODUCTO,
         FIRMA_CLIENTE,
         FOTOS_CARGO,
-        FOTOS_DOMICILIO
+        FOTOS_DOMICILIO,
+
+        FOTOS_COMPROBANTE_PAGO
     }
 
     public EntregaGEPresenter(DescargaEntregaView view, ArrayList<Ruta> rutas, int numVecesGestionado) {
@@ -252,6 +256,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 typeCameraCaptureImage = "Firma";
                 takeSigning();
                 break;
+            case FOTOS_COMPROBANTE_PAGO:
+                typeCameraCaptureImage = "Pago";
+                takePhoto();
+                break;
         }
     }
 
@@ -275,10 +283,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             view.notifyPiezaItemChanged(position);
 
             setVisibilityContainerMsgEntregaParcial();
-        } else if(piezaItems.get(position).isBarcodeScanningIsMandatory()){
+        } else if (piezaItems.get(position).isBarcodeScanningIsMandatory()) {
             view.showSnackBar(R.string.activity_detalle_ruta_msg_scan_pieza);
             CommonUtils.vibrateDevice(view.getViewContext(), 100);
-        }else {
+        } else {
             view.showSnackBar(R.string.activity_detalle_ruta_msg_no_puede_seleccionar_pieza);
             CommonUtils.vibrateDevice(view.getViewContext(), 100);
         }
@@ -357,7 +365,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     @SuppressLint("MissingPermission")
     public void gestionarGuia() {
-        if (!validateFechaDispositivo()) { return; }
+        if (!validateFechaDispositivo()) {
+            return;
+        }
 
         if (rutas.get(0).getTipoZona() == Ruta.ZONA.RURAL) {
             LocationServices.getFusedLocationProviderClient(AndroidApplication.getAppContext())
@@ -373,6 +383,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         new SaveGestionTask().execute();
     }
 
+    //Here we set the step order
     public void onBtnSiguienteClick() {
         if (currentStep == STEPS.PIEZAS) {
             if (validateSelectedPiezas()) {
@@ -449,6 +460,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
                     currentStep = STEPS.FOTOS_CARGO;
+                }if (isMedioPagoYape()) {
+                    view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
+                    currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;
                 } else {
                     view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
                     view.notifyGaleriaDomicilioAllItemChanged();
@@ -472,6 +486,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
 
         if (currentStep == STEPS.FOTOS_CARGO) {
+
             if (rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.LIQUIDACION)) {
                 if (validateFotosCargo()) {
                     gestionarGuia();
@@ -489,7 +504,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             }
 
             boolean hasHabilitantes = hasHabilitantes();
-            if (!hasHabilitantes || (hasHabilitantes && validateFotosCargo())) {
+
+            if (!hasHabilitantes || validateFotosCargo()) {
                 view.setVisibilityBoxStepFotoCargoEntrega(View.GONE);
                 view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
                 view.notifyGaleriaDomicilioAllItemChanged();
@@ -497,6 +513,18 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 currentStep = STEPS.FOTOS_DOMICILIO;
                 return;
             }
+
+
+        }
+        if (currentStep == STEPS.FOTOS_COMPROBANTE_PAGO) {
+            if(validateFotosComprobantePago()){
+                view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
+                view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
+                view.notifyGaleriaDomicilioAllItemChanged();
+                view.setTextBtnSiguiente("Gestionar");
+                currentStep = STEPS.FOTOS_DOMICILIO;
+            }
+            return;
         }
 
         if (currentStep == STEPS.FOTOS_DOMICILIO) {
@@ -590,7 +618,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (canTakeFirmaCliente()) {
             Activity activity = (Activity) view.getViewContext();
             Intent intent = new Intent(view.getViewContext(), FirmarActivity.class);
-            intent.putExtra("pathDirectory" , dirPathPhotos);
+            intent.putExtra("pathDirectory", dirPathPhotos);
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_enter_from_bottom, R.anim.not_slide);
         } else {
@@ -633,20 +661,21 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     private void loadDataPiezas() {
 
-        boolean barcodeScanningIsMandatory =  true;
+        boolean barcodeScanningIsMandatory = true;
 
-        for (Ruta ruta: rutas) {
+        for (Ruta ruta : rutas) {
             List<Pieza> piezas = rutaPendienteInteractor.selectPiezas(ruta.getIdServicio(),
                     ruta.getLineaNegocio());
 
             boolean selected = piezas.size() == 1;
             barcodeScanningIsMandatory &= (ruta.getFlagScanPck().equals("1") && piezas.size() < 9);
 
-            for (Pieza pieza: piezas) {
+            for (Pieza pieza : piezas) {
                 boolean selectable = true;
                 if (pieza.getChkEstado().equals(CHK_ENTREGA)) selectable = false;
                 if (pieza.getChkEstado().equals(CHK_ENTREGA_DEVOLUCION)) selectable = false;
-                if (pieza.getChkEstado().equals("6") && pieza.getEstadoManifiesto() != 1) selectable = false;
+                if (pieza.getChkEstado().equals("6") && pieza.getEstadoManifiesto() != 1)
+                    selectable = false;
                 if (barcodeScanningIsMandatory) selectable = false;
 
                 piezaItems.add(new PiezaItem(
@@ -665,7 +694,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
         view.showPiezas(piezaItems);
 
-        if(barcodeScanningIsMandatory){
+        if (barcodeScanningIsMandatory) {
             view.setVisibilityWarningScanBarcodeMandatory(View.VISIBLE);
         }
     }
@@ -745,7 +774,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    private void loadTipoMedioPago() {
+    private void loadTipoMedioPago() {//llamdado primero
         if (isMedioPagoNoDefinido()) {
             ArrayList<String> tipoMedioPagoItems = new ArrayList<>();
 
@@ -797,7 +826,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
         String tipoMedioPago = "0";
 
-        if (isMedioPagoNoDefinido()) {
+        if (isMedioPagoNoDefinido()) {//Luego de fotos de domicilio (4?)
             tipoMedioPago = selectedIndexTipoMedioPago + "";
         }
 
@@ -1002,7 +1031,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    private void setVisibilityInputTipoMedioPago() {
+    private void setVisibilityInputTipoMedioPago() {//segundo
         if (isMedioPagoNoDefinido()) {
             view.setVisibilityLayoutInputTipoMedioPago(View.VISIBLE);
         } else {
@@ -1027,7 +1056,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             view.setVisibilityLayoutInputObservarEntrega(View.GONE);
         }
     }
-
+    /*
     private void setVisibilityInputVoucher() {
         if (isMedioPagoConTarjeta()) {
             view.setVisibilityLayoutInputVoucher(View.VISIBLE);
@@ -1035,6 +1064,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             view.setVisibilityLayoutInputVoucher(View.GONE);
         }
     }
+    */
 
     private void setTitleStepFotoCargo() {
         view.setTitleStepFotoCargo(
@@ -1048,11 +1078,13 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 if (minFotosProducto > 10) {
                     minFotosProducto = 10;
                 }
-            } catch (NumberFormatException ex) { }
+            } catch (NumberFormatException ex) {
+            }
         }
     }
 
-    private boolean isMedioPagoEfectivo() {
+    //TODO agregar Yape
+    /*private boolean isMedioPagoEfectivo() {
         switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
             case 1:
                 return true;
@@ -1069,14 +1101,19 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             return true;
         }
         return false;
-    }
+    }*/
 
     private boolean isMedioPagoNoDefinido() {
+        String pago = rutas.get(0).getIdMedioPago();
         switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
             case 8:
                 return true;
         }
         return false;
+    }
+
+    private boolean isMedioPagoYape() {
+        return rutas.get(0).getIdMedioPago().equals("3");
     }
 
     private boolean hasHabilitantes() {
@@ -1086,6 +1123,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 return true;
             }
         }
+        Log.i(TAG, "hasHabilitantes_hasHabilitantes false");
         return false;
     }
 
@@ -1096,7 +1134,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     if (Integer.parseInt(rutas.get(i).getFirmaClienteGestionGuia()) == 1) {
                         return true;
                     }
-                } catch (NumberFormatException ex) {}
+                } catch (NumberFormatException ex) {
+                }
             }
         }
         return false;
@@ -1136,7 +1175,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     private boolean validateSelectedPiezas() {
-        if (piezaItems.stream().anyMatch(PiezaItem::isSelected)) { return true; }
+        if (piezaItems.stream().anyMatch(PiezaItem::isSelected)) {
+            return true;
+        }
 
         view.showSnackBar(R.string.activity_detalle_ruta_message_piezas_no_seleccionado);
         CommonUtils.vibrateDevice(view.getViewContext(), 100);
@@ -1144,7 +1185,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     private boolean validateSelectedProductosEntregados() {
-        if (premioItems.stream().anyMatch(PremioItem::isSelected)) { return true; }
+        if (premioItems.stream().anyMatch(PremioItem::isSelected)) {
+            return true;
+        }
 
         view.showSnackBar(R.string.activity_detalle_ruta_message_producto_no_seleccionado);
         CommonUtils.vibrateDevice(view.getViewContext(), 100);
@@ -1213,7 +1256,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             }
         }
 
-        if (isMedioPagoNoDefinido()) {
+        if (isMedioPagoNoDefinido()) {//luego de datos de entrega 3?
             if (selectedIndexTipoMedioPago < 1) {
                 view.showSnackBar(
                         R.string.activity_detalle_ruta_message_tipo_medio_pago_no_seleccionado);
@@ -1226,18 +1269,14 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             return false;
         }
 
-        if (!validateObservarGestionEntrega()) {
-            return false;
-        }
-
-        return true;
+        return validateObservarGestionEntrega();
     }
 
     private boolean validateFotosProducto() {
         int totalBtns = rutas.get(0).getTipoZona() == Ruta.ZONA.RURAL ? 2 : 1;
         if ((galeria.size() - totalBtns) < minFotosProducto) {
             view.showSnackBar(
-                    "Debe tomar " + minFotosProducto +  " foto(s) del producto como mínimo para realizar la gestión de la guía.");
+                    "Debe tomar " + minFotosProducto + " foto(s) del producto como mínimo para realizar la gestión de la guía.");
             CommonUtils.vibrateDevice(view.getViewContext(), 100);
             return false;
         }
@@ -1273,6 +1312,17 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if ((galeriaDomicilio.size() - 1) < 1) {
             view.showSnackBar(
                     "Debe tomar una foto del domicilio como mínimo para realizar la gestión de la guía.");
+            CommonUtils.vibrateDevice(view.getViewContext(), 100);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateFotosComprobantePago() {
+        if (galeriaComprobantePago.size() - 1 < 1) {
+            view.showSnackBar(
+                    "Debe tomar una foto del pago como mínimo para realizar la gestión de la guía.");
             CommonUtils.vibrateDevice(view.getViewContext(), 100);
             return false;
         }
@@ -1344,6 +1394,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 return canTakeFotoCargo();
             case FOTOS_DOMICILIO:
                 return canTakeFotoDomicilio();
+            case FOTOS_COMPROBANTE_PAGO:
+                return canTakeFotoComprobantePago();
             default:
                 return false;
         }
@@ -1363,6 +1415,11 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         return galeriaCargo.size() <= 10;
     }
 
+    private boolean canTakeFotoComprobantePago() {
+        return galeriaCargo.size() <= 2;
+    }
+
+
     private boolean canTakeFotoDomicilio() {
         int totalBtns = rutas.get(0).getTipoZona() == Ruta.ZONA.RURAL ? 2 : 1;
         int totalImages = galeriaDomicilio.size() - totalBtns;
@@ -1376,11 +1433,13 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         galeriaCargo.clear();
         galeriaFirma.clear();
         galeriaDomicilio.clear();
+        galeriaComprobantePago.clear();
 
         GalleryButtonItem buttonItem = new GalleryButtonItem(R.drawable.ic_camera_grey);
         galeria.add(buttonItem);
         galeriaCargo.add(buttonItem);
         galeriaDomicilio.add(buttonItem);
+        galeriaComprobantePago.add(buttonItem);
 
         buttonItem = new GalleryButtonItem(R.drawable.ic_firma_grey);
         galeriaFirma.add(buttonItem);
@@ -1408,6 +1467,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 case "domicilio":
                     galeriaDomicilio.add(item);
                     break;
+                case "pago":
+                    galeriaComprobantePago.add(item);
+                    break;
             }
         }
 
@@ -1415,6 +1477,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         view.showImagenFirmaEnGaleria(galeriaFirma);
         view.showFotosCargoEnGaleria(galeriaCargo);
         view.showFotosDomicilioEnGaleria(galeriaDomicilio);
+        view.showFotosComprobantePago(galeriaComprobantePago);
     }
 
     private void insertImageToGallery() {
@@ -1433,6 +1496,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         } else if (typeCameraCaptureImage.equalsIgnoreCase("Domicilio")) {
             galeriaDomicilio.add(item);
             view.notifyGaleriaDomicilioAllItemChanged();
+        }else if (typeCameraCaptureImage.equalsIgnoreCase("Pago")) {
+            galeriaComprobantePago.add(item);
+            view.notifyGaleriaPagoAllItemChanged();
         }
     }
 
@@ -1490,6 +1556,16 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
                 galeriaDomicilio.remove(position);
                 view.notifyGaleriaDomicilioItemRemove(position);
+                break;
+            case FOTOS_COMPROBANTE_PAGO:
+                FileUtils.deleteFile(((GalleryPhotoItem) galeriaComprobantePago.get(position)).getPathImage());
+
+                indexSplit = ((GalleryPhotoItem) galeriaComprobantePago.get(position)).getPathImage().lastIndexOf("/") + 1;
+                name = ((GalleryPhotoItem) galeriaComprobantePago.get(position)).getPathImage().substring(indexSplit);
+                path = ((GalleryPhotoItem) galeriaComprobantePago.get(position)).getPathImage().substring(0, indexSplit);
+
+                galeriaComprobantePago.remove(position);
+                view.notifyGaleriaPagoItemRemove(position);
                 break;
         }
 
@@ -1570,7 +1646,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link DetalleRutaRuralPresenter#descargaFinalizadaReceiver}
      * {@link RutaPendientePresenter#descargaFinalizadaReceiver}
      * {@link RutaGestionadaPresenter#descargaFinalizadaReceiver}
@@ -1585,7 +1661,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link FirmarActivity#sendOnSaveFirmaReceiver}
      */
     private BroadcastReceiver saveFirmaReceiver = new BroadcastReceiver() {
@@ -1599,7 +1675,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link ObservarGestionEntregaPresenter#sendDataObservacionGestionEntregaReceiver}
      */
     private BroadcastReceiver dataObservacionGestionEntregaReceiver = new BroadcastReceiver() {
@@ -1613,7 +1689,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     /**
      * Broadcast
-     *
+     * <p>
      * {@link CodeScannerImpl#sendOnResultScannListener}
      */
     private BroadcastReceiver resultScannReceiver = new BroadcastReceiver() {
@@ -1663,7 +1739,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
             if (rutas.get(0).getTipoZona() == Ruta.ZONA.RURAL) {
                 for (int i = 0; i < descargaRutas.size(); i++) {
-                    if (descargaRutas.get(i) != null) { descargaRutas.get(i).delete(); }
+                    if (descargaRutas.get(i) != null) {
+                        descargaRutas.get(i).delete();
+                    }
                 }
                 for (int i = 0; i < rutas.size(); i++) {
                     Ruta ruta = rutaPendienteInteractor.selectRuta(
@@ -1673,7 +1751,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
                         List<Pieza> piezas = RutaPendienteInteractor.selectPiezas(
                                 rutas.get(i).getIdServicio(), rutas.get(i).getLineaNegocio());
-                        for (Pieza pieza: piezas) {
+                        for (Pieza pieza : piezas) {
                             pieza.delete();
                         }
                     }

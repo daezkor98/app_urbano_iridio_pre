@@ -111,7 +111,7 @@ public class Ruta extends SugarRecord implements Serializable {
         this.idZona = idZona;
         this.idRuta = idRuta;
         this.idGuia = idGuia;
-        this.idMedioPago = idMedioPago;
+        this.idMedioPago = idMedioPago;//
         this.lineaNegocio = lineaNegocio;
         this.idCliente = idCliente;
         this.idManifiesto = idManifiesto;

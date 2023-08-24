@@ -35,6 +35,7 @@ public interface DescargaEntregaView extends BaseV5View {
     void showImagenFirmaEnGaleria(List<GalleryWrapperItem> items);
     void showFotosCargoEnGaleria(List<GalleryWrapperItem> items);
     void showFotosDomicilioEnGaleria(List<GalleryWrapperItem> items);
+    void showFotosComprobantePago(List<GalleryWrapperItem> items);
     void showTipoDocIdentificacion(ArrayList<String> tipoDocIdentificacion);
     void showTipoDireccion(ArrayList<String> tipoDireccion);
     void showTipoMedioPago(ArrayList<String> tipoMedioPago);
@@ -55,6 +56,7 @@ public interface DescargaEntregaView extends BaseV5View {
     void setVisibilityBoxStepFotosEntrega(int visible);
     void setVisibilityBoxStepFirmaEntrega(int visible);
     void setVisibilityBoxStepFotoCargoEntrega(int visible);
+    void setVisibilityBoxStepFotoComprobantePago(int visible);
     void setVisibilityBoxStepFotosDomicilio(int visible);
 
     void notifyPiezaItemChanged(int position);
@@ -74,6 +76,10 @@ public interface DescargaEntregaView extends BaseV5View {
 
     void notifyGaleriaDomicilioItemRemove(int position);
     void notifyGaleriaDomicilioAllItemChanged();
+
+    void notifyGaleriaPagoItemRemove(int position);
+    void notifyGaleriaPagoAllItemChanged();
+
 
     void notifyMotivosAllItemChanged();
 

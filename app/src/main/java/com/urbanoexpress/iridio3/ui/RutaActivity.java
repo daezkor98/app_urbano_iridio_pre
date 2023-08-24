@@ -267,10 +267,6 @@ public class RutaActivity extends BaseActivity implements RutaView, OnActionMode
                 binding.fabIniciarTerminarRuta.hide();
                 AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
                 appBarLayout.setExpanded(false, true);
-                /*Log.d("MainAcitivity", "Z INDEX appBarLayout: " + appBarLayout.getZ());
-                Log.d("MainAcitivity", "Z INDEX toolbar: " + toolbar.getZ());
-                Log.d("MainAcitivity", "Z INDEX tabLayout: " + tabLayout.getZ());
-                Log.d("MainAcitivity", "Z INDEX searchView: " + searchView.getZ());*/
             }
 
             @Override

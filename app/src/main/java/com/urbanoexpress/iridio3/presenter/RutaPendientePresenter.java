@@ -891,7 +891,9 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             flag_scaneo_pck = "0";
         }
 
-        Ruta ruta = new Ruta(
+        String idMedioPago = jsonRuta.getString("id_medio_pago");
+
+        Ruta ruta = new Ruta(//aqui se guarda la ruta en local
                 Preferences.getInstance().getString("idUsuario", ""),
                 jsonRuta.getString("id_servicio"),
                 jsonRuta.getString("man_id_det_rec"),
@@ -900,7 +902,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 jsonRuta.getString("zon_id"),
                 jsonRuta.getString("ruta_id"),
                 jsonRuta.getString("guia_id"),
-                jsonRuta.getString("id_medio_pago"),
+                jsonRuta.getString("id_medio_pago"),//
+                //"3",//TODO reverse comment
                 jsonRuta.getString("id_cliente"),
                 jsonRuta.getString("id_manifiesto"),
                 jsonRuta.getString("linea_negocio"),
@@ -927,7 +930,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 jsonRuta.getString("nom_contacto"),
                 jsonRuta.getString("telefono"),
                 jsonRuta.getString("celular"),
-                jsonRuta.getString("medio_pago"),
+                jsonRuta.getString("medio_pago"),//
                 jsonRuta.getString("importe"),
                 jsonRuta.getString("tipo_envio"),
                 jsonRuta.getString("anotaciones"),

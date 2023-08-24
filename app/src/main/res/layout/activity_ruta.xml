@@ -123,11 +123,6 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <com.urbanoexpress.iridio3.util.components.searchview.MaterialSearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabIniciarTerminarRuta"
         android:layout_width="wrap_content"
@@ -139,5 +134,10 @@
         app:srcCompat="@drawable/ic_near_me_white"
         app:layout_anchor="@id/viewPager"
         app:layout_anchorGravity="bottom|right|end"/>
+
+    <com.urbanoexpress.iridio3.util.components.searchview.MaterialSearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

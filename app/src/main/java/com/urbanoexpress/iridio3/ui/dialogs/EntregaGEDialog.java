@@ -270,6 +270,17 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     }
 
     @Override
+    public void showFotosComprobantePago(List<GalleryWrapperItem> items) {
+        try {
+            GalleryAdapter adapter = new GalleryAdapter(getActivity(), items);
+            adapter.setListener(this);
+            binding.rvGaleriaComprobantePago.setAdapter(adapter);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
     public void showTipoDocIdentificacion(ArrayList<String> tipoDocIdentificacion) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 R.layout.spinner_item_text_black, tipoDocIdentificacion);
@@ -374,6 +385,11 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     }
 
     @Override
+    public void setVisibilityBoxStepFotoComprobantePago(int visible) {
+        binding.boxStepFotosComprobantePago.setVisibility(visible);
+    }
+
+    @Override
     public void setVisibilityBoxStepFotosDomicilio(int visible) {
         binding.boxStepFotosDomicilio.setVisibility(visible);
     }
@@ -401,7 +417,7 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
         RecyclerView.Adapter adapter = binding.rvPremios.getAdapter();
         if (adapter != null) adapter.notifyDataSetChanged();
     }
-
+//AQUI FOTOS
     @Override
     public void notifyGaleriaFotosItemRemove(int position) {
         RecyclerView.Adapter adapter = binding.rvGaleriaFotos.getAdapter();
@@ -447,6 +463,18 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     @Override
     public void notifyGaleriaDomicilioAllItemChanged() {
         RecyclerView.Adapter adapter = binding.rvGaleriaDomicilio.getAdapter();
+        if (adapter != null) adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyGaleriaPagoItemRemove(int position) {
+        RecyclerView.Adapter adapter = binding.rvGaleriaComprobantePago.getAdapter();
+        if (adapter != null) adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void notifyGaleriaPagoAllItemChanged() {
+        RecyclerView.Adapter adapter = binding.rvGaleriaComprobantePago.getAdapter();
         if (adapter != null) adapter.notifyDataSetChanged();
     }
 
@@ -563,6 +591,11 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
         binding.rvGaleriaFirma.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         binding.rvGaleriaFirma.setHasFixedSize(true);
         binding.rvGaleriaFirma.addItemDecoration(new GridSpacingItemDecoration(3,
+                MetricsUtils.dpToPx(getActivity(), 2), true));
+
+        binding.rvGaleriaComprobantePago.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        binding.rvGaleriaComprobantePago.setHasFixedSize(true);
+        binding.rvGaleriaComprobantePago.addItemDecoration(new GridSpacingItemDecoration(3,
                 MetricsUtils.dpToPx(getActivity(), 2), true));
 
         binding.rvGaleriaCargo.setLayoutManager(new GridLayoutManager(getActivity(), 3));

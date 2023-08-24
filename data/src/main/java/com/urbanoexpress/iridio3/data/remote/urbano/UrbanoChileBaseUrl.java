@@ -5,7 +5,8 @@ import com.urbanoexpress.iridio3.data.remote.BaseUrl;
 
 public final class UrbanoChileBaseUrl implements BaseUrl {
 
-    private static final String DEVELOPMENT_BASE_URL = "http://devel.urbanoexpress.com.pe/";
+//    private static final String DEVELOPMENT_BASE_URL = "http://devel.urbanoexpress.com.pe/";
+    private static final String DEVELOPMENT_BASE_URL = "https://pyp3.cl.urbanoexpress.net/";
     private static final String PRODUCTION_BASE_URL = "https://app.urbanoexpress.cl/";
 
     private final int apiEnvironment;

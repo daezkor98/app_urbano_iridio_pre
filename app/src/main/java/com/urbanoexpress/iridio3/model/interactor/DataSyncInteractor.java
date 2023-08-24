@@ -103,6 +103,7 @@ public class DataSyncInteractor {
                 });
     }
 
+    //
     public void uploadImagenDescarga(String[] params, MultipartJsonObjectRequest.DataPart data,
                                      final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
