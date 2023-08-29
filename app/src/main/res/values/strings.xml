@@ -480,4 +480,6 @@
     <!---->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mandatory_barcode_scanning">Esta guía requiere escanear cada código de barras de manera obligatoria</string>
+    <string name="yape_qr">YAPE QR</string>
+    <string name="scann_yape_qr">Escanea el QR YAPE y completa el pago</string>
 </resources>

@@ -85,6 +85,9 @@ public final class ApiRest {
 
         String UPLOAD_MOTORIZADO_LICENCE = "api-apps/iridio/RegisterLincense";
 
+        String GUIA_YAPE_QR = "api-apps/iridio/getGuiasRutaQR";
+
+
         interface Google {
             String DISTANCE_MATRIX = "api-apps/iridio/googleDistanceMatrix";
             String DIRECTIONS = "api-apps/iridio/googleDirections";

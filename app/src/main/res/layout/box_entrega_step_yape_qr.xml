@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yape_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/lbl_step_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/lightPrimaryText"
+        android:textSize="18sp"
+        android:text="@string/scann_yape_qr"
+        app:layout_constraintStart_toStartOf="@id/body_layout"
+        app:layout_constraintEnd_toEndOf="@id/body_layout"
+        app:layout_constraintBottom_toTopOf="@id/body_layout"/>
+
+    <FrameLayout
+        android:id="@+id/body_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="30dp"
+        android:padding="16dp"
+        android:background="@drawable/bg_white_with_corner_10dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+      <!--  <ProgressBar
+            style="?android:attr/progressBarStyleInverse"
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"/>-->
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/qr_code_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/yape_qr"
+            android:scaleType="fitXY" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

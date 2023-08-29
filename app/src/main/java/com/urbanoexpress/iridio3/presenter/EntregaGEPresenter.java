@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -65,6 +66,7 @@ import com.urbanoexpress.iridio3.util.Preferences;
 import com.urbanoexpress.iridio3.util.ValidationUtils;
 import com.urbanoexpress.iridio3.util.constant.Country;
 import com.urbanoexpress.iridio3.util.constant.LocalAction;
+import com.urbanoexpress.iridio3.view.BaseModalsView;
 import com.urbanoexpress.iridio3.view.DescargaEntregaView;
 
 import org.apache.commons.lang3.text.WordUtils;
@@ -88,6 +90,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -163,7 +166,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         FOTOS_CARGO,
         FOTOS_DOMICILIO,
 
-        FOTOS_COMPROBANTE_PAGO
+        FOTOS_COMPROBANTE_PAGO,
+
+        YAPE_QR
     }
 
     public EntregaGEPresenter(DescargaEntregaView view, ArrayList<Ruta> rutas, int numVecesGestionado) {
@@ -461,8 +466,36 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     view.notifyGaleriaCargoAllItemChanged();
                     currentStep = STEPS.FOTOS_CARGO;
                 }if (isMedioPagoYape()) {
-                    view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
-                    currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;
+                    view.setVisibilityBoxYapeQR(View.VISIBLE);
+                    currentStep = STEPS.YAPE_QR;
+                    view.showProgressDialog("Cargando QR");
+
+                    HashMap<String, String> requestParams = new HashMap<String, String>();
+                    requestParams.put("vp_man_id_det", rutas.get(0).getIdServicio());
+                    rutaPendienteInteractor.getQuiaYapeQR(requestParams , new RequestCallback() {
+                                @Override
+                                public void onSuccess(JSONObject response) {
+                                    view.dismissProgressDialog();
+                                    Log.i("TAG", "onSuccess_JSONObject: " + response.toString());
+                                    try {
+                                        JSONObject ar = response.getJSONArray("data").getJSONObject(0);
+                                        String QR = ar.getString("qr");
+                                        view.displayQR(QR);
+                                    }catch (Exception e){
+                                        Log.e(TAG, "onSuccess: ",e );
+                                        BaseModalsView.showToast(view.getViewContext(),
+                                                "Hubo un error, ", Toast.LENGTH_LONG);
+                                    }
+
+                                }
+
+                                @Override
+                                public void onError(VolleyError error) {
+                                    BaseModalsView.showToast(view.getViewContext(),
+                                            "Hubo un error, ", Toast.LENGTH_LONG);
+                                }
+                            }
+                    );
                 } else {
                     view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
                     view.notifyGaleriaDomicilioAllItemChanged();
@@ -516,6 +549,13 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
 
         }
+
+        if(currentStep== STEPS.YAPE_QR){
+            view.setVisibilityBoxYapeQR(View.GONE);
+            view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
+            currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;//TODO pago Yape
+        }
+
         if (currentStep == STEPS.FOTOS_COMPROBANTE_PAGO) {
             if(validateFotosComprobantePago()){
                 view.setVisibilityBoxStepFotoComprobantePago(View.GONE);

@@ -1,5 +1,7 @@
 package com.urbanoexpress.iridio3.model.interactor;
 
+import static com.urbanoexpress.iridio3.data.rest.ApiRest.Api.GUIA_YAPE_QR;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import com.urbanoexpress.iridio3.data.rest.ApiRequest;
 import com.urbanoexpress.iridio3.data.rest.ApiRest;
@@ -36,6 +39,23 @@ public class RutaPendienteInteractor {
 
     public RutaPendienteInteractor(Context context) {
         this.context = context;
+    }
+
+    public void getQuiaYapeQR(Map<String, String> params, final RequestCallback callback) {
+        ApiRequest
+                .getInstance()
+                .putNewParams(params)
+                .requestForm(GUIA_YAPE_QR, new ApiRequest.ResponseListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess(response);
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        callback.onError(error);
+                    }
+                });
     }
 
     public void getRutas(String[] params, final RequestCallback callback) {

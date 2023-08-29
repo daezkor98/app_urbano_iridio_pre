@@ -564,6 +564,11 @@
             </LinearLayout>
              <!-- -->
 
+            <include
+                android:visibility="gone"
+                android:id="@+id/boxYapeQR"
+                layout="@layout/box_entrega_step_yape_qr"/>
+
             <LinearLayout
                 android:id="@+id/boxStepFirmaEntrega"
                 android:layout_width="match_parent"

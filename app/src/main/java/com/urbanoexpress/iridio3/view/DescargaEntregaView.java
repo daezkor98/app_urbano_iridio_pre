@@ -56,7 +56,9 @@ public interface DescargaEntregaView extends BaseV5View {
     void setVisibilityBoxStepFotosEntrega(int visible);
     void setVisibilityBoxStepFirmaEntrega(int visible);
     void setVisibilityBoxStepFotoCargoEntrega(int visible);
+    void displayQR(String yapeHash);
     void setVisibilityBoxStepFotoComprobantePago(int visible);
+    void setVisibilityBoxYapeQR(int visible);
     void setVisibilityBoxStepFotosDomicilio(int visible);
 
     void notifyPiezaItemChanged(int position);

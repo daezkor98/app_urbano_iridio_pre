@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio3.ui.dialogs;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bumptech.glide.Glide;
 import com.urbanoexpress.iridio3.R;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.databinding.ModalEntregarGuiaBinding;
@@ -48,6 +50,7 @@ import com.urbanoexpress.iridio3.ui.model.PremioItem;
 import com.urbanoexpress.iridio3.util.CommonUtils;
 import com.urbanoexpress.iridio3.util.GridSpacingItemDecoration;
 import com.urbanoexpress.iridio3.util.MetricsUtils;
+import com.urbanoexpress.iridio3.util.QRCode;
 import com.urbanoexpress.iridio3.util.RecyclerTouchListener;
 import com.urbanoexpress.iridio3.util.constant.Country;
 import com.urbanoexpress.iridio3.view.DescargaEntregaView;
@@ -385,11 +388,29 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     }
 
     @Override
+    public void displayQR(String yapeHash) {
+        Bitmap drawable = new QRCode.Builder(requireContext())
+                .setValue(yapeHash)
+                .setSize(MetricsUtils.dpToPx(requireContext(), 90))
+                .build();
+
+        Glide.with(this)
+                .load(drawable)
+                .into(binding.boxYapeQR.qrCodeImage);
+    }
+
+    @Override
     public void setVisibilityBoxStepFotoComprobantePago(int visible) {
         binding.boxStepFotosComprobantePago.setVisibility(visible);
     }
 
     @Override
+    public void setVisibilityBoxYapeQR(int visible) {
+        binding.boxYapeQR.getRoot().setVisibility(visible);
+    }
+
+    @Override
+
     public void setVisibilityBoxStepFotosDomicilio(int visible) {
         binding.boxStepFotosDomicilio.setVisibility(visible);
     }

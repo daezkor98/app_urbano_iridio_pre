@@ -97,4 +97,5 @@
     <color name="search_layover_bg">#80000000</color>
 
     <color name="colorStatesMaterialButton">@color/color_states_materialbutton</color>
+    <color name="yape_color">#7E1F98</color>
 </resources>
