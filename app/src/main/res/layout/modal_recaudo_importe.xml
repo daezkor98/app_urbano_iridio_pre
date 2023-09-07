@@ -72,11 +72,13 @@
                         android:layout_height="wrap_content"
                         android:text="Si"
                         android:id="@+id/rBtnSi"
+                        android:textColor="@color/black"
                         android:layout_weight="1"
                         android:checked="true" />
 
                     <RadioButton
                         android:layout_width="0dp"
+                        android:textColor="@color/black"
                         android:layout_height="wrap_content"
                         android:text="No"
                         android:id="@+id/rBtnNo"

@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +54,7 @@ import com.urbanoexpress.iridio3.ui.adapter.model.GalleryWrapperItem;
 import com.urbanoexpress.iridio3.ui.dialogs.GestionarGENoRecolectadasDialog;
 import com.urbanoexpress.iridio3.ui.dialogs.GestionarRecoleccionGuiaValijaDilog;
 import com.urbanoexpress.iridio3.ui.dialogs.ObservarGestionEntregaDialog;
+import com.urbanoexpress.iridio3.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.ui.model.MotivoDescargaItem;
 import com.urbanoexpress.iridio3.ui.model.PiezaItem;
 import com.urbanoexpress.iridio3.ui.model.PremioItem;
@@ -461,10 +463,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
 
                 if (isMedioPagoYape()) {
-                    view.setVisibilityBoxYapeQR(View.VISIBLE);
-                    currentStep = STEPS.YAPE_QR;
-                    requestYapeQR();
-                }else if (minFotosProducto == 0) {
+                    showYapeQRStep();
+                } else if (isMedioPagoEfectivo()) {
+                    showPagoDialog();
+                } else if (minFotosProducto == 0) {
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
                     currentStep = STEPS.FOTOS_CARGO;
@@ -507,7 +509,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             return;
         }
 
-        if(currentStep== STEPS.YAPE_QR){
+        if (currentStep == STEPS.YAPE_QR) {
             view.setVisibilityBoxYapeQR(View.GONE);
 
             view.setVisibilityBoxYapeQR(View.GONE);
@@ -572,7 +574,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 view.notifyGaleriaCargoAllItemChanged();
                 view.setTextBtnSiguiente("Gestionar");
                 currentStep = STEPS.FOTOS_CARGO;
-            } else if(validateFotosComprobantePago()){
+            } else if (validateFotosComprobantePago()) {
                 view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
                 view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
                 view.notifyGaleriaFotosAllItemChanged();
@@ -1137,14 +1139,56 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    //TODO agregar Yape
-    /*private boolean isMedioPagoEfectivo() {
-        switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
+    private void showPagoDialog() {
+        View viewModal = view.getFragment().getLayoutInflater().inflate(R.layout.modal_recaudo_importe, null);
+
+        final RadioButton rBtnSiRecaudo = (RadioButton) viewModal.findViewById(R.id.rBtnSi);
+
+        ModalHelper.getBuilderAlertDialog(view.getViewContext())
+                .setView(viewModal)
+                .setPositiveButton( R.string.text_siguiente, (dialog, which) -> {
+                    if (rBtnSiRecaudo.isChecked()) {
+                        continueDatosEntregaStep();
+                    } else {
+                        showYapeQRStep();
+                    }
+                }).show();
+    }
+
+    private void continueDatosEntregaStep(){
+        if (minFotosProducto == 0) {
+            view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
+            view.notifyGaleriaCargoAllItemChanged();
+            currentStep = STEPS.FOTOS_CARGO;
+        } else if (rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.LIQUIDACION)) {
+            view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
+            view.notifyGaleriaCargoAllItemChanged();
+            view.setTextBtnSiguiente("Gestionar");
+            currentStep = STEPS.FOTOS_CARGO;
+        } else {
+            view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
+            view.notifyGaleriaFotosAllItemChanged();
+            currentStep = STEPS.FOTOS_PRODUCTO;
+        }
+    }
+
+    private void showYapeQRStep(){
+        view.setVisibilityBoxYapeQR(View.VISIBLE);
+        currentStep = STEPS.YAPE_QR;
+        requestYapeQR();
+    }
+
+    private boolean isMedioPagoEfectivo() {
+/*        switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
             case 1:
                 return true;
         }
-        return false;
+        return false;*/
+
+        return true;
     }
+    //TODO agregar Yape
+    /*
 
     private boolean isMedioPagoConTarjeta() {
         switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
@@ -1551,7 +1595,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         } else if (typeCameraCaptureImage.equalsIgnoreCase("Domicilio")) {
             galeriaDomicilio.add(item);
             view.notifyGaleriaDomicilioAllItemChanged();
-        }else if (typeCameraCaptureImage.equalsIgnoreCase("Pago")) {
+        } else if (typeCameraCaptureImage.equalsIgnoreCase("Pago")) {
             galeriaComprobantePago.add(item);
             view.notifyGaleriaPagoAllItemChanged();
         }

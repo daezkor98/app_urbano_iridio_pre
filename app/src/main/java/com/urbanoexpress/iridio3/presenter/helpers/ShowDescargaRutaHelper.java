@@ -179,6 +179,8 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
                             .show();
                     break;
                 case DescargaRuta.Entrega.RECAUDO_IMPORTE:
+                    /*no-op*/
+                    /*
                     viewModal = layoutInflater.inflate(R.layout.modal_recaudo_importe, null);
 
                     final RadioButton rBtnSiRecaudo = (RadioButton) viewModal.findViewById(R.id.rBtnSi);
@@ -195,7 +197,7 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
                                 } else {
                                     showToast(activity, "No se olvide recaudar el importe de la entrega.", Toast.LENGTH_LONG);
                                 }
-                            }, R.string.text_cancelar, null);
+                            }, R.string.text_cancelar, null);*/
                     break;
                 case DescargaRuta.Entrega.RECOGIO_HABILITANTES:
                     viewModal = layoutInflater.inflate(R.layout.modal_recogio_habilitantes, null);
