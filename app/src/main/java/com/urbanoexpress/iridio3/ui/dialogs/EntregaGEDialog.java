@@ -471,7 +471,7 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
 
     @Override
     public void notifyGaleriaCargoAllItemChanged() {
-        RecyclerView.Adapter adapter = binding.rvGaleriaDomicilio.getAdapter();
+        RecyclerView.Adapter adapter = binding.rvGaleriaCargo.getAdapter();
         if (adapter != null) adapter.notifyDataSetChanged();
     }
 

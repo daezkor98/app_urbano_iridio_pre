@@ -225,6 +225,34 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
+    private void requestYapeQR() {
+        view.showProgressDialog("Cargando QR");
+        HashMap<String, String> requestParams = new HashMap<String, String>();
+        requestParams.put("vp_man_id_det", rutas.get(0).getIdServicio());
+        rutaPendienteInteractor.getQuiaYapeQR(requestParams, new RequestCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                view.dismissProgressDialog();
+                try {
+                    JSONObject ar = response.getJSONArray("data").getJSONObject(0);
+                    String QR = ar.getString("qr");
+                    view.displayQR(QR);
+                } catch (Exception e) {
+                    Log.e(TAG, "onSuccess: ", e);
+                    BaseModalsView.showToast(view.getViewContext(),
+                            "Hubo un error, ", Toast.LENGTH_LONG);
+                }
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                BaseModalsView.showToast(view.getViewContext(),
+                        "Hubo un error, ", Toast.LENGTH_LONG);
+            }
+        });
+    }
+
     public void onBtnScanPCKClick() {
         Intent intent = new Intent(view.getViewContext(), QRScannerActivity.class);
         Bundle bundle = new Bundle();
@@ -432,7 +460,11 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             if (validateDatosEntrega()) {
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
 
-                if (minFotosProducto == 0) {
+                if (isMedioPagoYape()) {
+                    view.setVisibilityBoxYapeQR(View.VISIBLE);
+                    currentStep = STEPS.YAPE_QR;
+                    requestYapeQR();
+                }else if (minFotosProducto == 0) {
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
                     currentStep = STEPS.FOTOS_CARGO;
@@ -465,37 +497,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
                     currentStep = STEPS.FOTOS_CARGO;
-                }if (isMedioPagoYape()) {
-                    view.setVisibilityBoxYapeQR(View.VISIBLE);
-                    currentStep = STEPS.YAPE_QR;
-                    view.showProgressDialog("Cargando QR");
-
-                    HashMap<String, String> requestParams = new HashMap<String, String>();
-                    requestParams.put("vp_man_id_det", rutas.get(0).getIdServicio());
-                    rutaPendienteInteractor.getQuiaYapeQR(requestParams , new RequestCallback() {
-                                @Override
-                                public void onSuccess(JSONObject response) {
-                                    view.dismissProgressDialog();
-                                    Log.i("TAG", "onSuccess_JSONObject: " + response.toString());
-                                    try {
-                                        JSONObject ar = response.getJSONArray("data").getJSONObject(0);
-                                        String QR = ar.getString("qr");
-                                        view.displayQR(QR);
-                                    }catch (Exception e){
-                                        Log.e(TAG, "onSuccess: ",e );
-                                        BaseModalsView.showToast(view.getViewContext(),
-                                                "Hubo un error, ", Toast.LENGTH_LONG);
-                                    }
-
-                                }
-
-                                @Override
-                                public void onError(VolleyError error) {
-                                    BaseModalsView.showToast(view.getViewContext(),
-                                            "Hubo un error, ", Toast.LENGTH_LONG);
-                                }
-                            }
-                    );
                 } else {
                     view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
                     view.notifyGaleriaDomicilioAllItemChanged();
@@ -503,6 +504,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     currentStep = STEPS.FOTOS_DOMICILIO;
                 }
             }
+            return;
+        }
+
+        if(currentStep== STEPS.YAPE_QR){
+            view.setVisibilityBoxYapeQR(View.GONE);
+
+            view.setVisibilityBoxYapeQR(View.GONE);
+            view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
+            currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;
             return;
         }
 
@@ -550,19 +560,23 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
         }
 
-        if(currentStep== STEPS.YAPE_QR){
-            view.setVisibilityBoxYapeQR(View.GONE);
-            view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
-            currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;//TODO pago Yape
-        }
-
         if (currentStep == STEPS.FOTOS_COMPROBANTE_PAGO) {
-            if(validateFotosComprobantePago()){
+            if (minFotosProducto == 0) {
                 view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
-                view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
-                view.notifyGaleriaDomicilioAllItemChanged();
+                view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
+                view.notifyGaleriaCargoAllItemChanged();
+                currentStep = STEPS.FOTOS_CARGO;
+            } else if (rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.LIQUIDACION)) {
+                view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
+                view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
+                view.notifyGaleriaCargoAllItemChanged();
                 view.setTextBtnSiguiente("Gestionar");
-                currentStep = STEPS.FOTOS_DOMICILIO;
+                currentStep = STEPS.FOTOS_CARGO;
+            } else if(validateFotosComprobantePago()){
+                view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
+                view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
+                view.notifyGaleriaFotosAllItemChanged();
+                currentStep = STEPS.FOTOS_PRODUCTO;
             }
             return;
         }
@@ -1153,7 +1167,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     private boolean isMedioPagoYape() {
-        return rutas.get(0).getIdMedioPago().equals("3");
+        String medioPago = rutas.get(0).getIdMedioPago();
+        return medioPago.equals("3");
+
     }
 
     private boolean hasHabilitantes() {
@@ -1361,8 +1377,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     private boolean validateFotosComprobantePago() {
         if (galeriaComprobantePago.size() - 1 < 1) {
-            view.showSnackBar(
-                    "Debe tomar una foto del pago como mínimo para realizar la gestión de la guía.");
+            view.showSnackBar("Debe tomar al menos una foto al comprobante de pago");
             CommonUtils.vibrateDevice(view.getViewContext(), 100);
             return false;
         }
