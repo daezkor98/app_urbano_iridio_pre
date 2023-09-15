@@ -1179,15 +1179,12 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     private boolean isMedioPagoEfectivo() {
-/*        switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
+        switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
             case 1:
                 return true;
         }
-        return false;*/
-
-        return true;
+        return false;
     }
-    //TODO agregar Yape
     /*
 
     private boolean isMedioPagoConTarjeta() {
