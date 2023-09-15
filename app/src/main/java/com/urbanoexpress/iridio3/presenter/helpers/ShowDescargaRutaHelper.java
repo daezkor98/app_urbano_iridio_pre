@@ -180,6 +180,12 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
                     break;
                 case DescargaRuta.Entrega.RECAUDO_IMPORTE:
                     /*no-op*/
+
+                    if (isHabilitantes()) {
+                        updateProcesoDescarga(DescargaRuta.Entrega.RECOGIO_HABILITANTES);
+                    } else {
+                        updateProcesoDescarga(DescargaRuta.Entrega.ENTREGAR);
+                    }
                     /*
                     viewModal = layoutInflater.inflate(R.layout.modal_recaudo_importe, null);
 
