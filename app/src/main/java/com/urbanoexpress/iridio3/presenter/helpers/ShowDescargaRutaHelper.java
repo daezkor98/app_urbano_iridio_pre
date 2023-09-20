@@ -186,6 +186,8 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
                     } else {
                         updateProcesoDescarga(DescargaRuta.Entrega.ENTREGAR);
                     }
+                    onClickDescarga();
+
                     /*
                     viewModal = layoutInflater.inflate(R.layout.modal_recaudo_importe, null);
 

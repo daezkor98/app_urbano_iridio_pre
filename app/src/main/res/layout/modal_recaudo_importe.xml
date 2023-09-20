@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="¿Recaudo importe?"
+                    android:text="¿Va Pagar con Yape?"
                     android:id="@+id/textView3"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/darkSecondaryText" />
