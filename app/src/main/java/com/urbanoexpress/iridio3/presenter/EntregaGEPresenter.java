@@ -1142,15 +1142,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     private void showPagoDialog() {
         View viewModal = view.getFragment().getLayoutInflater().inflate(R.layout.modal_recaudo_importe, null);
 
-        final RadioButton rBtnSiRecaudo = (RadioButton) viewModal.findViewById(R.id.rBtnSi);
+        final RadioButton rBtnPagoYape = (RadioButton) viewModal.findViewById(R.id.rBtnSi);
 
         ModalHelper.getBuilderAlertDialog(view.getViewContext())
                 .setView(viewModal)
                 .setPositiveButton( R.string.text_siguiente, (dialog, which) -> {
-                    if (rBtnSiRecaudo.isChecked()) {
-                        continueDatosEntregaStep();
-                    } else {
+                    if (rBtnPagoYape.isChecked()) {
                         showYapeQRStep();
+                    } else {
+                        continueDatosEntregaStep();
                     }
                 }).show();
     }
