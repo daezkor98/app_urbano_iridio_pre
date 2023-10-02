@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yape_color"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/yape_color">
 
     <TextView
         android:id="@+id/lbl_step_order"
@@ -11,43 +11,74 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:gravity="center"
+        android:text="@string/scann_yape_qr"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/lightPrimaryText"
         android:textSize="18sp"
-        android:text="@string/scann_yape_qr"
-        app:layout_constraintStart_toStartOf="@id/body_layout"
-        app:layout_constraintEnd_toEndOf="@id/body_layout"
-        app:layout_constraintBottom_toTopOf="@id/body_layout"/>
+        app:layout_constraintBottom_toTopOf="@id/sub_constraint"
+        app:layout_constraintEnd_toEndOf="@id/sub_constraint"
+        app:layout_constraintStart_toStartOf="@id/sub_constraint" />
 
-    <FrameLayout
-        android:id="@+id/body_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="30dp"
-        android:padding="16dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sub_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         android:background="@drawable/bg_white_with_corner_10dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-      <!--  <ProgressBar
-            style="?android:attr/progressBarStyleInverse"
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/lay_importe_group"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"/>-->
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="@id/qr_code_image"
+            app:layout_constraintStart_toStartOf="@id/qr_code_image"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/lbl_importe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="Importe:"
+                android:textColor="@color/yape_color"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lbl_importe_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:text="S/. 4.50"
+                android:textColor="@color/yape_color"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/qr_code_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/yape_qr"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lay_importe_group" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

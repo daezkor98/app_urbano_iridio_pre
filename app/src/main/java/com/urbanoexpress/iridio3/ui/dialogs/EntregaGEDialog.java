@@ -400,6 +400,11 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     }
 
     @Override
+    public void setTextImporte(String importe) {
+        binding.boxYapeQR.lblImporteValue.setText(importe);
+    }
+
+    @Override
     public void setVisibilityBoxStepFotoComprobantePago(int visible) {
         binding.boxStepFotosComprobantePago.setVisibility(visible);
     }

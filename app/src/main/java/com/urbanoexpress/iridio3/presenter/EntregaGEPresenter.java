@@ -239,6 +239,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     JSONObject ar = response.getJSONArray("data").getJSONObject(0);
                     String QR = ar.getString("qr");
                     view.displayQR(QR);
+                    view.setTextImporte(ModelUtils.getSimboloMoneda(view.getViewContext()) + " " + rutas.get(0).getImporte());
                 } catch (Exception e) {
                     Log.e(TAG, "onSuccess: ", e);
                     BaseModalsView.showToast(view.getViewContext(),
