@@ -1,9 +1,12 @@
 package com.urbanoexpress.iridio3.util;
 
+import static android.os.Build.VERSION_CODES.S_V2;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
@@ -40,9 +43,12 @@ public class PermissionUtils {
     public static ArrayList<String> getBasicPermissions() {
         ArrayList<String> permissions = new ArrayList<>();
         permissions.add(Manifest.permission.CAMERA);
-        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         permissions.add(Manifest.permission.READ_PHONE_STATE);
+
+        if (Build.VERSION.SDK_INT < S_V2) {
+            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
