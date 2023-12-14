@@ -482,4 +482,5 @@
     <string name="mandatory_barcode_scanning">Esta guía requiere escanear cada código de barras de manera obligatoria</string>
     <string name="yape_qr">YAPE QR</string>
     <string name="scann_yape_qr">Escanea el QR YAPE y completa el pago</string>
+    <string name="no_entrega_inspect_warning">Esta Visita va ser auditada, asegurese de indicar el motivo correctamente y tomar la foto del domicilio.</string>
 </resources>

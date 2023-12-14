@@ -81,6 +81,17 @@
                         android:scaleType="centerInside"
                         android:layout_gravity="right|center_vertical" />
                 </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:background="@color/yellow_2"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="16sp"
+                    android:text="@string/no_entrega_inspect_warning"
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
