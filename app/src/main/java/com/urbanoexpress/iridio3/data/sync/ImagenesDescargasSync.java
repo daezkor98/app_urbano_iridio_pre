@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.urbanoexpress.iridio3.model.entity.Data;
 import com.urbanoexpress.iridio3.model.entity.Imagen;
 import com.urbanoexpress.iridio3.model.entity.LogErrorSync;
@@ -74,6 +75,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
                 RequestCallback callback = new RequestCallback() {
                     @Override
                     public void onSuccess(JSONObject response) {
+                        Log.i("_._"+TAG, "onSuccess: " + response);
                         try {
                             if (response.getBoolean("success")) {
                                 getData().get(getCountData()).setDataSync(Data.Sync.SYNCHRONIZED);
@@ -110,6 +112,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
 
                     @Override
                     public void onError(VolleyError error) {
+                        Log.i("_._"+TAG, "onError: " + error.toString());
                         error.printStackTrace();
                         LogErrorSync errorSync = new LogErrorSync(
                                 "3_"+TAG,
@@ -144,8 +147,10 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
 
                 byte[] data = FileUtils.readAllBytes(getData().get(getCountData()).getFullPath());
 
+                Log.i("_._" +TAG, "executeSync: ImageData: " + data.length);
+
                 if (data == null) {
-                    //getData().get(getCountData()).delete();
+                    FirebaseCrashlytics.getInstance().log("ImageWithNullData");
                     nextData();
                     executeSync();
                 } else {

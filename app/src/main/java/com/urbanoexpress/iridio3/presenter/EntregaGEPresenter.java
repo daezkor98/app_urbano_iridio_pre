@@ -845,6 +845,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     private void saveImage(String fileName, String directory, String anotaciones) {
+        Log.i("_._" + TAG, "saveImage: " + fileName + " " + directory + " " + anotaciones);
         Imagen imagen = new Imagen(
                 Preferences.getInstance().getString("idUsuario", ""),
                 fileName,
@@ -1148,7 +1149,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
         ModalHelper.getBuilderAlertDialog(view.getViewContext())
                 .setView(viewModal)
-                .setPositiveButton( R.string.text_siguiente, (dialog, which) -> {
+                .setPositiveButton(R.string.text_siguiente, (dialog, which) -> {
                     if (rBtnPagoYape.isChecked()) {
                         showYapeQRStep();
                     } else {
@@ -1157,7 +1158,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 }).show();
     }
 
-    private void continueDatosEntregaStep(){
+    private void continueDatosEntregaStep() {
         if (minFotosProducto == 0) {
             view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
             view.notifyGaleriaCargoAllItemChanged();
@@ -1174,7 +1175,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    private void showYapeQRStep(){
+    private void showYapeQRStep() {
         view.setVisibilityBoxYapeQR(View.VISIBLE);
         currentStep = STEPS.YAPE_QR;
         requestYapeQR();
