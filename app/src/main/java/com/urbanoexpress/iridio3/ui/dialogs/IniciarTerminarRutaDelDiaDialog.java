@@ -3,6 +3,7 @@ package com.urbanoexpress.iridio3.ui.dialogs;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -50,8 +51,7 @@ import java.util.Date;
 import java.util.List;
 
 public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
-
-    public static final String TAG = "IniciarTerminarRutaDelDiaDialog";
+    private static final String TAG = IniciarTerminarRutaDelDiaDialog.class.getSimpleName();
 
     private ModalIniciarTerminarRutaDelDiaBinding binding;
     private RutaPendienteInteractor interactor;
@@ -218,7 +218,7 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
             case EstadoRuta.Estado.FINALIZADO:
                 binding.lblTitle.setText("Terminar Ruta");
                 binding.lblUltimoKilometraje.setText(ultimoKM + " km");
-                binding. btnIniciarTerminarRuta.setText(R.string.act_plan_de_viaje_btn_terminar_ruta);
+                binding.btnIniciarTerminarRuta.setText(R.string.act_plan_de_viaje_btn_terminar_ruta);
                 binding.lblSugerencia.setText(R.string.act_ruta_msg_sugerencia_ingresar_kilometraje_cierre);
                 binding.btnEditarPlaca.setVisibility(View.GONE);
                 binding.boxTotalKM.setVisibility(View.VISIBLE);
@@ -271,8 +271,8 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
                     estadoRuta
             );
             //if (estadoRuta == EstadoRuta.Estado.FINALIZADO) {
-                estado.setDataSync(Data.Sync.MANUAL);
-                estadoRutaCierre.add(estado);
+            estado.setDataSync(Data.Sync.MANUAL);
+            estadoRutaCierre.add(estado);
             //}
             estado.save();
         }
@@ -292,8 +292,8 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
                     estadoRuta
             );
             //if (estadoRuta == EstadoRuta.Estado.FINALIZADO) {
-                estado.setDataSync(Data.Sync.MANUAL);
-                estadoRutaCierre.add(estado);
+            estado.setDataSync(Data.Sync.MANUAL);
+            estadoRutaCierre.add(estado);
             //}
             estado.save();
         }
@@ -328,6 +328,7 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
                         Log.d(TAG, "success: false");
                         final String msgError = response.getString("msg_error");
                         LogErrorSync errorSync = new LogErrorSync(
+                                "1_"+TAG,
                                 Preferences.getInstance().getString("idUsuario", ""),
                                 LogErrorSync.Tipo.ESTADO_RUTA,
                                 "Error de servicio",
@@ -346,6 +347,7 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
                     Log.d(TAG, "syncEstadoRuta");
                     Log.d(TAG, "JSONException");
                     LogErrorSync errorSync = new LogErrorSync(
+                            "2_"+TAG,
                             Preferences.getInstance().getString("idUsuario", ""),
                             LogErrorSync.Tipo.ESTADO_RUTA,
                             "Error de conversión de datos",
@@ -365,6 +367,7 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
                 error.printStackTrace();
                 dismissProgressDialog();
                 LogErrorSync errorSync = new LogErrorSync(
+                        "3_"+TAG,
                         Preferences.getInstance().getString("idUsuario", ""),
                         LogErrorSync.Tipo.ESTADO_RUTA,
                         "Error de conexión",
@@ -388,7 +391,7 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
                 idLineaNegocio += estadoRutaCierre.get(i).getLineaNegocio();
             } else {
                 idRutas += estadoRutaCierre.get(i).getIdRuta() + "|";
-                idLineaNegocio  += estadoRutaCierre.get(i).getLineaNegocio() + "|";
+                idLineaNegocio += estadoRutaCierre.get(i).getLineaNegocio() + "|";
             }
         }
 
@@ -457,7 +460,7 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link RutaPendientePresenter#rutaIniciadaReceiver}
      */
     private void sendOnRutaIniciadaReceiver() {
@@ -467,7 +470,7 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
 
     /**
      * Receiver
-     *
+     * <p>
      * {@link RutaPendientePresenter#rutaFinalizadaReceiver}
      * {@link RutaGestionadaPresenter#rutaFinalizadaReceiver}
      * {@link RutaPresenter#rutaFinalizadaReceiver}

@@ -788,6 +788,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                         Log.d(TAG, "success: false");
                         final String msgError = response.getString("msg_error");
                         LogErrorSync errorSync = new LogErrorSync(
+                                "1_"+TAG,
                                 Preferences.getInstance().getString("idUsuario", ""),
                                 LogErrorSync.Tipo.ESTADO_RUTA,
                                 "Error de servicio",
@@ -808,6 +809,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                     Log.d(TAG, "syncEstadoRuta");
                     Log.d(TAG, "JSONException");
                     LogErrorSync errorSync = new LogErrorSync(
+                            "2_"+TAG,
                             Preferences.getInstance().getString("idUsuario", ""),
                             LogErrorSync.Tipo.ESTADO_RUTA,
                             "Error de conversión de datos",
@@ -829,6 +831,7 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                 BaseModalsView.hideProgressDialog();
                 error.printStackTrace();
                 LogErrorSync errorSync = new LogErrorSync(
+                        "3_"+TAG,
                         Preferences.getInstance().getString("idUsuario", ""),
                         LogErrorSync.Tipo.ESTADO_RUTA,
                         "Error de conexión",

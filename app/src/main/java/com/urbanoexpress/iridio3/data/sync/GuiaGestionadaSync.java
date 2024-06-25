@@ -77,6 +77,7 @@ public class GuiaGestionadaSync extends DataSyncModel<GuiaGestionada> {
                                 getData().get(getCountData()).save();
                             } else {
                                 LogErrorSync errorSync = new LogErrorSync(
+                                        "1_"+TAG,
                                         getData().get(getCountData()).getIdUsuario(),
                                         LogErrorSync.Tipo.GUIA_GESTIONADA,
                                         "Error de servicio",
@@ -92,6 +93,7 @@ public class GuiaGestionadaSync extends DataSyncModel<GuiaGestionada> {
                         } catch (JSONException ex) {
                             ex.printStackTrace();
                             LogErrorSync errorSync = new LogErrorSync(
+                                    "2_"+TAG,
                                     getData().get(getCountData()).getIdUsuario(),
                                     LogErrorSync.Tipo.GUIA_GESTIONADA,
                                     "Error de conversión de datos",
@@ -108,6 +110,7 @@ public class GuiaGestionadaSync extends DataSyncModel<GuiaGestionada> {
                     public void onError(VolleyError error) {
                         error.printStackTrace();
                         LogErrorSync errorSync = new LogErrorSync(
+                                "3_"+TAG,
                                 getData().get(getCountData()).getIdUsuario(),
                                 LogErrorSync.Tipo.GUIA_GESTIONADA,
                                 "Error de conexión",

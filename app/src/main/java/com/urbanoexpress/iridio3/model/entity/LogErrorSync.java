@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.model.entity;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.orm.SugarRecord;
 
 /**
@@ -15,16 +16,27 @@ public class LogErrorSync extends SugarRecord {
     private String seguimiento_pila;
     private String timestamp;
 
-    public LogErrorSync() { }
+    public LogErrorSync() {
+    }
 
-    public LogErrorSync(String idUsuario, int tipo, String titulo,
+    public LogErrorSync(String locationTag, String idUsuario, int tipo, String titulo,
                         String mensaje, String seguimiento_pila, String timestamp) {
+        String locationIdentifier = locationTag.substring (0, Math.min(8, locationTag.length())) + "__";
         this.idUsuario = idUsuario;
         this.tipo = tipo;
-        this.titulo = titulo;
+        this.titulo = locationIdentifier + titulo;
         this.mensaje = mensaje;
         this.seguimiento_pila = seguimiento_pila;
         this.timestamp = timestamp;
+        FirebaseCrashlytics
+                .getInstance()
+                .log("LogError---- \nthis.idUsuario:_ " + this.idUsuario +
+                        "\nthis.tipo:_ " + this.tipo +
+                        "\nthis.titulo:_ " + this.titulo +
+                        "\nthis.mensaje:_ " + this.mensaje +
+                        "\nthis.seguimiento_pila:_ " + this.seguimiento_pila +
+                        "\nthis.timestamp:_ " + this.timestamp
+                );
     }
 
     public String getIdUsuario() {
@@ -76,12 +88,12 @@ public class LogErrorSync extends SugarRecord {
     }
 
     public interface Tipo {
-        int ESTADO_RUTA     = 0;
+        int ESTADO_RUTA = 0;
         int GUIA_GESTIONADA = 1;
-        int SECUENCIA_GUIA  = 2;
-        int IMAGEN          = 3;
-        int GPS             = 4;
+        int SECUENCIA_GUIA = 2;
+        int IMAGEN = 3;
+        int GPS = 4;
         int GESTION_LLAMADA = 5;
-        int INCIDENTE_RUTA  = 6;
+        int INCIDENTE_RUTA = 6;
     }
 }

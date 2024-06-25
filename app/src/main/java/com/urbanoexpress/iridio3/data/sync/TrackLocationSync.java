@@ -86,6 +86,7 @@ public class TrackLocationSync extends DataSyncModel<TrackLocation> {
                                 }
                             } else {
                                 LogErrorSync errorSync = new LogErrorSync(
+                                        "1_"+TAG,
                                         getData().get(getCountData()).getIdUsuario(),
                                         LogErrorSync.Tipo.GPS,
                                         "Error de servicio",
@@ -100,6 +101,7 @@ public class TrackLocationSync extends DataSyncModel<TrackLocation> {
                         } catch (JSONException ex) {
                             ex.printStackTrace();
                             LogErrorSync errorSync = new LogErrorSync(
+                                    "2_"+TAG,
                                     getData().get(getCountData()).getIdUsuario(),
                                     LogErrorSync.Tipo.GPS,
                                     "Error de conversión de datos",
@@ -116,6 +118,7 @@ public class TrackLocationSync extends DataSyncModel<TrackLocation> {
                     public void onError(VolleyError error) {
                         error.printStackTrace();
                         LogErrorSync errorSync = new LogErrorSync(
+                                "3_"+TAG,
                                 getData().get(getCountData()).getIdUsuario(),
                                 LogErrorSync.Tipo.GPS,
                                 "Error de conexión",
@@ -160,6 +163,7 @@ public class TrackLocationSync extends DataSyncModel<TrackLocation> {
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                     LogErrorSync errorSync = new LogErrorSync(
+                            "4_"+TAG,
                             getData().get(getCountData()).getIdUsuario(),
                             LogErrorSync.Tipo.GPS,
                             "Error de empaquetado de datos",

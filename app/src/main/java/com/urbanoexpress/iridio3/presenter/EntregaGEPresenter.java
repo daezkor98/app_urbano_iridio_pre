@@ -120,6 +120,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     private List<GalleryWrapperItem> galeriaFirma = new ArrayList<>();
     private List<GalleryWrapperItem> galeriaCargo = new ArrayList<>();//aqui
 
+    //yape
     private List<GalleryWrapperItem> galeriaComprobantePago = new ArrayList<>();//aqui
     private List<GalleryWrapperItem> galeriaDomicilio = new ArrayList<>();
 

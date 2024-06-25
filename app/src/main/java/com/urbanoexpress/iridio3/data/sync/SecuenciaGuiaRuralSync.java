@@ -88,6 +88,7 @@ public class SecuenciaGuiaRuralSync extends DataSyncModel<Ruta> {
                                     Log.d(TAG, "SecuenciaGuiaSync");
                                     Log.d(TAG, "success: false");
                                     LogErrorSync errorSync = new LogErrorSync(
+                                            "1_"+TAG,
                                             Session.getUser().getIdUsuario(),
                                             LogErrorSync.Tipo.SECUENCIA_GUIA,
                                             "Error de servicio",
@@ -105,6 +106,7 @@ public class SecuenciaGuiaRuralSync extends DataSyncModel<Ruta> {
                                 Log.d(TAG, "SecuenciaGuiaSync");
                                 Log.d(TAG, "JSONException");
                                 LogErrorSync errorSync = new LogErrorSync(
+                                        "2_"+TAG,
                                         Session.getUser().getIdUsuario(),
                                         LogErrorSync.Tipo.SECUENCIA_GUIA,
                                         "Error de conversión de datos",
@@ -121,6 +123,7 @@ public class SecuenciaGuiaRuralSync extends DataSyncModel<Ruta> {
                             error.printStackTrace();
                             finishSync();
                             LogErrorSync errorSync = new LogErrorSync(
+                                    "3_"+TAG,
                                     Session.getUser().getIdUsuario(),
                                     LogErrorSync.Tipo.SECUENCIA_GUIA,
                                     "Error de conexión",

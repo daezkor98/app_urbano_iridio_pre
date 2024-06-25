@@ -84,6 +84,7 @@ public class GestionLlamadaSync extends DataSyncModel<GestionLlamada> {
                                 }
                             } else {
                                 LogErrorSync errorSync = new LogErrorSync(
+                                        "1_"+TAG,
                                         Session.getUser().getIdUsuario(),
                                         LogErrorSync.Tipo.GESTION_LLAMADA,
                                         "Error de servicio",
@@ -99,6 +100,7 @@ public class GestionLlamadaSync extends DataSyncModel<GestionLlamada> {
                             ex.printStackTrace();
                             finishSync();
                             LogErrorSync errorSync = new LogErrorSync(
+                                    "2_"+TAG,
                                     Session.getUser().getIdUsuario(),
                                     LogErrorSync.Tipo.GESTION_LLAMADA,
                                     "Error de conversión de datos",
@@ -115,6 +117,7 @@ public class GestionLlamadaSync extends DataSyncModel<GestionLlamada> {
                         error.printStackTrace();
                         finishSync();
                         LogErrorSync errorSync = new LogErrorSync(
+                                "3_"+TAG,
                                 Session.getUser().getIdUsuario(),
                                 LogErrorSync.Tipo.GESTION_LLAMADA,
                                 "Error de conexión",
@@ -169,6 +172,7 @@ public class GestionLlamadaSync extends DataSyncModel<GestionLlamada> {
                         ex.printStackTrace();
                         finishSync();
                         LogErrorSync errorSync = new LogErrorSync(
+                                "4_"+TAG,
                                 Session.getUser().getIdUsuario(),
                                 LogErrorSync.Tipo.GESTION_LLAMADA,
                                 "Error de empaquetado de datos",

@@ -79,6 +79,7 @@ public class IncidenteRutaSync extends DataSyncModel<IncidenteRuta> {
                                 Log.d(TAG, "syncRutasGestionadas");
                                 Log.d(TAG, "success: false");
                                 LogErrorSync errorSync = new LogErrorSync(
+                                        "1_"+TAG,
                                         Session.getUser().getIdUsuario(),
                                         LogErrorSync.Tipo.INCIDENTE_RUTA,
                                         "Error de servicio",
@@ -97,6 +98,7 @@ public class IncidenteRutaSync extends DataSyncModel<IncidenteRuta> {
                             Log.d(TAG, "syncRutasGestionadas");
                             Log.d(TAG, "JSONException");
                             LogErrorSync errorSync = new LogErrorSync(
+                                    "2_"+TAG,
                                     Session.getUser().getIdUsuario(),
                                     LogErrorSync.Tipo.INCIDENTE_RUTA,
                                     "Error de conversión de datos",
@@ -113,6 +115,7 @@ public class IncidenteRutaSync extends DataSyncModel<IncidenteRuta> {
                         error.printStackTrace();
                         finishSync();
                         LogErrorSync errorSync = new LogErrorSync(
+                                "3_"+TAG,
                                 Session.getUser().getIdUsuario(),
                                 LogErrorSync.Tipo.INCIDENTE_RUTA,
                                 "Error de conexión",

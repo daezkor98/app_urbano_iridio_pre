@@ -80,6 +80,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
                                 getData().get(getCountData()).save();
                             } else {
                                 LogErrorSync errorSync = new LogErrorSync(
+                                        "1_"+TAG,
                                         getData().get(getCountData()).getIdUsuario(),
                                         LogErrorSync.Tipo.IMAGEN,
                                         "Error de servicio",
@@ -94,6 +95,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
                         } catch (JSONException ex) {
                             ex.printStackTrace();
                             LogErrorSync errorSync = new LogErrorSync(
+                                    "2_"+TAG,
                                     getData().get(getCountData()).getIdUsuario(),
                                     LogErrorSync.Tipo.IMAGEN,
                                     "Error de conversión de datos",
@@ -110,6 +112,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
                     public void onError(VolleyError error) {
                         error.printStackTrace();
                         LogErrorSync errorSync = new LogErrorSync(
+                                "3_"+TAG,
                                 getData().get(getCountData()).getIdUsuario(),
                                 LogErrorSync.Tipo.IMAGEN,
                                 "Error de conexión",
@@ -174,7 +177,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
     }
 
     private String getTipoImagenDescarga(String fileName) {
-        Log.i(TAG, "getTipoImagenDescarga: "+fileName);
+        Log.i(TAG, "getTipoImagenDescarga: " + fileName);
         if (fileName.contains("Imagen")) {
             return "1";
         } else if (fileName.contains("Firma")) {
@@ -189,7 +192,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
             return "6";
         } else if (fileName.contains("ge_no_recolectada")) {
             return "9";
-        } else if(fileName.contains("Pago")) {
+        } else if (fileName.contains("Pago")) {
             return "10";
         }
         return "0";

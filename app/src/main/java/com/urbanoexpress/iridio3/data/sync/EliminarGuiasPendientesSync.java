@@ -24,7 +24,7 @@ import java.util.List;
 
 public class EliminarGuiasPendientesSync extends DataSyncModel<Ruta> {
 
-    private static final String TAG = "EliminarGuiasPendientesSync";
+    private static final String TAG = EliminarGuiasPendientesSync.class.getSimpleName();
 
     private static EliminarGuiasPendientesSync eliminarGuiasPendientesSync;
 
@@ -114,6 +114,7 @@ public class EliminarGuiasPendientesSync extends DataSyncModel<Ruta> {
                         error.printStackTrace();
                         finishSync();
                         LogErrorSync errorSync = new LogErrorSync(
+                                TAG,
                                 Session.getUser().getIdUsuario(),
                                 LogErrorSync.Tipo.GPS,
                                 "Error de conexión",
