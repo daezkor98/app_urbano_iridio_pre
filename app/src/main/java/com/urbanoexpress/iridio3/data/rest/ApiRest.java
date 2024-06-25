@@ -24,9 +24,7 @@ public final class ApiRest {
         String GET_USER_PROFILE = "api-apps/iridio/getUserProfile";
         String UPLOAD_PHOTO_USER_PROFILE = "api-apps/iridio/uploadPhotoUserProfile";
         String CHANGE_PASSWORD_USER_PROFILE = "api-apps/iridio/changePasswordUserProfile";
-
         String LOGIN = "api-apps/iridio/logInV2";
-        //        String GET_MENU_USUARIO                         = "api-apps/iridio/getMenuUsuario";
         String VALIDATE_USER_NAME_COURIER = "api-apps/iridio/validateUserNameCourier";
         String CHANGE_USER_COURIER_PASSWORD = "api-apps/iridio/changeUserCourierPassword";
 
