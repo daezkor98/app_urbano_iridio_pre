@@ -90,7 +90,7 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         smsBroadcast.initOTPListener(this);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
-        view.getViewContext().registerReceiver(smsBroadcast, intentFilter);
+        //view.getViewContext().registerReceiver(smsBroadcast, intentFilter);
     }
 
     public void onResume() {

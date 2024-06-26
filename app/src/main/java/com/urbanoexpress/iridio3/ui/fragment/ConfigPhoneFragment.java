@@ -19,9 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.auth.api.credentials.Credential;
-import com.google.android.gms.auth.api.credentials.Credentials;
-import com.google.android.gms.auth.api.credentials.HintRequest;
+//import com.google.android.gms.auth.api.credentials.Credential;
+//import com.google.android.gms.auth.api.credentials.Credentials;
+//import com.google.android.gms.auth.api.credentials.HintRequest;
 import com.urbanoexpress.iridio3.R;
 import com.urbanoexpress.iridio3.databinding.FragmentConfigPhoneBinding;
 import com.urbanoexpress.iridio3.presenter.ConfigPhonePresenter;
@@ -59,6 +59,7 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
         super.onViewCreated(view, savedInstanceState);
         setupViews();
 
+        /*
         requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -66,7 +67,7 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
                     finishActivity();
                 }
             }
-        });
+        });*/
 
         if (presenter == null) {
             presenter = new ConfigPhonePresenter(this);
@@ -82,7 +83,7 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
 
     public void activityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == HINT_REQUEST) {
-            if (data != null) {
+            /*if (data != null) {
                 Credential cred = data.getParcelableExtra(Credential.EXTRA_KEY);
                 if (cred != null) {
                     String unformattedPhone = cred.getId();
@@ -93,7 +94,7 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
                     hideKeyboard();
                     presenter.onBtnContinuarClick();
                 }
-            }
+            }*/
         }
     }
 
@@ -133,6 +134,7 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
 
     @Override
     public void requestHint() {
+         /*
         HintRequest hintRequest = new HintRequest.Builder()
                 .setPhoneNumberIdentifierSupported(true)
                 .build();
@@ -143,7 +145,7 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
                     HINT_REQUEST, null, 0, 0, 0);
         } catch (IntentSender.SendIntentException ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
 
     @Override
