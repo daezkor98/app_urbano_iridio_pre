@@ -48,10 +48,6 @@ public class BienvenidaFragment extends Fragment {
     }
 
     private void setupViews() {
-        Glide.with(this)
-                .load(R.drawable.bg_bienvenida)
-                .centerCrop()
-                .into(binding.imgBgBienvenida);
 
         binding.btnSiguiente.setOnClickListener(v -> {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

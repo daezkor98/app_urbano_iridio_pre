@@ -171,9 +171,6 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
     }
 
     private void setupViews() {
-        Glide.with(this)
-                .load(R.drawable.bg_bienvenida)
-                .into(binding.image);
 
         binding.selectCountryLayout.setOnClickListener(v -> presenter.onSelectCountryClick());
 
