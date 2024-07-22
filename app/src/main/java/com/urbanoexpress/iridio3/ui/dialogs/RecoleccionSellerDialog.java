@@ -429,7 +429,7 @@ public class RecoleccionSellerDialog extends BaseDialogFragment implements Recol
     @Override
     public void setVisibilityStepFotosDomicilio(boolean visible) {
         if (visible) {
-            binding.galleryTitleText.setText("FIRMA DEL DOMICILIO");
+            binding.galleryTitleText.setText("FOTO DEL DOMICILIO");
         }
     }
 

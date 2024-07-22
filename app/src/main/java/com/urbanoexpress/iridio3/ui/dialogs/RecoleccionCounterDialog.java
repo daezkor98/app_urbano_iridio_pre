@@ -441,7 +441,7 @@ public class RecoleccionCounterDialog  extends BaseDialogFragment implements Rec
     @Override
     public void setVisibilityStepFotosDomicilio(boolean visible) {
         if (visible) {
-            binding.galleryTitleText.setText("FIRMA DEL DOMICILIO");
+            binding.galleryTitleText.setText("FOTO DEL DOMICILIO");
         }
     }
 
