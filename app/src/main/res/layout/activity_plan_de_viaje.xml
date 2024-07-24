@@ -713,7 +713,7 @@
                             android:layout_height="20dp"
                             android:orientation="horizontal"
                             android:transitionName="@string/transition_table_header"
-                            android:background="@color/red_3">
+                            android:background="@color/colorPrimary">
 
                             <TextView
                                 android:layout_width="0dp"
