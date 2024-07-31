@@ -111,8 +111,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
-        app:itemTextColor="@drawable/navigation_menu_item_text_color"
-        app:itemIconTint="@drawable/navigation_menu_item_icon_tint"/>
+        app:itemRippleColor="@color/menuIconTint"
+        app:itemTextColor="@color/black_2"
+        app:itemIconTint="@color/menuIconTint"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
