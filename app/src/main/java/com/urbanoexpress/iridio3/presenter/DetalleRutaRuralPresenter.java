@@ -572,6 +572,15 @@ public class DetalleRutaRuralPresenter {
         telephonyManager.listen(callStateListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
+    public void displayRequiredObservation() {
+        view.showObservationDialog(ruta.getObservaciones());
+    }
+
+    public Boolean hasObservation() {
+        String observacion = ruta.getObservaciones();
+        return observacion != null && !observacion.isEmpty();
+    }
+
     /**
      * Listener to detect incoming calls.
      */

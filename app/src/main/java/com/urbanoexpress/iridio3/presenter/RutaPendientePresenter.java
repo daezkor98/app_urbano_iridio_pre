@@ -1,5 +1,7 @@
 package com.urbanoexpress.iridio3.presenter;
 
+import static java.util.Collections.singletonList;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -418,51 +420,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 ArrayList<JSONObject> nuevasRutas = getNuevasRutas(jsonRutas);
                 Log.d("PRUEBARUTA", "RUTAS NUEVAS: " + nuevasRutas.size());
 
-//                for (int i = 0; i < rutasActuales.size(); i++) {
-//                    JSONArray jsonGuias = getNuevasGuiasByLineaNegocio(
-//                            jsonRutas, rutasActuales.get(i).getIdRuta(),
-//                            rutasActuales.get(i).getLineaNegocio());
-//                    Log.d("PRUEBARUTA", "Guias Nuevas: " + jsonGuias.length());
-//
-//                    for (int j = 0; j < nuevasRutas.size(); j++) {
-//                        if (rutasActuales.get(i).getLineaNegocio().equals(
-//                                nuevasRutas.get(j).getString("linea_negocio"))) {
-//
-//                            if (isNuevaFechaRuta(rutasActuales.get(i).getIdRuta(),
-//                                    rutasActuales.get(i).getFechaRuta(), jsonGuias)) {
-//                                boolean newGuias = false;
-//                                for (int k = 0; k < jsonGuias.length(); k++) {
-//                                    JSONObject jsonRuta = jsonGuias.getJSONObject(k);
-//
-////                                    Log.d(TAG, "isRutaSaved: " + isRutaSaved(jsonRuta));
-//                                    // Verificar si la guia esta eliminada
-//                                    if (jsonRuta.getString("mot_id").equals("246")) {
-//                                        newGuias = true;
-//                                        deleteGEAnuladas(jsonRuta);
-//                                    } else {
-//                                        if (!isRutaSaved(jsonRuta)) {
-//                                            newGuias = true;
-//                                            saveRuta(jsonRuta);
-//                                            ((RutaActivity) viewgetViewContext()).showSnackBarEstadoRuta();
-//                                        }
-//                                    }
-//                                }
-//                                if (newGuias) registerNewSecuencia();
-//                            } else {
-//                                showAlertDialog(activity,
-//                                        R.string.activity_ruta_title_nueva_ruta_asignada,
-//                                        R.string.activity_ruta_message_nueva_ruta_asignada,
-//                                        R.string.text_aceptar, new DialogInterface.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                                dialogInterface.dismiss();
-//                                            }
-//                                        });
-//                            }
-//
-//                        }
-//                    }
-//                }
 
                 for (int i = 0; i < nuevasRutas.size(); i++) {
 
@@ -492,7 +449,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                                 for (int k = 0; k < jsonGuias.length(); k++) {
                                     JSONObject jsonRuta = jsonGuias.getJSONObject(k);
 
-//                                    Log.d(TAG, "isRutaSaved: " + isRutaSaved(jsonRuta));
                                     // Verificar si la guia esta eliminada
                                     if (jsonRuta.getString("mot_id").equals("246")) {
                                         newGuias = true;
@@ -571,7 +527,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                             for (int k = 0; k < jsonGuias.length(); k++) {
                                 JSONObject jsonRuta = jsonGuias.getJSONObject(k);
 
-                                // Log.d(TAG, "isRutaSaved: " + isRutaSaved(jsonRuta));
                                 // Verificar si la guia esta eliminada
                                 if (jsonRuta.getString("mot_id").equals("246")) {
                                     newGuias = true;
@@ -679,37 +634,26 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         ArrayList<Ruta> rutasActuales = new ArrayList<>();
 
         for (int i = 0; i < rutas.size(); i++) {
-//            Log.d("PRUEBARUTA", "RUTA LINEA 1-"+ i +": " + rutas.get(i).getLineaNegocio());
             if (rutasActuales.size() == 0) {
                 rutasActuales.add(rutas.get(i));
-//                Log.d("PRUEBARUTA", "getRutasActuales: 0");
             } else {
                 boolean existRuta = false;
 
                 for (int j = 0; j < rutasActuales.size(); j++) {
-//                    Log.d("PRUEBARUTA", "RUTA ACTUAL LINEA: " + rutasActuales.get(j).getLineaNegocio());
-//                    Log.d("PRUEBARUTA", "RUTA LINEA: " + rutas.get(i).getLineaNegocio());
 
                     if (rutasActuales.get(j).getLineaNegocio().equals(
                             rutas.get(i).getLineaNegocio())) {
                         existRuta = true;
-
-//                        rutasActuales.add(rutas.get(i));
-
-//                        Log.d("PRUEBARUTA", "getRutasActuales: 1");
 
                     } else if (rutasActuales.get(j).getLineaNegocio().equals(
                             rutas.get(i).getLineaNegocio())
                             && rutasActuales.get(j).getIdRuta().equals(
                             rutas.get(i).getIdRuta())) {
                         existRuta = true;
-//                        rutasActuales.add(rutas.get(i));
-//                        Log.d("PRUEBARUTA", "getRutasActuales: 2");
                     }
                 }
 
                 if (!existRuta) {
-//                    Log.d("PRUEBARUTA", "getRutasActuales: 3");
                     rutasActuales.add(rutas.get(i));
                 }
 
@@ -874,10 +818,11 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 Ruta.EstadoDescarga.PENDIENTE,
                 Ruta.ResultadoGestion.NO_DEFINIDO,
                 Data.Delete.NO,
-                Data.Validate.VALID
+                Data.Validate.VALID,
+                jsonRuta.getString("mensaje_custom_fotos")
         );
 
-        removeRutaOnDescargaFinalizada(new ArrayList<Ruta>(Arrays.asList(ruta)));
+        removeRutaOnDescargaFinalizada(new ArrayList<Ruta>(singletonList(ruta)));
     }
 
     private void saveRuta(JSONObject jsonRuta) throws JSONException {
@@ -903,7 +848,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 jsonRuta.getString("ruta_id"),
                 jsonRuta.getString("guia_id"),
                 jsonRuta.getString("id_medio_pago"),//
-                //"3",//TODO reverse comment
                 jsonRuta.getString("id_cliente"),
                 jsonRuta.getString("id_manifiesto"),
                 jsonRuta.getString("linea_negocio"),
@@ -951,14 +895,15 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 jsonRuta.getString("flag_firma"),
                 jsonRuta.getString("cant_fotos"),
                 jsonRuta.getString("descripcion").toLowerCase(),
-                jsonRuta.getString("observacion").toLowerCase(),
+                jsonRuta.getString("observacion"),
                 jsonRuta.getString("secuencia_ruteo"),
                 flag_scaneo_pck,
                 Integer.parseInt(jsonRuta.getString("flag_alerta")),
                 Ruta.EstadoDescarga.PENDIENTE,
                 Ruta.ResultadoGestion.NO_DEFINIDO,
                 Data.Delete.NO,
-                Data.Validate.VALID
+                Data.Validate.VALID,
+                jsonRuta.getString("mensaje_custom_fotos")
         );
 
         if (jsonRuta.has("pck")) {

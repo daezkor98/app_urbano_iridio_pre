@@ -84,6 +84,8 @@ public class Ruta extends SugarRecord implements Serializable {
      */
     private int dataValidate;
 
+    private String observacionFotos;
+
     public Ruta() { }
 
     public Ruta(String idUsuario, String idServicio, String idServicioRecoleccion, String idMotivo,
@@ -102,7 +104,7 @@ public class Ruta extends SugarRecord implements Serializable {
                 String guiaRequerimientoHorario, String guiaRequerimientoNuevaDireccion,
                 String premiosGestionGuia, String firmaClienteGestionGuia, String minimoFotosProductoGestionGuia,
                 String descripcion, String observaciones, String secuenciaRuteo, String flagScanPck, int mostrarAlerta,
-                int estadoDescarga, int resultadoGestion, int eliminado, int dataValidate) {
+                int estadoDescarga, int resultadoGestion, int eliminado, int dataValidate,String observacionFotos) {
         this.idUsuario = idUsuario;
         this.idServicio = idServicio;
         this.idServicioRecoleccion = idServicioRecoleccion;
@@ -168,6 +170,7 @@ public class Ruta extends SugarRecord implements Serializable {
         this.eliminado = eliminado;
         this.dataValidate = dataValidate;
         this.idImagen = "";
+        this.observacionFotos = observacionFotos;
     }
 
     public String getIdUsuario() {
@@ -688,6 +691,14 @@ public class Ruta extends SugarRecord implements Serializable {
 
     public void setFlagScanPck(String flagScanPck) {
         this.flagScanPck = flagScanPck;
+    }
+
+    public String getObservacionFotos() {
+        return observacionFotos;
+    }
+
+    public void setObservacionFotos(String observacionFotos) {
+        this.observacionFotos = observacionFotos;
     }
 
     public interface ZONA {

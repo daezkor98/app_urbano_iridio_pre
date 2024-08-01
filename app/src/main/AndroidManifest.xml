@@ -281,15 +281,17 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC2EI9V85Xl2C3sdIEW2lhST-HFCpzg0cY" />
+        <!-- SUGAR DB-->
         <meta-data
             android:name="DATABASE"
             android:value="urbano.db" />
         <meta-data
             android:name="VERSION"
-            android:value="53" />
+            android:value="54" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
+        <!-- END SUGAR DB-->
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.urbanoexpress.iridio" />

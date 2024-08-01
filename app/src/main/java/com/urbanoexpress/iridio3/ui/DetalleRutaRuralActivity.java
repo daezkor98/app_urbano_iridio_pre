@@ -238,6 +238,17 @@ public class DetalleRutaRuralActivity extends AppThemeBaseActivity implements De
     }
 
     @Override
+    public void showObservationDialog(String observationBody) {
+        ModalHelper.getBuilderAlertDialog(this)
+                .setTitle("Observación")
+                .setMessage(observationBody)
+                .setPositiveButton("Entendido",(dialog,which)->{
+                    manageGuia();
+                })
+                .show();
+    }
+
+    @Override
     public void showDialogSeleccionarResultadoLlamada(String[] resultados) {
         ModalHelper.getBuilderAlertDialog(this)
                 .setTitle("Seleccione el resultado de la llamada realizada")
@@ -275,6 +286,12 @@ public class DetalleRutaRuralActivity extends AppThemeBaseActivity implements De
         finish();
     }
 
+    private void manageGuia(){
+        binding.btnGestionar.setEnabled(false);
+        presenter.onBtnGestionarClick();
+        new Handler().postDelayed(() -> binding.btnGestionar.setEnabled(true), 1000);
+
+    }
     private void setupViews() {
         setupToolbar(binding.toolbar);
         setScreenTitle(R.string.title_activity_detalle_ruta);
@@ -283,9 +300,11 @@ public class DetalleRutaRuralActivity extends AppThemeBaseActivity implements De
         binding.rvDetalles.setHasFixedSize(true);
 
         binding.btnGestionar.setOnClickListener((v) -> {
-            binding.btnGestionar.setEnabled(false);
-            presenter.onBtnGestionarClick();
-            new Handler().postDelayed(() -> binding.btnGestionar.setEnabled(true), 1000);
+            if(presenter.hasObservation()){
+                presenter.displayRequiredObservation();
+            }else{
+                manageGuia() ;
+            }
         });
 
         binding.actionIndicacionesContainerLayout.setOnClickListener((v) -> {

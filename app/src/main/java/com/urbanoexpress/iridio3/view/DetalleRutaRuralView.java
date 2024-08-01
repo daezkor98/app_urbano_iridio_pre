@@ -38,6 +38,7 @@ public interface DetalleRutaRuralView extends BaseView2 {
     void showMsgGaleriaNodisponible();
     void showMsgGestionNoPermitidaPorOrdenDescarga();
     void showDialogDescargarMotivosGestionLlamada();
+    void showObservationDialog(String observationBody);
     void showDialogSeleccionarResultadoLlamada(String[] resultados);
     void showDialogSeleccionarMotivoLlamadaNoContactada(String[] motivos);
 

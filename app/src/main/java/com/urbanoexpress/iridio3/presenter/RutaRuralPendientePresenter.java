@@ -376,7 +376,8 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
                 Ruta.EstadoDescarga.PENDIENTE,
                 Ruta.ResultadoGestion.NO_DEFINIDO,
                 Data.Delete.NO,
-                Data.Validate.VALID
+                Data.Validate.VALID,
+                jsonRuta.getString("mensaje_custom_fotos")
         );
 
         if (jsonRuta.has("pck")) {

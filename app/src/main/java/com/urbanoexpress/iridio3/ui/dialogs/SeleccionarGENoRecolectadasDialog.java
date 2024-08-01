@@ -158,7 +158,9 @@ public class SeleccionarGENoRecolectadasDialog extends DialogFragment
                                 Ruta.EstadoDescarga.PENDIENTE,
                                 Ruta.ResultadoGestion.NO_DEFINIDO,
                                 Data.Delete.NO,
-                                Data.Validate.VALID)
+                                Data.Validate.VALID,
+                                ""
+                                )
                         );
                     }
                 }
