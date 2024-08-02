@@ -217,7 +217,7 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
         binding.navigationView.addHeaderView(headerMenuView);
 
         Glide.with(MainActivity.this)
-                .load(R.drawable.bg_header_navigation)
+                .load(R.drawable.bg_header_navigation_new)
                 .centerCrop()
                 .into((ImageView) headerMenuView.findViewById(R.id.imgBGHeader));
 

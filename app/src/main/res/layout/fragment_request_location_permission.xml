@@ -1,53 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gris_1"
+        app:layout_constraintBottom_toTopOf="@id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/scrollView">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="45dp"
-            android:src="@drawable/logo_urbano_lema_white"
-            android:scaleType="fitXY"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="10dp"/>
-
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:src="@drawable/bg_city_shader"
-            android:scaleType="centerCrop"
-            android:layout_gravity="bottom"/>
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bg_request_location_header" />
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="110dp"
-            android:src="@drawable/bg_hand_turn_on_gps"
-            android:scaleType="fitXY"
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="30dp"/>
-    </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/gris_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_layout"
+        app:layout_constraintBottom_toTopOf="@id/footer_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/footer_layout">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,38 +44,39 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
                 android:gravity="center"
+                android:text="Uso de la ubicación"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorPrimary"
-                android:text="Uso de la ubicación" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
                 android:gravity="center"
+                android:text="Para gestionar tus rutas, permite que Urbano - Iridio use tu ubicación todo el tiempo."
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textSize="16sp"
                 android:textColor="@color/lightPrimaryText"
-                android:text="Para gestionar tus rutas, permite que Urbano - Iridio use tu ubicación todo el tiempo." />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
                 android:gravity="center"
+                android:text="Urbano - Iridio utilizará la ubicación en segundo plano para monitorear tu ubicación en tiempo real, trazar tu recorrido y calcular los tiempos de distribución de ruta."
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textSize="16sp"
                 android:textColor="@color/lightPrimaryText"
-                android:text="Urbano - Iridio utilizará la ubicación en segundo plano para monitorear tu ubicación en tiempo real, trazar tu recorrido y calcular los tiempos de distribución de ruta." />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:text="Urbano - Iridio recogerá y almacenará los datos de localización aún cuando la aplicación se encuentre cerrada o no se esté usando."
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textSize="16sp"
                 android:textColor="@color/lightPrimaryText"
-                android:text="Urbano - Iridio recogerá y almacenará los datos de localización aún cuando la aplicación se encuentre cerrada o no se esté usando." />
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -99,31 +84,35 @@
         android:id="@+id/footer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/gris_1"
+        android:orientation="vertical"
         android:paddingLeft="25dp"
         android:paddingTop="5dp"
         android:paddingRight="25dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView">
 
         <Button
             android:id="@+id/btnOtorgarAcceso"
-            android:theme="@style/Button.Red"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/text_otorgar_acceso"
-            android:textColor="@color/lightPrimaryText" />
+            android:textColor="@color/lightPrimaryText"
+            android:textStyle="bold"
+            android:theme="@style/Button.Red" />
 
         <Button
             android:id="@+id/btnNoGracias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:text="@string/text_no_gracias"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/lightPrimaryText"
-            android:text="@string/text_no_gracias" />
+            android:textColor="@color/colorSecondary"
+            android:textStyle="bold" />
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

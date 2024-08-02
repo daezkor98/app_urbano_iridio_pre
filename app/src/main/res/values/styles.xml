@@ -131,7 +131,7 @@
     </style>
 
     <style name="Button.Red">
-        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="colorButtonNormal">@color/colorSecondary</item>
     </style>
 
     <style name="MainButton">
