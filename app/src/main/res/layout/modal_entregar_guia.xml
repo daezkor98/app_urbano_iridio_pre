@@ -45,7 +45,6 @@
                     android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:maxLines="1"
                     android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
@@ -57,7 +56,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:fadeScrollbars="false"
                     android:scrollbars="vertical" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -107,7 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,7 +144,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -193,7 +196,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -391,18 +395,18 @@
                                 android:id="@+id/rBtnObservarEntrega"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
                                 android:layout_weight="1"
-                                android:text="Si" />
+                                android:text="Si"
+                                android:textColor="@color/black" />
 
                             <RadioButton
                                 android:id="@+id/rBtnNoObservarEntrega"
                                 android:layout_width="0dp"
-                                android:textColor="@color/black"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:checked="true"
-                                android:text="No" />
+                                android:text="No"
+                                android:textColor="@color/black" />
                         </RadioGroup>
                     </LinearLayout>
 
@@ -414,7 +418,8 @@
                         android:background="#F1F1F1"
                         android:orientation="vertical"
                         android:padding="10dp"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -487,7 +492,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -508,27 +514,46 @@
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvGaleriaFotos"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:clickable="true"
-                        android:focusable="true" />
-                </LinearLayout>
+                        android:focusable="true"
+                        app:layout_constraintBottom_toTopOf="@id/warning_observation_fotos_producto"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                        android:id="@+id/warning_observation_fotos_producto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:foregroundGravity="bottom"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvGaleriaFotos"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
-             <!-- FOTOS PARA COMPROBANTE DE PAGO YAPE(O PLIN) -->
+            <!-- FOTOS PARA COMPROBANTE DE PAGO YAPE(O PLIN) -->
             <LinearLayout
                 android:id="@+id/boxStepFotosComprobantePago"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -549,34 +574,50 @@
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvGaleriaComprobantePago"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:clickable="true"
-                        android:focusable="true" />
+                        android:focusable="true"
+                        app:layout_constraintBottom_toTopOf="@id/warning_observation_comprobante_pago"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </LinearLayout>
+                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                        android:id="@+id/warning_observation_comprobante_pago"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvGaleriaComprobantePago"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
-             <!-- -->
+            <!-- -->
 
             <include
-                android:visibility="gone"
                 android:id="@+id/boxYapeQR"
-                layout="@layout/box_entrega_step_yape_qr"/>
+                layout="@layout/box_entrega_step_yape_qr"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/boxStepFirmaEntrega"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -616,7 +657,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -638,6 +680,33 @@
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvGaleriaCargo"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintBottom_toTopOf="@id/warning_observation_cargo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                        android:id="@+id/warning_observation_cargo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvGaleriaCargo"
+                        tools:visibility="visible" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -649,7 +718,14 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true" />
+                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                        android:id="@+id/warning_observation_cargo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
                 </LinearLayout>
+                -->
             </LinearLayout>
 
             <LinearLayout
@@ -657,7 +733,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -678,6 +755,34 @@
                         android:textColor="@android:color/white" />
                 </LinearLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvGaleriaDomicilio"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintBottom_toTopOf="@id/warning_observation_domicilio"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                        android:id="@+id/warning_observation_domicilio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rvGaleriaDomicilio"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -689,7 +794,14 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true" />
+                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                        android:id="@+id/warning_observation_domicilio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
                 </LinearLayout>
+                -->
             </LinearLayout>
 
         </LinearLayout>
@@ -701,7 +813,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <View
             android:layout_width="match_parent"

@@ -220,6 +220,11 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         stringBuilder.append(rutas.get(0).getIdGuia());
         stringBuilder.append("/");
         dirPathPhotos = stringBuilder.toString();
+
+        String fotoObservation = rutas.get(0).getObservacionFotos();
+        if (fotoObservation != null && !fotoObservation.isEmpty()) {
+            view.showFotoObservationGalleriesWarning(fotoObservation);
+        }
     }
 
     public void onClickUpdateMotivos() {

@@ -16,6 +16,12 @@ class WarningMessage @JvmOverloads constructor(ctx: Context, attrs: AttributeSet
 
     lateinit var bind: ComponentWarningMessageBinding
 
+    var text: String
+        set(value) {
+            this.bind.tvWarningMessage.text = value
+        }
+        get() = this.bind.tvWarningMessage.text.toString()
+
     init {
         initView()
         useAttrs(ctx, attrs)
@@ -24,7 +30,6 @@ class WarningMessage @JvmOverloads constructor(ctx: Context, attrs: AttributeSet
     private fun initView() {
         bind = ComponentWarningMessageBinding.inflate(LayoutInflater.from(context), this, true)
     }
-
 
     private fun useAttrs(ctx: Context, attrs: AttributeSet) {
         val a: TypedArray = ctx.obtainStyledAttributes(attrs, R.styleable.WarningMessage)

@@ -1,5 +1,7 @@
 package com.urbanoexpress.iridio3.ui.dialogs;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -248,6 +250,18 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void showFotoObservationGalleriesWarning(String fotoObservation) {
+        this.binding.warningObservationCargo.setText(fotoObservation);
+        this.binding.warningObservationCargo.setVisibility(VISIBLE);
+        this.binding.warningObservationDomicilio.setText(fotoObservation);
+        this.binding.warningObservationDomicilio.setVisibility(VISIBLE);
+        this.binding.warningObservationFotosProducto.setText(fotoObservation);
+        this.binding.warningObservationFotosProducto.setVisibility(VISIBLE);
+        this.binding.warningObservationComprobantePago.setText(fotoObservation);
+        this.binding.warningObservationComprobantePago.setVisibility(VISIBLE);
     }
 
     @Override
@@ -697,7 +711,7 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
             if (isChecked) {
                 binding.layoutInputComentarios.setVisibility(View.GONE);
             } else {
-                binding.layoutInputComentarios.setVisibility(View.VISIBLE);
+                binding.layoutInputComentarios.setVisibility(VISIBLE);
             }
         });
 

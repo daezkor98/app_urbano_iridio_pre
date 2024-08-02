@@ -39,7 +39,7 @@ public interface DescargaEntregaView extends BaseV5View {
     void showTipoDocIdentificacion(ArrayList<String> tipoDocIdentificacion);
     void showTipoDireccion(ArrayList<String> tipoDireccion);
     void showTipoMedioPago(ArrayList<String> tipoMedioPago);
-
+    void showFotoObservationGalleriesWarning(String fotoObservation);
     void setVisibilityContainerMsgEntregaParcial(int visible);
     void setVisibilityWarningScanBarcodeMandatory(int visible);
     void setVisibilityLayoutInputRecibidoPor(int visible);
