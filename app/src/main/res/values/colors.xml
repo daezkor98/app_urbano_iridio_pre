@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#1E91ED</color>
+    <color name="colorPrimaryShaded">#1aaae6</color>
     <color name="colorSecondary">#ED1E79</color>
+    <color name="brandPurple">#5b0187</color>
     <color name="colorPrimaryDark">#1E91ED</color>
     <color name="colorAccent">#448AFF</color>
     <color name="colorAccentDark">#2979FF</color>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
@@ -9,23 +10,23 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@android:color/transparent"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@android:color/transparent"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/activity_horizontal_margin"
-        android:paddingVertical="@dimen/activity_vertical_margin"
-        android:gravity="center"
-        android:animateLayoutChanges="true">
+        android:paddingVertical="@dimen/activity_vertical_margin">
 
         <ImageView
+            android:id="@+id/imgLogoUrbano"
             android:layout_width="240dp"
             android:layout_height="77dp"
-            android:id="@+id/imgLogoUrbano"
             android:src="@drawable/logo_urbano_lema_white"
             android:visibility="gone" />
 
@@ -33,9 +34,11 @@
             android:id="@+id/layoutFormLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="50dp"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -47,23 +50,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/bg_input_login"
-                    android:paddingLeft="65dp"
-                    android:paddingRight="25dp"
                     android:hint="NOMBRE DE USUARIO"
-                    android:maxLength="50"
                     android:inputType="textEmailAddress|textCapCharacters"
+
+                    android:maxLength="50"
+                    android:paddingStart="65dp"
+                    android:paddingEnd="25dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColorHint="@color/lightPrimaryText"
                     android:textColor="@color/lightPrimaryText"
-                    android:theme="@style/selectableItemBlackStyle"/>
+                    android:textColorHint="@color/lightPrimaryText"
+                    android:theme="@style/selectableItemBlackStyle" />
 
                 <ImageView
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:padding="15dp"
                     android:background="@drawable/bg_icon_input_login"
+                    android:padding="8dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_circle_user"/>
+                    android:src="@drawable/ic_circle_user" />
+
             </FrameLayout>
 
             <FrameLayout
@@ -76,53 +81,58 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/bg_input_login"
-                    android:paddingLeft="65dp"
-                    android:paddingRight="25dp"
                     android:hint="CONTRASEÑA"
                     android:inputType="textPassword"
                     android:maxLength="50"
+                    android:paddingStart="65dp"
+                    android:paddingEnd="25dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColorHint="@color/lightPrimaryText"
                     android:textColor="@color/lightPrimaryText"
-                    android:theme="@style/selectableItemBlackStyle"/>
+                    android:textColorHint="@color/lightPrimaryText"
+                    android:theme="@style/selectableItemBlackStyle" />
 
                 <ImageView
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:padding="15dp"
                     android:background="@drawable/bg_icon_input_login"
+                    android:padding="8dp"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_circle_lock"/>
+                    android:src="@drawable/ic_circle_lock" />
 
                 <ImageButton
                     android:id="@+id/show_password_button"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_eye_off_grey"
-                    android:scaleType="centerInside"
-                    android:background="?selectableItemBackgroundBorderless"
                     android:layout_gravity="center_vertical|end"
-                    app:tint="@color/white"/>
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_eye_off_grey"
+                    app:tint="@color/white" />
             </FrameLayout>
 
             <Button
-                style="@style/Widget.App.Button.LoginButton"
                 android:id="@+id/login_button"
+                style="@style/Widget.App.Button.LoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="45dp"
-                android:text="ENTRAR"/>
+                android:text="ENTRAR" />
 
             <TextView
                 android:id="@+id/lblForgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="¿Has olvidado tu contraseña?"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/lightPrimaryText"
+                android:layout_marginTop="30dp"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:text="¿Has olvidado tu contraseña?"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorSecondary"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
         </LinearLayout>
+
     </LinearLayout>
+
 </FrameLayout>
