@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00a4e3</color>
-    <color name="colorSecondary">#ee0070</color>
-    <color name="colorPrimaryDark">#00a4e3</color>
+    <color name="colorPrimary">#1E91ED</color>
+    <color name="colorSecondary">#ED1E79</color>
+    <color name="colorPrimaryDark">#1E91ED</color>
     <color name="colorAccent">#448AFF</color>
     <color name="colorAccentDark">#2979FF</color>
     <color name="statusBarColor">#20000000</color>
