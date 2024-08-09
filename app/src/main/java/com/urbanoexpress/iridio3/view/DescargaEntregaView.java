@@ -32,6 +32,10 @@ public interface DescargaEntregaView extends BaseV5View {
     void showPiezas(List<PiezaItem> items);
     void showPremios(List<PremioItem> items);
     void showFotosEnGaleria(List<GalleryWrapperItem> items);
+    void adjustWarningMessageToCargo(int imageCount);
+    void adjustWarningMessageToDomicilio(int imageCount);
+    void adjustWarningMessageToFotosProducto(int imageCount);
+    void adjustWarningMessageToComprobantePago(int imageCount);
     void showImagenFirmaEnGaleria(List<GalleryWrapperItem> items);
     void showFotosCargoEnGaleria(List<GalleryWrapperItem> items);
     void showFotosDomicilioEnGaleria(List<GalleryWrapperItem> items);

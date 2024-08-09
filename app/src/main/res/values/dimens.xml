@@ -11,7 +11,10 @@
     <dimen name="search_icon_padding">12dp</dimen>
     <dimen name="search_view_text_padding">65dp</dimen>
 
+
     <dimen name="dialog">500dp</dimen>
+    <dimen name="warning_regular">14sp</dimen>
+    <dimen name="warning_big">16sp</dimen>
 
     <dimen name="bottom_sheet_corner_radius">10dp</dimen>
     <dimen name="bottom_sheet_top_padding">0dp</dimen>

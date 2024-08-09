@@ -5,6 +5,8 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
 import com.urbanoexpress.iridio3.R
 import com.urbanoexpress.iridio3.databinding.ComponentWarningMessageBinding
 
@@ -21,6 +23,10 @@ class WarningMessage @JvmOverloads constructor(ctx: Context, attrs: AttributeSet
             this.bind.tvWarningMessage.text = value
         }
         get() = this.bind.tvWarningMessage.text.toString()
+
+    public fun setTextSize(@DimenRes dimenId: Int) {
+        this.bind.tvWarningMessage.textSize = this.context.resources.getDimension(dimenId)
+    }
 
     init {
         initView()

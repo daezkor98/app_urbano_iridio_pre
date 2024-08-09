@@ -1561,18 +1561,23 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             switch (imagen.getAnotaciones().toLowerCase()) {
                 case "imagen":
                     galeria.add(item);
+                    //adjust rv.galeria
+                    view.adjustWarningMessageToFotosProducto(galeria.size());
                     break;
                 case "firma":
                     galeriaFirma.add(item);
                     break;
                 case "cargo":
                     galeriaCargo.add(item);
+                    view.adjustWarningMessageToCargo(galeriaCargo.size());
                     break;
                 case "domicilio":
                     galeriaDomicilio.add(item);
+                    view.adjustWarningMessageToDomicilio(galeriaDomicilio.size());
                     break;
                 case "pago":
                     galeriaComprobantePago.add(item);
+                    view.adjustWarningMessageToComprobantePago(galeriaComprobantePago.size());
                     break;
             }
         }
