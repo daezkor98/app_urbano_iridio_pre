@@ -94,11 +94,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scrollView">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnOtorgarAcceso"
             android:layout_width="match_parent"
-            android:background="@drawable/bg_button_secondary"
             android:layout_height="50dp"
+            android:background="@drawable/bg_button_secondary"
             android:text="@string/text_otorgar_acceso"
             android:textColor="@color/lightPrimaryText"
             android:textStyle="bold" />
