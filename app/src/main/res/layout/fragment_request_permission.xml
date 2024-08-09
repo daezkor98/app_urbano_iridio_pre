@@ -6,36 +6,17 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="45dp"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/logo_urbano_lema_white" />
-
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_gravity="bottom"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_city_shader" />
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="110dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="30dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_hand_padlock" />
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/bg_bienvenida_new_3" />
 
     </FrameLayout>
 
-    <!--android:background="@color/gris_1"-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -47,22 +28,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¡Requerimos tu"
+            android:text="¡Requerimos tu permiso!"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="permiso!"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="25dp" />
 
-        <!--android:textColor="@color/lightPrimaryText"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,13 +48,14 @@
             android:layout_width="match_parent"
             android:layout_height="40dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnOtorgarAcceso"
+            style="@style/Button.Red"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/text_otorgar_acceso"
             android:textColor="@color/lightPrimaryText"
-            android:theme="@style/Button.Red" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 

@@ -170,21 +170,12 @@
         <item name="android:colorControlHighlight">@color/darkPrimaryText</item>
     </style>
 
+
     <style name="Button.Red">
-        <item name="android:colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:background"> @drawable/bg_button_secondary</item>
+        <item name="android:colorButtonNormal">@color/colorSecondary</item>
     </style>
 
-    <!--<style name="TextAppearance.RobotoLight" parent="android:TextAppearance">
-        <item name="fontPath">fonts/Roboto-Light.ttf</item>
-    </style>
-
-    <style name="TextAppearance.RobotoThin" parent="android:TextAppearance">
-        <item name="fontPath">fonts/Roboto-Thin.ttf</item>
-    </style>
-
-    <style name="TextAppearance.RobotoRegular" parent="android:TextAppearance">
-        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
-    </style>-->
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorPrimary</item>

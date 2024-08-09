@@ -131,6 +131,7 @@
     </style>
 
     <style name="Button.Red">
+        <item name="android:background"> @drawable/bg_button_secondary</item>
         <item name="colorButtonNormal">@color/colorSecondary</item>
     </style>
 
