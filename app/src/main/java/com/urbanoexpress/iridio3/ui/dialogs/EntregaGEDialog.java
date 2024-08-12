@@ -256,43 +256,43 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     public void showFotoObservationGalleriesWarning(String fotoObservation) {
         this.binding.warningObservationCargo.setText(fotoObservation);
         this.binding.warningObservationCargo.setVisibility(VISIBLE);
-        this.binding.warningObservationCargo.setTextSize(R.dimen.warning_big);
+        this.binding.warningObservationCargo.setTextSize(18f);
         this.binding.warningObservationDomicilio.setText(fotoObservation);
         this.binding.warningObservationDomicilio.setVisibility(VISIBLE);
-        this.binding.warningObservationDomicilio.setTextSize(R.dimen.warning_big);
+        this.binding.warningObservationDomicilio.setTextSize(18f);
         this.binding.warningObservationFotosProducto.setText(fotoObservation);
         this.binding.warningObservationFotosProducto.setVisibility(VISIBLE);
-        this.binding.warningObservationFotosProducto.setTextSize(R.dimen.warning_big);
+        this.binding.warningObservationFotosProducto.setTextSize(18f);
         this.binding.warningObservationComprobantePago.setText(fotoObservation);
         this.binding.warningObservationComprobantePago.setVisibility(VISIBLE);
-        this.binding.warningObservationComprobantePago.setTextSize(R.dimen.warning_big);
+        this.binding.warningObservationComprobantePago.setTextSize(18f);
     }
 
     @Override
     public void adjustWarningMessageToCargo(int imageCount) {
         if (imageCount > 2) {
-         binding.warningObservationCargo.setTextSize(R.dimen.warning_regular);
+         binding.warningObservationCargo.setTextSize(14f);
         }
     }
 
     @Override
     public void adjustWarningMessageToDomicilio(int imageCount) {
         if (imageCount > 2) {
-            binding.warningObservationDomicilio.setTextSize(R.dimen.warning_regular);
+            binding.warningObservationDomicilio.setTextSize(14f);
         }
     }
 
     @Override
     public void adjustWarningMessageToFotosProducto(int imageCount) {
         if (imageCount > 2) {
-            binding.warningObservationFotosProducto.setTextSize(R.dimen.warning_regular);
+            binding.warningObservationFotosProducto.setTextSize(14f);
         }
     }
 
     @Override
     public void adjustWarningMessageToComprobantePago(int imageCount) {
         if (imageCount > 2) {
-            binding.warningObservationComprobantePago.setTextSize(R.dimen.warning_regular);
+            binding.warningObservationComprobantePago.setTextSize(14f);
         }
     }
 

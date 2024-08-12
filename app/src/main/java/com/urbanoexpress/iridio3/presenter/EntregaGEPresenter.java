@@ -1561,7 +1561,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             switch (imagen.getAnotaciones().toLowerCase()) {
                 case "imagen":
                     galeria.add(item);
-                    //adjust rv.galeria
                     view.adjustWarningMessageToFotosProducto(galeria.size());
                     break;
                 case "firma":
