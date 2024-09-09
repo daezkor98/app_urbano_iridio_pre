@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.data.rest.ApiRequest;
 import com.urbanoexpress.iridio3.pe.data.rest.ApiRest;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;

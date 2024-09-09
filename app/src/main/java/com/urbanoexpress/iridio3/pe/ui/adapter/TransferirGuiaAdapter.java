@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.databinding.TransferirGuiaRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.TransferirGuiaRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;
 import com.urbanoexpress.iridio3.pe.ui.model.TransferirGuiaItem;
 

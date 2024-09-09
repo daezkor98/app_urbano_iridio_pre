@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.application.AndroidApplication;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalInterface;

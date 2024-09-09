@@ -30,7 +30,7 @@ import com.drew.metadata.Tag;
 import com.google.android.gms.location.LocationServices;
 import com.orm.util.NamingHelper;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.application.AndroidApplication;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.pe.model.entity.Data;

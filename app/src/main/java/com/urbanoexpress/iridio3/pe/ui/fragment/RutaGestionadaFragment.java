@@ -12,11 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentRutasBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRutasBinding;
 import com.urbanoexpress.iridio3.pe.presenter.RutaGestionadaPresenter;
-import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.RutaAdapter;
+import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.util.AnimationUtils;
 import com.urbanoexpress.iridio3.pe.view.RutaGestionadaView;
 

@@ -6,8 +6,8 @@ import android.view.ViewTreeObserver;
 
 import androidx.annotation.Nullable;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityShareProfileQrcodeBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityShareProfileQrcodeBinding;
 import com.urbanoexpress.iridio3.pe.util.Preferences;
 import com.urbanoexpress.iridio3.pe.util.UrbanoQRFormatter;
 import com.urbanoexpress.iridio3.pe.util.graphics.QRCodeGenerator;

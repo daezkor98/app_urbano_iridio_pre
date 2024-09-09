@@ -29,8 +29,8 @@ import androidx.work.WorkManager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityMainBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityMainBinding;
 import com.urbanoexpress.iridio3.pe.model.NavigationMenuModel;
 import com.urbanoexpress.iridio3.pe.presenter.NavigationMenuPresenter;
 import com.urbanoexpress.iridio3.pe.presenter.NotificacionesRutaPresenter;

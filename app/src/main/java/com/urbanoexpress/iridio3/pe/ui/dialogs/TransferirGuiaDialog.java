@@ -25,9 +25,9 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
-import com.urbanoexpress.iridio3.databinding.ModalTransferirGuiaBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalTransferirGuiaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.PlanDeViaje;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.model.interactor.RutaPendienteInteractor;

@@ -21,8 +21,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalGestionarRecoleccionGuiaValijaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalGestionarRecoleccionGuiaValijaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.presenter.GestionarRecoleccionGuiaValijaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.adapter.GaleriaDescargaRutaAdapter;

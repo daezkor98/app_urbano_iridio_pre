@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentBienvenidaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentBienvenidaBinding;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 
 /**

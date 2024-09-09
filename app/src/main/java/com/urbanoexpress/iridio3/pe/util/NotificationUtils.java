@@ -10,7 +10,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 
 public class NotificationUtils extends ContextWrapper {
 

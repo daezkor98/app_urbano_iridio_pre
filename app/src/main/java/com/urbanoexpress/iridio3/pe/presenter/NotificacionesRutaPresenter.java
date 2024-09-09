@@ -7,7 +7,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.model.interactor.NotificacionesRutaInteractor;
 import com.urbanoexpress.iridio3.pe.model.interactor.callback.RequestCallback;

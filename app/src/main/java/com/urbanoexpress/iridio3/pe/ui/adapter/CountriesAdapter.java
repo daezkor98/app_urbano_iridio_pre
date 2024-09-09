@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.databinding.ItemCountryBottomSheetBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ItemCountryBottomSheetBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.PaisItem;
 
 import java.util.List;

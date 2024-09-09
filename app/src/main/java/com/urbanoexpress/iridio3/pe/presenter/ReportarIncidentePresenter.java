@@ -16,7 +16,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.IncidenteRuta;
 import com.urbanoexpress.iridio3.pe.ui.RequestPermissionActivity;
 import com.urbanoexpress.iridio3.pe.util.CameraUtils;

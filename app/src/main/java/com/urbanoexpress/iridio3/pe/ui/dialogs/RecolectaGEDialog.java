@@ -25,8 +25,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalRecolectarGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalRecolectarGuiaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.presenter.RecolectaGEPresenter;
 import com.urbanoexpress.iridio3.pe.ui.model.MotivoDescargaItem;

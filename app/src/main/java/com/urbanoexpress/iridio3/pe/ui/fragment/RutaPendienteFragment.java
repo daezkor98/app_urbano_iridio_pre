@@ -21,8 +21,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentRutasBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRutasBinding;
 import com.urbanoexpress.iridio3.pe.presenter.RutaPendientePresenter;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnActionModeListener;

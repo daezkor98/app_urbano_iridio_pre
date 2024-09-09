@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.IncidenteRuta;
 import com.urbanoexpress.iridio3.pe.model.entity.ParadaProgramada;
 import com.urbanoexpress.iridio3.pe.model.entity.PlanDeViaje;

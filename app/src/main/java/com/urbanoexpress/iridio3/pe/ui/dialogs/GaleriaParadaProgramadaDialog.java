@@ -19,8 +19,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalGaleriaDescargaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalGaleriaDescargaBinding;
 import com.urbanoexpress.iridio3.pe.presenter.GaleriaDescargaPresenter;
 import com.urbanoexpress.iridio3.pe.presenter.GaleriaParadaProgramadaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.adapter.GaleriaDescargaRutaAdapter;

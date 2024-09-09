@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import com.urbanoexpress.iridio3.databinding.ParadaProgramadaRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ParadaProgramadaRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;
 import com.urbanoexpress.iridio3.pe.ui.model.ParadaProgramadaItem;
 

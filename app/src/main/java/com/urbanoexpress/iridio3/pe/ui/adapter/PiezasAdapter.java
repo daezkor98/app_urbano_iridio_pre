@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ItemPiezaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ItemPiezaBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.PiezaItem;
 
 import org.apache.commons.text.WordUtils;

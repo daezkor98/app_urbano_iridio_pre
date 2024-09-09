@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urbanoexpress.iridio3.databinding.RowRecoleccionGuiasSinAlistarItemBinding;
+import com.urbanoexpress.iridio3.pe.databinding.RowRecoleccionGuiasSinAlistarItemBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.PiezaRecolectadaItem;
 
 import java.time.LocalDate;

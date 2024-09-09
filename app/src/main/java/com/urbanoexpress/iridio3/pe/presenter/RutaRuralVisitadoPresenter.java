@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.DescargaRuta;
 import com.urbanoexpress.iridio3.pe.model.entity.Pieza;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;

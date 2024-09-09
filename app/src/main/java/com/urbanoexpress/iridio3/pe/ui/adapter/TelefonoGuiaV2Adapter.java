@@ -9,8 +9,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urbanoexpress.iridio3.databinding.ItemTelefonoGuiaBinding;
-import com.urbanoexpress.iridio3.databinding.ItemTelefonoGuiaHeaderBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ItemTelefonoGuiaBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ItemTelefonoGuiaHeaderBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.TelefonoGuiaItem;
 import com.urbanoexpress.iridio3.pe.util.AnimationUtils;
 

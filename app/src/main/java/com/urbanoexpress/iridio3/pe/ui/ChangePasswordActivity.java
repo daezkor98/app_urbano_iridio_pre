@@ -9,8 +9,8 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityChangePasswordBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityChangePasswordBinding;
 import com.urbanoexpress.iridio3.pe.presenter.ChangePasswordPresenter;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;

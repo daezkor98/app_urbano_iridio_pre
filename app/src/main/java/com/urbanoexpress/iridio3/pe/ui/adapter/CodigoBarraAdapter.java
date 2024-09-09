@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.databinding.CodigoBarraRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.CodigoBarraRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;
 import com.urbanoexpress.iridio3.pe.ui.model.CodigoBarraItem;
 

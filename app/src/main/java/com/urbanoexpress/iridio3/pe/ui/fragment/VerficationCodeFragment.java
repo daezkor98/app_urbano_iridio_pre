@@ -20,8 +20,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentVerficationCodeBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentVerficationCodeBinding;
 import com.urbanoexpress.iridio3.pe.presenter.VerficationCodePresenter;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.view.VerficationCodeView;

@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.urbanoexpress.iridio3.R
-import com.urbanoexpress.iridio3.databinding.ActivityMotorizadoDocFormBinding
-
-//import com.urbanoexpress.iridio3.databinding.ActivityMotorizadoDocFormBinding
+import com.urbanoexpress.iridio3.pe.R
+import com.urbanoexpress.iridio3.pe.databinding.ActivityMotorizadoDocFormBinding
 import com.urbanoexpress.iridio3.pe.presenter.viewmodel.LicenciaFormViewModel
 import com.urbanoexpress.iridio3.pe.ui.dialogs.DATE_PICKER_MODE
 import com.urbanoexpress.iridio3.pe.ui.dialogs.DatePickerDailogFragment

@@ -14,7 +14,7 @@ import android.view.View;
 import com.android.volley.VolleyError;
 import com.google.android.gms.maps.model.LatLng;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.model.interactor.GoogleMapsServiceApis;

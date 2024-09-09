@@ -17,8 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentRecolectarValijaExpressPhotoValijaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRecolectarValijaExpressPhotoValijaBinding;
 import com.urbanoexpress.iridio3.pe.model.RecolectarValijaExpressViewModel;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.presenter.RVEPhotoValijaPresenter;

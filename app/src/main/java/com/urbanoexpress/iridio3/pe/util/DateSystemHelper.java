@@ -5,7 +5,7 @@ import android.provider.Settings;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.util.network.Connectivity;
 

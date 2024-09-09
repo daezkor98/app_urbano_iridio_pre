@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import com.urbanoexpress.iridio3.databinding.ModalFacturaPeriodoResumenBinding
+import com.urbanoexpress.iridio3.pe.databinding.ModalFacturaPeriodoResumenBinding
 import com.urbanoexpress.iridio3.pe.model.dto.Period
 import com.urbanoexpress.iridio3.urbanocore.extentions.onExclusiveClick
 import com.urbanoexpress.iridio3.urbanocore.values.AK

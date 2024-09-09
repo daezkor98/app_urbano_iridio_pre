@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 

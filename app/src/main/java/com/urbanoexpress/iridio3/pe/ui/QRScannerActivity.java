@@ -7,8 +7,8 @@ import androidx.annotation.Nullable;
 
 import com.google.zxing.Result;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityQrscannerBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityQrscannerBinding;
 import com.urbanoexpress.iridio3.pe.presenter.QRScannerPresenter;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.view.QRScannerView;

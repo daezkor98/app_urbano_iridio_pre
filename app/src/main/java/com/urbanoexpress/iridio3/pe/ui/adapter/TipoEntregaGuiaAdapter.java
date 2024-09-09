@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urbanoexpress.iridio3.databinding.TipoEntregaGuiaRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.TipoEntregaGuiaRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.MotivoDescargaItem;
 
 import java.util.List;

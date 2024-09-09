@@ -23,8 +23,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalNoRecolectoGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalNoRecolectoGuiaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.presenter.GestionarGENoRecolectadasPresenter;
 import com.urbanoexpress.iridio3.pe.ui.model.MotivoDescargaItem;

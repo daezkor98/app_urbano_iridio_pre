@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
 import android.widget.DatePicker;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 
 import java.util.Calendar;
 

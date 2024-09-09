@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import com.urbanoexpress.iridio3.databinding.DespachoRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.DespachoRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemDespachoListener;
 import com.urbanoexpress.iridio3.pe.ui.model.DespachoItem;
 

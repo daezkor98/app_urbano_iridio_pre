@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urbanoexpress.iridio3.databinding.ItemPremioBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ItemPremioBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.PremioItem;
 
 import java.util.List;

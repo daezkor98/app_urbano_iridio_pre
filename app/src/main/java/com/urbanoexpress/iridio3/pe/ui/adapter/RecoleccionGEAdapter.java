@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.databinding.RecoleccionGeRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.RecoleccionGeRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.RecoleccionGEItem;
 
 import java.util.List;

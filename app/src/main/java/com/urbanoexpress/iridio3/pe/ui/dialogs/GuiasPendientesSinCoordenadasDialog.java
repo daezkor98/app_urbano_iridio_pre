@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.urbanoexpress.iridio3.databinding.ModalGePendientesSinCoordenadasBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalGePendientesSinCoordenadasBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.RutaAdapter;

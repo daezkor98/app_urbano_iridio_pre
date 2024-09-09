@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.AsignarDespachoRowBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.AsignarDespachoRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.AsignarDespachoItem;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 

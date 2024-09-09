@@ -15,8 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityPlanDeViajeBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityPlanDeViajeBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.ParadaProgramada;
 import com.urbanoexpress.iridio3.pe.model.entity.PlanDeViaje;
 import com.urbanoexpress.iridio3.pe.presenter.PlanDeViajePresenter;

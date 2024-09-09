@@ -5,7 +5,7 @@ import static com.urbanoexpress.iridio3.pe.model.NavigationMenuModel.TypeAction;
 import android.util.Log;
 
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.NavigationMenuModel;
 import com.urbanoexpress.iridio3.pe.model.entity.MenuApp;
 import com.urbanoexpress.iridio3.pe.ui.ConfiguracionActivity;

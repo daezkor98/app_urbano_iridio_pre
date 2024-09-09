@@ -4,8 +4,8 @@ import androidx.annotation.Nullable;
 
 import android.os.Bundle;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityAcercaDeBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityAcercaDeBinding;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 
 public class AcercaDeActivity extends AppThemeBaseActivity {

@@ -19,8 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentRecolectarValijaExpressScanBarcodeBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRecolectarValijaExpressScanBarcodeBinding;
 import com.urbanoexpress.iridio3.pe.model.RecolectarValijaExpressViewModel;
 import com.urbanoexpress.iridio3.pe.presenter.QRScannerPresenter;
 import com.urbanoexpress.iridio3.pe.presenter.RVEScanBarcodePresenter;

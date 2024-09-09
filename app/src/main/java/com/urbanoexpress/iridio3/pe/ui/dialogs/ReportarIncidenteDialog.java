@@ -20,8 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalReportarIncidenteBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalReportarIncidenteBinding;
 import com.urbanoexpress.iridio3.pe.presenter.ReportarIncidentePresenter;
 import com.urbanoexpress.iridio3.pe.util.CameraUtils;
 import com.urbanoexpress.iridio3.pe.util.MetricsUtils;

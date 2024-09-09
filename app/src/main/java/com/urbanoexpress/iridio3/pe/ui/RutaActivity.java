@@ -19,8 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityRutaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityRutaBinding;
 import com.urbanoexpress.iridio3.pe.presenter.QRScannerPresenter;
 import com.urbanoexpress.iridio3.pe.presenter.RutaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.adapter.ViewPagerAdapter;

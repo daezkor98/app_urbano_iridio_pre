@@ -11,8 +11,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.BottomSheetRequerimientoGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.BottomSheetRequerimientoGuiaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.ui.model.DetailsItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.DetailsAdapter;

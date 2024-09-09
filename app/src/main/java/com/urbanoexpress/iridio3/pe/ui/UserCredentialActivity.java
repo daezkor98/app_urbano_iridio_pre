@@ -6,8 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityUserCredentialBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityUserCredentialBinding;
 import com.urbanoexpress.iridio3.pe.model.UserCredentialModel;
 import com.urbanoexpress.iridio3.pe.util.MetricsUtils;
 import com.urbanoexpress.iridio3.pe.util.QRCode;

@@ -14,8 +14,8 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 
 import com.android.volley.VolleyError;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalEditarPlacaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalEditarPlacaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.model.interactor.RutaPendienteInteractor;
 import com.urbanoexpress.iridio3.pe.model.interactor.callback.RequestCallback;

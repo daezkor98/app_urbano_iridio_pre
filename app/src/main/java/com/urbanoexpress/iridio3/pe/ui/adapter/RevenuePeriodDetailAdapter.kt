@@ -3,7 +3,7 @@ package com.urbanoexpress.iridio3.pe.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.urbanoexpress.iridio3.databinding.RowRevenuePeriodDetailBinding
+import com.urbanoexpress.iridio3.pe.databinding.RowRevenuePeriodDetailBinding
 import com.urbanoexpress.iridio3.pe.model.dto.RevenueDay
 import com.urbanoexpress.iridio3.urbanocore.extentions.*
 import com.urbanoexpress.iridio3.urbanocore.values.weekDays

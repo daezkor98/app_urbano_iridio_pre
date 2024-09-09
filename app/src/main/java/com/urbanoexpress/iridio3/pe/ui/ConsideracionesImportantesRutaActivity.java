@@ -6,8 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityConsideracionesImportantesRutaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityConsideracionesImportantesRutaBinding;
 import com.urbanoexpress.iridio3.pe.presenter.ConsideracionesImportantesRutaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.RutaAdapter;

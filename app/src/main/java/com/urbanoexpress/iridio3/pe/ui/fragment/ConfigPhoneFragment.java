@@ -2,6 +2,13 @@ package com.urbanoexpress.iridio3.pe.ui.fragment;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -9,18 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import com.bumptech.glide.Glide;
-//import com.google.android.gms.auth.api.credentials.Credential;
-//import com.google.android.gms.auth.api.credentials.Credentials;
-//import com.google.android.gms.auth.api.credentials.HintRequest;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentConfigPhoneBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentConfigPhoneBinding;
 import com.urbanoexpress.iridio3.pe.presenter.ConfigPhonePresenter;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.ChoiseCountryBottomSheet;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;

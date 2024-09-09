@@ -1,6 +1,6 @@
 package com.urbanoexpress.iridio3.pe.presenter;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.RecolectarValijaExpressViewModel;
 import com.urbanoexpress.iridio3.pe.model.entity.Data;
 import com.urbanoexpress.iridio3.pe.model.entity.DescargaRuta;

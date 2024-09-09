@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityRecolectarValijaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityRecolectarValijaBinding;
 import com.urbanoexpress.iridio3.pe.model.RecolectarValijaExpressViewModel;
 import com.urbanoexpress.iridio3.pe.ui.fragment.RVECompleteFragment;
 import com.urbanoexpress.iridio3.pe.ui.fragment.RVEPhotoValijaFragment;

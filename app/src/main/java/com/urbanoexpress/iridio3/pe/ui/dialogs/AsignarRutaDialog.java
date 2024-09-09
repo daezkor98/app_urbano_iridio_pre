@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalAsignarRutaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalAsignarRutaBinding;
 import com.urbanoexpress.iridio3.pe.util.Preferences;
 import com.urbanoexpress.iridio3.pe.util.Session;
 

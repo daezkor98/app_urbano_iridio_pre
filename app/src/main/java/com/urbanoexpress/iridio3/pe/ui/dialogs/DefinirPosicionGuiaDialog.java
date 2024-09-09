@@ -15,8 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalDefinirPosicionDeLaGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalDefinirPosicionDeLaGuiaBinding;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;
 import com.urbanoexpress.iridio3.pe.util.constant.LocalAction;
 import com.urbanoexpress.iridio3.pe.view.BaseModalsView;

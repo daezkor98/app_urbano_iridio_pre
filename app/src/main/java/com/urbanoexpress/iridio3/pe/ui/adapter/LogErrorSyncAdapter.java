@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.databinding.LogErrorSyncRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.LogErrorSyncRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;
 import com.urbanoexpress.iridio3.pe.ui.model.LogErrorSyncItem;
 

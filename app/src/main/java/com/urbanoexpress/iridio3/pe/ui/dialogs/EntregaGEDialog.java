@@ -35,9 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
-import com.urbanoexpress.iridio3.databinding.ModalEntregarGuiaBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalEntregarGuiaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.presenter.EntregaGEPresenter;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;

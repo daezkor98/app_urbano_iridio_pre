@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urbanoexpress.iridio3.databinding.ItemContenedorRecoleccionBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ItemContenedorRecoleccionBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.ContenedorRecoleccionItem;
 
 import java.util.List;

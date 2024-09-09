@@ -10,7 +10,7 @@ import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.tasks.Task;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.pe.data.rest.ApiRequest;
 import com.urbanoexpress.iridio3.pe.data.rest.ApiRest;

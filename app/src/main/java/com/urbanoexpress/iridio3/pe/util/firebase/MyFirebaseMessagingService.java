@@ -15,7 +15,7 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.model.interactor.NotificacionesRutaInteractor;
 import com.urbanoexpress.iridio3.pe.ui.NotificacionesRutaActivity;

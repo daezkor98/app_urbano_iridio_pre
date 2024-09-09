@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 
 public class AdderButton extends ConstraintLayout implements View.OnClickListener, TextWatcher,
         View.OnFocusChangeListener {

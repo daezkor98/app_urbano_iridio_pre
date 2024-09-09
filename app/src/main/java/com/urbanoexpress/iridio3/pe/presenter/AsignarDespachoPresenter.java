@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import com.android.volley.VolleyError;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.PlanDeViaje;
 import com.urbanoexpress.iridio3.pe.model.interactor.PlanDeViajeInteractor;
 import com.urbanoexpress.iridio3.pe.model.interactor.callback.RequestCallback;

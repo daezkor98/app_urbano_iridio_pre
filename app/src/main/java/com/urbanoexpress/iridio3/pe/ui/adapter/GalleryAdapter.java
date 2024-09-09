@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.databinding.ItemGalleryButtonBinding;
-import com.urbanoexpress.iridio3.databinding.ItemGalleryPhotoBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ItemGalleryButtonBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ItemGalleryPhotoBinding;
 import com.urbanoexpress.iridio3.pe.ui.adapter.model.GalleryButtonItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.model.GalleryPhotoItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.model.GalleryWrapperItem;

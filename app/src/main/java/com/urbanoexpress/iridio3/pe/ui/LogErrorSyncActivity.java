@@ -8,9 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.orm.util.NamingHelper;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityRegistroErrorSincDatosBinding;
-import com.urbanoexpress.iridio3.databinding.ModalDetalleLogErrorSyncBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityRegistroErrorSincDatosBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalDetalleLogErrorSyncBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.LogErrorSync;
 import com.urbanoexpress.iridio3.pe.ui.model.LogErrorSyncItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.LogErrorSyncAdapter;

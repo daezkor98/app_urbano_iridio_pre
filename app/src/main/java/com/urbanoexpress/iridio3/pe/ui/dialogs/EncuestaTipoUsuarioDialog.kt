@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.urbanoexpress.iridio3.databinding.ModalEncuestaTipoUsuarioBinding
+import com.urbanoexpress.iridio3.pe.databinding.ModalEncuestaTipoUsuarioBinding
 import com.urbanoexpress.iridio3.pe.presenter.viewmodel.LicenciaFormViewModel
 import com.urbanoexpress.iridio3.pe.ui.MainActivity
 import com.urbanoexpress.iridio3.pe.ui.MotorizadoDocFormActivity

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.databinding.GaleriaImagenRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.GaleriaImagenRowBinding;
 import com.urbanoexpress.iridio3.pe.model.util.ModelUtils;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemGaleriaListener;
 import com.urbanoexpress.iridio3.pe.ui.model.GaleriaDescargaRutaItem;

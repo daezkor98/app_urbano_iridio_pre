@@ -6,8 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityResumenRutaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityResumenRutaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.ResumenRuta;
 import com.urbanoexpress.iridio3.pe.presenter.ResumenRutaPresenter;
 import com.urbanoexpress.iridio3.pe.util.LocationUtils;

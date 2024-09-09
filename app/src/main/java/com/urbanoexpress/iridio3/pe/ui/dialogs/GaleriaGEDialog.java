@@ -21,8 +21,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalGaleriaDescargaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalGaleriaDescargaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.presenter.GaleriaDescargaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.adapter.GaleriaDescargaRutaAdapter;

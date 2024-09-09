@@ -17,8 +17,8 @@ import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentRutasBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRutasBinding;
 import com.urbanoexpress.iridio3.pe.presenter.RutaRuralPendientePresenter;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnActionModeListener;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;

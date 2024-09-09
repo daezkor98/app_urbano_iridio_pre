@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.android.volley.VolleyError;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.UserCredentialModel;
 import com.urbanoexpress.iridio3.pe.model.interactor.UserProfileInteractor;
 import com.urbanoexpress.iridio3.pe.model.interactor.callback.RequestCallback;

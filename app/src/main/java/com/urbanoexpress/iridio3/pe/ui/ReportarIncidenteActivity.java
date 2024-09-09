@@ -4,8 +4,8 @@ import androidx.annotation.Nullable;
 import android.os.Bundle;
 import android.view.View;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityReportarIncidenteBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityReportarIncidenteBinding;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.ReportarIncidenteDialog;
 
 public class ReportarIncidenteActivity extends AppThemeBaseActivity {

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.urbanoexpress.iridio3.databinding.ModalAsignarDespachoPlanViajeBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalAsignarDespachoPlanViajeBinding;
 import com.urbanoexpress.iridio3.pe.presenter.AsignarDespachoPresenter;
 import com.urbanoexpress.iridio3.pe.ui.model.AsignarDespachoItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.AsignarDespachoAdapter;

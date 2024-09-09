@@ -20,8 +20,8 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityUserProfileBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityUserProfileBinding;
 import com.urbanoexpress.iridio3.pe.model.UserCredentialModel;
 import com.urbanoexpress.iridio3.pe.presenter.UserProfilePresenter;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;

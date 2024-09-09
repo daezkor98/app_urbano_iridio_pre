@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 import androidx.core.content.ContextCompat;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.application.AndroidApplication;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.pe.model.entity.MotivoDescarga;

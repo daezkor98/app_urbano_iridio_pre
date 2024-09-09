@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.urbanoexpress.iridio3.databinding.ModalLogoutBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalLogoutBinding;
 import com.urbanoexpress.iridio3.pe.services.DataSyncService;
 import com.urbanoexpress.iridio3.pe.ui.InitActivity;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;

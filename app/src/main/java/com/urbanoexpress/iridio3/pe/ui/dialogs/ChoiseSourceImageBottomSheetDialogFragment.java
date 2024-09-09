@@ -7,7 +7,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.view.View;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 
 /**
  * Created by mick on 19/07/16.

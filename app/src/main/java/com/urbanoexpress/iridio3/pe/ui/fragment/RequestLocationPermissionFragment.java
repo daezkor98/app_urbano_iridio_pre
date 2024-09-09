@@ -18,8 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentRequestLocationPermissionBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRequestLocationPermissionBinding;
 import com.urbanoexpress.iridio3.pe.ui.RequestPermissionActivity;
 import com.urbanoexpress.iridio3.pe.ui.InitActivity;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;

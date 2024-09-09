@@ -23,8 +23,8 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalNoEntregoGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalNoEntregoGuiaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.presenter.NoEntregaGEPresenter;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;

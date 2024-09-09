@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio3.pe.model.entity.Pieza;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;

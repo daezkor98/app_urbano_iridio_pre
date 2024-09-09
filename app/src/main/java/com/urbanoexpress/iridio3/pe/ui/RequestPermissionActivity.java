@@ -4,8 +4,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityInitBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityInitBinding;
 import com.urbanoexpress.iridio3.pe.ui.fragment.RequestLocationPermissionFragment;
 import com.urbanoexpress.iridio3.pe.ui.fragment.RequestPermissionFragment;
 import com.urbanoexpress.iridio3.pe.util.PermissionUtils;

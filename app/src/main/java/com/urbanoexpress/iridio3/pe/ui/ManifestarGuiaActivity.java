@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import android.os.Bundle;
 import android.view.View;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityManifestarGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityManifestarGuiaBinding;
 import com.urbanoexpress.iridio3.pe.presenter.ManifestarGuiaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.model.PiezaItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.PiezasAdapter;

@@ -1,7 +1,7 @@
 package com.urbanoexpress.iridio3.pe.ui
 
 import android.os.Bundle
-import com.urbanoexpress.iridio3.databinding.ActivityMisGananciasBinding
+import com.urbanoexpress.iridio3.pe.databinding.ActivityMisGananciasBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

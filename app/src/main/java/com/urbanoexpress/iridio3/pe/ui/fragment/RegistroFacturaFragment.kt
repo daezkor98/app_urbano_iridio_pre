@@ -11,8 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.urbanoexpress.iridio3.R
-import com.urbanoexpress.iridio3.databinding.FragmentRegistroFacturaBinding
+import com.urbanoexpress.iridio3.pe.R
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRegistroFacturaBinding
 import com.urbanoexpress.iridio3.pe.model.dto.CERT_ESTADO
 import com.urbanoexpress.iridio3.pe.model.dto.Period
 import com.urbanoexpress.iridio3.pe.presenter.viewmodel.RegistrarFacturaViewModel

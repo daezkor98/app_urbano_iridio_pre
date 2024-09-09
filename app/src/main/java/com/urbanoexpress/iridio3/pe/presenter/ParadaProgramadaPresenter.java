@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.Despacho;
 import com.urbanoexpress.iridio3.pe.model.entity.ParadaProgramada;
 import com.urbanoexpress.iridio3.pe.model.entity.PlanDeViaje;

@@ -5,8 +5,8 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.urbanoexpress.iridio3.R
-import com.urbanoexpress.iridio3.databinding.ComponentWarningMessageBinding
+import com.urbanoexpress.iridio3.pe.R
+import com.urbanoexpress.iridio3.pe.databinding.ComponentWarningMessageBinding
 
 /**
  * Simple Warning message placeHolder - With top line separator

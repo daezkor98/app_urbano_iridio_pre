@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.urbanoexpress.iridio3.databinding.ModalConfirmPiezasRecolectadasBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalConfirmPiezasRecolectadasBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.PiezaRecolectadaItem;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.constant.LocalAction;

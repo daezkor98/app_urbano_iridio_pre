@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.FileProvider;
 import android.util.Log;
 
-import com.urbanoexpress.iridio3.BuildConfig;
+import com.urbanoexpress.iridio3.pe.BuildConfig;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

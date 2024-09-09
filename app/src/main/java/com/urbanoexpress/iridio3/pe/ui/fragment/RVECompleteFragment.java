@@ -14,8 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.FragmentRecolectarValijaExpressCompleteBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.FragmentRecolectarValijaExpressCompleteBinding;
 import com.urbanoexpress.iridio3.pe.model.RecolectarValijaExpressViewModel;
 
 public class RVECompleteFragment extends BaseFragment {

@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ItemPiezaRecolectadaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ItemPiezaRecolectadaBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.PiezaRecolectadaItem;
 
 import java.time.LocalDate;

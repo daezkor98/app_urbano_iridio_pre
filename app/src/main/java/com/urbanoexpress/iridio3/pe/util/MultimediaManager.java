@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
 
-import com.urbanoexpress.iridio3.BuildConfig;
+import com.urbanoexpress.iridio3.pe.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;

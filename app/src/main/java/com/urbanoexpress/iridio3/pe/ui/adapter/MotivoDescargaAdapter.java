@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.ui.model.MotivoDescargaItem;
 
 /**

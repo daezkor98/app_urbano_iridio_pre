@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.BottomSheetChoiseCountryBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.BottomSheetChoiseCountryBinding;
 import com.urbanoexpress.iridio3.pe.ui.fragment.ConfigPhoneFragment;
 import com.urbanoexpress.iridio3.pe.ui.model.PaisItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.CountriesAdapter;

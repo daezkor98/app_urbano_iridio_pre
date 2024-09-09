@@ -12,8 +12,8 @@ import android.view.MenuItem;
 
 import java.io.File;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityFirmarBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityFirmarBinding;
 import com.urbanoexpress.iridio3.pe.presenter.EntregaGEPresenter;
 import com.urbanoexpress.iridio3.pe.util.CameraUtils;
 import com.urbanoexpress.iridio3.pe.util.FileUtils;

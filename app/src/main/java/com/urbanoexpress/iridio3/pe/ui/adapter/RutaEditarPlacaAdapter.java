@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.urbanoexpress.iridio3.databinding.RutaEditarPlacaRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.RutaEditarPlacaRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaEditarPlacaItem;
 
 import java.util.List;

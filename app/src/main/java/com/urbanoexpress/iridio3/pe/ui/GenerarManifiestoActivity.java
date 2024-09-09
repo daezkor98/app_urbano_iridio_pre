@@ -15,8 +15,8 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityGenerarManifiestoBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityGenerarManifiestoBinding;
 import com.urbanoexpress.iridio3.pe.presenter.GenerarManifiestoPresenter;
 import com.urbanoexpress.iridio3.pe.ui.adapter.CodigoBarraAdapter;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;

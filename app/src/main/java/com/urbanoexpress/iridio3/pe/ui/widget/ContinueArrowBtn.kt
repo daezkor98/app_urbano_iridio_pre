@@ -7,7 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
-import com.urbanoexpress.iridio3.R
+import com.urbanoexpress.iridio3.pe.R
 
 class ContinueArrowBtn(ctx: Context, attrs: AttributeSet) : LinearLayoutCompat(ctx, attrs) {
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.databinding.MainMenuRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.MainMenuRowBinding;
 import com.urbanoexpress.iridio3.pe.model.NavigationMenuModel;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;

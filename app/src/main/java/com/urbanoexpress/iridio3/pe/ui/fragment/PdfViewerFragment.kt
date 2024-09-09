@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.urbanoexpress.iridio3.databinding.FragmentPdfViewerBinding
+import com.urbanoexpress.iridio3.pe.databinding.FragmentPdfViewerBinding
 
 class PdfViewerFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class PdfViewerFragment : Fragment() {
     ): View {
 
         bind = FragmentPdfViewerBinding.inflate(inflater, container, false)
-        bind.pdfView.fromUri(pdfUri).load()
+        //bind.pdfView.fromUri(pdfUri).load()
 
         return bind.root
     }

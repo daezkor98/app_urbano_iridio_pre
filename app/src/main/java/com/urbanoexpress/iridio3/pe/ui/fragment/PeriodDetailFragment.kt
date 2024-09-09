@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.urbanoexpress.iridio3.databinding.FragmentPeriodDetailBinding
+import com.urbanoexpress.iridio3.pe.databinding.FragmentPeriodDetailBinding
 import com.urbanoexpress.iridio3.pe.model.dto.Period
 import com.urbanoexpress.iridio3.pe.model.dto.completeDays
 import com.urbanoexpress.iridio3.pe.presenter.viewmodel.PeriodRevenueViewModel

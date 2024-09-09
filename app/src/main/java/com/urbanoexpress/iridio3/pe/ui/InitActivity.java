@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityInitBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityInitBinding;
 import com.urbanoexpress.iridio3.pe.presenter.InitPresenter;
 import com.urbanoexpress.iridio3.pe.ui.fragment.LogInFragment;
 import com.urbanoexpress.iridio3.pe.ui.fragment.RequestLocationPermissionFragment;

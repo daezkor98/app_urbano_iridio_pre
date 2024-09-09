@@ -18,7 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
-import com.urbanoexpress.iridio3.databinding.ModalEditarNumeroTelefonoBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalEditarNumeroTelefonoBinding;
 import com.urbanoexpress.iridio3.pe.util.constant.Country;
 import com.urbanoexpress.iridio3.pe.util.constant.LocalAction;
 

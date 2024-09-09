@@ -15,10 +15,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.data.rest.ApiRequest;
 import com.urbanoexpress.iridio3.pe.data.rest.ApiRest;
-import com.urbanoexpress.iridio3.databinding.ActivityConfiguracionBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityConfiguracionBinding;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.Preferences;

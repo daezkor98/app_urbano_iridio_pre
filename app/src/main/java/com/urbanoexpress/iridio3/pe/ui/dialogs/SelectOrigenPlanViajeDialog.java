@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ModalSelectOrigenPlanViajeBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ModalSelectOrigenPlanViajeBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.PlanDeViaje;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnClickItemListener;
 import com.urbanoexpress.iridio3.pe.ui.model.OrigenPlanViajeItem;

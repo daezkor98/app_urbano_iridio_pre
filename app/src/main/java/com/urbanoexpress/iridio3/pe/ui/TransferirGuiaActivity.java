@@ -12,8 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityTransferirGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityTransferirGuiaBinding;
 import com.urbanoexpress.iridio3.pe.presenter.TransferirGuiaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.RutaAdapter;

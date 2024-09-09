@@ -15,7 +15,7 @@ import android.view.Window;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 
 /**
  * Created by mick on 01/06/16.

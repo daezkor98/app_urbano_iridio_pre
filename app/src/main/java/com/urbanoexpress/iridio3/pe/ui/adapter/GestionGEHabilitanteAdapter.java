@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.databinding.GestionGuiaHabilitantesRowBinding;
+import com.urbanoexpress.iridio3.pe.databinding.GestionGuiaHabilitantesRowBinding;
 
 import java.util.List;
 

@@ -19,7 +19,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
-import com.urbanoexpress.iridio3.databinding.ModalCodigoQrRutaBinding;
+import com.urbanoexpress.iridio3.pe.databinding.ModalCodigoQrRutaBinding;
 import com.urbanoexpress.iridio3.pe.util.MetricsUtils;
 
 /**

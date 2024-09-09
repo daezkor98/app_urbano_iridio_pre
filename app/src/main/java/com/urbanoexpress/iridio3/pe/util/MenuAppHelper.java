@@ -2,7 +2,7 @@ package com.urbanoexpress.iridio3.pe.util;
 
 import android.content.Context;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.ui.MisGananciasActivity;
 import com.urbanoexpress.iridio3.pe.ui.NotificacionesRutaActivity;
 import com.urbanoexpress.iridio3.pe.ui.PlanDeViajeActivity;

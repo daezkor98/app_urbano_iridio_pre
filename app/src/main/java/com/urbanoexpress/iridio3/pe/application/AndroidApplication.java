@@ -6,7 +6,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.orm.SugarContext;
-import com.urbanoexpress.iridio3.BuildConfig;
+import com.urbanoexpress.iridio3.pe.BuildConfig;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.data.remote.ApiEnvironment;
 import com.urbanoexpress.iridio3.data.remote.BaseUrl;

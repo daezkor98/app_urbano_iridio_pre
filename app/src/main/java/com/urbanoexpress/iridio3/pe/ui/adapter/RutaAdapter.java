@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import com.bumptech.glide.Glide;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.RutaRowBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.RutaRowBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.util.OnTouchItemRutasListener;

@@ -17,7 +17,7 @@ import android.util.Log;
 
 import java.lang.reflect.Method;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 
 /**
  * Created by mick on 19/05/16.

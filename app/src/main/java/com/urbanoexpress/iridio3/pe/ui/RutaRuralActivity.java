@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityRutaRuralBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityRutaRuralBinding;
 import com.urbanoexpress.iridio3.pe.presenter.QRScannerPresenter;
 import com.urbanoexpress.iridio3.pe.presenter.RutaRuralPresenter;
 import com.urbanoexpress.iridio3.pe.ui.fragment.RutaRuralPendienteFragment;

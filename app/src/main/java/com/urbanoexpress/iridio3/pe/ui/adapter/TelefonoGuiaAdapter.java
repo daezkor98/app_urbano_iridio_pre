@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.TelefonoGuiaRowBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.TelefonoGuiaRowBinding;
 import com.urbanoexpress.iridio3.pe.ui.model.TelefonoGuiaItem;
 import com.urbanoexpress.iridio3.pe.util.AnimationUtils;
 

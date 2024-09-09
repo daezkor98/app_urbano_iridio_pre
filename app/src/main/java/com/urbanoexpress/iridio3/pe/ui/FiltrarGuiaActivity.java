@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.widget.CompoundButton;
 
 import com.orm.util.NamingHelper;
-import com.urbanoexpress.iridio3.R;
-import com.urbanoexpress.iridio3.databinding.ActivityFiltrarGuiaBinding;
+import com.urbanoexpress.iridio3.pe.R;
+import com.urbanoexpress.iridio3.pe.databinding.ActivityFiltrarGuiaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.Data;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;

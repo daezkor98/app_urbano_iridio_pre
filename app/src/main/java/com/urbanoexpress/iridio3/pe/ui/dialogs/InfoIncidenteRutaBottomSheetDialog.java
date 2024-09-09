@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.urbanoexpress.iridio3.databinding.BottomSheetInfoIncidenteRutaBinding;
+import com.urbanoexpress.iridio3.pe.databinding.BottomSheetInfoIncidenteRutaBinding;
 import com.urbanoexpress.iridio3.pe.model.entity.IncidenteRuta;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.FileUtils;

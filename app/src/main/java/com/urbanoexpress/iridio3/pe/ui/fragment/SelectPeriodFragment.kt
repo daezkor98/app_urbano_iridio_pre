@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.urbanoexpress.iridio3.R
-import com.urbanoexpress.iridio3.databinding.FragmentSelectPeriodBinding
+import com.urbanoexpress.iridio3.pe.R
+import com.urbanoexpress.iridio3.pe.databinding.FragmentSelectPeriodBinding
 import com.urbanoexpress.iridio3.pe.model.dto.Period
 import com.urbanoexpress.iridio3.pe.ui.adapter.PeriodsRevenueAdapter
 import com.urbanoexpress.iridio3.urbanocore.values.AK

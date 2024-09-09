@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.urbanoexpress.iridio3.R;
+import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.application.AndroidApplication;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.ui.helpers.OnBackButtonPressedListener;
