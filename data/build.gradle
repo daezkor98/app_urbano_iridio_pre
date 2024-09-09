@@ -4,11 +4,13 @@ plugins {
 
 android {
 
-    compileSdk 31
+    compileSdk 34
+
+    namespace 'com.urbanoexpress.iridio3.data'
 
     defaultConfig {
         minSdk 16
-        targetSdk 30
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

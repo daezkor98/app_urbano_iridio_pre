@@ -17,7 +17,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <com.urbanoexpress.iridio3.util.components.TouchDrawCanvas
+    <com.urbanoexpress.iridio3.pe.util.components.TouchDrawCanvas
         android:id="@+id/touchDrawCanvas"
         android:name="pe.com.urbano.android.util.components.TouchDrawCanvas"
         android:layout_width="0dp"

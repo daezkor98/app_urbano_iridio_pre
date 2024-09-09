@@ -5,7 +5,7 @@
     android:id="@+id/lay_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.widget.FormFieldView">
+    tools:context=".pe.ui.widget.FormFieldView">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_container"

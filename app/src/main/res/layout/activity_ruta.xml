@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urbanoexpress.iridio3.ui.RutaActivity">
+    tools:context="com.urbanoexpress.iridio3.pe.ui.RutaActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -116,7 +116,7 @@
 
         </LinearLayout>
 
-        <com.urbanoexpress.iridio3.util.components.CustomViewPager
+        <com.urbanoexpress.iridio3.pe.util.components.CustomViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -135,7 +135,7 @@
         app:layout_anchor="@id/viewPager"
         app:layout_anchorGravity="bottom|right|end"/>
 
-    <com.urbanoexpress.iridio3.util.components.searchview.MaterialSearchView
+    <com.urbanoexpress.iridio3.pe.util.components.searchview.MaterialSearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

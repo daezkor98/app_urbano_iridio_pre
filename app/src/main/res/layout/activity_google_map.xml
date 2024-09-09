@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urbanoexpress.iridio3.ui.GoogleMapActivity">
+    tools:context="com.urbanoexpress.iridio3.pe.ui.GoogleMapActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -36,7 +36,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.urbanoexpress.iridio3.ui.GoogleMapActivity" />
+            tools:context="com.urbanoexpress.iridio3.pe.ui.GoogleMapActivity" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

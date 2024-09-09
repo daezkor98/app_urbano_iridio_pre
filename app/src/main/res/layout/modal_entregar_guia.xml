@@ -8,7 +8,7 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     android:theme="@style/color_theme_colorPrimary"
-    tools:context="com.urbanoexpress.iridio3.ui.dialogs.EntregaGEDialog">
+    tools:context="com.urbanoexpress.iridio3.pe.ui.dialogs.EntregaGEDialog">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -529,7 +529,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                    <com.urbanoexpress.iridio3.pe.util.components.message.WarningMessage
                         android:id="@+id/warning_observation_fotos_producto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -589,7 +589,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                    <com.urbanoexpress.iridio3.pe.util.components.message.WarningMessage
                         android:id="@+id/warning_observation_comprobante_pago"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -695,7 +695,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                    <com.urbanoexpress.iridio3.pe.util.components.message.WarningMessage
                         android:id="@+id/warning_observation_cargo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -770,7 +770,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+                    <com.urbanoexpress.iridio3.pe.util.components.message.WarningMessage
                         android:id="@+id/warning_observation_domicilio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -848,7 +848,7 @@
     </LinearLayout>
 
     <!--@warning_barcode_mandatory is only visible when the control param requires it-->
-    <com.urbanoexpress.iridio3.util.components.message.WarningMessage
+    <com.urbanoexpress.iridio3.pe.util.components.message.WarningMessage
         android:id="@+id/warning_scan_barcode_mandatory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

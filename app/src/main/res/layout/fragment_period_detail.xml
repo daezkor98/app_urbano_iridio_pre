@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.PeriodDetailFragment">
+    tools:context=".pe.ui.fragment.PeriodDetailFragment">
 
     <include
         android:id="@+id/progress_layout"

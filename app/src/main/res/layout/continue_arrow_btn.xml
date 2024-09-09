@@ -9,7 +9,7 @@
     android:foreground="@drawable/ripple_simple_transparent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    tools:context=".ui.widget.ContinueArrowBtn">
+    tools:context=".pe.ui.widget.ContinueArrowBtn">
 
     <TextView
         android:id="@+id/tv_text"

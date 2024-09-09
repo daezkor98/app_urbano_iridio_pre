@@ -20,8 +20,10 @@ android {
     }
     compileSdkVersion 34
 
+    namespace 'com.urbanoexpress.iridio3.pe'
+
     defaultConfig {
-        applicationId 'com.urbanoexpress.iridio3'
+        applicationId 'com.urbanoexpress.iridio3.pe'
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 130
