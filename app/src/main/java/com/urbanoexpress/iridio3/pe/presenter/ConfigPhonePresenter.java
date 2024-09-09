@@ -115,7 +115,7 @@ public class ConfigPhonePresenter {
     }
 
     //GOOGLE MASTER NUMBER USED FOR REVISION AND TESTING
-    final String GOOGLE_MOCK_PHONE = "987654321"; // The corresponding OTP code is "572376"
+    final String GOOGLE_MOCK_PHONE = "937004449"; // The corresponding OTP code is "572376"
 
     private void requestConfigPhone() {
         ApiRequest.getInstance().newParams();

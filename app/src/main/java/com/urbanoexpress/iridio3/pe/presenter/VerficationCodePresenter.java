@@ -42,8 +42,14 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         this.isoCountry = isoCountry;
         this.phone = phone;
         this.firebaseToken = firebaseToken;
+        if (isGoogleMock) {
+            view.showProgressDialog();
+            requestValidateVerificationCode(GOOGLE_MOCK_CODE);
+        }
     }
 
+    //Used to pass google testint
+    final String GOOGLE_MOCK_CODE = "168788";
     @Override
     public void onOTPReceived(String value) {
         try {
