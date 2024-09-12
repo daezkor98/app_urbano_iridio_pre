@@ -33,7 +33,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
+
 
     <application
         android:name="com.urbanoexpress.iridio3.pe.application.AndroidApplication"
@@ -326,11 +328,11 @@
         <service
             android:name="com.urbanoexpress.iridio3.pe.services.DataSyncService"
             android:exported="false"
-            android:foregroundServiceType="specialUse"
+            android:foregroundServiceType="dataSync"
             android:persistent="true" />
         <service
             android:name="com.urbanoexpress.iridio3.pe.util.firebase.MyFirebaseMessagingService"
-            android:foregroundServiceType="specialUse"
+            android:foregroundServiceType="remoteMessaging"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
