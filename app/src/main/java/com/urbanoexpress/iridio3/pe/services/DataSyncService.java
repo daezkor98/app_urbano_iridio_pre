@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio3.pe.services;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
@@ -68,6 +69,7 @@ public class DataSyncService extends Service {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void initTask() {
         if (Session.getUser() != null) {
             timerData = new Timer();

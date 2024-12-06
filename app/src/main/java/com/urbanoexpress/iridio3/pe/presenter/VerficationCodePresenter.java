@@ -49,7 +49,7 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
     }
 
     //Used to pass google testint
-    final String GOOGLE_MOCK_CODE = "168788";
+    final String GOOGLE_MOCK_CODE = "760164";
     @Override
     public void onOTPReceived(String value) {
         try {
