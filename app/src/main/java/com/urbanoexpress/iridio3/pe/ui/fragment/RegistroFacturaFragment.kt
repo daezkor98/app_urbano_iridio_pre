@@ -207,14 +207,6 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
 
         bind.tvFileName.onExclusiveClick {
             showPDfInScreen()
-            /*pdfUri.ifSafe {
-                findNavController().navigate(
-                    R.id.action_registroFacturaFragment_to_pdfViewerFragment,
-                    bundleOf("  PDFURI" to pdfUri)
-                )
-            }.ifNull {
-                showToast("Seleccione un documento")
-            }*/
         }
     }
 

@@ -141,9 +141,6 @@ dependencies {
     //Utils
     implementation 'com.google.code.gson:gson:2.9.0'
 
-    //PDF viewer
-    //implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
-
     //Hilt DI
     implementation "com.google.dagger:hilt-android:$hilt_v"
     kapt "com.google.dagger:hilt-compiler:$hilt_v"
