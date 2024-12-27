@@ -90,7 +90,7 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
 
         if (presenter == null) {
             presenter = new NavigationMenuPresenter(this);
-            presenter.init();
+            presenter.setUserData();
         }
     }
 

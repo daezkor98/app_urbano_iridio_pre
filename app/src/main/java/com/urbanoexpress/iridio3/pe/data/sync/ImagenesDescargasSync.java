@@ -147,7 +147,7 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
 
                 byte[] data = FileUtils.readAllBytes(getData().get(getCountData()).getFullPath());
 
-                Log.i("_._" +TAG, "executeSync: ImageData: " + data.length);
+                //Log.i("_._" +TAG, "executeSync: ImageData: " + data.length);
 
                 if (data == null) {
                     FirebaseCrashlytics.getInstance().log("ImageWithNullData");
