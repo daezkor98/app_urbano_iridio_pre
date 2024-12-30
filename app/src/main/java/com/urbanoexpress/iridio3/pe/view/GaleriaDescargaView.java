@@ -1,5 +1,7 @@
 package com.urbanoexpress.iridio3.pe.view;
 
+import android.content.Intent;
+
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public interface GaleriaDescargaView extends BaseView {
     void notifyGaleryItemInsert(int position);
     void notifyGaleryItemRemove(int position);
     void notifyGaleryAllItemChanged();
-
+    void openGallery(Intent intent);
     Fragment getFragment();
 
 }
