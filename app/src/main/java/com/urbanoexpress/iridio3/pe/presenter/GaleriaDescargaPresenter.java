@@ -435,7 +435,17 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
             } else {
                 String pathImageSelected = FileUtilss.getRealPath(galeriaDescargaView.getContextView(), intents[0].getData());
                 Date dateCreated = null;
+                /////
+                if (pathImageSelected == null) {
+                    msgError = "Lo sentimos, la ruta del archivo no es valido.";
+                    return false;
+                }
                 File file = new File(pathImageSelected);
+                if (!file.exists()) {
+                    msgError = "Lo sentimos, el archivo no es valido.";
+                    return false;
+                }
+                /////
 
                 if (Build.VERSION.SDK_INT < 26) {
                     dateCreated = new Date(file.lastModified());

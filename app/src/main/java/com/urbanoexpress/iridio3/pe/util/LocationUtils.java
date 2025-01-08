@@ -83,7 +83,7 @@ public class LocationUtils {
     }
 
     public static void validateSwitchedOnGPS(Activity activity, final OnSwitchedOnGPSListener callback) {
-        LocationRequest mLocationRequest = new LocationRequest();
+        LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
