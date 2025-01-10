@@ -9,6 +9,7 @@ import com.urbanoexpress.iridio3.pe.databinding.FragmentPeriodDetailBinding
 import com.urbanoexpress.iridio3.pe.model.dto.Period
 import com.urbanoexpress.iridio3.pe.model.dto.completeDays
 import com.urbanoexpress.iridio3.pe.presenter.viewmodel.PeriodRevenueViewModel
+import com.urbanoexpress.iridio3.pe.ui.ResultRevenueDay
 import com.urbanoexpress.iridio3.pe.ui.adapter.RevenuePeriodDetailAdapter
 import com.urbanoexpress.iridio3.urbanocore.extentions.operateOver
 import com.urbanoexpress.iridio3.urbanocore.values.AK
@@ -45,7 +46,7 @@ class PeriodDetailFragment : AppThemeBaseFragment() {
             }
         }
 
-        periodDetailVM.periodDetailLD.observe(this) {
+       /* periodDetailVM.periodDetailLD.observe(this) {
             if (isCurrentPeriod) {
                 adapter.revenueDays =
                     it.operateOver(
@@ -58,6 +59,36 @@ class PeriodDetailFragment : AppThemeBaseFragment() {
                             toThenThat = { item -> item.entregas == 0 && item.no_entregas == 0 },
                             operate = { notWorkingMessage = "No trabajó" })
             }
+        }*/
+
+        periodDetailVM.periodDetailLD.observe(this) { result ->
+            when (result) {
+                is ResultRevenueDay.Success -> {
+                    val revenueDay = result.data
+
+                    if (isCurrentPeriod) {
+                        adapter.revenueDays =
+                            revenueDay.operateOver(
+                                toThenThat = { item -> item.entregas == 0 && item.no_entregas == 0 },
+                                operate = { notWorkingMessage = "No trabajó" })
+                    } else {
+                        adapter.revenueDays =
+                            revenueDay.completeDays()
+                                .operateOver(
+                                    toThenThat = { item -> item.entregas == 0 && item.no_entregas == 0 },
+                                    operate = { notWorkingMessage = "No trabajó" })
+                    }
+                }
+
+                is ResultRevenueDay.Error -> {
+
+                    showToast("Lo sentimos, no se pudo obtener los detalles.")
+
+                }
+
+                else -> Unit
+            }
+
         }
 
         period?.let {

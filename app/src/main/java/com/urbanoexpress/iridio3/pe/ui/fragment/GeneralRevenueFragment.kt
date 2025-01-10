@@ -36,6 +36,10 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     lateinit var currentPeriod: Period
 
+    private var itemListClickDialog: FacturaPeriodoResumenDialog? = null
+    private var facturaPeriodoResumenDialog: FacturaPeriodoResumenDialog? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -104,12 +108,13 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
     }
 
     private fun onCurrentPeriodClick() {
-        val dialog = FacturaPeriodoResumenDialog.getInstance(
+        facturaPeriodoResumenDialog = FacturaPeriodoResumenDialog.getInstance(
             currentPeriod,
             true,
             ::navigateToPeriodDetail
         )
-        dialog.show(childFragmentManager, "RESS")
+        facturaPeriodoResumenDialog  ?.show(childFragmentManager, "RESS")
+
     }
 
     private fun configUI() {
@@ -119,7 +124,7 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
         //TODO make a secure exclusiveClick
         bind.btnRegistrarFac.onExclusiveClick {
-
+            closeDialog()
             if (areApproved.size == 1) {
                 findNavController()
                     .navigate(
@@ -137,24 +142,39 @@ class GeneralRevenueFragment : AppThemeBaseFragment() {
 
     private fun handleItemClick(index: Int) {
 
-        val dialog = FacturaPeriodoResumenDialog.getInstance(
+        itemListClickDialog = FacturaPeriodoResumenDialog.getInstance(
             periodsAdapter.periods[index],
             false,
             ::navigateToPeriodDetail
         )
-        dialog.show(childFragmentManager, "RESS")
+        itemListClickDialog?.show(childFragmentManager, "RESS")
     }
 
     fun navigateToPeriodDetail(period: Period, isCurrent: Boolean) {
+        closeDialog()
+        if (period.entregas == 0 && period.no_entregas == 0) {
+            showToast("Lo sentimos, sin detalles para mostrar.")
 
-        val args = bundleOf(
-            AK.SELECTED_PERIOD to period,
-            AK.IS_CURRENT to isCurrent
-        )
+        } else {
+            val args = bundleOf(
+                AK.SELECTED_PERIOD to period,
+                AK.IS_CURRENT to isCurrent
+            )
 
-        findNavController().navigate(
-            R.id.action_generalRevenueFragment_to_periodDetailFragment,
-            args
-        )
+            findNavController().navigate(
+                R.id.action_generalRevenueFragment_to_periodDetailFragment,
+                args
+            )
+
+        }
+    }
+
+
+    private fun closeDialog() {
+        itemListClickDialog?.dismiss()
+        itemListClickDialog = null
+
+        facturaPeriodoResumenDialog?.dismiss()
+        facturaPeriodoResumenDialog = null
     }
 }
