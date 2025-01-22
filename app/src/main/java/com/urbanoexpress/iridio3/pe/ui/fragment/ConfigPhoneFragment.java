@@ -1,16 +1,28 @@
 package com.urbanoexpress.iridio3.pe.ui.fragment;
 
+import static android.Manifest.permission.READ_PHONE_STATE;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,15 +36,37 @@ import com.urbanoexpress.iridio3.pe.ui.dialogs.ChoiseCountryBottomSheet;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.view.ConfigPhoneView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
 public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigPhoneView {
 
     public static final String TAG = "ConfigPhoneFragment";
-
     private FragmentConfigPhoneBinding binding;
     private ConfigPhonePresenter presenter;
     private Fragment verificationCodeFragment;
-
     private final int HINT_REQUEST = 100;
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
+                boolean allPermissionsGranted = true;
+
+                for (String permission : permissions.keySet()) {
+                    Boolean isGranted = permissions.get(permission);
+                    if (isGranted != null) {
+                        if (!isGranted) {
+                            allPermissionsGranted = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (allPermissionsGranted) {
+                    updatePhoneNumberList();
+                }
+            }
+    );
 
     public static ConfigPhoneFragment newInstance() {
         return new ConfigPhoneFragment();
@@ -45,8 +79,37 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
         getActivity().getWindow().setBackgroundDrawable(
                 ContextCompat.getDrawable(getActivity(), R.drawable.bg_fragment_bienvenida));
         CommonUtils.changeColorStatusBar(getActivity(), R.color.statusBarColor);
-        binding = FragmentConfigPhoneBinding.inflate(inflater, container, false);
+        binding = FragmentConfigPhoneBinding.inflate(inflater);
+        EditText editTextAutocomplete = binding.textInputLayoutMenu.getEditText();
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) editTextAutocomplete;
+        if (autoCompleteTextView != null) {
+            autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+                        if (!autoCompleteTextView.getText().toString().isEmpty()) {
+                            binding.nextButton.setEnabled(true);
+                        }
+                    }
+            );
+            autoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
+                        if (hasFocus) {
+                            getPhoneNumber();
+                            autoCompleteTextView.clearFocus();
+                        }
+                    }
+            );
+        }
+
         return binding.getRoot();
+    }
+
+    private void setAdapterListNumber(List<String> listNumbers) {
+        if (!listNumbers.isEmpty()) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getViewContext(), R.layout.list_item_numbers, listNumbers);
+            AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) binding.textInputLayoutMenu.getEditText();
+            if (autoCompleteTextView != null) {
+                autoCompleteTextView.setAdapter(adapter);
+            }
+        }
+
     }
 
     @Override
@@ -179,7 +242,12 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
 
         binding.nextButton.setOnClickListener(v -> {
             hideKeyboard();
-            presenter.onBtnContinuarClick();
+            AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) binding.textInputLayoutMenu.getEditText();
+            if (autoCompleteTextView != null) {
+                if (!autoCompleteTextView.getText().toString().isEmpty()) {
+                    presenter.onBtnContinuarClick2();
+                }
+            }
         });
     }
 
@@ -193,5 +261,64 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
                 ex.printStackTrace();
             }
         }
+    }
+
+    private void getPhoneNumber() {
+        boolean allPermissionsGranted = true;
+
+        String[] permissions = {READ_PHONE_STATE};
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            permissions = Arrays.copyOf(permissions, permissions.length + 1);
+            permissions[permissions.length - 1] = Manifest.permission.READ_PHONE_NUMBERS;
+        }
+
+        for (String permission : permissions) {
+            if (ActivityCompat.checkSelfPermission(requireContext(), permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                allPermissionsGranted = false;
+            }
+        }
+        if (allPermissionsGranted) {
+            updatePhoneNumberList();
+        } else {
+            requestPermissionPhoneNumber();
+        }
+
+    }
+
+    private void updatePhoneNumberList() {
+        ArrayList<String> listPhoneNumber = new ArrayList<>();
+        SubscriptionManager subscriptionManager;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            subscriptionManager = (SubscriptionManager) requireActivity().getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+            if (subscriptionManager != null) {
+                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissionPhoneNumber();
+                    return;
+                }
+                for (SubscriptionInfo subscriptionInfo : subscriptionManager.getActiveSubscriptionInfoList()) {
+                    String phoneNumber = subscriptionInfo.getNumber();
+                    if (phoneNumber != null) {
+                        listPhoneNumber.add(phoneNumber);
+                    }
+                }
+            }
+
+        }
+
+        if (binding != null) {
+            setAdapterListNumber(listPhoneNumber);
+        }
+    }
+
+    private void requestPermissionPhoneNumber() {
+        String[] permissions = {READ_PHONE_STATE};
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            permissions = Arrays.copyOf(permissions, permissions.length + 1);
+            permissions[permissions.length - 1] = Manifest.permission.READ_PHONE_NUMBERS;
+        }
+        requestPermissionLauncher.launch(permissions);
     }
 }

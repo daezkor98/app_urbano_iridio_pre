@@ -57,6 +57,13 @@ public class ConfigPhonePresenter {
         } else {
             view.setEnabledButtonNext(true);
         }
+
+
+    }
+
+    public void onBtnContinuarClick2() {
+        configCountry2();
+        view.setEnabledButtonNext(false);
     }
 
     private void selectCountry(String isoCountry) {
@@ -112,6 +119,18 @@ public class ConfigPhonePresenter {
             requestConfigPhone();
         }
         /*End testing code*/
+    }
+
+    private void configCountry2() {
+        view.showProgressDialog();
+        PreferencesHelper preferencesHelper = new PreferencesHelper(view.getViewContext());
+
+        ApiRest.getInstance().setApiBaseUrl(
+                        ApiRest.buildUrbanoApiBaseUrl(preferencesHelper.getApiEnvironment(), Country.PERU));
+
+        view.navigateToVerficationCodeFragment(isoCountry,
+                view.getTextPhone(), firebaseToken,false);
+
     }
 
     //GOOGLE MASTER NUMBER USED FOR REVISION AND TESTING

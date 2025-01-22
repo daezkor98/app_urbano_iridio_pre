@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".pe.ui.fragment.ConfigPhoneFragment">
+    tools:context="com.urbanoexpress.iridio3.pe.ui.fragment.ConfigPhoneFragment">
 
     <FrameLayout
         android:id="@+id/image"
@@ -50,6 +50,7 @@
                 android:text="Ingresa tu número de celular"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/gris_2"
+                android:visibility="gone"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -60,6 +61,7 @@
                 android:background="@drawable/bg_input_default"
                 android:clickable="true"
                 android:focusable="true"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -127,8 +129,43 @@
                 android:layout_height="wrap_content"
                 android:text="Enviaremos un mensaje a este número con un código de verificación."
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone"
                 android:textColor="@color/gris_2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="20dp"
+                android:text="Selecciona tu número de celular"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/gris_2"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/linarLayoutMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutMenu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Numeró celular">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -141,6 +178,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:enabled="false"
             android:paddingHorizontal="@dimen/activity_horizontal_margin"
             android:text="@string/text_siguiente" />
     </LinearLayout>
