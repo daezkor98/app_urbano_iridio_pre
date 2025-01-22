@@ -129,6 +129,21 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         }
     }
 
+    public void onBtnContinuarClick2() {
+        view.hideKeyboard();
+
+        view.setEnabledButtonNext(false);
+
+            if (Connection.hasNetworkConnectivity(view.getViewContext())) {
+                view.showProgressDialog();
+                new ConfigCountryTask().execute();
+            } else {
+                view.setEnabledButtonNext(true);
+                view.showMessageNotConnectedToNetwork();
+            }
+
+    }
+
     private void startSMSListener() {
         SmsRetrieverClient client = SmsRetriever.getClient(view.getViewContext());
 

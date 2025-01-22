@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.pe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -13,18 +14,35 @@ import androidx.lifecycle.Lifecycle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.databinding.FragmentVerficationCodeBinding;
 import com.urbanoexpress.iridio3.pe.presenter.VerficationCodePresenter;
+import com.urbanoexpress.iridio3.pe.ui.MainActivity;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.view.VerficationCodeView;
+
+import java.util.concurrent.Executor;
 
 public class VerficationCodeFragment extends AppThemeBaseFragment implements VerficationCodeView {
 
@@ -32,6 +50,9 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
 
     private FragmentVerficationCodeBinding binding;
     private VerficationCodePresenter presenter;
+    private static final int RC_SIGN_IN = 9001;
+
+    private FirebaseAuth mAuth;
 
     public static VerficationCodeFragment newInstance(String isoCountry, String phone,
                                                       String firebaseToken, Boolean isGoogleMock) {
@@ -51,12 +72,13 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
 
         if (getArguments() != null) {
             presenter = new VerficationCodePresenter(this,
-                    getArguments().getString("isoCountry"),
+                    "pe",
                     getArguments().getString("phone"),
                     getArguments().getString("firebaseToken"),
                     getArguments().getBoolean("isGoogleMock")
             );
         }
+
     }
 
     @Nullable
@@ -67,6 +89,23 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
                 ContextCompat.getDrawable(getActivity(), R.drawable.bg_fragment_bienvenida));
         CommonUtils.changeColorStatusBar(getActivity(), R.color.statusBarColor);
         binding = FragmentVerficationCodeBinding.inflate(inflater, container, false);
+        mAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Crear el cliente de GoogleSignIn
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getViewContext(), gso);
+
+        binding.googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
         return binding.getRoot();
     }
 
@@ -75,7 +114,7 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
         super.onViewCreated(view, savedInstanceState);
         setupViews();
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 if (getViewProgress().getVisibility() != View.VISIBLE) {
@@ -196,7 +235,7 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
             return false;
         });
 
-        binding.nextButton.setOnClickListener(v -> presenter.onBtnContinuarClick());
+        binding.nextButton.setOnClickListener(v -> presenter.onBtnContinuarClick2());
 
         binding.txtCode1.addTextChangedListener(textWatcherVerificationCode);
         binding.txtCode2.addTextChangedListener(textWatcherVerificationCode);
@@ -270,4 +309,49 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
             return false;
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+            }
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        Log.d("Hola","este es el token: "+idToken);
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    updateUI(user);
+                } else {
+                    // If sign in fails, display a message to the user.
+                    updateUI(null);
+                }
+            }
+        });
+    }
+
+    private void updateUI(  FirebaseUser user){
+        if (user!=null){
+            presenter.onBtnContinuarClick2();
+           // Toast.makeText(getViewContext(), "Bienvenido: "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getViewContext(), "el usuario es nulo", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 }
