@@ -88,9 +88,43 @@ public class ForgotPasswordActivity extends AppThemeBaseActivity {
 
         binding.btnRestablecer.setOnClickListener(v -> {
             if (validateInputNewPassword()) {
-                changeUserPassword();
+                validateTextPassword();
             }
         });
+    }
+
+    public void validateTextPassword() {
+
+        String[] validaciones = {
+                "La contraseña debe tener al menos 8 caracteres.",
+                "La contraseña debe contener al menos una letra mayúscula.",
+                "La contraseña debe contener al menos un número.",
+                "La contraseña debe contener al menos un símbolo especial.",
+                "La contraseña no debe contener espacios."
+        };
+
+        String[] expresiones = {
+                "^.{8,}$",                          // Validación de longitud mínima (8 caracteres)
+                ".*[A-Z].*",                         // Validación de al menos una mayúscula
+                ".*\\d.*",                           // Validación de al menos un número
+                ".*[!@#$%^&*()_+\\-=?<>.,;:'\"{}|].*", // Validación de al menos un símbolo especial
+                "^(?!.*\\s).*"                       // Validación de que no tenga espacios
+        };
+        StringBuilder errores = new StringBuilder();
+
+        for (int i = 0; i < validaciones.length; i++) {
+            if (!binding.txtNewPassword.getText().toString().matches(expresiones[i])) {
+                errores.append(validaciones[i]).append("\n");
+            }
+        }
+
+        if (errores.length() > 0) {
+            binding.passwordErrorText.setText(errores.toString());
+            binding.passwordErrorText.setVisibility(View.VISIBLE); // Mostramos el error
+        } else {
+            binding.passwordErrorText.setVisibility(View.GONE);
+            changeUserPassword();
+        }
     }
 
     private void showPageInputNewPassword() {
