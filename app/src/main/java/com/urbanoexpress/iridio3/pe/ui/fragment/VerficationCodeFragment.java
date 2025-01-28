@@ -225,7 +225,7 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
 
     private void setupViews() {
         Glide.with(this)
-                .load(R.drawable.bg_bienvenida)
+                .load(R.drawable.bg_bienvenida_v2)
                 .into(binding.image);
 
         binding.txtCode6.setOnEditorActionListener((v, actionId, event) -> {
