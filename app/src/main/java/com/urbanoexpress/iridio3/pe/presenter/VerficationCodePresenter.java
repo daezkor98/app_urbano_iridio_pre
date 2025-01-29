@@ -2,6 +2,7 @@ package com.urbanoexpress.iridio3.pe.presenter;
 
 import android.content.IntentFilter;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -136,7 +137,9 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
 
             if (Connection.hasNetworkConnectivity(view.getViewContext())) {
                 view.showProgressDialog();
-                new ConfigCountryTask().execute();
+               // new ConfigCountryTask().execute();
+                requestValidateVerificationEmail();
+                //requestValidateVerificationCode("123456");
             } else {
                 view.setEnabledButtonNext(true);
                 view.showMessageNotConnectedToNetwork();
@@ -219,6 +222,49 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
                             error.printStackTrace();
                             view.dismissProgressDialog();
                             view.setEnabledButtonNext(true);
+                            view.showToast(R.string.volley_error_message);
+                        }
+                    });
+        } else {
+            view.showMessageNotConnectedToNetwork();
+        }
+    }
+
+    private void requestValidateVerificationEmail() {
+        if (Connection.hasNetworkConnectivity(view.getViewContext())) {
+            ApiRequest.getInstance().newParams();
+            ApiRequest.getInstance().putParams("telefono", "980601243");
+            ApiRequest.getInstance().putParams("codigo", "+51");
+            ApiRequest.getInstance().putParams("email", "prueba2025@gmail.com");
+            ApiRequest.getInstance().putParams("version", Build.VERSION.RELEASE);
+            ApiRequest.getInstance().putParams("device", Build.MODEL);
+
+            ApiRequest.getInstance().request("https://api.geo.dev-urbano.dev/iridio/api/registro/addPhone",
+                    ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            view.dismissProgressDialog();
+                            view.setEnabledButtonNext(true);
+                             Log.d("Hola","onresponse");
+                          /*  try {
+                                if (response.getBoolean("success")) {
+                                    //new ConfigCountryTask().execute();
+                                    view.showToast(response.getString("sucess"));
+                                } else {
+                                    view.showToast(response.getString("msg_error"));
+                                }
+                            } catch (JSONException ex) {
+                                ex.printStackTrace();
+                                view.showToast(R.string.json_object_exception);
+                            }*/
+                        }
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            view.dismissProgressDialog();
+                            view.setEnabledButtonNext(true);
+                            Log.d("Hola","error: "+error.getCause());
                             view.showToast(R.string.volley_error_message);
                         }
                     });
