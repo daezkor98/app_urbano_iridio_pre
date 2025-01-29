@@ -143,8 +143,8 @@ dependencies {
     //Utils
     implementation 'com.google.code.gson:gson:2.9.0'
 
-    //PDF viewer
-    //implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    //libreria para los numeros
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.37'
 
     //Hilt DI
     implementation "com.google.dagger:hilt-android:$hilt_v"

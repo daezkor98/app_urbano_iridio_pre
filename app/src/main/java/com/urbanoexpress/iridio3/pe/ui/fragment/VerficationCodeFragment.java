@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.pe.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -35,6 +37,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.databinding.FragmentVerficationCodeBinding;
 import com.urbanoexpress.iridio3.pe.presenter.VerficationCodePresenter;
@@ -69,11 +74,11 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d("Hola", "este es el fono: " + getArguments().getString("phone"));
         if (getArguments() != null) {
             presenter = new VerficationCodePresenter(this,
                     "pe",
-                    getArguments().getString("phone"),
+                    getNationalNumber(getArguments().getString("phone")),
                     getArguments().getString("firebaseToken"),
                     getArguments().getBoolean("isGoogleMock")
             );
@@ -235,7 +240,7 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
             return false;
         });
 
-        binding.nextButton.setOnClickListener(v -> presenter.onBtnContinuarClick2());
+        //binding.nextButton.setOnClickListener(v -> presenter.onBtnContinuarClick2());
 
         binding.txtCode1.addTextChangedListener(textWatcherVerificationCode);
         binding.txtCode2.addTextChangedListener(textWatcherVerificationCode);
@@ -327,7 +332,6 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
-        Log.d("Hola","este es el token: "+idToken);
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
@@ -344,14 +348,41 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
         });
     }
 
-    private void updateUI(  FirebaseUser user){
-        if (user!=null){
-            presenter.onBtnContinuarClick2();
-           // Toast.makeText(getViewContext(), "Bienvenido: "+user.getDisplayName(), Toast.LENGTH_SHORT).show();
-        }else {
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            presenter.onBtnContinuarClick2(user.getEmail());
+        } else {
             Toast.makeText(getViewContext(), "el usuario es nulo", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private String getCountryCode(String phone) {
+        TelephonyManager telephonyManager = (TelephonyManager) requireActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String simCountryCode = telephonyManager.getSimCountryIso().toUpperCase();
+
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+        Phonenumber.PhoneNumber number = null;
+        try {
+            number = phoneNumberUtil.parse(phone, simCountryCode);
+            return String.valueOf(number.getCountryCode());
+        } catch (NumberParseException e) {
+            return "";
+        }
+    }
+
+    private String getNationalNumber(String phone) {
+        TelephonyManager telephonyManager = (TelephonyManager) requireActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String simCountryCode = telephonyManager.getSimCountryIso().toUpperCase();
+
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+        Phonenumber.PhoneNumber number = null;
+        try {
+            number = phoneNumberUtil.parse(phone, simCountryCode);
+            return String.valueOf(number.getNationalNumber());
+        } catch (NumberParseException e) {
+            return String.valueOf(phone);
+        }
     }
 
 }

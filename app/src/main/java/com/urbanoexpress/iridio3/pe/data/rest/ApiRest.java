@@ -1,5 +1,11 @@
 package com.urbanoexpress.iridio3.pe.data.rest;
 
+import static com.urbanoexpress.iridio3.data.remote.urbano.UrbanoPeruBaseUrl.DEVELOPMENT_BASE_URL_V2;
+
+import android.content.Context;
+
+import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
+import com.urbanoexpress.iridio3.data.remote.ApiEnvironment;
 import com.urbanoexpress.iridio3.data.remote.BaseUrl;
 import com.urbanoexpress.iridio3.data.remote.urbano.UrbanoChileBaseUrl;
 import com.urbanoexpress.iridio3.data.remote.urbano.UrbanoPeruBaseUrl;
@@ -85,6 +91,8 @@ public final class ApiRest {
 
         String GUIA_YAPE_QR = "api-apps/iridio/getGuiasRutaQR";
 
+        String VALIDATE_VERIFICATION_EMAIL = "iridio/api/registro/addPhone";
+
 
         interface Google {
             String DISTANCE_MATRIX = "api-apps/iridio/googleDistanceMatrix";
@@ -112,6 +120,19 @@ public final class ApiRest {
 
     public String getApiBaseUrl() {
         return apiBaseUrl;
+    }
+
+    public String getNewApiBaseUrl(Context context) {
+        PreferencesHelper preferencesHelper = new PreferencesHelper(context);
+
+        switch (preferencesHelper.getApiEnvironment()) {
+            case ApiEnvironment.DEVELOPMENT:
+                return DEVELOPMENT_BASE_URL_V2;
+            case ApiEnvironment.PRODUCTION:
+                return DEVELOPMENT_BASE_URL_V2;
+            default:
+                return "";
+        }
     }
 
     public static BaseUrl buildUrbanoApiBaseUrl(int apiEnvironment, int country) {

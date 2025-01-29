@@ -24,6 +24,7 @@ import com.urbanoexpress.iridio3.pe.util.constant.Country;
 import com.urbanoexpress.iridio3.pe.util.network.Connection;
 import com.urbanoexpress.iridio3.pe.view.VerficationCodeView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,6 +52,7 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
 
     //Used to pass google testint
     final String GOOGLE_MOCK_CODE = "760164";
+
     @Override
     public void onOTPReceived(String value) {
         try {
@@ -130,20 +132,18 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         }
     }
 
-    public void onBtnContinuarClick2() {
+    public void onBtnContinuarClick2(String email) {
         view.hideKeyboard();
 
         view.setEnabledButtonNext(false);
 
-            if (Connection.hasNetworkConnectivity(view.getViewContext())) {
-                view.showProgressDialog();
-               // new ConfigCountryTask().execute();
-                requestValidateVerificationEmail();
-                //requestValidateVerificationCode("123456");
-            } else {
-                view.setEnabledButtonNext(true);
-                view.showMessageNotConnectedToNetwork();
-            }
+        if (Connection.hasNetworkConnectivity(view.getViewContext())) {
+            view.showProgressDialog();
+            requestValidateVerificationEmail(email);
+        } else {
+            view.setEnabledButtonNext(true);
+            view.showMessageNotConnectedToNetwork();
+        }
 
     }
 
@@ -230,42 +230,53 @@ public class VerficationCodePresenter implements SmsBroadcastReceiver.OTPReceive
         }
     }
 
-    private void requestValidateVerificationEmail() {
+    private void requestValidateVerificationEmail(String email) {
         if (Connection.hasNetworkConnectivity(view.getViewContext())) {
             ApiRequest.getInstance().newParams();
-            ApiRequest.getInstance().putParams("telefono", "980601243");
+            ApiRequest.getInstance().putParams("telefono", phone);
             ApiRequest.getInstance().putParams("codigo", "+51");
-            ApiRequest.getInstance().putParams("email", "prueba2025@gmail.com");
-            ApiRequest.getInstance().putParams("version", Build.VERSION.RELEASE);
+            ApiRequest.getInstance().putParams("email", email);
             ApiRequest.getInstance().putParams("device", Build.MODEL);
+            ApiRequest.getInstance().putParams("version", Build.VERSION.RELEASE);
 
-            ApiRequest.getInstance().request("https://api.geo.dev-urbano.dev/iridio/api/registro/addPhone",
+            ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getNewApiBaseUrl(view.getViewContext()) + ApiRest.Api.VALIDATE_VERIFICATION_EMAIL,
                     ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                         @Override
                         public void onResponse(JSONObject response) {
                             view.dismissProgressDialog();
                             view.setEnabledButtonNext(true);
-                             Log.d("Hola","onresponse");
-                          /*  try {
+
+                            try {
                                 if (response.getBoolean("success")) {
-                                    //new ConfigCountryTask().execute();
-                                    view.showToast(response.getString("sucess"));
+                                    new ConfigCountryTask().execute();
                                 } else {
                                     view.showToast(response.getString("msg_error"));
                                 }
                             } catch (JSONException ex) {
-                                ex.printStackTrace();
                                 view.showToast(R.string.json_object_exception);
-                            }*/
+                            }
+
                         }
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                            view.dismissProgressDialog();
-                            view.setEnabledButtonNext(true);
-                            Log.d("Hola","error: "+error.getCause());
-                            view.showToast(R.string.volley_error_message);
+
+                            try {
+                                String errorMessage = new String(error.networkResponse.data);
+                                JSONObject jsonError = new JSONObject(errorMessage);
+                                JSONArray detailArray = jsonError.optJSONArray("detail");
+
+                                if (detailArray != null && detailArray.length() > 0) {
+                                    JSONObject firstDetail = detailArray.getJSONObject(0);
+                                    String detailedErrorMessage = firstDetail.optString("msg", "Detalles del error no disponibles.");
+                                    view.showToast(detailedErrorMessage);
+                                } else {
+                                    view.showToast("Detalles del error no disponibles.");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                view.showToast("Error al procesar la respuesta del servidor.");
+                            }
                         }
                     });
         } else {
