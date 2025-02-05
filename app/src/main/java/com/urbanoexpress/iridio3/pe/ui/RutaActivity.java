@@ -40,16 +40,22 @@ import com.urbanoexpress.iridio3.pe.view.RutaView;
 public class RutaActivity extends BaseActivity implements RutaView, OnActionModeListener {
 
     private final String TAG = RutaActivity.class.getSimpleName();
-
     private ActivityRutaBinding binding;
     private RutaPresenter presenter;
     private Menu menu;
+    boolean isFromLoginQr = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRutaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+             isFromLoginQr = bundle.getBoolean("isfromLoginQr", false);
+        }
 
         initUI();
 
@@ -313,8 +319,13 @@ public class RutaActivity extends BaseActivity implements RutaView, OnActionMode
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isfromLoginQr", isFromLoginQr);
+        RutaPendienteFragment rutaPendienteFragment = new RutaPendienteFragment();
+        rutaPendienteFragment.setArguments(bundle);
+
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new RutaPendienteFragment(), "Pendientes");
+        adapter.addFragment(rutaPendienteFragment, "Pendientes");
         adapter.addFragment(new RutaGestionadaFragment(), "Gestionados");
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
