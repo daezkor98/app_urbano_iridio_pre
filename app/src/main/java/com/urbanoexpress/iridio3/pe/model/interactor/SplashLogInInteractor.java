@@ -30,8 +30,8 @@ public class SplashLogInInteractor {
         ApiRequest.getInstance().putParams("password",      params[1]);
         ApiRequest.getInstance().putParams("firebaseToken", params[2]);
         ApiRequest.getInstance().putParams("device_imei",   params[3]);
-        ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
-                        ApiRest.Api.LOGIN,
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getNewApiBaseUrl(context) +
+                        ApiRest.Api.LOGIN_v2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
             @Override
             public void onResponse(JSONObject response) {

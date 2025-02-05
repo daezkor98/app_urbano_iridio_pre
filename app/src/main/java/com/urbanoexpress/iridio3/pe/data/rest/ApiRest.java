@@ -93,6 +93,7 @@ public final class ApiRest {
 
         String VALIDATE_VERIFICATION_EMAIL = "iridio/api/registro/addPhone";
 
+        String LOGIN_v2 = "iridio/api/registro/loginV2";
 
         interface Google {
             String DISTANCE_MATRIX = "api-apps/iridio/googleDistanceMatrix";

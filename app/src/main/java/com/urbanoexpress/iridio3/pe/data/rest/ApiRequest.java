@@ -81,7 +81,7 @@ public class ApiRequest {
         }
     }
 
-    public void requestFormDataJSon(String url, final ResponseListener responseListener) {
+    private void requestFormDataJSon(String url, final ResponseListener responseListener) {
         JSONObject jsonParams = new JSONObject(requestParams);
 
         JsonObjectRequest request = new JsonObjectRequest
