@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.databinding.FragmentSplashLoginBinding;
@@ -78,6 +79,8 @@ public class LogInFragment extends BaseFragment implements SplashLogInView {
             getActivity().overridePendingTransition(R.anim.slide_enter_from_bottom,
                     R.anim.not_slide);
             return true;
+        } else if (item.getItemId() == R.id.action_login_qr){
+            goToLoginQRFragment();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -179,5 +182,11 @@ public class LogInFragment extends BaseFragment implements SplashLogInView {
         appCompatActivity.setSupportActionBar(toolbar);
         appCompatActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    private void goToLoginQRFragment(){
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, new LoginQrFragment());
+        transaction.commit();
     }
 }
