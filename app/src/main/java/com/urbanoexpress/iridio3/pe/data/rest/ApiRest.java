@@ -90,10 +90,10 @@ public final class ApiRest {
         String UPLOAD_MOTORIZADO_LICENCE = "api-apps/iridio/RegisterLincense";
 
         String GUIA_YAPE_QR = "api-apps/iridio/getGuiasRutaQR";
-
         String VALIDATE_VERIFICATION_EMAIL = "iridio/api/registro/addPhone";
-
         String LOGIN_v2 = "iridio/api/registro/loginV2";
+        String GET_RUTAS_V2 = "iridio/api/rutas/getGuiasRutaV4";
+
 
         interface Google {
             String DISTANCE_MATRIX = "api-apps/iridio/googleDistanceMatrix";
