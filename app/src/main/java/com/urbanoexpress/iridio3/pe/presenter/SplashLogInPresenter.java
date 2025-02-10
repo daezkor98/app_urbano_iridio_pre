@@ -132,12 +132,20 @@ public class SplashLogInPresenter implements RequestCallback {
 
         @Override
         public Boolean doInBackground(JSONObject... jsonObjects) {
+
+            try {
+                JSONObject data = jsonObjects[0].getJSONObject("data");
+                saveToken(data.getString("access_token"));
+            } catch (JSONException ex) {
+                view.showToast(R.string.act_login_login_msg_error_datos_user_profile);
+                return false;
+            }
+
             try {
                 JSONObject data = jsonObjects[0].getJSONObject("data");
                 saveUserProfile(data.getJSONObject("userProfile"));
             } catch (JSONException ex) {
                 ex.printStackTrace();
-                //TODO show messages on background
                 view.showToast(R.string.act_login_login_msg_error_datos_user_profile);
                 return false;
             }
@@ -359,6 +367,12 @@ public class SplashLogInPresenter implements RequestCallback {
             // Es decir, los menus principales no seran contados en el menu de la aplicacion.
             return nivel > 0;
         }
+
+        private void saveToken(String token) {
+            Preferences.getInstance().edit()
+                    .putString("auth_token", token).apply();
+        }
     }
+
 
 }

@@ -356,7 +356,18 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             @Override
             public void onError(VolleyError error) {
                 new LoadGETask(false, false).execute();
-                view.showSnackBar(R.string.volley_error_message);
+                if (error.networkResponse!=null){
+                    if (error.networkResponse.statusCode == 403) {
+                        view.showAuthenticationError();
+                    }else if(error.networkResponse.statusCode == 401){
+                        view.showAuthenticationError();
+
+                    } else{
+                        view.showSnackBar(R.string.volley_error_message);
+                    }
+                }else{
+                    view.showSnackBar(R.string.volley_error_message);
+                }
             }
         };
 

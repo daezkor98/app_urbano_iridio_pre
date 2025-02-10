@@ -2,10 +2,12 @@ package com.urbanoexpress.iridio3.pe.data.rest;
 
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.urbanoexpress.iridio3.pe.util.Preferences;
 import com.urbanoexpress.iridio3.pe.util.network.volley.CustomJsonObjectRequest;
 import com.urbanoexpress.iridio3.pe.util.network.volley.ManagerVolley;
 import com.urbanoexpress.iridio3.pe.util.network.volley.MultipartJsonObjectRequest;
@@ -86,6 +88,7 @@ public class ApiRequest {
 
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.POST, url, jsonParams, new Response.Listener<JSONObject>() {
+
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -97,7 +100,17 @@ public class ApiRequest {
 
                         responseListener.onErrorResponse(error);
                     }
-                });
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>(super.getHeaders());
+                String bearerToken = Preferences.getInstance().getString("auth_token","");
+                if (!bearerToken.isEmpty()) {
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                }
+                return headers;
+            }
+        };
 
         ManagerVolley.getInstance(null).addToRequestQueue(request);
     }

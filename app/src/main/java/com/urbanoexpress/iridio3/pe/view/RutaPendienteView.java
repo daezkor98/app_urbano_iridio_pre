@@ -37,4 +37,7 @@ public interface RutaPendienteView extends BaseV5View {
     void showMessageRutaNoIniciada();
     void showMessageRutaFinalizada();
 
+    default void showAuthenticationError() {}
+
+
 }
