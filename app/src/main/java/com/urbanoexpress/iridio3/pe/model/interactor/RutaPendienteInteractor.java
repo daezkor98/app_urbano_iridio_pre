@@ -60,13 +60,10 @@ public class RutaPendienteInteractor {
     public void getRutas(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
         ApiRequest.getInstance().putParams("vp_id_ruta",                params[0]);
-        ApiRequest.getInstance().putParams("linea_valores",             params[1]);
-        ApiRequest.getInstance().putParams("linea_logistica",           params[2]);
-        ApiRequest.getInstance().putParams("linea_logistica_especial",  params[3]);
         ApiRequest.getInstance().putParams("id_user",                   params[4]);
         ApiRequest.getInstance().putParams("imei",                      params[5]);
-        ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
-                        ApiRest.Api.GET_RUTAS,
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getNewApiBaseUrl(context) +
+                        ApiRest.Api.GET_RUTAS_V2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {

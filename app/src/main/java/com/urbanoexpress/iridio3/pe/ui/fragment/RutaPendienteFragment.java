@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.pe.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.work.WorkManager;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,15 +26,19 @@ import java.util.List;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.databinding.FragmentRutasBinding;
 import com.urbanoexpress.iridio3.pe.presenter.RutaPendientePresenter;
+import com.urbanoexpress.iridio3.pe.services.DataSyncService;
+import com.urbanoexpress.iridio3.pe.ui.InitActivity;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.ui.interfaces.OnActionModeListener;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.RutaAdapter;
 import com.urbanoexpress.iridio3.pe.util.AnimationUtils;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
+import com.urbanoexpress.iridio3.pe.util.Session;
 import com.urbanoexpress.iridio3.pe.util.SimpleItemTouchHelperCallback;
 import com.urbanoexpress.iridio3.pe.util.androidsdkfixs.itemtouchelper.ItemTouchHelper;
 import com.urbanoexpress.iridio3.pe.view.RutaPendienteView;
+import com.urbanoexpress.iridio3.pe.work.UserStatusWorker;
 
 public class RutaPendienteFragment extends BaseFragment implements RutaPendienteView,
         RutaAdapter.OnClickGuiaItemListener, ActionMode.Callback {
@@ -45,7 +51,8 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     private RutaAdapter rutaAdapter;
     private Menu menu;
 
-    public RutaPendienteFragment() { }
+    public RutaPendienteFragment() {
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -280,6 +287,16 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     }
 
     @Override
+    public void showAuthenticationError() {
+        ModalHelper.getBuilderAlertDialog(getActivity())
+                .setTitle(R.string.pending_route_title_token_error)
+                .setMessage(R.string.pending_route_msg_token_error)
+                .setCancelable(false)
+                .setPositiveButton(R.string.pending_route_phone_accept, (dialog, which) -> closeUSerSession())
+                .show();
+    }
+
+    @Override
     public void showMessageNuevaRutaAsignada() {
         ModalHelper.getBuilderAlertDialog(getActivity())
                 .setTitle(R.string.activity_ruta_title_nueva_ruta_asignada)
@@ -313,6 +330,19 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
                 .setMessage(R.string.activity_detalle_ruta_message_ruta_finalizada)
                 .setPositiveButton(R.string.text_aceptar, null)
                 .show();
+    }
+
+    private void closeUSerSession() {
+        WorkManager.getInstance(requireContext()).cancelUniqueWork(UserStatusWorker.TAG);
+
+        new Thread(() -> {
+            CommonUtils.deleteUserData();
+            Session.clearSession();
+        }).start();
+
+        requireActivity().stopService(new Intent(getActivity(), DataSyncService.class));
+        requireActivity().startActivity(new Intent(getActivity(), InitActivity.class));
+        requireActivity().finish();
     }
 
     private void setupViews() {

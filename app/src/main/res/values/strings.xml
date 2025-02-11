@@ -494,6 +494,11 @@
 
     <string name="ver_code_phone_accept">Aceptar</string>
 
+    <!--ruta pendiente fragment-->
+    <string name="pending_route_title_token_error">Sesión expirada</string>
+    <string name="pending_route_msg_token_error">Tu sesión ha caducado. Por favor, vuelve a iniciar sesión para continuar.</string>
+    <string name="pending_route_phone_accept">Aceptar</string>
+
     <!---->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mandatory_barcode_scanning">Esta guía requiere escanear cada código de barras de manera obligatoria</string>
