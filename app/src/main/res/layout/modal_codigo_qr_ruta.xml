@@ -1,76 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/textViewQRCodeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="El código QR de la ruta es:"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/gris_2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutQRCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQRCodeLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:elevation="2dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTintMode="src_atop"
+            android:max="100"
+            android:progress="0" />
+
+        <ImageView
+            android:id="@+id/imgCodigoQR"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textViewCodeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="El código de verificación es:"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/gris_2"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutQRCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+    <TextView
+        android:id="@+id/textViewCodePath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="2567"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/gris_2"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCodeLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        app:layout_constraintGuide_percent="0.5" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gris_2"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="El código QR de la ruta es:"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"/>
+    <Button
+        android:id="@+id/btnAceptar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/text_aceptar"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:theme="@style/selectableItemGrisStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCodePath" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleInverse"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:indeterminate="true"
-                android:max="100"
-                android:progress="0"
-                android:layout_gravity="center"
-                android:indeterminateTintMode="src_atop"
-                android:indeterminateTint="@color/colorPrimary"
-                android:elevation="2dp"/>
 
-            <ImageView
-                android:id="@+id/imgCodigoQR"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true" />
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:orientation="horizontal"
-        android:gravity="right">
-
-        <Button
-            android:id="@+id/btnAceptar"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:minWidth="88dp"
-            android:theme="@style/selectableItemGrisStyle"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            android:text="@string/text_aceptar"
-            android:layout_gravity="center_vertical"
-            android:textAllCaps="true"
-            android:layout_marginRight="8dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"/>
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

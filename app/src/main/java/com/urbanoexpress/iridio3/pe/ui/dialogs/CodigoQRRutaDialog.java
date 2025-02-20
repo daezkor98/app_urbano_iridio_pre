@@ -9,15 +9,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.urbanoexpress.iridio3.pe.util.Preferences;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pe.databinding.ModalCodigoQrRutaBinding;
 import com.urbanoexpress.iridio3.pe.util.MetricsUtils;
@@ -38,6 +42,7 @@ public class CodigoQRRutaDialog extends DialogFragment {
                              @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         binding = ModalCodigoQrRutaBinding.inflate(inflater, container, false);
+        binding.textViewCodePath.setText(Preferences.getInstance().getString("code_path", ""));
         return binding.getRoot();
     }
 
@@ -45,6 +50,23 @@ public class CodigoQRRutaDialog extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViews();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            int width = getResources().getDisplayMetrics().widthPixels;
+            int height = getResources().getDisplayMetrics().heightPixels;
+            WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
+
+            params.width = (int) (width * 0.9);
+            params.height = (int) (height * 0.7);
+
+            getDialog().getWindow().setAttributes(params);
+
+        }
     }
 
     private void setupViews() {

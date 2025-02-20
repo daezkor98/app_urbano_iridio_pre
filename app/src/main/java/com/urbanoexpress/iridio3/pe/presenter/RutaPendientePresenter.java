@@ -392,6 +392,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             response = jsonObjects[0];
 
             try {
+                saveCodePath(response.getString("codigo_ruta"));
+
                 if (response.getBoolean("success")) {
                     visibleModalNuevaRutaAsignada = false;
                     saveRutas(response.getJSONArray("data"));
@@ -1780,5 +1782,10 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             }
         }
     };
+
+    private void saveCodePath(String token) {
+        Preferences.getInstance().edit()
+                .putString("code_path", token).apply();
+    }
 
 }
