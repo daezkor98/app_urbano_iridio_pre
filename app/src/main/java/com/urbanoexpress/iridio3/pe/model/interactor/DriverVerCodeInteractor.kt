@@ -7,11 +7,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.JsonObject
 import com.urbanoexpress.iridio3.pe.data.rest.ApiRest
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.ERROR_400
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.ERROR_MSG
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.GENERIC_ERROR
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.RESPONSE_ERROR
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.SUCCESS
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.ERROR_400
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.ERROR_MSG
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.GENERIC_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.RESPONSE_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.SUCCESS
 import com.urbanoexpress.iridio3.urbanocore.ST.gson
 import org.json.JSONObject
 import kotlin.coroutines.resume

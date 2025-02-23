@@ -17,10 +17,10 @@ import com.urbanoexpress.iridio3.pe.presenter.DriverVerCodePresenter
 import com.urbanoexpress.iridio3.pe.ui.MainActivity
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper
 import com.urbanoexpress.iridio3.pe.util.Preferences
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.EMPTY_VALUE
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.LOADING_LOGIN
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.PREFERENCES_PHONE
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.PREFERENCES_USER_PROFILE
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.EMPTY_VALUE
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.LOADING_LOGIN
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.PREFERENCES_PHONE
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.PREFERENCES_USER_PROFILE
 
 
 private const val ARG_PARAM1 = "pathCode"

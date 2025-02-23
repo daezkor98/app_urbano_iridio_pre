@@ -11,7 +11,7 @@ import com.urbanoexpress.iridio3.pe.model.interactor.DriverVerCodeInteractor
 import com.urbanoexpress.iridio3.pe.util.CommonUtils
 import com.urbanoexpress.iridio3.pe.util.Preferences
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine
-import com.urbanoexpress.iridio3.pe.util.constant.Constants.GENERIC_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.GENERIC_ERROR
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
