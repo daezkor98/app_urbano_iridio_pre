@@ -9,7 +9,7 @@
         android:id="@+id/planRutaCamaraFragment"
         android:name="com.urbanoexpress.iridio3.pe.ui.fragment.PlanRutaCamaraFragment"
         android:label="fragment_plan_ruta"
-        tools:layout="@layout/fragment_plan_ruta">
+        tools:layout="@layout/fragment_plan_ruta_camara">
         <action
             android:id="@+id/action_planRutaCamaraFragment_to_planRutaDetallesFragment"
             app:destination="@id/planRutaDetallesFragment" />
