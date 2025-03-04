@@ -275,6 +275,10 @@
             android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.PlanRutaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="android.max_aspect"
