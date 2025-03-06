@@ -6,6 +6,7 @@ import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.ui.MisGananciasActivity;
 import com.urbanoexpress.iridio3.pe.ui.NotificacionesRutaActivity;
 import com.urbanoexpress.iridio3.pe.ui.PlanDeViajeActivity;
+import com.urbanoexpress.iridio3.pe.ui.PlanRutaActivity;
 import com.urbanoexpress.iridio3.pe.ui.ResumenRutaActivity;
 import com.urbanoexpress.iridio3.pe.ui.ResumenRutaRuralActivity;
 import com.urbanoexpress.iridio3.pe.ui.RutaActivity;
@@ -44,7 +45,9 @@ public class MenuAppHelper {
     public static MenuAppHelper buildMenu(String menuClass) {
         if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
             return new MenuAppHelper(PlanDeViajeActivity.class, R.drawable.ic_truck_grey);
-        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DIARIA)) {
+            return new MenuAppHelper(PlanRutaActivity.class, R.drawable.ic_truck_grey);
+        }else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)) {
             return new MenuAppHelper(RutaActivity.class, R.drawable.ic_truck_grey);
         } else if (menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
             return new MenuAppHelper(RutaRuralActivity.class, R.drawable.ic_truck_grey);
@@ -64,6 +67,8 @@ public class MenuAppHelper {
     public static String buildDescription(Context context, String menuClass) {
         if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
             return context.getString(R.string.text_menu_plan_de_viaje);
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DIARIA)) {
+            return "escanea el QR de la ruta que quieres realizar";
         } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)
                 || menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
             return context.getString(R.string.text_menu_ruta_del_dia);
@@ -81,7 +86,7 @@ public class MenuAppHelper {
     }
 
     public static int builIDResIconLinear(String menuClass) {
-        if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
+        if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)|| menuClass.equalsIgnoreCase(Menu.RUTA_DIARIA)) {
             return R.drawable.ic_linear_truck;
         } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)
                 || menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
@@ -102,7 +107,9 @@ public class MenuAppHelper {
     public static boolean isValidMenu(String menuClass) {
         if (menuClass.equalsIgnoreCase(Menu.PLAN_DE_VIAJE)) {
             return true;
-        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)) {
+        } else if (menuClass.equalsIgnoreCase(Menu.RUTA_DIARIA)) {
+            return true;
+        }else if (menuClass.equalsIgnoreCase(Menu.RUTA_DEL_DIA)) {
             return true;
         } else if (menuClass.equalsIgnoreCase(Menu.RUTA_GESTOR)) {
             return true;
