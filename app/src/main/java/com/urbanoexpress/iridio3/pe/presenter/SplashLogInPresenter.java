@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.android.volley.VolleyError;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.urbanoexpress.iridio3.pe.model.entity.Grupo;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.MenuApp;
@@ -132,7 +133,6 @@ public class SplashLogInPresenter implements RequestCallback {
 
         @Override
         public Boolean doInBackground(JSONObject... jsonObjects) {
-
             try {
                 JSONObject data = jsonObjects[0].getJSONObject("data");
                 saveToken(data.getString("access_token"));
@@ -237,6 +237,7 @@ public class SplashLogInPresenter implements RequestCallback {
         }
 
         private void saveAppDataDefault(JSONObject data) throws JSONException {
+            Grupo.deleteAll(Grupo.class);
             MotivoDescarga.deleteAll(MotivoDescarga.class);
             TipoDireccion.deleteAll(TipoDireccion.class);
 
@@ -252,7 +253,7 @@ public class SplashLogInPresenter implements RequestCallback {
                         MotivoDescarga.Tipo.ENTREGA_PARCIAL,
                         "\n- Entrega Parcial");
 
-                saveMotivos(motivosDBMain.getJSONArray("no_entrega"),
+                saveMotivos2(motivosDBMain.getJSONArray("no_entrega"),
                         MotivoDescarga.Tipo.NO_ENTREGA,
                         "\n- No Entrega");
 
@@ -337,6 +338,36 @@ public class SplashLogInPresenter implements RequestCallback {
             }/* else {
                 msgErrorMotivos += msgError;
             }*/
+        }
+
+        private void saveMotivos2(JSONArray motivos, int tipoMotivo, String msgError) throws JSONException {
+
+            if (motivos.length() > 0) {
+                for (int i = 0; i < motivos.length(); i++) {
+                    JSONObject jsonObject = motivos.getJSONObject(i);
+                    Grupo grupo = new Grupo(
+                            jsonObject.getInt("gru_id"),
+                            jsonObject.getString("gru_descri")
+                    );
+                    grupo.save();
+
+                    JSONArray submotivosJson = jsonObject.getJSONArray("submotivos");
+                    for (int j = 0; j < submotivosJson.length(); j++) {
+                        JSONObject jsonObjectSubMotivo = submotivosJson.getJSONObject(j);
+                        MotivoDescarga submotivo = new MotivoDescarga(
+                                Preferences.getInstance().getString("idUsuario", ""),
+                                tipoMotivo,
+                                jsonObjectSubMotivo.getString("mot_id"),
+                                jsonObjectSubMotivo.getString("codigo"),
+                                jsonObjectSubMotivo.getString("descri"),
+                                jsonObjectSubMotivo.getString("linea"),
+                                jsonObjectSubMotivo.getInt("gru_id")
+                                );
+                        submotivo.save();
+                    }
+
+                }
+            }
         }
 
         private void saveUserMenu(JSONArray data) throws JSONException {
