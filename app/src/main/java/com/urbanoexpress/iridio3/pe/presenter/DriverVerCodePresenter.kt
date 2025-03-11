@@ -3,7 +3,7 @@ package com.urbanoexpress.iridio3.pe.presenter
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import com.urbanoexpress.iridio3.pe.R
-import com.urbanoexpress.iridio3.pe.model.entity.Grupo
+import com.urbanoexpress.iridio3.pe.model.entity.GrupoMotivo
 import com.urbanoexpress.iridio3.pe.model.entity.MenuApp
 import com.urbanoexpress.iridio3.pe.model.entity.MotivoDescarga
 import com.urbanoexpress.iridio3.pe.model.entity.TipoDireccion
@@ -197,7 +197,8 @@ class ProcessLogInDataTask(
 
     @Throws(JSONException::class)
     private fun saveAppDataDefault(data: JSONObject) {
-        Grupo.deleteAll(Grupo::class.java)
+        GrupoMotivo.deleteAll(
+            GrupoMotivo::class.java)
         MotivoDescarga.deleteAll(MotivoDescarga::class.java)
         TipoDireccion.deleteAll(TipoDireccion::class.java)
 
@@ -317,11 +318,12 @@ class ProcessLogInDataTask(
         if (motivos.length() > 0) {
             for (i in 0 until motivos.length()) {
                 val jsonObject = motivos.getJSONObject(i)
-                val grupo = Grupo(
-                    jsonObject.getInt("gru_id"),
-                    jsonObject.getString("gru_descri")
-                )
-                grupo.save()
+                val grupoMotivo =
+                    GrupoMotivo(
+                        jsonObject.getInt("gru_id"),
+                        jsonObject.getString("gru_descri")
+                    )
+                grupoMotivo.save()
 
                 val submotivosJson = jsonObject.getJSONArray("submotivos")
                 for (j in 0 until submotivosJson.length()) {

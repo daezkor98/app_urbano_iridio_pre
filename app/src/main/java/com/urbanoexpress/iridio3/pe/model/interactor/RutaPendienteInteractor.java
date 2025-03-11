@@ -22,7 +22,7 @@ import com.urbanoexpress.iridio3.pe.data.rest.ApiRest;
 import com.urbanoexpress.iridio3.pe.model.entity.Data;
 import com.urbanoexpress.iridio3.pe.model.entity.DescargaRuta;
 import com.urbanoexpress.iridio3.pe.model.entity.EstadoRuta;
-import com.urbanoexpress.iridio3.pe.model.entity.Grupo;
+import com.urbanoexpress.iridio3.pe.model.entity.GrupoMotivo;
 import com.urbanoexpress.iridio3.pe.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio3.pe.model.entity.MotivoDescarga;
 import com.urbanoexpress.iridio3.pe.model.entity.Pieza;
@@ -263,9 +263,9 @@ public class RutaPendienteInteractor {
                 NamingHelper.toSQLNameDefault("gruId") + " = ? ",
                 Preferences.getInstance().getString("idUsuario", ""), gruId + "");
     }
-    public List<Grupo> selectAllMotivosNoEntrega() {
+    public List<GrupoMotivo> selectAllMotivosNoEntrega() {
         try {
-            return Grupo.find(Grupo.class, null);
+            return GrupoMotivo.find(GrupoMotivo.class, null);
         } catch (SQLiteException e) {
             return new ArrayList<>();
         }

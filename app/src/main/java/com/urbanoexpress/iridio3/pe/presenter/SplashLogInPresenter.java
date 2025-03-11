@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.android.volley.VolleyError;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.urbanoexpress.iridio3.pe.model.entity.Grupo;
+import com.urbanoexpress.iridio3.pe.model.entity.GrupoMotivo;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.MenuApp;
@@ -237,7 +237,7 @@ public class SplashLogInPresenter implements RequestCallback {
         }
 
         private void saveAppDataDefault(JSONObject data) throws JSONException {
-            Grupo.deleteAll(Grupo.class);
+            GrupoMotivo.deleteAll(GrupoMotivo.class);
             MotivoDescarga.deleteAll(MotivoDescarga.class);
             TipoDireccion.deleteAll(TipoDireccion.class);
 
@@ -345,11 +345,11 @@ public class SplashLogInPresenter implements RequestCallback {
             if (motivos.length() > 0) {
                 for (int i = 0; i < motivos.length(); i++) {
                     JSONObject jsonObject = motivos.getJSONObject(i);
-                    Grupo grupo = new Grupo(
+                    GrupoMotivo grupoMotivo = new GrupoMotivo(
                             jsonObject.getInt("gru_id"),
                             jsonObject.getString("gru_descri")
                     );
-                    grupo.save();
+                    grupoMotivo.save();
 
                     JSONArray submotivosJson = jsonObject.getJSONArray("submotivos");
                     for (int j = 0; j < submotivosJson.length(); j++) {

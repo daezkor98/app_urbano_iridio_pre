@@ -1,6 +1,6 @@
 package com.urbanoexpress.iridio3.pe.presenter
 
-import com.urbanoexpress.iridio3.pe.model.entity.Grupo
+import com.urbanoexpress.iridio3.pe.model.entity.GrupoMotivo
 import com.urbanoexpress.iridio3.pe.model.interactor.RutaPendienteInteractor
 import com.urbanoexpress.iridio3.pe.ui.model.MotivoDescargaItem
 
@@ -16,12 +16,12 @@ class NoEntregaListMotivosPresenter(
     private lateinit var motivoItems: ArrayList<MotivoDescargaItem>
 
     override fun getListMotivosNoEntrega() {
-        val dbMotivoDescargas: List<Grupo> = rutaPendienteInteractor.selectAllMotivosNoEntrega()
+        val dbMotivoDescargas: List<GrupoMotivo> = rutaPendienteInteractor.selectAllMotivosNoEntrega()
         motivoItems = ArrayList()
 
         if (dbMotivoDescargas.isNotEmpty()){
             for (motivo in dbMotivoDescargas) {
-               val item = MotivoDescargaItem(motivo.gru_id.toString(), motivo.gru_descri, false)
+               val item = MotivoDescargaItem(motivo.idGrupoMotivo.toString(), motivo.desGrupoMotivo, false)
                 motivoItems.add(item)
             }
             view.showListMotivosNoEntrega(motivoItems)
