@@ -3,6 +3,7 @@ package com.urbanoexpress.iridio3.pe.model.interactor;
 import static com.urbanoexpress.iridio3.pe.data.rest.ApiRest.Api.GUIA_YAPE_QR;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -10,6 +11,7 @@ import com.orm.util.NamingHelper;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +22,7 @@ import com.urbanoexpress.iridio3.pe.data.rest.ApiRest;
 import com.urbanoexpress.iridio3.pe.model.entity.Data;
 import com.urbanoexpress.iridio3.pe.model.entity.DescargaRuta;
 import com.urbanoexpress.iridio3.pe.model.entity.EstadoRuta;
+import com.urbanoexpress.iridio3.pe.model.entity.Grupo;
 import com.urbanoexpress.iridio3.pe.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio3.pe.model.entity.MotivoDescarga;
 import com.urbanoexpress.iridio3.pe.model.entity.Pieza;
@@ -254,6 +257,20 @@ public class RutaPendienteInteractor {
                 tipoMotivo + "", lineaNegocio);
     }
 
+    public List<MotivoDescarga> selectAllSubMotivos(int gruId) {
+        return MotivoDescarga.find(MotivoDescarga.class,
+                NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
+                NamingHelper.toSQLNameDefault("gruId") + " = ? ",
+                Preferences.getInstance().getString("idUsuario", ""), gruId + "");
+    }
+    public List<Grupo> selectAllMotivosNoEntrega() {
+        try {
+            return Grupo.find(Grupo.class, null);
+        } catch (SQLiteException e) {
+            return new ArrayList<>();
+        }
+    }
+
     public List<TipoDireccion> selectAllTipoDireccion() {
         return TipoDireccion.find(TipoDireccion.class,
                 NamingHelper.toSQLNameDefault("idUsuario") + " = ?",
@@ -373,7 +390,7 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("eliminado") + " = ? and " +
                         NamingHelper.toSQLNameDefault("estadoDescarga") + " in (10, 20) and " +
                         NamingHelper.toSQLNameDefault("lineaNegocio") + " in (2, 3, 4)",
-                new String[] {
+                new String[]{
                         Preferences.getInstance().getString("idUsuario", ""),
                         Data.Delete.NO + ""
                 }, "", "", "");
@@ -387,8 +404,8 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("lineaNegocio") + " in (2, 3, 4) and " +
                         NamingHelper.toSQLNameDefault("gpsLatitude") + " = ? and " +
                         NamingHelper.toSQLNameDefault("gpsLongitude") + " = ? ",
-                        Preferences.getInstance().getString("idUsuario", ""),
-                        Data.Delete.NO + "", gpsLatitude, gpsLongitude);
+                Preferences.getInstance().getString("idUsuario", ""),
+                Data.Delete.NO + "", gpsLatitude, gpsLongitude);
     }
 
     public List<EstadoRuta> selectAllEstadoRuta() {
@@ -503,7 +520,7 @@ public class RutaPendienteInteractor {
                         "(" + NamingHelper.toSQLNameDefault("tipoRuta") + " is null or " +
                         NamingHelper.toSQLNameDefault("tipoRuta") + " = ?)",
                 new String[]{Preferences.getInstance().getString("idUsuario", ""),
-                Data.Delete.NO + "", EstadoRuta.TipoRuta.RUTA_DEL_DIA + ""});
+                        Data.Delete.NO + "", EstadoRuta.TipoRuta.RUTA_DEL_DIA + ""});
     }
 
     public Pieza selectPieza(String idPieza, String idServicio, String lineaNegocio) {
@@ -515,7 +532,9 @@ public class RutaPendienteInteractor {
                 Preferences.getInstance().getString("idUsuario", ""),
                 idPieza, idServicio, lineaNegocio);
 
-        if (list.size() > 0) { return list.get(0); }
+        if (list.size() > 0) {
+            return list.get(0);
+        }
         return null;
     }
 
@@ -525,7 +544,9 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("barra") + " = ?",
                 Preferences.getInstance().getString("idUsuario", ""), barra);
 
-        if (list.size() > 0) { return list.get(0); }
+        if (list.size() > 0) {
+            return list.get(0);
+        }
         return null;
     }
 
@@ -539,7 +560,9 @@ public class RutaPendienteInteractor {
                 Preferences.getInstance().getString("idUsuario", ""),
                 String.valueOf(Data.Delete.NO), String.valueOf(Ruta.EstadoDescarga.PENDIENTE), barra);
 
-        if (list.size() > 0) { return list.get(0); }
+        if (list.size() > 0) {
+            return list.get(0);
+        }
         return null;
     }
 
@@ -567,7 +590,7 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("estadoDescarga") + " = ? and " +
                         NamingHelper.toSQLNameDefault("lineaNegocio") + " in (2, 3, 4)",
                 new String[]{Preferences.getInstance().getString("idUsuario", ""),
-                Data.Delete.NO + "", Ruta.EstadoDescarga.PENDIENTE + ""});
+                        Data.Delete.NO + "", Ruta.EstadoDescarga.PENDIENTE + ""});
     }
 
     public long getTotalRutasGestionadas() {

@@ -32,12 +32,12 @@ import com.urbanoexpress.iridio3.pe.model.interactor.RutaPendienteInteractor;
 import com.urbanoexpress.iridio3.pe.model.util.ModelUtils;
 import com.urbanoexpress.iridio3.pe.ui.adapter.GestionGEHabilitanteAdapter;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.EntregaGEDialog;
-import com.urbanoexpress.iridio3.pe.ui.dialogs.NoEntregaGEDialog;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.RecoleccionCounterDialog;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.RecoleccionGEDialog;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.RecoleccionLogisticaInversaDialog;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.RecoleccionSellerDialog;
 import com.urbanoexpress.iridio3.pe.ui.dialogs.RecolectaGEDialog;
+import com.urbanoexpress.iridio3.pe.ui.fragment.NoEntregaListMotivosFragment;
 import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.LocationUtils;
@@ -235,8 +235,8 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
                     break;
                 case DescargaRuta.Entrega.NO_ENTREGO:
                 case DescargaRuta.Recoleccion.NO_RECOLECTO:
-                    dialogFragment = NoEntregaGEDialog.newInstance(rutas, numVecesGestionado);
-                    tagFragment = NoEntregaGEDialog.TAG;
+                    dialogFragment = NoEntregaListMotivosFragment.Companion.newInstance(rutas, numVecesGestionado);
+                    tagFragment = NoEntregaListMotivosFragment.Companion.getTAG();
                     break;
                 case DescargaRuta.Recoleccion.LLEGO_DIRECCION_RECOJO:
                     ModalHelper.getBuilderAlertDialog(activity)

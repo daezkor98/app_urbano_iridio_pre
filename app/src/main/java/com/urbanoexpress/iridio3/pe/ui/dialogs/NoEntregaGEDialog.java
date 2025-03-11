@@ -52,11 +52,12 @@ import com.urbanoexpress.iridio3.pe.view.DescargaNoEntregaView;
 
     public NoEntregaGEDialog() { }
 
-    public static NoEntregaGEDialog newInstance(ArrayList<Ruta> rutas, int numVecesGestionado) {
+    public static NoEntregaGEDialog newInstance(ArrayList<Ruta> rutas, int numVecesGestionado, int idMotivo) {
         NoEntregaGEDialog fragment = new NoEntregaGEDialog();
         Bundle args = new Bundle();
         args.putSerializable("guias", rutas);
         args.putInt("numVecesGestionado", numVecesGestionado);
+        args.putInt("idMotivo",idMotivo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +75,8 @@ import com.urbanoexpress.iridio3.pe.view.DescargaNoEntregaView;
             presenter = new NoEntregaGEPresenter(
                     NoEntregaGEDialog.this,
                     (ArrayList<Ruta>) getArguments().getSerializable("guias"),
-                    getArguments().getInt("numVecesGestionado"));
+                    getArguments().getInt("numVecesGestionado"),
+                    getArguments().getInt("idMotivo"));
             presenter.init();
         }
 
