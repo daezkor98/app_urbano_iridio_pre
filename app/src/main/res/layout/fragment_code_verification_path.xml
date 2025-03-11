@@ -1,26 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.DriverVerificationCodeFragment">
 
+
+    <FrameLayout
+        android:id="@+id/bannerCodeVerificationDriver"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="45dp"
+            android:src="@drawable/logo_urbano_lema_white"
+            android:scaleType="fitXY"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:src="@drawable/bg_city_shader"
+            android:scaleType="centerCrop"
+            android:layout_gravity="bottom"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="110dp"
+            android:src="@drawable/bg_hand_turn_on_gps"
+            android:scaleType="fitXY"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="30dp"/>
+
+    </FrameLayout>
+
     <TextView
         android:id="@+id/textViewTitleVerification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="48dp"
-        android:text="Verificacíon de Ruta"
+        android:layout_marginTop="32dp"
+        android:text="Verificación de Ruta"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDesVerification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/bannerCodeVerificationDriver"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDesVerification" />
 
     <TextView
         android:id="@+id/textViewDesVerification"
@@ -28,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="32dp"
-        android:text="Ingrese el código de verificacíon que se encuentra debajo del QR de la ruta compartida"
+        android:text="Ingrese el código de verificación"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitleVerification"
@@ -40,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDesVerification">
@@ -127,6 +164,18 @@
 
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/textViewDesVerification2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Encuentra el código de \nverificación debajo del QR de la \nruta compartida por el auxiliar."
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewVerification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button"
@@ -134,9 +183,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="32dp"
-        android:text="validar código"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewVerification" />
+        android:layout_marginBottom="32dp"
+        android:text="validar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
