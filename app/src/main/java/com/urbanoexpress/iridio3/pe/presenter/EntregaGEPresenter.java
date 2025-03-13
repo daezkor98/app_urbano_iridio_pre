@@ -119,6 +119,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     private List<GalleryWrapperItem> galeria = new ArrayList<>();
     private List<GalleryWrapperItem> galeriaFirma = new ArrayList<>();
     private List<GalleryWrapperItem> galeriaCargo = new ArrayList<>();//aqui
+    private List<GalleryWrapperItem> galeriaProductoxCliente = new ArrayList<>();//aqui
 
     //yape
     private List<GalleryWrapperItem> galeriaComprobantePago = new ArrayList<>();//aqui
@@ -170,7 +171,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         FOTOS_DOMICILIO,
 
         FOTOS_COMPROBANTE_PAGO,
-
+        FOTOS_PRODUCTO_CLIENTE,
         YAPE_QR
     }
 
@@ -227,12 +228,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    public void onClickUpdateMotivos() {
-        if (CommonUtils.validateConnectivity(view.getViewContext())) {
-            getListaMotivo();
-        }
-    }
-
     private void requestYapeQR() {
         view.showProgressDialog("Cargando QR");
         HashMap<String, String> requestParams = new HashMap<String, String>();
@@ -274,12 +269,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     public void onGalleryButtonClick(int position) {
         switch (currentStep) {
+            case FOTOS_PRODUCTO_CLIENTE:
             case FOTOS_PRODUCTO:
             case FOTOS_DOMICILIO:
                 if (currentStep == STEPS.FOTOS_PRODUCTO) {
                     typeCameraCaptureImage = "Imagen";
-                } else {
+                } else if (currentStep == STEPS.FOTOS_DOMICILIO) {
                     typeCameraCaptureImage = "Domicilio";
+                } else {
+                    typeCameraCaptureImage = "ProductoxCliente";
                 }
                 switch (((GalleryButtonItem) galeria.get(position)).getAction()) {
                     case GalleryButtonItem.Action.CAMERA:
@@ -468,26 +466,35 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.DATOS_ENTREGA) {
             if (validateDatosEntrega()) {
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
-
                 if (isMedioPagoYape()) {
                     showYapeQRStep();
                 } else if (isMedioPagoEfectivo()) {
                     showPagoDialog();
-                } else if (minFotosProducto == 0) {
+                } else if (minFotosProducto == 0 || hasHabilitantes() || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
-                    currentStep = STEPS.FOTOS_CARGO;
-                } else if (rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.LIQUIDACION)) {
-                    view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
-                    view.notifyGaleriaCargoAllItemChanged();
-                    view.setTextBtnSiguiente("Gestionar");
                     currentStep = STEPS.FOTOS_CARGO;
                 } else {
-                    view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
-                    view.notifyGaleriaFotosAllItemChanged();
-                    currentStep = STEPS.FOTOS_PRODUCTO;
+                    view.setVisibilityBoxStepProductoCliente(View.VISIBLE);
+                    view.notifyGaleriaProductoClienteAllItemChanged();
+                    view.setTextBtnSiguiente("Gestionar");
+                    currentStep = STEPS.FOTOS_PRODUCTO_CLIENTE;
                 }
                 view.hideKeyboard();
+            }
+            return;
+        }
+
+        if (currentStep == STEPS.FOTOS_PRODUCTO_CLIENTE) {
+            if (validateFotosProductoxCLiente()) {
+                boolean isGuiaDevolucion = rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.DEVOLUCION);
+                if (isGuiaDevolucion || isRequiredFirmaCliente()) {
+                    view.setVisibilityBoxStepFirmaEntrega(View.VISIBLE);
+                    view.notifyGaleriaFirmaAllItemChanged();
+                    currentStep = STEPS.FIRMA_CLIENTE;
+                } else {
+                    gestionarGuia();
+                }
             }
             return;
         }
@@ -496,7 +503,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             if (validateFotosProducto()) {
                 view.setVisibilityBoxStepFotosEntrega(View.GONE);
 
-                boolean isGuiaDevolucion = rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.DEVOLUCION);
+               /* boolean isGuiaDevolucion = rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.DEVOLUCION);
 
                 if (isGuiaDevolucion || isRequiredFirmaCliente()) {
                     view.setVisibilityBoxStepFirmaEntrega(View.VISIBLE);
@@ -506,12 +513,11 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
                     currentStep = STEPS.FOTOS_CARGO;
-                } else {
-                    view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
-                    view.notifyGaleriaDomicilioAllItemChanged();
-                    view.setTextBtnSiguiente("Gestionar");
-                    currentStep = STEPS.FOTOS_DOMICILIO;
-                }
+                } else {*/
+                view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
+                view.notifyGaleriaDomicilioAllItemChanged();
+                currentStep = STEPS.FOTOS_DOMICILIO;
+                // }
             }
             return;
         }
@@ -528,18 +534,21 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.FIRMA_CLIENTE) {
             boolean isGuiaDevolucion = rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.DEVOLUCION);
 
-            if (isGuiaDevolucion || validateFirmaCliente()) {
+           /* if (isGuiaDevolucion || validateFirmaCliente()) {
                 view.setVisibilityBoxStepFirmaEntrega(View.GONE);
                 view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                 view.notifyGaleriaCargoAllItemChanged();
                 currentStep = STEPS.FOTOS_CARGO;
+            }*/
+            if (validateFirmaCliente()) {
+                gestionarGuia();
             }
             return;
         }
 
         if (currentStep == STEPS.FOTOS_CARGO) {
 
-            if (rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.LIQUIDACION)) {
+            /*if (rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.LIQUIDACION)) {
                 if (validateFotosCargo()) {
                     gestionarGuia();
                 }
@@ -550,7 +559,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 view.setVisibilityBoxStepFotoCargoEntrega(View.GONE);
                 view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
                 view.notifyGaleriaDomicilioAllItemChanged();
-                view.setTextBtnSiguiente("Gestionar");
                 currentStep = STEPS.FOTOS_DOMICILIO;
                 return;
             }
@@ -561,9 +569,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 view.setVisibilityBoxStepFotoCargoEntrega(View.GONE);
                 view.setVisibilityBoxStepFotosDomicilio(View.VISIBLE);
                 view.notifyGaleriaDomicilioAllItemChanged();
-                view.setTextBtnSiguiente("Gestionar");
                 currentStep = STEPS.FOTOS_DOMICILIO;
                 return;
+            }*/
+            boolean isGuiaDevolucion = rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.DEVOLUCION);
+
+            if (isGuiaDevolucion || isRequiredFirmaCliente()) {
+                view.setVisibilityBoxStepFirmaEntrega(View.VISIBLE);
+                view.notifyGaleriaFirmaAllItemChanged();
+                currentStep = STEPS.FIRMA_CLIENTE;
             }
 
 
@@ -579,20 +593,26 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
                 view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                 view.notifyGaleriaCargoAllItemChanged();
-                view.setTextBtnSiguiente("Gestionar");
                 currentStep = STEPS.FOTOS_CARGO;
             } else if (validateFotosComprobantePago()) {
                 view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
-                view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
-                view.notifyGaleriaFotosAllItemChanged();
-                currentStep = STEPS.FOTOS_PRODUCTO;
+                // view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
+                // view.notifyGaleriaFotosAllItemChanged();
+                //currentStep = STEPS.FOTOS_PRODUCTO;
+
+                view.setVisibilityBoxStepProductoCliente(View.VISIBLE);
+                view.notifyGaleriaProductoClienteAllItemChanged();
+                view.setTextBtnSiguiente("Gestionar");
+                currentStep = STEPS.FOTOS_PRODUCTO_CLIENTE;
             }
             return;
         }
 
         if (currentStep == STEPS.FOTOS_DOMICILIO) {
             if (validateFotosDomicilio()) {
-                gestionarGuia();
+                view.setVisibilityBoxStepTipoEntrega(View.VISIBLE);
+                view.setVisibilityBoxStepFotosDomicilio(View.GONE);
+                currentStep = STEPS.TIPO_ENTREGA;
             }
         }
     }
@@ -607,43 +627,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     public void onSelectedTipoMedioPago(int position) {
         selectedIndexTipoMedioPago = position;
-    }
-
-    private void getListaMotivo() {
-        view.showProgressDialog(R.string.text_actualizando_motivos);
-        final RequestCallback callback = new RequestCallback() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                view.dismissProgressDialog();
-
-                try {
-                    if (response.getBoolean("success")) {
-                        rutaPendienteInteractor.deleteMotivos(tipoMotivo);
-                        saveMotivos(response.getJSONArray("data"));
-                        loadMotivos();
-                    } else {
-                        view.showToast(response.getString("msg_error"));
-                    }
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
-                    view.showToast(R.string.json_object_exception);
-                }
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                error.printStackTrace();
-                view.dismissProgressDialog();
-                view.showToast(R.string.volley_error_message);
-            }
-        };
-
-        String[] params = new String[]{
-                String.valueOf(tipoMotivo),
-                Preferences.getInstance().getString("idUsuario", "")
-        };
-
-        rutaPendienteInteractor.getMotivos(params, callback);
     }
 
     private void takePhoto() {
@@ -686,22 +669,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             activity.overridePendingTransition(R.anim.slide_enter_from_bottom, R.anim.not_slide);
         } else {
             view.showMessageCantTakeSigning();
-        }
-    }
-
-    private void saveMotivos(JSONArray data) throws JSONException {
-        JSONObject jsonObject;
-        for (int i = 0; i < data.length(); i++) {
-            jsonObject = data.getJSONObject(i);
-            MotivoDescarga motivo = new MotivoDescarga(
-                    Preferences.getInstance().getString("idUsuario", ""),
-                    tipoMotivo,
-                    jsonObject.getString("mot_id"),
-                    jsonObject.getString("codigo"),
-                    jsonObject.getString("descri"),
-                    jsonObject.getString("linea")
-            );
-            motivo.save();
         }
     }
 
@@ -1064,10 +1031,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             view.notifyPremiosAllItemChanged();
             currentStep = STEPS.PRODUCTOS_A_ENTREGAR;
         } else {
-            view.setVisibilityBoxStepTipoEntrega(View.VISIBLE);
+
+            // view.setVisibilityBoxStepTipoEntrega(View.VISIBLE);
             //view.notifyMotivosAllItemChanged();
             loadMotivos();
-            currentStep = STEPS.TIPO_ENTREGA;
+            view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
+            view.notifyGaleriaFotosAllItemChanged();
+            //currentStep = STEPS.TIPO_ENTREGA;
+            currentStep = STEPS.FOTOS_PRODUCTO;
+
         }
     }
 
@@ -1171,7 +1143,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         } else if (rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.LIQUIDACION)) {
             view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
             view.notifyGaleriaCargoAllItemChanged();
-            view.setTextBtnSiguiente("Gestionar");
             currentStep = STEPS.FOTOS_CARGO;
         } else {
             view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
@@ -1434,6 +1405,17 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         return true;
     }
 
+    private boolean validateFotosProductoxCLiente() {
+        if ((galeriaProductoxCliente.size() - 1) < 1) {
+            view.showSnackBar(
+                    "Debe tomar una foto del producto junto con el cliente para realizar la gestión de la guía.");
+            CommonUtils.vibrateDevice(view.getViewContext(), 100);
+            return false;
+        }
+
+        return true;
+    }
+
     private boolean validateGestionRecoleccionGuiaValija() {
         if (rutas.size() == 1) {
             if (rutas.get(0).getIdServicioRecoleccion() != null) {
@@ -1500,6 +1482,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 return canTakeFotoDomicilio();
             case FOTOS_COMPROBANTE_PAGO:
                 return canTakeFotoComprobantePago();
+            case FOTOS_PRODUCTO_CLIENTE:
+                return canTakeFotoProductoxCLiente();
             default:
                 return false;
         }
@@ -1530,6 +1514,12 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         return totalImages < 10;
     }
 
+    private boolean canTakeFotoProductoxCLiente() {
+        int totalBtns = rutas.get(0).getTipoZona() == Ruta.ZONA.RURAL ? 2 : 1;
+        int totalImages = galeriaProductoxCliente.size() - totalBtns;
+        return totalImages < 10;
+    }
+
     private void showGalerias() {
         List<Imagen> images = selectAllImages();
 
@@ -1538,13 +1528,13 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         galeriaFirma.clear();
         galeriaDomicilio.clear();
         galeriaComprobantePago.clear();
-
+        galeriaProductoxCliente.clear();
         GalleryButtonItem buttonItem = new GalleryButtonItem(R.drawable.ic_camera_grey);
         galeria.add(buttonItem);
         galeriaCargo.add(buttonItem);
         galeriaDomicilio.add(buttonItem);
         galeriaComprobantePago.add(buttonItem);
-
+        galeriaProductoxCliente.add(buttonItem);
         buttonItem = new GalleryButtonItem(R.drawable.ic_firma_grey);
         galeriaFirma.add(buttonItem);
 
@@ -1553,11 +1543,11 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     GalleryButtonItem.Action.GALLERY);
             galeria.add(buttonItem);
             galeriaDomicilio.add(buttonItem);
+            galeriaProductoxCliente.add(buttonItem);
         }
 
         for (Imagen imagen : images) {
             GalleryPhotoItem item = new GalleryPhotoItem(imagen.getPath() + imagen.getName());
-
             switch (imagen.getAnotaciones().toLowerCase()) {
                 case "imagen":
                     galeria.add(item);
@@ -1578,6 +1568,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     galeriaComprobantePago.add(item);
                     view.adjustWarningMessageToComprobantePago(galeriaComprobantePago.size());
                     break;
+
+                case "productoxcliente":
+                    galeriaProductoxCliente.add(item);
+                    view.adjustWarningMessageToFotosProductoxCLiente(galeriaProductoxCliente.size());
             }
         }
 
@@ -1586,6 +1580,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         view.showFotosCargoEnGaleria(galeriaCargo);
         view.showFotosDomicilioEnGaleria(galeriaDomicilio);
         view.showFotosComprobantePago(galeriaComprobantePago);
+        view.showFotosProductoxClienteEnGaleria(galeriaProductoxCliente);
     }
 
     private void insertImageToGallery() {
@@ -1607,6 +1602,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         } else if (typeCameraCaptureImage.equalsIgnoreCase("Pago")) {
             galeriaComprobantePago.add(item);
             view.notifyGaleriaPagoAllItemChanged();
+        } else if (typeCameraCaptureImage.equalsIgnoreCase("ProductoxCliente")) {
+            galeriaProductoxCliente.add(item);
+            view.notifyGaleriaProductoClienteAllItemChanged();
         }
     }
 
@@ -1664,6 +1662,17 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
                 galeriaDomicilio.remove(position);
                 view.notifyGaleriaDomicilioItemRemove(position);
+                break;
+
+            case FOTOS_PRODUCTO_CLIENTE:
+                FileUtils.deleteFile(((GalleryPhotoItem) galeriaProductoxCliente.get(position)).getPathImage());
+
+                indexSplit = ((GalleryPhotoItem) galeriaProductoxCliente.get(position)).getPathImage().lastIndexOf("/") + 1;
+                name = ((GalleryPhotoItem) galeriaProductoxCliente.get(position)).getPathImage().substring(indexSplit);
+                path = ((GalleryPhotoItem) galeriaProductoxCliente.get(position)).getPathImage().substring(0, indexSplit);
+
+                galeriaProductoxCliente.remove(position);
+                view.notifyGaleriaProductoClienteItemRemove(position);
                 break;
             case FOTOS_COMPROBANTE_PAGO:
                 FileUtils.deleteFile(((GalleryPhotoItem) galeriaComprobantePago.get(position)).getPathImage());

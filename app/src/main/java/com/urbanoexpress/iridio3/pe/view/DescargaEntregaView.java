@@ -99,4 +99,10 @@ public interface DescargaEntregaView extends BaseV5View {
     void showMessageCantTakePhoto();
     void showMessageCantTakeSigning();
     void showWrongDateAndTimeMessage();
+
+    void setVisibilityBoxStepProductoCliente(int visible);
+    void adjustWarningMessageToFotosProductoxCLiente( int imageCount);
+    void showFotosProductoxClienteEnGaleria(List<GalleryWrapperItem> items);
+    void notifyGaleriaProductoClienteItemRemove(int position);
+    void notifyGaleriaProductoClienteAllItemChanged();
 }
