@@ -41,7 +41,7 @@ public final class ApiRest {
         String UPLOAD_ESTADO_RUTA = "api-apps/iridio/uploadEstadoRutaV2";
         String UPLOAD_ESTADO_RUTA_KILOMETRAJE = "api-apps/iridio/uploadEstadoRutaWithKilometrajeV2";
         String VALIDATE_SOLICITA_KILOMETRAJE = "api-apps/iridio/validateSolicitaKilometraje";
-        String UPLOAD_GUIA_GESTIONADA = "api-apps/iridio/uploadGuiaGestionadaV5";
+        String UPLOAD_GUIA_GESTIONADA = "api/uploadGuiaGestionadaV5";
         String UPLOAD_IMAGEN = "api-apps/iridio/uploadGuiaImagen";
         String UPLOAD_IMAGEN_PARADA_PROGRAMADA = "api-apps/iridio/uploadParadaProgramadaImagen";
         String UPLOAD_GPS = "api-apps/iridio/uploadGPSRutaV2";
