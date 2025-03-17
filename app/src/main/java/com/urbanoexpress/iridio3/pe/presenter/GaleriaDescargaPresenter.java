@@ -75,7 +75,7 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
 
     public static final int REQUEST_IMAGE_GALLERY = 200;
 
-    private int contadorImagenes = 0, contadorFirma = 0;
+    private int contadorImagenes = 0, contadorFirma = 0, contadorDomicilio = 0;
 
     private Activity activity;
 
@@ -137,34 +137,13 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
 
     @Override
     public void onClickAddPhotoFromGalery() {
-        if (canTakePhoto()) {
+
             typeCameraCaptureImage = "Imagen";
-
-            Fragment fragment = galeriaDescargaView.getFragment();
-
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/jpeg");
-    //            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoCapture));
-                fragment.startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
-            } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("image/jpeg");
-    //            Intent intent = new Intent(Intent.ACTION_PICK,
-    //                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-    //            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoCapture));
-                fragment.startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
-            }
-        } else {
-            showAlertDialog(galeriaDescargaView.getContextView(),
-                    R.string.text_advertencia,
-                    R.string.activity_detalle_ruta_message_no_puede_tomar_foto,
-                    R.string.text_aceptar, null);
-        }
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/jpeg");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/jpeg");
+            galeriaDescargaView.openGallery(intent);
     }
 
     @Override
@@ -196,17 +175,23 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
         Log.d(TAG, "showGaleria");
         dbImagenes = selectAllImages();
 
-        if (dbImagenes.size() > 0) {
+        if (!dbImagenes.isEmpty()) {
             GaleriaDescargaRutaItem item;
 
             for (Imagen imagen : dbImagenes) {
                 item = new GaleriaDescargaRutaItem(imagen.getPath() + imagen.getName());
                 galeria.add(item);
 
-                if (imagen.getAnotaciones().equals("imagen")) {
-                    contadorImagenes++;
-                } else if (imagen.getAnotaciones().equals("firma")) {
-                    contadorFirma++;
+                switch (imagen.getAnotaciones()) {
+                    case "imagen":
+                        contadorImagenes++;
+                        break;
+                    case "firma":
+                        contadorFirma++;
+                        break;
+                    case "domicilio":
+                        contadorDomicilio++;
+                        break;
                 }
             }
         } else {
@@ -236,6 +221,11 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
         return (contadorImagenes + 1) <= MAX_PHOTO_CAPTURE;
     }
 
+
+    private boolean canTakeHomePhoto() {
+        return (contadorDomicilio + 1) <= MAX_PHOTO_CAPTURE;
+    }
+
     public void onActivityResultImageFromCamera() {
         if (compressImage()) {
             insertPhotoToGalery();
@@ -259,9 +249,37 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
                 .setSingleChoiceItems(nombreTipoFotos, 0,
                         (dialog, which) -> selectedIndexTypeImageResultImageFromStorage = which)
                 .setPositiveButton(R.string.text_aceptar,
-                        (dialog, which) -> new ProcessImageFromStorageTask().execute(data))
+                        (dialog, which) -> validateNumberPhotos(data))
                 .setNegativeButton(R.string.text_cancelar, null)
                 .show();
+    }
+
+    private void validateNumberPhotos(Intent data){
+        switch (selectedIndexTypeImageResultImageFromStorage) {
+            case 0:
+                if (canTakePhoto()) {
+                    new ProcessImageFromStorageTask().execute(data);
+                } else {
+                    showAlertDialog(galeriaDescargaView.getContextView(),
+                            R.string.text_advertencia,
+                            R.string.activity_detalle_ruta_message_no_puede_tomar_foto,
+                            R.string.text_aceptar, null);
+                }
+                break;
+            case 2:
+                if (canTakeHomePhoto()) {
+                    new ProcessImageFromStorageTask().execute(data);
+                } else {
+                    showAlertDialog(galeriaDescargaView.getContextView(),
+                            R.string.text_advertencia,
+                            R.string.activity_detalle_ruta_message_no_puede_tomar_foto,
+                            R.string.text_aceptar, null);
+                }
+                break;
+            default:
+                new ProcessImageFromStorageTask().execute(data);
+                break;
+        }
     }
 
     private boolean compressImage() {
@@ -316,10 +334,16 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
                 Data.Sync.PENDING);
         imagen.save();
 
-        if (anotaciones.equals("imagen")) {
-            contadorImagenes++;
-        } else {
-            contadorFirma++;
+        switch (anotaciones) {
+            case "imagen":
+                contadorImagenes++;
+                break;
+            case "domicilio":
+                contadorDomicilio++;
+                break;
+            default:
+                contadorFirma++;
+                break;
         }
 
         Log.d(TAG, "save image");
@@ -331,13 +355,18 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
         return dbImagenes.get(position).getName().contains("Imagen");
     }
 
+    private boolean isPhotoHome(int position) {
+        return dbImagenes.get(position).getName().contains("Domicilio");
+    }
+
     private void deleteImageGalery(int position) {
         FileUtils.deleteFile(dbImagenes.get(position).getPath() + dbImagenes.get(position).getName());
 
         dbImagenes.get(position).delete();
 
-        if (isPhoto(position)) contadorImagenes--;
-        else contadorFirma--;
+        if (isPhoto(position)) {contadorImagenes--;} else if (isPhotoHome(position)) {
+            contadorDomicilio--;
+        } else contadorFirma--;
 
         dbImagenes.remove(position);
 
@@ -406,7 +435,17 @@ public class GaleriaDescargaPresenter extends BaseModalsView implements OnClickI
             } else {
                 String pathImageSelected = FileUtilss.getRealPath(galeriaDescargaView.getContextView(), intents[0].getData());
                 Date dateCreated = null;
+                /////
+                if (pathImageSelected == null) {
+                    msgError = "Lo sentimos, la ruta del archivo no es valido.";
+                    return false;
+                }
                 File file = new File(pathImageSelected);
+                if (!file.exists()) {
+                    msgError = "Lo sentimos, el archivo no es valido.";
+                    return false;
+                }
+                /////
 
                 if (Build.VERSION.SDK_INT < 26) {
                     dateCreated = new Date(file.lastModified());

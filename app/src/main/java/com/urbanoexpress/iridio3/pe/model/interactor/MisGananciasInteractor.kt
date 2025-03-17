@@ -86,7 +86,11 @@ class MisGananciasInteractor {
                             .toInstance<ResponseOf<ArrayList<RevenueDay>>>()
                             ?.assertSuccess()
                             .ifSafe {
-                                continuation.resume(it)
+                                if (it.isEmpty()){
+                                    continuation.resumeWithException(Exception("Sin datos disponibles"))
+                                }else{
+                                    continuation.resume(it)
+                                }
                             }.ifNull {
                                 continuation.resumeWithException(Exception("Sin datos disponibles"))
                             }

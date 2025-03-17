@@ -139,6 +139,11 @@ public class GaleriaParadaProgramadaDialog extends DialogFragment implements Gal
     }
 
     @Override
+    public void openGallery(Intent intent) {
+
+    }
+
+    @Override
     public Fragment getFragment() {
         return this;
     }

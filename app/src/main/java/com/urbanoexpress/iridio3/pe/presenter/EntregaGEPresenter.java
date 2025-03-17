@@ -642,19 +642,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (canTakePhoto()) {
             Fragment fragment = view.getFragment();
 
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/jpeg");
-                fragment.startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
-            } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/jpeg");
-                fragment.startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
-            }
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/jpeg");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            fragment.startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
         } else {
             view.showMessageCantTakePhoto();
         }

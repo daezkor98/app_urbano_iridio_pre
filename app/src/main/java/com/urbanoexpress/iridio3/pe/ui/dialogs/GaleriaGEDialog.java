@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -41,6 +45,7 @@ public class GaleriaGEDialog extends DialogFragment implements GaleriaDescargaVi
 
     private ModalGaleriaDescargaBinding binding;
     private GaleriaDescargaPresenter presenter;
+    ActivityResultLauncher<Intent> galleryImageResultLauncher;
 
     public GaleriaGEDialog() { }
 
@@ -58,6 +63,7 @@ public class GaleriaGEDialog extends DialogFragment implements GaleriaDescargaVi
                              @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         binding = ModalGaleriaDescargaBinding.inflate(inflater, container, false);
+        galleryRegisterResult();
         return binding.getRoot();
     }
 
@@ -137,6 +143,12 @@ public class GaleriaGEDialog extends DialogFragment implements GaleriaDescargaVi
     }
 
     @Override
+    public void openGallery(Intent intent) {
+        galleryImageResultLauncher.launch(intent);
+    }
+
+
+    @Override
     public Fragment getFragment() {
         return this;
     }
@@ -158,5 +170,19 @@ public class GaleriaGEDialog extends DialogFragment implements GaleriaDescargaVi
                 new GridSpacingItemDecoration(3, MetricsUtils.dpToPx(getActivity(), 2), true));
 
         binding.btnAceptar.setOnClickListener(v -> dismiss());
+    }
+
+    private void galleryRegisterResult(){
+        galleryImageResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == Activity.RESULT_OK){
+                    Intent data = result.getData();
+                    if (data!=null){
+                        presenter.onActivityResultImageFromStorage(data);
+                    }
+                }
+            }
+        });
     }
 }

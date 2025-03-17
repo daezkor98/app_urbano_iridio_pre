@@ -78,15 +78,29 @@ public class NotificationUtils extends ContextWrapper {
 
 
     public static Notification getDataSyncChannelNotification(Context context) {
-        String channelId = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? DATA_SYNC_CHANNEL_ID : "";
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, channelId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Data Sync Channel for Iridio";
+            String description = "Channel for data sync notifications Iridio";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(DATA_SYNC_CHANNEL_ID, name, importance);
+            channel.setDescription(description);
 
-        return notificationBuilder.setOngoing(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, DATA_SYNC_CHANNEL_ID)
+                .setOngoing(true)
+                .setSmallIcon(R.mipmap.new_ic_launcher)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
-                .build();
+                .setContentTitle("Sincronización de Iridio activada")
+                .setContentText("sincronizando tu data en segundo plano")
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setWhen(System.currentTimeMillis());
+
+        return notificationBuilder.build();
     }
 
     private NotificationManager getManager() {

@@ -38,7 +38,7 @@ public class NavigationMenuPresenter {
         Preferences.getInstance().init(view.getViewContext(), "UserProfile");
     }
 
-    public void init() {
+    public void setUserData() {
         setDrawerHeader();
         new QueryDrawerMenuTask().execute();
     }

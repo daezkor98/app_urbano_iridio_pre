@@ -46,6 +46,7 @@ public class CameraUtils {
         File photo = FileUtils.generateFile(fragment.getContext(), generateImageName(prefix), directory);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra("android.intent.extra.CAMERA_FACING", 1);
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(fragment.getActivity(), BuildConfig.APPLICATION_ID + ".provider", photo);

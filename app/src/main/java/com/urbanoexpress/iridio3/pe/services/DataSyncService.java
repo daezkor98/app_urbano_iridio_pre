@@ -35,8 +35,6 @@ public class DataSyncService extends Service {
     private Timer timerData;
     private Timer timerNewsData;
 
-    private Intent intent;
-
     private DataSyncTask syncData;
     private DataSyncTask syncNewsData;
 
@@ -50,8 +48,6 @@ public class DataSyncService extends Service {
     public void onCreate() {
         Log.i(TAG, "SERVICE CREATE");
         super.onCreate();
-
-        intent = new Intent(TAG);
 
         PowerManager pm = (PowerManager) getSystemService(this.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "URBANO_DATA_SYNC");
@@ -136,7 +132,9 @@ public class DataSyncService extends Service {
             }
         }
         try {
-            wakeLock.release();
+            if (wakeLock != null && wakeLock.isHeld()) {
+                wakeLock.release();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -1,6 +1,5 @@
 package com.urbanoexpress.iridio3.pe.model.dto
 
-import android.util.Log
 import com.google.gson.reflect.TypeToken
 import com.urbanoexpress.iridio3.urbanocore.DataEvent
 import com.urbanoexpress.iridio3.urbanocore.ST
@@ -30,7 +29,7 @@ fun <T> ResponseOf<T>.wasSuccessful(): ResponseOf<T> {
     if (this.success!!) {
         return this
     } else {
-        throw  Exception("Solicitud fallida")
+        throw Exception("Solicitud fallida")
     }
 }
 
@@ -48,13 +47,16 @@ fun <T> ResponseOf<T>.validate(
 }
 
 fun <T> ResponseOf<T>?.assertSuccess(): T? {
-    if (this !=null){
-        if (this.success!!) {
+
+    if (this != null) {
+
+        this.success?.let {
             return this.data
-        } else {
-            throw  Exception("Solicitud fallida")
+        } ?: run {
+            throw Exception("Solicitud fallida")
         }
-    }else{
+
+    } else {
         throw Exception("Respuesta nula")
     }
 }

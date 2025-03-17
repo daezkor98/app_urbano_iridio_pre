@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.pe.ui.fragment
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,10 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.urbanoexpress.iridio3.pe.R
 import com.urbanoexpress.iridio3.pe.databinding.FragmentRegistroFacturaBinding
 import com.urbanoexpress.iridio3.pe.model.dto.CERT_ESTADO
 import com.urbanoexpress.iridio3.pe.model.dto.Period
@@ -85,6 +84,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
             CERT_ESTADO.EN_PROCESO.stateId -> {
                 findNavController().popBackStack()
             }
+
             CERT_ESTADO.LIQUIDADO.stateId -> {
                 disableEdition()
                 ModalHelper
@@ -93,6 +93,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
                         bind.root, "Su pago se encuentra en proceso de aprobación"
                     ).build().show()
             }
+
             CERT_ESTADO.APROBADO.stateId -> {
                 prepareForEdition()
                 if (this.period?.fac_id != NO_EXISTE) {
@@ -105,6 +106,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
                         bind.root, "Adjunte su Recibo por Honorarios"
                     ).build().show()
             }
+
             CERT_ESTADO.FACTURADO.stateId -> {
                 showPreviousFactData()
                 disableEdition()
@@ -112,6 +114,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
                     bind.root, "Su pago está procesandose"
                 ).build().show()
             }
+
             CERT_ESTADO.PAGADO.stateId -> {
                 showPreviousFactData()
                 disableEdition()
@@ -203,14 +206,7 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
         }
 
         bind.tvFileName.onExclusiveClick {
-            pdfUri.ifSafe {
-                findNavController().navigate(
-                    R.id.action_registroFacturaFragment_to_pdfViewerFragment,
-                    bundleOf("PDFURI" to pdfUri)
-                )
-            }.ifNull {
-                showToast("Seleccione un documento")
-            }
+            showPDfInScreen()
         }
     }
 
@@ -251,4 +247,21 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
             paint?.isUnderlineText = true
         }
     }
+
+
+    private fun showPDfInScreen() {
+        pdfUri?.let {
+            val viewPDFIntent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(it, "application/pdf")
+                addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            try {
+                startActivity(viewPDFIntent)
+            } catch (e: ActivityNotFoundException) {
+                showToast("Necesitas instalar una app para la lectura de PDF")
+            }
+        }
+    }
+
 }
