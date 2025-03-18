@@ -49,8 +49,8 @@ public class LogInFragment extends BaseFragment implements SplashLogInView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        getActivity().getWindow().setBackgroundDrawable(
-                ContextCompat.getDrawable(getActivity(), R.drawable.bg_fragment_login));
+      //  getActivity().getWindow().setBackgroundDrawable(
+        //        ContextCompat.getDrawable(getActivity(), R.drawable.bg_fragment_login));
         binding = FragmentSplashLoginBinding.inflate(inflater, container, false);
 
         setupViews();
