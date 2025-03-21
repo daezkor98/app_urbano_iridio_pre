@@ -29,7 +29,7 @@ public class Usuario extends SugarRecord implements Serializable {
     private boolean menuAppAvailable;
     private String idRuta;
     private int totalNotificaciones;
-
+    private String flag;
     public Usuario() { }
 
     public Usuario(String idUsuario, String usuario, String nombre,
@@ -37,7 +37,7 @@ public class Usuario extends SugarRecord implements Serializable {
                    String siglaProvincia, String perfil, String tiempoRequestGPS,
                    String tiempoRequesDatos, String lineaPostal, String lineaValores,
                    String lineaLogistica, String lineaLogisticaEspecial, String devicePhone,
-                   boolean menuAppAvailable, String idRuta, int totalNotificaciones) {
+                   boolean menuAppAvailable, String idRuta, int totalNotificaciones, String flag) {
         this.idUsuario = idUsuario;
         this.usuario = usuario;
         this.nombre = nombre;
@@ -56,6 +56,7 @@ public class Usuario extends SugarRecord implements Serializable {
         this.menuAppAvailable = menuAppAvailable;
         this.idRuta = idRuta;
         this.totalNotificaciones = totalNotificaciones;
+        this.flag = flag;
     }
 
     public String getIdUsuario() {
@@ -200,5 +201,13 @@ public class Usuario extends SugarRecord implements Serializable {
 
     public void setTotalNotificaciones(int totalNotificaciones) {
         this.totalNotificaciones = totalNotificaciones;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setIsFlag(String flag) {
+        this.flag = flag;
     }
 }

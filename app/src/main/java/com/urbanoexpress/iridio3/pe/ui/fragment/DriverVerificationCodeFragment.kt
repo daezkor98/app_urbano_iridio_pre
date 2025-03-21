@@ -70,11 +70,13 @@ class DriverVerificationCodeFragment : BaseFragment(), DriverContract.DriverVeri
         binding?.button?.isEnabled = false
         binding?.button?.setOnClickListener {
             this.hideKeyboard()
+            val phone = getDriverPhone()
+            Preferences.getInstance().init(requireContext(), "UserProfile")
             param1?.let { idRutaQR ->
                 loginQrPresenter.loginDriverUser (
                     idRutaQR = idRutaQR,
                     verCodeQR = getVerificationCode(),
-                    driverPhone = getDriverPhone()
+                    driverPhone = phone
                 )
             }
         }
@@ -106,6 +108,7 @@ class DriverVerificationCodeFragment : BaseFragment(), DriverContract.DriverVeri
 
 
     private fun getDriverPhone(): String {
+        Preferences.getInstance().init(requireContext(), "GlobalConfigApp")
         return Preferences.getInstance().getString(PREFERENCES_PHONE, EMPTY_VALUE) ?: EMPTY_VALUE
     }
 

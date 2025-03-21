@@ -231,7 +231,8 @@ public class SplashLogInPresenter implements RequestCallback {
                     devicePhone,
                     true,
                     "0",
-                    0
+                    0,
+                    "1"
             );
             usuario.save();
         }

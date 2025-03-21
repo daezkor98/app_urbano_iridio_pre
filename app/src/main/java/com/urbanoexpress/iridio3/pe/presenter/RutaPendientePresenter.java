@@ -373,11 +373,9 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
         String[] params = new String[]{
                 Preferences.getInstance().getInt("idRuta", 0) + "",
-                Preferences.getInstance().getString("lineaValores", ""),
-                Preferences.getInstance().getString("lineaLogistica", ""),
-                Preferences.getInstance().getString("lineaLogisticaEspecial", ""),
                 Preferences.getInstance().getString("idUsuario", ""),
-                Session.getUser().getDevicePhone()
+                Session.getUser().getDevicePhone(),
+                Session.getUser().getFlag(),
         };
 
         interactor.getRutas(params, callback);

@@ -190,7 +190,8 @@ class ProcessLogInDataTask(
             devicePhone,
             true,
             "0",
-            0
+            0,
+            "0"
         )
         usuario.save()
     }

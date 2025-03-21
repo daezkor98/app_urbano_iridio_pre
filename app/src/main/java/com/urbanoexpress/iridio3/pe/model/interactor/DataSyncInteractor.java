@@ -219,6 +219,7 @@ public class DataSyncInteractor {
         ApiRequest.getInstance().putParams("vp_metros", params[2]);
         ApiRequest.getInstance().putParams("vp_imei_cel", params[3]);
         ApiRequest.getInstance().putParams("vp_user", params[4]);
+        ApiRequest.getInstance().putParams("flag", params[5]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.UPLOAD_SECUENCIA_RUTA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
