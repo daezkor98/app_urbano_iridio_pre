@@ -62,11 +62,11 @@ public class RutaPendienteInteractor {
 
     public void getRutas(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_id_ruta",                params[0]);
-        ApiRequest.getInstance().putParams("id_user",                   params[1]);
-        ApiRequest.getInstance().putParams("imei",                      params[2]);
-        ApiRequest.getInstance().putParams("flag",                      params[3]);
-        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getNewApiBaseUrl(context) +
+        ApiRequest.getInstance().putParams("vp_id_ruta", params[0]);
+        ApiRequest.getInstance().putParams("id_user", params[1]);
+        ApiRequest.getInstance().putParams("imei", params[2]);
+        ApiRequest.getInstance().putParams("flag", params[3]);
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getApiBaseUrlV2() +
                         ApiRest.Api.GET_RUTAS_V2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
@@ -83,9 +83,9 @@ public class RutaPendienteInteractor {
 
     public void getGuiasRutaRural(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("linea_logistica",   params[0]);
-        ApiRequest.getInstance().putParams("id_user",           params[1]);
-        ApiRequest.getInstance().putParams("device_phone",      params[2]);
+        ApiRequest.getInstance().putParams("linea_logistica", params[0]);
+        ApiRequest.getInstance().putParams("id_user", params[1]);
+        ApiRequest.getInstance().putParams("device_phone", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_GUIAS_RUTA_RURAL,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -104,7 +104,7 @@ public class RutaPendienteInteractor {
     public void getMotivos(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
         ApiRequest.getInstance().putParams("vp_chk_id", params[0]);
-        ApiRequest.getInstance().putParams("id_user",   params[1]);
+        ApiRequest.getInstance().putParams("id_user", params[1]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_MOTIVOS_DESCARGA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -122,10 +122,10 @@ public class RutaPendienteInteractor {
 
     public static void editPlaca(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_id_ruta",        params[0]);
-        ApiRequest.getInstance().putParams("vp_placa",          params[1]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[2]);
-        ApiRequest.getInstance().putParams("vp_id_user",        params[3]);
+        ApiRequest.getInstance().putParams("vp_id_ruta", params[0]);
+        ApiRequest.getInstance().putParams("vp_placa", params[1]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[2]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[3]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.EDIT_PLACA_RUTA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -144,8 +144,8 @@ public class RutaPendienteInteractor {
     public static void getGuiasElectronicasRecoleccion(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
         ApiRequest.getInstance().putParams("vp_id_recoleccion", params[0]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",        params[2]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_GUIAS_ELECTRONICAS_RECOLECCION,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -164,8 +164,8 @@ public class RutaPendienteInteractor {
     public static void getContenedoresRecoleccion(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
         ApiRequest.getInstance().putParams("vp_id_recoleccion", params[0]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",        params[2]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_CONTENEDORES_RECOLECCION,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -183,20 +183,21 @@ public class RutaPendienteInteractor {
 
     public static void uploadEstadoRutaKilometraje(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_rou_id",         params[0]);
-        ApiRequest.getInstance().putParams("vp_rou_estado",     params[1]);
-        ApiRequest.getInstance().putParams("vp_gps_px",         params[2]);
-        ApiRequest.getInstance().putParams("vp_gps_py",         params[3]);
-        ApiRequest.getInstance().putParams("vp_fecha",          params[4]);
-        ApiRequest.getInstance().putParams("vp_hora",           params[5]);
-        ApiRequest.getInstance().putParams("vp_km",             params[6]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[7]);
-        ApiRequest.getInstance().putParams("firebaseToken",     params[8]);
-        ApiRequest.getInstance().putParams("motivo_nt",         params[9]);
-        ApiRequest.getInstance().putParams("id_user",           params[10]);
-        ApiRequest.getInstance().putParams("imei",              params[11]);
-        ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
-                        ApiRest.Api.UPLOAD_ESTADO_RUTA_KILOMETRAJE,
+        ApiRequest.getInstance().putParams("vp_rou_id", params[0]);
+        ApiRequest.getInstance().putParams("vp_rou_estado", params[1]);
+        ApiRequest.getInstance().putParams("vp_gps_px", params[2]);
+        ApiRequest.getInstance().putParams("vp_gps_py", params[3]);
+        ApiRequest.getInstance().putParams("vp_fecha", params[4]);
+        ApiRequest.getInstance().putParams("vp_hora", params[5]);
+        ApiRequest.getInstance().putParams("vp_km", params[6]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[7]);
+        ApiRequest.getInstance().putParams("firebaseToken", params[8]);
+        ApiRequest.getInstance().putParams("motivo_nt", params[9]);
+        ApiRequest.getInstance().putParams("id_user", params[10]);
+        ApiRequest.getInstance().putParams("imei", params[11]);
+        ApiRequest.getInstance().putParams("flag", params[12]);
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getApiBaseUrlV2() +
+                        ApiRest.Api.UPLOAD_ESTADO_RUTA_KILOMETRAJE_V2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -212,8 +213,8 @@ public class RutaPendienteInteractor {
 
     public static void validateSolicitaKilometraje(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_rutas",      params[0]);
-        ApiRequest.getInstance().putParams("vp_id_user",    params[1]);
+        ApiRequest.getInstance().putParams("vp_rutas", params[0]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[1]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.VALIDATE_SOLICITA_KILOMETRAJE,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -231,9 +232,9 @@ public class RutaPendienteInteractor {
 
     public static void readBarraRecoleccion(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_barra",      params[0]);
-        ApiRequest.getInstance().putParams("vp_srec_id",    params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",    params[2]);
+        ApiRequest.getInstance().putParams("vp_barra", params[0]);
+        ApiRequest.getInstance().putParams("vp_srec_id", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.READ_BARRA_RECOLECCION,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -261,9 +262,10 @@ public class RutaPendienteInteractor {
     public List<MotivoDescarga> selectAllSubMotivos(int gruId) {
         return MotivoDescarga.find(MotivoDescarga.class,
                 NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
-                NamingHelper.toSQLNameDefault("gruId") + " = ? ",
+                        NamingHelper.toSQLNameDefault("gruId") + " = ? ",
                 Preferences.getInstance().getString("idUsuario", ""), gruId + "");
     }
+
     public List<GrupoMotivo> selectAllMotivosNoEntrega() {
         try {
             return GrupoMotivo.find(GrupoMotivo.class, null);

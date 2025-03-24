@@ -65,7 +65,7 @@ public class VerficationCodePresenter {
             ApiRequest.getInstance().putParams("device", Build.MODEL);
             ApiRequest.getInstance().putParams("version", Build.VERSION.RELEASE);
 
-            ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getNewApiBaseUrl(view.getViewContext()) + ApiRest.Api.VALIDATE_VERIFICATION_EMAIL,
+            ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getApiBaseUrlV2() + ApiRest.Api.VALIDATE_VERIFICATION_EMAIL,
                     ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                         @Override
                         public void onResponse(JSONObject response) {

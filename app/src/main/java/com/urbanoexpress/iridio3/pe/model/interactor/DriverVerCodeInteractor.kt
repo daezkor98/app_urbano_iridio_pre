@@ -28,8 +28,7 @@ class DriverVerCodeInteractor(private val context: Context?) {
         suspendCoroutine { continuation ->
 
             val jsonObjectRequest = JsonObjectRequest(Request.Method.POST,
-                ApiRest.getInstance()
-                    .getNewApiBaseUrl(context) + ApiRest.Api.LOGIN_QR + idRuta + "/${verificationCode}",
+                ApiRest.getInstance().apiBaseUrlV2 + ApiRest.Api.LOGIN_QR + idRuta + "/${verificationCode}",
                 null,
                 { response ->
                     val successStatus = response.optBoolean(SUCCESS, false)
