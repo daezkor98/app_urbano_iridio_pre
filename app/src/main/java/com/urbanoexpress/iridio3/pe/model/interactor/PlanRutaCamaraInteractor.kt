@@ -1,22 +1,19 @@
 package com.urbanoexpress.iridio3.pe.model.interactor
 
 import android.content.Context
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.urbanoexpress.iridio3.pe.data.rest.ApiRest
 import com.urbanoexpress.iridio3.pe.model.response.PlanRutaCamaraResponse
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_400
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_CODE_400
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_MSG
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.GENERIC_ERROR
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_DEFAULT_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_MSG_ERROR
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.SUCCESS
 import com.urbanoexpress.iridio3.urbanocore.ST.gson
-import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -50,7 +47,7 @@ class PlanRutaCamaraInteractor(context: Context) {
                             continuation.resumeWithException(exception)
                         }
                     } else {
-                        val msgError = response.optString(RESPONSE_ERROR, GENERIC_ERROR)
+                        val msgError = response.optString(RESPONSE_MSG_ERROR, RESPONSE_DEFAULT_ERROR)
                         continuation.resumeWithException(getExceptionMessage(msgError))
                     }
                 },
@@ -63,9 +60,9 @@ class PlanRutaCamaraInteractor(context: Context) {
         }
 
     private fun getExceptionMessage(message: String): Exception {
-        if (message.contains(ERROR_400)) {
+        if (message.contains(ERROR_CODE_400)) {
             try {
-                val msgJsonString = message.split(ERROR_400)[1]
+                val msgJsonString = message.split(ERROR_CODE_400)[1]
                 val msgJsonObject = gson.fromJson(msgJsonString, JsonObject::class.java)
                 return Exception(msgJsonObject.get(ERROR_MSG).toString())
             } catch (e: Exception) {

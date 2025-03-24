@@ -3,10 +3,11 @@ package com.urbanoexpress.iridio3.pe.presenter
 import com.urbanoexpress.iridio3.pe.model.interactor.PlanRutaCamaraInteractor
 import com.urbanoexpress.iridio3.pe.model.interactor.RutaPendienteInteractor
 import com.urbanoexpress.iridio3.pe.presenter.mapper.toView
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.GENERIC_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_DEFAULT_ERROR
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -21,10 +22,11 @@ class PlanRutaCamaraPresenter(
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : PlanRutaCamaraContract.Presenter {
+    private var job: Job? = null
 
     override fun getRutaDetail(idRutaQR: String) {
 
-        CoroutineScope(mainDispatcher).launch {
+        job = CoroutineScope(mainDispatcher).launch {
             try {
                 val users = withContext(ioDispatcher) {
                     planRutaCamaraInteractor.getRutaDetail(idRutaQr = idRutaQR)
@@ -32,20 +34,20 @@ class PlanRutaCamaraPresenter(
                 planRutaCamaraView.showRutaDetail(users.toView())
 
             } catch (e: Exception) {
-                planRutaCamaraView.showError(e.message ?: GENERIC_ERROR)
+                planRutaCamaraView.showError(e.message ?: RESPONSE_DEFAULT_ERROR)
             }
         }
     }
 
     override fun validateGuideList() {
-        if (rutaPendienteInteractor.selectAllRutas().isNotEmpty()){
+        if (rutaPendienteInteractor.selectAllRutas().isNotEmpty()) {
             planRutaCamaraView.showGuideList()
-        }else{
-           planRutaCamaraView.enableQrCamera()
+        } else {
+            planRutaCamaraView.enableQrCamera()
         }
     }
 
     override fun detachView() {
-        //
+        job?.cancel()
     }
 }

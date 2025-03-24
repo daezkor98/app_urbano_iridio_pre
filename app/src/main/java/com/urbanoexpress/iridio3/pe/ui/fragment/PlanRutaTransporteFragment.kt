@@ -10,15 +10,17 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.urbanoexpress.iridio3.pe.R
 import com.urbanoexpress.iridio3.pe.databinding.FragmentPlanRutaTransporteBinding
-import com.urbanoexpress.iridio3.pe.model.interactor.PlanRutasDetallesInteractor
+import com.urbanoexpress.iridio3.pe.model.interactor.PlanRutaTransporteInteractor
 import com.urbanoexpress.iridio3.pe.presenter.PlanRutaTransporteContract
 import com.urbanoexpress.iridio3.pe.presenter.PlanRutaTransportePresenter
 import com.urbanoexpress.iridio3.pe.ui.RutaActivity
 import com.urbanoexpress.iridio3.pe.ui.model.PlacaGeoModel
+import com.urbanoexpress.iridio3.pe.util.Exception.BaseException
 import com.urbanoexpress.iridio3.pe.util.Preferences
 import com.urbanoexpress.iridio3.pe.util.Session
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.EMPTY_VALUE
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_409
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_CODE_PIEZA
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_CODE_PLACA
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.MODULE_NAME
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.MODULE_TITLE
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.PREFERENCES_GLOBAL_CONFIG
@@ -42,8 +44,8 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
         binding = FragmentPlanRutaTransporteBinding.inflate(inflater, container, false)
 
         presenter = PlanRutaTransportePresenter(
-            planRutaDetallesView = this,
-            planRutasDetallesInteractor = PlanRutasDetallesInteractor(requireContext())
+            planRutaTransporteView = this,
+            planRutasTransporteInteractor = PlanRutaTransporteInteractor(requireContext())
         )
         val rouId = args.idRouteId
 
@@ -110,25 +112,38 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
         return Preferences.getInstance().getString(PREFERENCES_ID_PER, EMPTY_VALUE) ?: EMPTY_VALUE
     }
 
-    override fun showError(error: String) {
+    override fun showError(error: BaseException) {
         this.dismissProgressDialog()
-        if (error.contains(ERROR_409)) {
-            BaseModalsView.showAlertDialog(
-                requireContext(),
-                getString(R.string.plan_ruta_titulo_error_piezas),
-                getString(R.string.plan_ruta_des_error_piezas),
-                getString(R.string.plan_ruta_aceptar)
-            ) { _ , _ -> requireActivity().finish() }
-        } else {
-            BaseModalsView.showAlertDialog(
-                requireContext(),
-                getString(R.string.plan_ruta_titulo_error_gen),
-                error,
-                getString(R.string.plan_ruta_aceptar),
-                null
-            )
-        }
+        when (error.errorCode) {
+            ERROR_CODE_PIEZA -> {
+                BaseModalsView.showAlertDialog(
+                    requireContext(),
+                    getString(R.string.plan_ruta_titulo_error_piezas),
+                    getString(R.string.plan_ruta_des_error_piezas),
+                    getString(R.string.plan_ruta_aceptar)
+                ) { _, _ -> requireActivity().finish() }
+            }
 
+            ERROR_CODE_PLACA -> {
+                BaseModalsView.showAlertDialog(
+                    requireContext(),
+                    getString(R.string.plan_ruta_titulo_error_placa),
+                    getString(R.string.plan_ruta_des_error_placa),
+                    getString(R.string.plan_ruta_aceptar),
+                    null
+                )
+            }
+
+            else -> {
+                BaseModalsView.showAlertDialog(
+                    requireContext(),
+                    getString(R.string.plan_ruta_titulo_error_gen),
+                    error.cause?.message ?: error.message,
+                    getString(R.string.plan_ruta_aceptar)
+                ) { _, _ -> requireActivity().finish() }
+            }
+
+        }
     }
 
 }

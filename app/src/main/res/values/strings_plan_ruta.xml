@@ -27,7 +27,9 @@
     <string name="plan_ruta_aceptar">Aceptar</string>
     <string name="plan_ruta_titulo_error_gen">Ocurrio un error</string>
     <string name="plan_ruta_titulo_error_piezas">Número de piezas incorrecto</string>
-    <string name="plan_ruta_des_error_piezas">Acercate con un supervisor para validar número de piezas</string>
+    <string name="plan_ruta_titulo_error_placa">Número de placa incorrecto</string>
+    <string name="plan_ruta_des_error_piezas">Acercate con un supervisor para validar número de piezas.</string>
+    <string name="plan_ruta_des_error_placa">Placa incorrecta, intentalo nuevamente.</string>
     <string name="plan_ruta_titulo_error_anulada">Ruta Anulada</string>
     <string name="plan_ruta_des_error_anulada">Debe escanear otra ruta</string>
     <string name="title_activity_plan_ruta">Plan de Ruta del Día</string>

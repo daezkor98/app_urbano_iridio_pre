@@ -1,12 +1,12 @@
 package com.urbanoexpress.iridio3.pe.presenter
 
-import android.util.Log
-import com.urbanoexpress.iridio3.pe.model.interactor.PlanRutasDetallesInteractor
+import com.urbanoexpress.iridio3.pe.model.interactor.PlanRutaTransporteInteractor
 import com.urbanoexpress.iridio3.pe.ui.model.PlacaGeoModel
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.GENERIC_ERROR
+import com.urbanoexpress.iridio3.pe.util.Exception.BaseException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -15,27 +15,28 @@ import kotlinx.coroutines.withContext
  * Created by Brandon Quintanilla on Febrero/25/2025.
  */
 class PlanRutaTransportePresenter(
-    private val planRutaDetallesView: PlanRutaTransporteContract.View,
-    private val planRutasDetallesInteractor: PlanRutasDetallesInteractor,
+    private val planRutaTransporteView: PlanRutaTransporteContract.View,
+    private val planRutasTransporteInteractor: PlanRutaTransporteInteractor,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : PlanRutaTransporteContract.Presenter {
+    private var job: Job? = null
 
     override fun validateRoad(placaGeoModel: PlacaGeoModel) {
-        CoroutineScope(mainDispatcher).launch {
+        job = CoroutineScope(mainDispatcher).launch {
             try {
                 val validate = withContext(ioDispatcher) {
-                    planRutasDetallesInteractor.validateRoad(road = placaGeoModel)
+                    planRutasTransporteInteractor.validateRoad(road = placaGeoModel)
                 }
-                planRutaDetallesView.showGuideList(validate.data.codeMsg)
+                planRutaTransporteView.showGuideList(validate.data.codeMsg)
 
-            } catch (e: Exception) {
-                planRutaDetallesView.showError(e.message ?: GENERIC_ERROR)
+            } catch (exception: BaseException) {
+                planRutaTransporteView.showError(exception)
             }
         }
     }
 
     override fun detachView() {
-        Log.d("Hola", "detachView")
+        job?.cancel()
     }
 }

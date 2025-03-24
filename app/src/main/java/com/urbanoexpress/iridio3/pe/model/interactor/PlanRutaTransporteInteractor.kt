@@ -9,11 +9,13 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.urbanoexpress.iridio3.pe.model.response.PlanRutaDetallesResponse
 import com.urbanoexpress.iridio3.pe.ui.model.PlacaGeoModel
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_400
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_409
+import com.urbanoexpress.iridio3.pe.util.Exception.BaseException
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.EMPTY_VALUE
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_CODE_400
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.ERROR_MSG
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.GENERIC_ERROR
-import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_CODE_DETAIL
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_DEFAULT_ERROR
+import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.RESPONSE_MSG_ERROR
 import com.urbanoexpress.iridio3.pe.util.constant.PlanRutaConstants.SUCCESS
 import com.urbanoexpress.iridio3.urbanocore.ST.gson
 import org.json.JSONObject
@@ -25,7 +27,7 @@ import kotlin.coroutines.suspendCoroutine
 /**
  * Created by Brandon Quintanilla on Febrero/25/2025.
  */
-class PlanRutasDetallesInteractor(context: Context) {
+class PlanRutaTransporteInteractor(context: Context) {
 
     private val requestQueue: RequestQueue = Volley.newRequestQueue(context)
 
@@ -39,7 +41,6 @@ class PlanRutasDetallesInteractor(context: Context) {
                 "https://api.geo.dev-urbano.dev/iridio/api/rutas/grabarRuta",
                 jsonRequestBody,
                 { response ->
-
                     val successStatus = response.optBoolean(SUCCESS, false)
                     if (successStatus) {
                         val apiResponseResult = runCatching {
@@ -51,38 +52,39 @@ class PlanRutasDetallesInteractor(context: Context) {
                         apiResponseResult.onSuccess { successResponse ->
                             continuation.resume(successResponse)
                         }.onFailure { exception ->
-                            continuation.resumeWithException(exception)
+                            continuation.resumeWithException(BaseException(cause = exception))
                         }
                     } else {
-                        val msgError = response.optString(RESPONSE_ERROR, GENERIC_ERROR)
-                        continuation.resumeWithException(getExceptionMessage(msgError))
+                        continuation.resumeWithException(getException(response))
                     }
                 },
                 { error ->
-                    continuation.resumeWithException(error)
+                    continuation.resumeWithException(BaseException(cause = error))
                 }
             )
 
             requestQueue.add(jsonObjectRequest)
         }
 
-    private fun getExceptionMessage(message: String): Exception {
-        if (message.contains(ERROR_400)) {
+    private fun getException(json: JSONObject): BaseException {
+        val errorCode = json.optString(RESPONSE_CODE_DETAIL, EMPTY_VALUE)
+        val message = getMessageError(json.optString(RESPONSE_MSG_ERROR, RESPONSE_DEFAULT_ERROR))
+        return BaseException(errorCode = errorCode, message = message)
+    }
+
+    private fun getMessageError(message: String): String {
+        if (message.contains(ERROR_CODE_400)) {
             try {
-                val msgJsonString = message.split(ERROR_400)[1]
+                val msgJsonString = message.split(ERROR_CODE_400)[1]
                 val msgJsonObject = gson.fromJson(msgJsonString, JsonObject::class.java)
-                return Exception(msgJsonObject.get(ERROR_MSG).toString())
+                return (msgJsonObject.get(ERROR_MSG).toString())
             } catch (e: Exception) {
-                return Exception(message)
+                return message
             }
 
-        } else if (message.contains(ERROR_409)) {
-            return Exception(ERROR_409)
-
         } else {
-            return Exception(message)
+            return message
         }
-
     }
 }
 
