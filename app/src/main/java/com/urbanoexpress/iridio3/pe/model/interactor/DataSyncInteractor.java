@@ -88,8 +88,9 @@ public class DataSyncInteractor {
         ApiRequest.getInstance().putParams("vp_linea_negocio", params[21]);
         ApiRequest.getInstance().putParams("vp_user", params[22]);
         ApiRequest.getInstance().putParams("vp_id_mac", params[23]);
-        ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
-                        ApiRest.Api.UPLOAD_GUIA_GESTIONADA,
+        ApiRequest.getInstance().putParams("flag", params[24]);
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getApiBaseUrlV2() +
+                        ApiRest.Api.UPLOAD_GUIA_GESTIONADA_V2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {

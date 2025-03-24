@@ -407,7 +407,8 @@ public class IniciarTerminarRutaDelDiaDialog extends BaseDialogFragment {
                 firebaseToken,
                 idMotivoNT,
                 estadoRutaCierre.get(0).getIdUsuario(),
-                Session.getUser().getDevicePhone()
+                Session.getUser().getDevicePhone(),
+                Session.getUser().getFlag()
         };
 
         interactor.uploadEstadoRutaKilometraje(params, callback);

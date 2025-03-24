@@ -876,7 +876,8 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                 firebaseToken,
                 idMotivoNT,
                 estadoRutaCierre.get(0).getIdUsuario(),
-                Session.getUser().getDevicePhone()
+                Session.getUser().getDevicePhone(),
+                Session.getUser().getFlag()
         };
 
         interactor.uploadEstadoRutaKilometraje(params, callback);

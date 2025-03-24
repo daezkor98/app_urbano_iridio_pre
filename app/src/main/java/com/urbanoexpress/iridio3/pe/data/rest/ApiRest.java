@@ -1,11 +1,5 @@
 package com.urbanoexpress.iridio3.pe.data.rest;
 
-import static com.urbanoexpress.iridio3.data.remote.urbano.UrbanoPeruBaseUrl.DEVELOPMENT_BASE_URL_V2;
-
-import android.content.Context;
-
-import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
-import com.urbanoexpress.iridio3.data.remote.ApiEnvironment;
 import com.urbanoexpress.iridio3.data.remote.BaseUrl;
 import com.urbanoexpress.iridio3.data.remote.urbano.UrbanoChileBaseUrl;
 import com.urbanoexpress.iridio3.data.remote.urbano.UrbanoPeruBaseUrl;
@@ -41,7 +35,7 @@ public final class ApiRest {
         String UPLOAD_ESTADO_RUTA = "api-apps/iridio/uploadEstadoRutaV2";
         String UPLOAD_ESTADO_RUTA_KILOMETRAJE = "api-apps/iridio/uploadEstadoRutaWithKilometrajeV2";
         String VALIDATE_SOLICITA_KILOMETRAJE = "api-apps/iridio/validateSolicitaKilometraje";
-        String UPLOAD_GUIA_GESTIONADA = "api/uploadGuiaGestionadaV5";
+        String UPLOAD_GUIA_GESTIONADA = "api-apps/iridio/uploadGuiaGestionadaV5";
         String UPLOAD_IMAGEN = "api-apps/iridio/uploadGuiaImagen";
         String UPLOAD_IMAGEN_PARADA_PROGRAMADA = "api-apps/iridio/uploadParadaProgramadaImagen";
         String UPLOAD_GPS = "api-apps/iridio/uploadGPSRutaV2";
@@ -94,7 +88,8 @@ public final class ApiRest {
         String LOGIN_v2 = "iridio/api/registro/loginV2";
         String GET_RUTAS_V2 = "iridio/api/rutas/getGuiasRutaV4";
         String LOGIN_QR ="iridio/api/registro/loginRuta/";
-
+        String UPLOAD_ESTADO_RUTA_KILOMETRAJE_V2 = "iridio/api/uploadEstadoRutaWithKilometrajeV3";
+        String UPLOAD_GUIA_GESTIONADA_V2 = "iridio/api/uploadGuiaGestionadaV5";
 
         interface Google {
             String DISTANCE_MATRIX = "api-apps/iridio/googleDistanceMatrix";
@@ -124,19 +119,6 @@ public final class ApiRest {
         return apiBaseUrl;
     }
 
-    public String getNewApiBaseUrl(Context context) {
-        PreferencesHelper preferencesHelper = new PreferencesHelper(context);
-
-        switch (preferencesHelper.getApiEnvironment()) {
-            case ApiEnvironment.DEVELOPMENT:
-                return DEVELOPMENT_BASE_URL_V2;
-            case ApiEnvironment.PRODUCTION:
-                return DEVELOPMENT_BASE_URL_V2;
-            default:
-                return "";
-        }
-    }
-
     public static BaseUrl buildUrbanoApiBaseUrl(int apiEnvironment, int country) {
         switch (country) {
             case Country.PERU:
@@ -146,6 +128,10 @@ public final class ApiRest {
             default:
                 return null;
         }
+    }
+
+    public String getApiBaseUrlV2(){
+        return "https://api.geo.dev-urbano.dev/";
     }
 
 }

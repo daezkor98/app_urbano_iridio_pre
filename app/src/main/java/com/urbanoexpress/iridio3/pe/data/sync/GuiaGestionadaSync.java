@@ -162,7 +162,8 @@ public class GuiaGestionadaSync extends DataSyncModel<GuiaGestionada> {
                             comentarioObservacionEntrega,
                             getData().get(getCountData()).getLineaNegocio(),
                             getData().get(getCountData()).getIdUsuario(),
-                            Session.getUser().getDevicePhone()
+                            Session.getUser().getDevicePhone(),
+                            Session.getUser().getFlag()
                     };
 
                     dataSyncInteractor.uploadGuiaGestionada(params, callback);
