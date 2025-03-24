@@ -1,7 +1,7 @@
 package com.urbanoexpress.iridio3.pe.presenter
 
-import com.urbanoexpress.iridio3.pe.model.interactor.PlanRutaTransporteInteractor
 import com.urbanoexpress.iridio3.pe.ui.model.PlacaGeoModel
+import com.urbanoexpress.iridio3.pe.util.Exception.BaseException
 
 
 /**
@@ -11,7 +11,7 @@ interface PlanRutaTransporteContract {
 
     interface View {
         fun showGuideList(successMsg:String)
-        fun showError(error: PlanRutaTransporteInteractor.BaseException)
+        fun showError(error: BaseException)
     }
 
     interface Presenter {
