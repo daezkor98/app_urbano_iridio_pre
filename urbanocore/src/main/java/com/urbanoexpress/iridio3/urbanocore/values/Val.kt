@@ -13,6 +13,7 @@ object Menu {
     const val RUTA_EXPRESS = "ruta_express"
     const val NOTIFICACIONES = "notificaciones"
     const val MIS_GANANCIAS = "my_revenue"
+    const val RUTA_DIARIA = "ruta_diaria"
 }
 
 val weekDays: Map<Int, String> = mapOf(
