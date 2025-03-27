@@ -1,7 +1,6 @@
 package com.urbanoexpress.iridio3.pe.presenter
 
 import android.util.Log
-import com.google.firebase.messaging.FirebaseMessaging
 import com.urbanoexpress.iridio3.pe.R
 import com.urbanoexpress.iridio3.pe.model.entity.GrupoMotivo
 import com.urbanoexpress.iridio3.pe.model.entity.MenuApp
@@ -16,13 +15,12 @@ import com.urbanoexpress.iridio3.pe.util.constant.DriverVerificationConstants.GE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-
-
 /**
  * Created by Brandon Quintanilla on Febrero/03/2025.
  */
@@ -33,19 +31,12 @@ class DriverVerCodePresenter(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : DriverContract.DriverVerificationPresenter {
 
-    private var firebaseToken = ""
-
-    init {
-
-        FirebaseMessaging.getInstance().token.addOnSuccessListener { s: String ->
-            firebaseToken = s
-        }
-    }
+    private var job: Job? = null
 
     override fun loginDriverUser(idRutaQR: String, verCodeQR: String, driverPhone: String) {
         view?.let { view ->
             view.showLoginProgressDialog()
-            CoroutineScope(mainDispatcher).launch {
+          job = CoroutineScope(mainDispatcher).launch {
                 try {
                     val users = withContext(ioDispatcher) {
                         interactor.loginQResponse(
@@ -64,7 +55,7 @@ class DriverVerCodePresenter(
     }
 
     override fun detachView() {
-        view = null
+        job?.cancel()
     }
 }
 
