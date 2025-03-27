@@ -33,9 +33,12 @@ import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.LocationUtils;
 import com.urbanoexpress.iridio3.pe.util.PermissionUtils;
 import com.urbanoexpress.iridio3.pe.util.Preferences;
+import com.urbanoexpress.iridio3.pe.util.Session;
 import com.urbanoexpress.iridio3.pe.util.components.searchview.MaterialSearchView;
 import com.urbanoexpress.iridio3.pe.util.constant.LocalAction;
 import com.urbanoexpress.iridio3.pe.view.RutaView;
+
+import java.util.Objects;
 
 public class RutaActivity extends BaseActivity implements RutaView, OnActionModeListener {
 
@@ -115,7 +118,11 @@ public class RutaActivity extends BaseActivity implements RutaView, OnActionMode
             presenter.onActionCodigoQRRuta();
             return true;
         } else if (item.getItemId() == R.id.action_forzar_terminar_ruta) {
-            presenter.onActionForzarCierreRuta();
+            if (Objects.equals(Session.getUser().getFlag(), "0")) {
+                showToast("No tienes permisos para esta acción");
+            } else {
+                presenter.onActionForzarCierreRuta();
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -234,7 +241,13 @@ public class RutaActivity extends BaseActivity implements RutaView, OnActionMode
         binding.boxConsideracionesImportantesRuta.setOnClickListener(v ->
                 presenter.onClickBoxConsideracionesImportantesRuta());
 
-        binding.fabIniciarTerminarRuta.setOnClickListener(v -> presenter.onClickFab());
+        if (Objects.equals(Session.getUser().getFlag(), "0")) {
+            binding.fabIniciarTerminarRuta.setVisibility(View.GONE);
+        } else {
+            binding.fabIniciarTerminarRuta.setVisibility(View.VISIBLE);
+            binding.fabIniciarTerminarRuta.setOnClickListener(v -> presenter.onClickFab());
+        }
+
 
         setupViewPager(binding.viewPager);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
@@ -364,7 +377,7 @@ public class RutaActivity extends BaseActivity implements RutaView, OnActionMode
                 return new int[]{
                         ContextCompat.getColor(RutaActivity.this, R.color.colorPrimary),
                         ContextCompat.getColor(RutaActivity.this, R.color.colorPrimaryDark)
-                    };
+                };
             case 1:
                 return new int[]{
                         ContextCompat.getColor(RutaActivity.this, R.color.colorBlackUrbano),
