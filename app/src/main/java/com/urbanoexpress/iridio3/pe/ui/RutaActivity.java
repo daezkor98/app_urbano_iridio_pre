@@ -33,9 +33,12 @@ import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.LocationUtils;
 import com.urbanoexpress.iridio3.pe.util.PermissionUtils;
 import com.urbanoexpress.iridio3.pe.util.Preferences;
+import com.urbanoexpress.iridio3.pe.util.Session;
 import com.urbanoexpress.iridio3.pe.util.components.searchview.MaterialSearchView;
 import com.urbanoexpress.iridio3.pe.util.constant.LocalAction;
 import com.urbanoexpress.iridio3.pe.view.RutaView;
+
+import java.util.Objects;
 
 public class RutaActivity extends BaseActivity implements RutaView, OnActionModeListener {
 
