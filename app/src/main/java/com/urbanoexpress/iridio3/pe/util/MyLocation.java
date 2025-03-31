@@ -120,6 +120,10 @@ public class MyLocation {
     }
 
     public static boolean isValidLocations(String latitude, String longitude) {
+        if (latitude==null || longitude==null){
+            return false;
+        }
+
         if (latitude.trim().isEmpty() && longitude.trim().isEmpty()) {
             return false;
         }

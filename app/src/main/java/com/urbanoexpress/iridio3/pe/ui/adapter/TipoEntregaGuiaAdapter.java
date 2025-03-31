@@ -20,6 +20,10 @@ public class TipoEntregaGuiaAdapter extends RecyclerView.Adapter<TipoEntregaGuia
         this.data = data;
     }
 
+    public List<MotivoDescargaItem> getData() {
+        return data;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

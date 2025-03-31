@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.android.volley.VolleyError;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.urbanoexpress.iridio3.pe.model.entity.GrupoMotivo;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.MenuApp;
@@ -134,10 +135,17 @@ public class SplashLogInPresenter implements RequestCallback {
         public Boolean doInBackground(JSONObject... jsonObjects) {
             try {
                 JSONObject data = jsonObjects[0].getJSONObject("data");
+                saveToken(data.getString("access_token"));
+            } catch (JSONException ex) {
+                view.showToast(R.string.act_login_login_msg_error_datos_user_profile);
+                return false;
+            }
+
+            try {
+                JSONObject data = jsonObjects[0].getJSONObject("data");
                 saveUserProfile(data.getJSONObject("userProfile"));
             } catch (JSONException ex) {
                 ex.printStackTrace();
-                //TODO show messages on background
                 view.showToast(R.string.act_login_login_msg_error_datos_user_profile);
                 return false;
             }
@@ -223,12 +231,14 @@ public class SplashLogInPresenter implements RequestCallback {
                     devicePhone,
                     true,
                     "0",
-                    0
+                    0,
+                    "1"
             );
             usuario.save();
         }
 
         private void saveAppDataDefault(JSONObject data) throws JSONException {
+            GrupoMotivo.deleteAll(GrupoMotivo.class);
             MotivoDescarga.deleteAll(MotivoDescarga.class);
             TipoDireccion.deleteAll(TipoDireccion.class);
 
@@ -244,7 +254,7 @@ public class SplashLogInPresenter implements RequestCallback {
                         MotivoDescarga.Tipo.ENTREGA_PARCIAL,
                         "\n- Entrega Parcial");
 
-                saveMotivos(motivosDBMain.getJSONArray("no_entrega"),
+                saveMotivos2(motivosDBMain.getJSONArray("no_entrega"),
                         MotivoDescarga.Tipo.NO_ENTREGA,
                         "\n- No Entrega");
 
@@ -331,6 +341,36 @@ public class SplashLogInPresenter implements RequestCallback {
             }*/
         }
 
+        private void saveMotivos2(JSONArray motivos, int tipoMotivo, String msgError) throws JSONException {
+
+            if (motivos.length() > 0) {
+                for (int i = 0; i < motivos.length(); i++) {
+                    JSONObject jsonObject = motivos.getJSONObject(i);
+                    GrupoMotivo grupoMotivo = new GrupoMotivo(
+                            jsonObject.getInt("gru_id"),
+                            jsonObject.getString("gru_descri")
+                    );
+                    grupoMotivo.save();
+
+                    JSONArray submotivosJson = jsonObject.getJSONArray("submotivos");
+                    for (int j = 0; j < submotivosJson.length(); j++) {
+                        JSONObject jsonObjectSubMotivo = submotivosJson.getJSONObject(j);
+                        MotivoDescarga submotivo = new MotivoDescarga(
+                                Preferences.getInstance().getString("idUsuario", ""),
+                                tipoMotivo,
+                                jsonObjectSubMotivo.getString("mot_id"),
+                                jsonObjectSubMotivo.getString("codigo"),
+                                jsonObjectSubMotivo.getString("descri"),
+                                jsonObjectSubMotivo.getString("linea"),
+                                jsonObjectSubMotivo.getInt("gru_id")
+                                );
+                        submotivo.save();
+                    }
+
+                }
+            }
+        }
+
         private void saveUserMenu(JSONArray data) throws JSONException {
             JSONObject jsonObject;
 
@@ -359,6 +399,12 @@ public class SplashLogInPresenter implements RequestCallback {
             // Es decir, los menus principales no seran contados en el menu de la aplicacion.
             return nivel > 0;
         }
+
+        private void saveToken(String token) {
+            Preferences.getInstance().edit()
+                    .putString("auth_token", token).apply();
+        }
     }
+
 
 }

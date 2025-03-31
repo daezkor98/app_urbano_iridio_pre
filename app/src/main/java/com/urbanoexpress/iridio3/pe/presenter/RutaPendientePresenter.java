@@ -356,17 +356,26 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             @Override
             public void onError(VolleyError error) {
                 new LoadGETask(false, false).execute();
-                view.showSnackBar(R.string.volley_error_message);
+                if (error.networkResponse!=null){
+                    if (error.networkResponse.statusCode == 403) {
+                        view.showAuthenticationError();
+                    }else if(error.networkResponse.statusCode == 401){
+                        view.showAuthenticationError();
+
+                    } else{
+                        view.showSnackBar(R.string.volley_error_message);
+                    }
+                }else{
+                    view.showSnackBar(R.string.volley_error_message);
+                }
             }
         };
 
         String[] params = new String[]{
                 Preferences.getInstance().getInt("idRuta", 0) + "",
-                Preferences.getInstance().getString("lineaValores", ""),
-                Preferences.getInstance().getString("lineaLogistica", ""),
-                Preferences.getInstance().getString("lineaLogisticaEspecial", ""),
                 Preferences.getInstance().getString("idUsuario", ""),
-                Session.getUser().getDevicePhone()
+                Session.getUser().getDevicePhone(),
+                Session.getUser().getFlag(),
         };
 
         interactor.getRutas(params, callback);
@@ -381,6 +390,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             response = jsonObjects[0];
 
             try {
+                saveCodePath(response.getString("codigo_ruta"));
+
                 if (response.getBoolean("success")) {
                     visibleModalNuevaRutaAsignada = false;
                     saveRutas(response.getJSONArray("data"));
@@ -1769,5 +1780,10 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             }
         }
     };
+
+    private void saveCodePath(String token) {
+        Preferences.getInstance().edit()
+                .putString("code_path", token).apply();
+    }
 
 }

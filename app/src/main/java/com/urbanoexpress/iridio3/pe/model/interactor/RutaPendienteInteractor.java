@@ -3,6 +3,7 @@ package com.urbanoexpress.iridio3.pe.model.interactor;
 import static com.urbanoexpress.iridio3.pe.data.rest.ApiRest.Api.GUIA_YAPE_QR;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -10,6 +11,7 @@ import com.orm.util.NamingHelper;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +22,7 @@ import com.urbanoexpress.iridio3.pe.data.rest.ApiRest;
 import com.urbanoexpress.iridio3.pe.model.entity.Data;
 import com.urbanoexpress.iridio3.pe.model.entity.DescargaRuta;
 import com.urbanoexpress.iridio3.pe.model.entity.EstadoRuta;
+import com.urbanoexpress.iridio3.pe.model.entity.GrupoMotivo;
 import com.urbanoexpress.iridio3.pe.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio3.pe.model.entity.MotivoDescarga;
 import com.urbanoexpress.iridio3.pe.model.entity.Pieza;
@@ -59,14 +62,12 @@ public class RutaPendienteInteractor {
 
     public void getRutas(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_id_ruta",                params[0]);
-        ApiRequest.getInstance().putParams("linea_valores",             params[1]);
-        ApiRequest.getInstance().putParams("linea_logistica",           params[2]);
-        ApiRequest.getInstance().putParams("linea_logistica_especial",  params[3]);
-        ApiRequest.getInstance().putParams("id_user",                   params[4]);
-        ApiRequest.getInstance().putParams("imei",                      params[5]);
-        ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
-                        ApiRest.Api.GET_RUTAS,
+        ApiRequest.getInstance().putParams("vp_id_ruta", params[0]);
+        ApiRequest.getInstance().putParams("id_user", params[1]);
+        ApiRequest.getInstance().putParams("imei", params[2]);
+        ApiRequest.getInstance().putParams("flag", params[3]);
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getApiBaseUrlV2() +
+                        ApiRest.Api.GET_RUTAS_V2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -82,9 +83,9 @@ public class RutaPendienteInteractor {
 
     public void getGuiasRutaRural(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("linea_logistica",   params[0]);
-        ApiRequest.getInstance().putParams("id_user",           params[1]);
-        ApiRequest.getInstance().putParams("device_phone",      params[2]);
+        ApiRequest.getInstance().putParams("linea_logistica", params[0]);
+        ApiRequest.getInstance().putParams("id_user", params[1]);
+        ApiRequest.getInstance().putParams("device_phone", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_GUIAS_RUTA_RURAL,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -103,7 +104,7 @@ public class RutaPendienteInteractor {
     public void getMotivos(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
         ApiRequest.getInstance().putParams("vp_chk_id", params[0]);
-        ApiRequest.getInstance().putParams("id_user",   params[1]);
+        ApiRequest.getInstance().putParams("id_user", params[1]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_MOTIVOS_DESCARGA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -121,10 +122,10 @@ public class RutaPendienteInteractor {
 
     public static void editPlaca(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_id_ruta",        params[0]);
-        ApiRequest.getInstance().putParams("vp_placa",          params[1]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[2]);
-        ApiRequest.getInstance().putParams("vp_id_user",        params[3]);
+        ApiRequest.getInstance().putParams("vp_id_ruta", params[0]);
+        ApiRequest.getInstance().putParams("vp_placa", params[1]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[2]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[3]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.EDIT_PLACA_RUTA,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -143,8 +144,8 @@ public class RutaPendienteInteractor {
     public static void getGuiasElectronicasRecoleccion(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
         ApiRequest.getInstance().putParams("vp_id_recoleccion", params[0]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",        params[2]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_GUIAS_ELECTRONICAS_RECOLECCION,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -163,8 +164,8 @@ public class RutaPendienteInteractor {
     public static void getContenedoresRecoleccion(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
         ApiRequest.getInstance().putParams("vp_id_recoleccion", params[0]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",        params[2]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.GET_CONTENEDORES_RECOLECCION,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -182,20 +183,21 @@ public class RutaPendienteInteractor {
 
     public static void uploadEstadoRutaKilometraje(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_rou_id",         params[0]);
-        ApiRequest.getInstance().putParams("vp_rou_estado",     params[1]);
-        ApiRequest.getInstance().putParams("vp_gps_px",         params[2]);
-        ApiRequest.getInstance().putParams("vp_gps_py",         params[3]);
-        ApiRequest.getInstance().putParams("vp_fecha",          params[4]);
-        ApiRequest.getInstance().putParams("vp_hora",           params[5]);
-        ApiRequest.getInstance().putParams("vp_km",             params[6]);
-        ApiRequest.getInstance().putParams("vp_linea_negocio",  params[7]);
-        ApiRequest.getInstance().putParams("firebaseToken",     params[8]);
-        ApiRequest.getInstance().putParams("motivo_nt",         params[9]);
-        ApiRequest.getInstance().putParams("id_user",           params[10]);
-        ApiRequest.getInstance().putParams("imei",              params[11]);
-        ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
-                        ApiRest.Api.UPLOAD_ESTADO_RUTA_KILOMETRAJE,
+        ApiRequest.getInstance().putParams("vp_rou_id", params[0]);
+        ApiRequest.getInstance().putParams("vp_rou_estado", params[1]);
+        ApiRequest.getInstance().putParams("vp_gps_px", params[2]);
+        ApiRequest.getInstance().putParams("vp_gps_py", params[3]);
+        ApiRequest.getInstance().putParams("vp_fecha", params[4]);
+        ApiRequest.getInstance().putParams("vp_hora", params[5]);
+        ApiRequest.getInstance().putParams("vp_km", params[6]);
+        ApiRequest.getInstance().putParams("vp_linea_negocio", params[7]);
+        ApiRequest.getInstance().putParams("firebaseToken", params[8]);
+        ApiRequest.getInstance().putParams("motivo_nt", params[9]);
+        ApiRequest.getInstance().putParams("id_user", params[10]);
+        ApiRequest.getInstance().putParams("imei", params[11]);
+        ApiRequest.getInstance().putParams("flag", params[12]);
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getApiBaseUrlV2() +
+                        ApiRest.Api.UPLOAD_ESTADO_RUTA_KILOMETRAJE_V2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -211,8 +213,8 @@ public class RutaPendienteInteractor {
 
     public static void validateSolicitaKilometraje(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_rutas",      params[0]);
-        ApiRequest.getInstance().putParams("vp_id_user",    params[1]);
+        ApiRequest.getInstance().putParams("vp_rutas", params[0]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[1]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.VALIDATE_SOLICITA_KILOMETRAJE,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -230,9 +232,9 @@ public class RutaPendienteInteractor {
 
     public static void readBarraRecoleccion(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("vp_barra",      params[0]);
-        ApiRequest.getInstance().putParams("vp_srec_id",    params[1]);
-        ApiRequest.getInstance().putParams("vp_id_user",    params[2]);
+        ApiRequest.getInstance().putParams("vp_barra", params[0]);
+        ApiRequest.getInstance().putParams("vp_srec_id", params[1]);
+        ApiRequest.getInstance().putParams("vp_id_user", params[2]);
         ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
                         ApiRest.Api.READ_BARRA_RECOLECCION,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
@@ -255,6 +257,21 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("lineaNegocio") + " in (0, ?)",
                 Preferences.getInstance().getString("idUsuario", ""),
                 tipoMotivo + "", lineaNegocio);
+    }
+
+    public List<MotivoDescarga> selectAllSubMotivos(int gruId) {
+        return MotivoDescarga.find(MotivoDescarga.class,
+                NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
+                        NamingHelper.toSQLNameDefault("gruId") + " = ? ",
+                Preferences.getInstance().getString("idUsuario", ""), gruId + "");
+    }
+
+    public List<GrupoMotivo> selectAllMotivosNoEntrega() {
+        try {
+            return GrupoMotivo.find(GrupoMotivo.class, null);
+        } catch (SQLiteException e) {
+            return new ArrayList<>();
+        }
     }
 
     public List<TipoDireccion> selectAllTipoDireccion() {
@@ -376,7 +393,7 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("eliminado") + " = ? and " +
                         NamingHelper.toSQLNameDefault("estadoDescarga") + " in (10, 20) and " +
                         NamingHelper.toSQLNameDefault("lineaNegocio") + " in (2, 3, 4)",
-                new String[] {
+                new String[]{
                         Preferences.getInstance().getString("idUsuario", ""),
                         Data.Delete.NO + ""
                 }, "", "", "");
@@ -390,8 +407,8 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("lineaNegocio") + " in (2, 3, 4) and " +
                         NamingHelper.toSQLNameDefault("gpsLatitude") + " = ? and " +
                         NamingHelper.toSQLNameDefault("gpsLongitude") + " = ? ",
-                        Preferences.getInstance().getString("idUsuario", ""),
-                        Data.Delete.NO + "", gpsLatitude, gpsLongitude);
+                Preferences.getInstance().getString("idUsuario", ""),
+                Data.Delete.NO + "", gpsLatitude, gpsLongitude);
     }
 
     public List<EstadoRuta> selectAllEstadoRuta() {
@@ -506,7 +523,7 @@ public class RutaPendienteInteractor {
                         "(" + NamingHelper.toSQLNameDefault("tipoRuta") + " is null or " +
                         NamingHelper.toSQLNameDefault("tipoRuta") + " = ?)",
                 new String[]{Preferences.getInstance().getString("idUsuario", ""),
-                Data.Delete.NO + "", EstadoRuta.TipoRuta.RUTA_DEL_DIA + ""});
+                        Data.Delete.NO + "", EstadoRuta.TipoRuta.RUTA_DEL_DIA + ""});
     }
 
     public Pieza selectPieza(String idPieza, String idServicio, String lineaNegocio) {
@@ -518,7 +535,9 @@ public class RutaPendienteInteractor {
                 Preferences.getInstance().getString("idUsuario", ""),
                 idPieza, idServicio, lineaNegocio);
 
-        if (list.size() > 0) { return list.get(0); }
+        if (list.size() > 0) {
+            return list.get(0);
+        }
         return null;
     }
 
@@ -528,7 +547,9 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("barra") + " = ?",
                 Preferences.getInstance().getString("idUsuario", ""), barra);
 
-        if (list.size() > 0) { return list.get(0); }
+        if (list.size() > 0) {
+            return list.get(0);
+        }
         return null;
     }
 
@@ -542,7 +563,9 @@ public class RutaPendienteInteractor {
                 Preferences.getInstance().getString("idUsuario", ""),
                 String.valueOf(Data.Delete.NO), String.valueOf(Ruta.EstadoDescarga.PENDIENTE), barra);
 
-        if (list.size() > 0) { return list.get(0); }
+        if (list.size() > 0) {
+            return list.get(0);
+        }
         return null;
     }
 
@@ -570,7 +593,7 @@ public class RutaPendienteInteractor {
                         NamingHelper.toSQLNameDefault("estadoDescarga") + " = ? and " +
                         NamingHelper.toSQLNameDefault("lineaNegocio") + " in (2, 3, 4)",
                 new String[]{Preferences.getInstance().getString("idUsuario", ""),
-                Data.Delete.NO + "", Ruta.EstadoDescarga.PENDIENTE + ""});
+                        Data.Delete.NO + "", Ruta.EstadoDescarga.PENDIENTE + ""});
     }
 
     public long getTotalRutasGestionadas() {

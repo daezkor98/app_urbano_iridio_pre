@@ -148,7 +148,8 @@ public class EstadoRutaSync extends DataSyncModel<EstadoRuta> {
                             firebaseToken,
                             "0",
                             getData().get(getCountData()).getIdUsuario(),
-                            Session.getUser().getDevicePhone()
+                            Session.getUser().getDevicePhone(),
+                            Session.getUser().getFlag()
                     };
 
                     RutaPendienteInteractor.uploadEstadoRutaKilometraje(params, callback);

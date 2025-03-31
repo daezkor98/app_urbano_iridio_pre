@@ -634,8 +634,6 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
                     }
                 }));
 
-        binding.btnUpdateMotivos.setOnClickListener(view -> presenter.onClickUpdateMotivos());
-
         binding.btnScanPCK.setOnClickListener(view -> presenter.onBtnScanPCKClick());
 
         binding.btnSiguiente.setOnClickListener(v -> presenter.onBtnSiguienteClick());
@@ -678,6 +676,11 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
         binding.rvGaleriaDomicilio.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         binding.rvGaleriaDomicilio.setHasFixedSize(true);
         binding.rvGaleriaDomicilio.addItemDecoration(new GridSpacingItemDecoration(3,
+                MetricsUtils.dpToPx(getActivity(), 2), true));
+
+        binding.rvGaleriaProductoCliente.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        binding.rvGaleriaProductoCliente.setHasFixedSize(true);
+        binding.rvGaleriaProductoCliente.addItemDecoration(new GridSpacingItemDecoration(3,
                 MetricsUtils.dpToPx(getActivity(), 2), true));
 
         binding.spinnerTipoDocIdentificacion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -784,6 +787,43 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
                 binding.txtDocIdentificacion.setFilters(new InputFilter[] { new InputFilter.LengthFilter(8) });
                 binding.txtDocIdentificacion.setInputType(InputType.TYPE_CLASS_NUMBER);
                 break;
+        }
+    }
+
+    @Override
+    public void showFotosProductoxClienteEnGaleria(List<GalleryWrapperItem> items) {
+        try {
+            GalleryAdapter adapter = new GalleryAdapter(getActivity(), items);
+            adapter.setListener(this);
+            binding.rvGaleriaProductoCliente.setAdapter(adapter);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void notifyGaleriaProductoClienteItemRemove(int position) {
+        RecyclerView.Adapter adapter = binding.rvGaleriaProductoCliente.getAdapter();
+        if (adapter != null) adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void notifyGaleriaProductoClienteAllItemChanged() {
+        RecyclerView.Adapter adapter = binding.rvGaleriaProductoCliente.getAdapter();
+        if (adapter != null) adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setVisibilityBoxStepProductoCliente(int visible) {
+        binding.boxStepFotosDomicilio.setVisibility(View.GONE);
+      binding.boxStepFotosProductoCliente.setVisibility(visible);
+    }
+
+    @Override
+    public void adjustWarningMessageToFotosProductoxCLiente(int imageCount) {
+        if (imageCount > 2) {
+            binding.warningObservationFotosProducto.setTextSize(14f);
         }
     }
 

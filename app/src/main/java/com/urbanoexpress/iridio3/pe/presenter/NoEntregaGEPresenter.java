@@ -110,11 +110,14 @@ public class NoEntregaGEPresenter {
         FOTOS_DOMICILIO
     }
 
+    private int idMotivo;
+
     public NoEntregaGEPresenter(DescargaNoEntregaView view, ArrayList<Ruta> rutas,
-                                int numVecesGestionado) {
+                                int numVecesGestionado, int idMotivo) {
         this.view = view;
         this.rutas = rutas;
         this.numVecesGestionado = numVecesGestionado;
+        this.idMotivo = idMotivo;
         rutaPendienteInteractor = new RutaPendienteInteractor(view.getViewContext());
     }
 
@@ -128,7 +131,7 @@ public class NoEntregaGEPresenter {
 
         loadDataRutas();
         setTipoMotivoDescarga();
-        loadMotivos();
+        loadSubMotivos();
         loadGaleria();
 
         StringBuilder stringBuilder = new StringBuilder("Descargas/");
@@ -345,6 +348,24 @@ public class NoEntregaGEPresenter {
 
         view.showListaMotivos(motivoItems);
     }
+
+    private void loadSubMotivos() {
+        dbMotivoDescargas = rutaPendienteInteractor.selectAllSubMotivos(idMotivo);
+
+        selectedIndexMotivo = -1;
+
+        motivoItems = new ArrayList<>();
+        motivoItems.clear();
+        MotivoDescargaItem item;
+
+        for (MotivoDescarga motivo : dbMotivoDescargas) {
+            item = new MotivoDescargaItem(motivo.getDescripcion(), false);
+            motivoItems.add(item);
+        }
+
+        view.showListaMotivos(motivoItems);
+    }
+
 
     private void loadDataRutas() {
         for (int i = 0; i < rutas.size(); i++) {

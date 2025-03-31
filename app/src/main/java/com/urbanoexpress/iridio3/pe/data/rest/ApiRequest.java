@@ -2,9 +2,12 @@ package com.urbanoexpress.iridio3.pe.data.rest;
 
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.urbanoexpress.iridio3.pe.util.Preferences;
 import com.urbanoexpress.iridio3.pe.util.network.volley.CustomJsonObjectRequest;
 import com.urbanoexpress.iridio3.pe.util.network.volley.ManagerVolley;
 import com.urbanoexpress.iridio3.pe.util.network.volley.MultipartJsonObjectRequest;
@@ -66,6 +69,50 @@ public class ApiRequest {
                 requestMultiPart(url, responseListener);
                 break;
         }
+    }
+
+    public void requestJSon(String url, int typeParams, final ResponseListener responseListener) {
+
+        switch (typeParams) {
+            case TypeParams.FORM_DATA:
+                requestFormDataJSon(url, responseListener);
+                break;
+            case TypeParams.MULTIPART:
+                requestMultiPart(url, responseListener);
+                break;
+        }
+    }
+
+    private void requestFormDataJSon(String url, final ResponseListener responseListener) {
+        JSONObject jsonParams = new JSONObject(requestParams);
+
+        JsonObjectRequest request = new JsonObjectRequest
+                (Request.Method.POST, url, jsonParams, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        responseListener.onResponse(response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        responseListener.onErrorResponse(error);
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>(super.getHeaders());
+                String bearerToken = Preferences.getInstance().getString("auth_token","");
+                if (!bearerToken.isEmpty()) {
+                    headers.put("Authorization", "Bearer " + bearerToken);
+                }
+                return headers;
+            }
+        };
+
+        ManagerVolley.getInstance(null).addToRequestQueue(request);
     }
 
     private void requestFormData(String url, final ResponseListener responseListener) {

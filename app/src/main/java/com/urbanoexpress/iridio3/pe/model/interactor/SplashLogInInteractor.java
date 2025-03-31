@@ -26,27 +26,27 @@ public class SplashLogInInteractor {
 
     public void logIn(String[] params, final RequestCallback callback) {
         ApiRequest.getInstance().newParams();
-        ApiRequest.getInstance().putParams("username",      params[0]);
-        ApiRequest.getInstance().putParams("password",      params[1]);
+        ApiRequest.getInstance().putParams("username", params[0]);
+        ApiRequest.getInstance().putParams("password", params[1]);
         ApiRequest.getInstance().putParams("firebaseToken", params[2]);
-        ApiRequest.getInstance().putParams("device_imei",   params[3]);
-        ApiRequest.getInstance().request(ApiRest.getInstance().getApiBaseUrl() +
-                        ApiRest.Api.LOGIN,
+        ApiRequest.getInstance().putParams("device_imei", params[3]);
+        ApiRequest.getInstance().requestJSon(ApiRest.getInstance().getApiBaseUrlV2() +
+                        ApiRest.Api.LOGIN_v2,
                 ApiRequest.TypeParams.FORM_DATA, new ApiRequest.ResponseListener() {
-            @Override
-            public void onResponse(JSONObject response) {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
 //                DevUtilsKt.logJson(response,"LOGINNNN");
-                //response.getJSONObject("data").getJSONArray("userMenu").toString()
+                        //response.getJSONObject("data").getJSONArray("userMenu").toString()
 
-                callback.onSuccess(response);
-            }
+                        callback.onSuccess(response);
+                    }
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callback.onError(error);
-            }
-        });
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        callback.onError(error);
+                    }
+                });
     }
 
     public static void getDataDefault(final RequestCallback callback) {

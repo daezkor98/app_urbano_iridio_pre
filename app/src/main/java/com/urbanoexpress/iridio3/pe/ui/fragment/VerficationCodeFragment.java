@@ -1,30 +1,36 @@
 package com.urbanoexpress.iridio3.pe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.databinding.FragmentVerficationCodeBinding;
 import com.urbanoexpress.iridio3.pe.presenter.VerficationCodePresenter;
+import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.view.VerficationCodeView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VerficationCodeFragment extends AppThemeBaseFragment implements VerficationCodeView {
 
@@ -32,15 +38,14 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
 
     private FragmentVerficationCodeBinding binding;
     private VerficationCodePresenter presenter;
+    private static final int RC_SIGN_IN = 9001;
+    private FirebaseAuth mAuth;
 
-    public static VerficationCodeFragment newInstance(String isoCountry, String phone,
-                                                      String firebaseToken, Boolean isGoogleMock) {
+    public static VerficationCodeFragment newInstance(String isoCountry, String phone) {
         VerficationCodeFragment fragment = new VerficationCodeFragment();
         Bundle args = new Bundle();
-        args.putString("isoCountry", isoCountry);
+        args.putString("codePhone", isoCountry);
         args.putString("phone", phone);
-        args.putString("firebaseToken", firebaseToken);
-        args.putBoolean("isGoogleMock", isGoogleMock);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,15 +53,13 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             presenter = new VerficationCodePresenter(this,
-                    getArguments().getString("isoCountry"),
-                    getArguments().getString("phone"),
-                    getArguments().getString("firebaseToken"),
-                    getArguments().getBoolean("isGoogleMock")
+                    getArguments().getString("codePhone"),
+                    getArguments().getString("phone")
             );
         }
+
     }
 
     @Nullable
@@ -67,6 +70,19 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
                 ContextCompat.getDrawable(getActivity(), R.drawable.bg_fragment_bienvenida));
         CommonUtils.changeColorStatusBar(getActivity(), R.color.statusBarColor);
         binding = FragmentVerficationCodeBinding.inflate(inflater, container, false);
+        mAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getViewContext(), gso);
+
+        binding.googleSignInButton.setOnClickListener(v -> {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        });
         return binding.getRoot();
     }
 
@@ -75,7 +91,7 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
         super.onViewCreated(view, savedInstanceState);
         setupViews();
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 if (getViewProgress().getVisibility() != View.VISIBLE) {
@@ -83,10 +99,6 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
                 }
             }
         });
-
-        if (presenter != null) {
-            presenter.init();
-        }
     }
 
     @Override
@@ -98,77 +110,7 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
-    }
-
-    @Override
-    public String getTextCode1() {
-        return binding.txtCode1.getText().toString().trim();
-    }
-
-    @Override
-    public String getTextCode2() {
-        return binding.txtCode2.getText().toString().trim();
-    }
-
-    @Override
-    public String getTextCode3() {
-        return binding.txtCode3.getText().toString().trim();
-    }
-
-    @Override
-    public String getTextCode4() {
-        return binding.txtCode4.getText().toString().trim();
-    }
-
-    @Override
-    public String getTextCode5() {
-        return binding.txtCode5.getText().toString().trim();
-    }
-
-    @Override
-    public String getTextCode6() {
-        return binding.txtCode6.getText().toString().trim();
-    }
-
-    @Override
-    public void setTextCode1(String text) {
-        binding.txtCode1.setText(text);
-    }
-
-    @Override
-    public void setTextCode2(String text) {
-        binding.txtCode2.setText(text);
-    }
-
-    @Override
-    public void setTextCode3(String text) {
-        binding.txtCode3.setText(text);
-    }
-
-    @Override
-    public void setTextCode4(String text) {
-        binding.txtCode4.setText(text);
-    }
-
-    @Override
-    public void setTextCode5(String text) {
-        binding.txtCode5.setText(text);
-    }
-
-    @Override
-    public void setTextCode6(String text) {
-        binding.txtCode6.setText(text);
-    }
-
-    @Override
-    public void setHtmlLblMsg(String html) {
-        binding.lblMsg.setText(HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY));
-    }
-
-    @Override
-    public void setEnabledButtonNext(boolean enabled) {
-        binding.nextButton.setEnabled(enabled);
+        binding = null;
     }
 
     @Override
@@ -176,98 +118,64 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
         if (getLifecycle().getCurrentState().equals(Lifecycle.State.STARTED) ||
                 getLifecycle().getCurrentState().equals(Lifecycle.State.RESUMED)) {
             try {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, fragment, tag).commit();
             } catch (NullPointerException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Error ocurrido", ex);
             }
         }
     }
 
     private void setupViews() {
         Glide.with(this)
-                .load(R.drawable.bg_bienvenida)
+                .load(R.drawable.bg_bienvenida_v2)
                 .into(binding.image);
-
-        binding.txtCode6.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                presenter.onBtnContinuarClick();
-            }
-            return false;
-        });
-
-        binding.nextButton.setOnClickListener(v -> presenter.onBtnContinuarClick());
-
-        binding.txtCode1.addTextChangedListener(textWatcherVerificationCode);
-        binding.txtCode2.addTextChangedListener(textWatcherVerificationCode);
-        binding.txtCode3.addTextChangedListener(textWatcherVerificationCode);
-        binding.txtCode4.addTextChangedListener(textWatcherVerificationCode);
-        binding.txtCode5.addTextChangedListener(textWatcherVerificationCode);
-        binding.txtCode6.addTextChangedListener(textWatcherVerificationCode);
-
-        binding.txtCode1.setOnKeyListener(onKeyListener);
-        binding.txtCode2.setOnKeyListener(onKeyListener);
-        binding.txtCode3.setOnKeyListener(onKeyListener);
-        binding.txtCode4.setOnKeyListener(onKeyListener);
-        binding.txtCode5.setOnKeyListener(onKeyListener);
-        binding.txtCode6.setOnKeyListener(onKeyListener);
     }
 
-    TextWatcher textWatcherVerificationCode = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            if (binding.txtCode1.isFocused()) {
-                if (!binding.txtCode1.getText().toString().isEmpty())
-                    binding.txtCode2.requestFocus();
-            } else if (binding.txtCode2.isFocused()) {
-                if (!binding.txtCode2.getText().toString().isEmpty())
-                    binding.txtCode3.requestFocus();
-            } else if (binding.txtCode3.isFocused()) {
-                if (!binding.txtCode3.getText().toString().isEmpty())
-                    binding.txtCode4.requestFocus();
-            } else if (binding.txtCode4.isFocused()) {
-                if (!binding.txtCode4.getText().toString().isEmpty())
-                    binding.txtCode5.requestFocus();
-            } else if (binding.txtCode5.isFocused()) {
-                if (!binding.txtCode5.getText().toString().isEmpty())
-                    binding.txtCode6.requestFocus();
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                showLoginError();
             }
         }
-    };
+    }
 
-    View.OnKeyListener onKeyListener = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_DEL
-                    && event.getAction() == KeyEvent.ACTION_UP) {
-                if (binding.txtCode2.isFocused()) {
-                    if (binding.txtCode2.getText().toString().isEmpty())
-                        binding.txtCode1.requestFocus();
-                } else if (binding.txtCode3.isFocused()) {
-                    if (binding.txtCode3.getText().toString().isEmpty())
-                        binding.txtCode2.requestFocus();
-                } else if (binding.txtCode4.isFocused()) {
-                    if (binding.txtCode4.getText().toString().isEmpty())
-                        binding.txtCode3.requestFocus();
-                } else if (binding.txtCode5.isFocused()) {
-                    if (binding.txtCode5.getText().toString().isEmpty())
-                        binding.txtCode4.requestFocus();
-                } else if (binding.txtCode6.isFocused()) {
-                    if (binding.txtCode6.getText().toString().isEmpty())
-                        binding.txtCode5.requestFocus();
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential).addOnCompleteListener(requireActivity(), task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user != null) {
+                    presenter.onBtnContinueClick(user.getEmail());
                 }
+            } else {
+                showMessageError();
             }
-            return false;
-        }
-    };
+        });
+    }
+
+    private void showMessageError() {
+        ModalHelper.getBuilderAlertDialog(requireContext())
+                .setTitle(R.string.ver_code_title_authentication_error)
+                .setMessage(R.string.ver_code_phone_msg_authentication_error)
+                .setPositiveButton(R.string.ver_code_phone_accept, null)
+                .show();
+    }
+
+    private void showLoginError() {
+        ModalHelper.getBuilderAlertDialog(requireContext())
+                .setTitle(R.string.ver_code_title_login_error)
+                .setMessage(R.string.ver_code_phone_msg_login_error)
+                .setPositiveButton(R.string.ver_code_phone_accept, null)
+                .show();
+    }
+
+
 }

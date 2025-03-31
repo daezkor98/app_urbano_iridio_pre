@@ -181,7 +181,8 @@ public class SecuenciaGuiaSync extends DataSyncModel<Ruta> {
                                         "0",
                                         "0",
                                         Session.getUser().getDevicePhone(),
-                                        Session.getUser().getIdUsuario()
+                                        Session.getUser().getIdUsuario(),
+                                        Session.getUser().getFlag(),
                                 };
 
                                 dataSyncInteractor.uploadSecuenciaRuta(params, callback);

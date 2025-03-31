@@ -73,6 +73,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Created by mick on 26/07/16.
@@ -645,14 +647,21 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
     }
 
     private boolean isDatosPorSincronizar() {
+        boolean isDriver = "0".equals(Session.getUser().getFlag());
+
         List<GuiaGestionada> guiaGestionadas = dataSyncInteractor.selectAllRutaGestionada();
         List<Imagen> imagenes = dataSyncInteractor.selectAllImagenDescarga();
         List<EstadoRuta> estadoRuta = dataSyncInteractor.selectAllEstadoRutaSyncPending();
-        List<TrackLocation> trackLocations = dataSyncInteractor.selectAllPendingTrackLocation();
         List<GestionLlamada> gestionLlamadas = dataSyncInteractor.selectAllPendingGestionLlamada();
+        List<TrackLocation> trackLocations = dataSyncInteractor.selectAllPendingTrackLocation();
 
-        if (guiaGestionadas.size() > 0 || imagenes.size() > 0 || estadoRuta.size() > 0 ||
-                trackLocations.size() > 50 || gestionLlamadas.size() > 0) {
+        boolean hasPendingData = Stream.of(guiaGestionadas, imagenes, estadoRuta, gestionLlamadas)
+                .allMatch(list ->!list.isEmpty());
+
+        boolean shouldShowToast = (isDriver && hasPendingData) ||
+                (!isDriver && hasPendingData && trackLocations.size() > 50);
+
+        if (shouldShowToast) {
             activity.runOnUiThread(() -> showToast(view.getContextView(),
                     R.string.activity_ruta_message_datos_sync_pendientes, Toast.LENGTH_LONG));
             showMessageErrorEstadoRuta = false;
@@ -876,7 +885,8 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
                 firebaseToken,
                 idMotivoNT,
                 estadoRutaCierre.get(0).getIdUsuario(),
-                Session.getUser().getDevicePhone()
+                Session.getUser().getDevicePhone(),
+                Session.getUser().getFlag()
         };
 
         interactor.uploadEstadoRutaKilometraje(params, callback);

@@ -477,6 +477,28 @@
     <!--Encuesta-->
     <string name="motorizado_encuest">Encuesta Motorizado</string>
 
+    <!--Config Phone Fragment-->
+    <string name="text_config_phone_msg_permission_denied">Para usar esta funcionalidad, necesitas habilitar el permiso del teléfono manualmente. ¿Quieres ir a la configuración de la aplicación?</string>
+    <string name="text_config_phone_accept">Aceptar</string>
+    <string name="text_config_phone_exit">Salir</string>
+    <string name="text_config_phone_title_permission_denied">Permiso denegado</string>
+    <string name="text_config_phone_title_permissions_justification">Permiso denegado</string>
+    <string name="text_config_phone_msg_permissions_justification">Esta aplicación necesita acceso al telefono para conocer su número. ¿Deseas conceder el permiso?</string>
+
+    <!--verification code fragment-->
+    <string name="ver_code_title_authentication_error">Error de autenticación</string>
+    <string name="ver_code_phone_msg_authentication_error">No se ha encontrado un usuario autenticado. Por favor, vuelva a intentarlo más tarde.</string>
+
+    <string name="ver_code_title_login_error">Error de inicio de sesión</string>
+    <string name="ver_code_phone_msg_login_error">Hubo un problema al iniciar sesión con Google. Intenta nuevamente.</string>
+
+    <string name="ver_code_phone_accept">Aceptar</string>
+
+    <!--ruta pendiente fragment-->
+    <string name="pending_route_title_token_error">Sesión expirada</string>
+    <string name="pending_route_msg_token_error">Tu sesión ha caducado. Por favor, vuelve a iniciar sesión para continuar.</string>
+    <string name="pending_route_phone_accept">Aceptar</string>
+
     <!---->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mandatory_barcode_scanning">Esta guía requiere escanear cada código de barras de manera obligatoria</string>

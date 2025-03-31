@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.DriverVerificationCodeFragment">
+
+
+    <FrameLayout
+        android:id="@+id/bannerCodeVerificationDriver"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="45dp"
+            android:src="@drawable/logo_urbano_lema_white"
+            android:scaleType="fitXY"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:src="@drawable/bg_city_shader"
+            android:scaleType="centerCrop"
+            android:layout_gravity="bottom"/>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="110dp"
+            android:src="@drawable/bg_hand_turn_on_gps"
+            android:scaleType="fitXY"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="30dp"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textViewTitleVerification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Verificación de Ruta"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bannerCodeVerificationDriver"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDesVerification" />
+
+    <TextView
+        android:id="@+id/textViewDesVerification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Ingrese el código de verificación"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleVerification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewVerification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDesVerification">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/editTextCode1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:hint="M"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/editTextCode2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <EditText
+                android:id="@+id/editTextCode2"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:hint="0"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/editTextCode3"
+                app:layout_constraintStart_toEndOf="@+id/editTextCode1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextCode3"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:hint="3"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/editTextCode4"
+                app:layout_constraintStart_toEndOf="@+id/editTextCode2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextCode4"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:hint="1"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/editTextCode5"
+                app:layout_constraintStart_toEndOf="@+id/editTextCode3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextCode5"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:hint="9"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/editTextCode6"
+                app:layout_constraintStart_toEndOf="@+id/editTextCode4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextCode6"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:hint="0"
+                android:inputType="text"
+                android:maxLength="1"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toEndOf="@+id/editTextCode5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textViewDesVerification2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="32dp"
+        android:text="Encuentra el código de \nverificación debajo del QR de la \nruta compartida por el auxiliar."
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewVerification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.App.Button.LoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="32dp"
+        android:text="validar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

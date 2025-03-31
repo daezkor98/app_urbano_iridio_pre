@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".pe.ui.fragment.ConfigPhoneFragment">
+    tools:context="com.urbanoexpress.iridio3.pe.ui.fragment.ConfigPhoneFragment">
 
     <FrameLayout
         android:id="@+id/image"
@@ -46,88 +46,34 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:layout_marginBottom="20dp"
-                android:text="Ingresa tu número de celular"
+                android:text="Selecciona tu número de celular"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/gris_2"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/llInputNombre"
+                android:id="@+id/linarLayoutMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@drawable/bg_input_default"
-                android:clickable="true"
-                android:focusable="true"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/select_country_layout"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:theme="@style/selectableItemGrisStyle">
+                    android:hint="Numeró celular">
 
-                    <ImageView
-                        android:id="@+id/icon_flag"
-                        android:layout_width="35dp"
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:adjustViewBounds="true" />
+                        android:inputType="none" />
 
-                    <TextView
-                        android:id="@+id/lbl_phone_prefix"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/gris_2" />
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:rotation="90"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/ic_chevron_right_grey" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:background="@color/darkDividers" />
-
-                <EditText
-                    android:id="@+id/txt_phone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:maxLength="9"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/gris_2"
-                    android:theme="@style/color_theme_colorPrimary" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enviaremos un mensaje a este número con un código de verificación."
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/gris_2" />
         </LinearLayout>
 
         <View
@@ -141,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:enabled="false"
             android:paddingHorizontal="@dimen/activity_horizontal_margin"
             android:text="@string/text_siguiente" />
     </LinearLayout>

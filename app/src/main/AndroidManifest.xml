@@ -20,6 +20,7 @@
         android:name="android.hardware.location.gps"
         android:required="true" />
 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -35,7 +36,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
-
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
 
     <application
         android:name="com.urbanoexpress.iridio3.pe.application.AndroidApplication"
@@ -275,6 +276,10 @@
             android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
+        <activity
+            android:name=".ui.PlanRutaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="android.max_aspect"
@@ -290,7 +295,7 @@
             android:value="urbano.db" />
         <meta-data
             android:name="VERSION"
-            android:value="54" />
+            android:value="56" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />

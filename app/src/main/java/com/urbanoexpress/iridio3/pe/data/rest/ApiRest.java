@@ -86,6 +86,12 @@ public final class ApiRest {
         String GUIA_YAPE_QR = "api-apps/iridio/getGuiasRutaQR";
 
         String WAYPOINTS = "iridio/api/registro/Waypoints/";
+        String VALIDATE_VERIFICATION_EMAIL = "iridio/api/registro/addPhone";
+        String LOGIN_v2 = "iridio/api/registro/loginV2";
+        String GET_RUTAS_V2 = "iridio/api/rutas/getGuiasRutaV4";
+        String LOGIN_QR ="iridio/api/registro/loginRuta/";
+        String UPLOAD_ESTADO_RUTA_KILOMETRAJE_V2 = "iridio/api/uploadEstadoRutaWithKilometrajeV3";
+        String UPLOAD_GUIA_GESTIONADA_V2 = "iridio/api/uploadGuiaGestionadaV5";
 
         interface Google {
             String DISTANCE_MATRIX = "api-apps/iridio/googleDistanceMatrix";

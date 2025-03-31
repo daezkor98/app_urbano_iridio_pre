@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--detalles de la ruta-->
+    <string name="plan_ruta_de_titulo">Datos de Ruta:</string>
+    <string name="plan_ruta_de_zona">Zona:</string>
+    <string name="plan_ruta_de_num_paradas">Número paradas:</string>
+    <string name="plan_ruta_de_envios">Total envios:</string>
+    <string name="plan_ruta_de_num_piezas">Número piezas:</string>
+    <string name="plan_ruta_de_tiempo">Tiempo de ruta:</string>
+    <string name="plan_ruta_de_kilometros">Kilometros:</string>
+    <string name="plan_ruta_de_siguiente">Siguiente</string>
+    <!--datos del transport-->
+    <string name="plan_ruta_trans_titulo">Datos del transporte</string>
+
+    <string name="plan_ruta_trans_ti_placa">Placa:</string>
+    <string name="plan_ruta_trans_num_placa">Número Placa:</string>
+    <string name="plan_ruta_trans_hint_placa">Ingrese Placa</string>
+
+    <string name="plan_ruta_trans_ti_piezas">Número de piezas:</string>
+    <string name="plan_ruta_trans_num_piezas">Piezas contadas:</string>
+    <string name="plan_ruta_trans_hint_piezas">Total piezas</string>
+
+    <string name="plan_ruta_trans_next">Validar Datos</string>
+
+    <!--datos generales-->
+    <string name="plan_ruta_validando">Validando...</string>
+    <string name="plan_ruta_aceptar">Aceptar</string>
+    <string name="plan_ruta_titulo_error_gen">Ocurrio un error</string>
+    <string name="plan_ruta_titulo_error_piezas">Número de piezas incorrecto</string>
+    <string name="plan_ruta_titulo_error_placa">Número de placa incorrecto</string>
+    <string name="plan_ruta_des_error_piezas">Acercate con un supervisor para validar número de piezas.</string>
+    <string name="plan_ruta_des_error_placa">Placa incorrecta, intentalo nuevamente.</string>
+    <string name="plan_ruta_titulo_error_anulada">Ruta Anulada</string>
+    <string name="plan_ruta_des_error_anulada">Debe escanear otra ruta</string>
+    <string name="title_activity_plan_ruta">Plan de Ruta del Día</string>
+
+
+</resources>

@@ -129,6 +129,11 @@ public class CommonUtils {
     }
 
     public static boolean isValidCoords(String latitude, String longitude) {
+
+        if (latitude==null || longitude==null){
+            return false;
+        }
+
         if (latitude.length() > 0 && longitude.length() > 0) {
             try {
                 double dLatitude = Double.parseDouble(latitude);

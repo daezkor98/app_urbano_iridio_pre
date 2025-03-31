@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio3.pe.model.entity;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Column;
 
 /**
  * Created by mick on 13/07/16.
@@ -13,8 +14,21 @@ public class MotivoDescarga extends SugarRecord {
     private String codigo;
     private String descripcion;
     private String lineaNegocio;
+    @Column(name = "GRU_ID")
+    private int gruId;
 
     public MotivoDescarga() { }
+
+    public MotivoDescarga(String idUsuario, int tipo, String idMotivo,
+                          String codigo, String descripcion, String lineaNegocio, int gruId) {
+        this.idUsuario = idUsuario;
+        this.tipo = tipo;
+        this.idMotivo = idMotivo;
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.lineaNegocio = lineaNegocio;
+        this.gruId = gruId;
+    }
 
     public MotivoDescarga(String idUsuario, int tipo, String idMotivo,
                           String codigo, String descripcion, String lineaNegocio) {
@@ -72,6 +86,14 @@ public class MotivoDescarga extends SugarRecord {
 
     public void setLineaNegocio(String lineaNegocio) {
         this.lineaNegocio = lineaNegocio;
+    }
+
+    public int getGruId() {
+        return gruId;
+    }
+
+    public void setGruId(int gruId) {
+        this.gruId = gruId;
     }
 
     public interface Tipo {
