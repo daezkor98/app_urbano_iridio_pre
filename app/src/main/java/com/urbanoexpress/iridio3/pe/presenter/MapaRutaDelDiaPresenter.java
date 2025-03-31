@@ -664,6 +664,7 @@ public class MapaRutaDelDiaPresenter {
                     }
                 } catch (JSONException e){
                     e.printStackTrace();
+                    view.onLoading(false);
                     BaseModalsView.showToast(view.getViewContext(),
                             R.string.json_object_exception,
                             Toast.LENGTH_LONG);
@@ -673,6 +674,7 @@ public class MapaRutaDelDiaPresenter {
             @Override
             public void onError(VolleyError error) {
                 error.printStackTrace();
+                view.onLoading(false);
                 BaseModalsView.showToast(view.getViewContext(),
                         R.string.volley_error_message,
                         Toast.LENGTH_SHORT);
