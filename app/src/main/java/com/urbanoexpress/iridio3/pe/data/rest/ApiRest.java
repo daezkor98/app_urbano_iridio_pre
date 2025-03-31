@@ -85,6 +85,7 @@ public final class ApiRest {
 
         String GUIA_YAPE_QR = "api-apps/iridio/getGuiasRutaQR";
 
+        String WAYPOINTS = "iridio/api/registro/Waypoints/";
 
         interface Google {
             String DISTANCE_MATRIX = "api-apps/iridio/googleDistanceMatrix";
@@ -123,6 +124,10 @@ public final class ApiRest {
             default:
                 return null;
         }
+    }
+
+    public String getApiBaseUrlV2(){
+        return "https://api.geo.dev-urbano.dev/";
     }
 
 }
