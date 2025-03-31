@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/plan_ruta_navigation"
-    app:startDestination="@id/planRutaTransporteFragment">
+    app:startDestination="@id/planRutaCamaraFragment">
 
     <fragment
         android:id="@+id/planRutaCamaraFragment"
@@ -35,7 +35,9 @@
         tools:layout="@layout/fragment_plan_ruta_transporte" >
         <argument
             android:name="idRouteId"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="9999" />
     </fragment>
 
 

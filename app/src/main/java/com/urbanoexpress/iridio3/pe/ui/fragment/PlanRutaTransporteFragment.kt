@@ -47,7 +47,7 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
             planRutaTransporteView = this,
             planRutasTransporteInteractor = PlanRutaTransporteInteractor(requireContext())
         )
-        val rouId = args.idRouteId
+        val rouId = args.idRouteId ?: 9999
 
         binding.etPlaca.addTextChangedListener(getTextWatcher())
         binding.etPiezasContadas.addTextChangedListener(getTextWatcher())
@@ -55,7 +55,7 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
             this.showProgressDialog(getString(R.string.plan_ruta_validando))
             presenter.validateRoad(
                 PlacaGeoModel(
-                    rouId = rouId.toInt(),
+                    rouId = rouId.toString().toInt(),
                     totPza = binding.etPiezasContadas.text.toString().toInt(),
                     undPlaca = binding.etPlaca.text.toString(),
                     celular = getUserPhone(),
