@@ -2,6 +2,7 @@ package com.urbanoexpress.iridio3.pe.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,9 +11,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import android.os.Bundle;
@@ -20,6 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +42,10 @@ import com.google.android.gms.maps.model.TileOverlay;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.application.AndroidApplication;
 import com.urbanoexpress.iridio3.pe.databinding.ActivityMapaRutaDelDiaBinding;
+import com.urbanoexpress.iridio3.pe.model.entity.ClienteRuta;
+import com.urbanoexpress.iridio3.pe.model.entity.ParadaRuta;
 import com.urbanoexpress.iridio3.pe.model.entity.Ruta;
+import com.urbanoexpress.iridio3.pe.model.entity.WaypointRuta;
 import com.urbanoexpress.iridio3.pe.presenter.MapaRutaDelDiaPresenter;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.ui.adapter.RutaAdapter;
@@ -43,11 +53,16 @@ import com.urbanoexpress.iridio3.pe.util.CachingUrlTileProvider;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.MetricsUtils;
 import com.urbanoexpress.iridio3.pe.util.constant.Constants;
+import com.urbanoexpress.iridio3.pe.view.BaseModalsView;
 import com.urbanoexpress.iridio3.pe.view.MapaRutaDelDiaView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
         implements MapaRutaDelDiaView, RutaAdapter.OnClickGuiaItemListener, OnMapReadyCallback {
@@ -59,7 +74,11 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
     private List<Marker> markerGuias;
     private int BEHAVIOR_PEEK_HEIGHT = 85;
     private TileOverlay tileOverlay;
+    private Marker selectedMarker;
     private static String CUSTOM_MAP_URL_FORMAT;
+
+    private BottomSheetBehavior bottomSheetBehaviorMarkerInfo;
+    private View bottomSheetMarkerInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +106,11 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
                 || bottomSheetBehaviorGuias.getState() == BottomSheetBehavior.STATE_COLLAPSED
                 || bottomSheetBehaviorGuias.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             bottomSheetBehaviorGuias.setState(BottomSheetBehavior.STATE_HIDDEN);
+            return true;
+        } else if (bottomSheetBehaviorMarkerInfo.getState() == BottomSheetBehavior.STATE_SETTLING
+                || bottomSheetBehaviorMarkerInfo.getState() == BottomSheetBehavior.STATE_COLLAPSED
+                || bottomSheetBehaviorMarkerInfo.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehaviorMarkerInfo.setState(BottomSheetBehavior.STATE_HIDDEN);
             return true;
         } else {
             return presenter.onBackButtonPressed();
@@ -204,6 +228,7 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
     @Override
     public void displayListGuias(List<RutaItem> guias) {
         bottomSheetBehaviorGuias.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        bottomSheetBehaviorMarkerInfo.setState(BottomSheetBehavior.STATE_HIDDEN);
         if (guias.size() == 1) {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -224,6 +249,7 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
     @Override
     public void displayMarkerSelector(String guia) {
         bottomSheetBehaviorGuias.setState(BottomSheetBehavior.STATE_HIDDEN);
+        bottomSheetBehaviorMarkerInfo.setState(BottomSheetBehavior.STATE_HIDDEN);
         googleMap.clear();
         configCustomMap();
         binding.boxMenuFab.setVisibility(View.GONE);
@@ -245,6 +271,7 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
     public void setVisibilityBoxRuteoGuias(int visibility) {
         if (visibility == View.VISIBLE) {
             bottomSheetBehaviorGuias.setState(BottomSheetBehavior.STATE_HIDDEN);
+            bottomSheetBehaviorMarkerInfo.setState(BottomSheetBehavior.STATE_HIDDEN);
             binding.boxMenuFab.setVisibility(View.GONE);
             binding.boxRutearGuias.setVisibility(View.VISIBLE);
         } else {
@@ -264,8 +291,24 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
     }
 
     @Override
+    public void setVisibilityFabRutaMapa(int visibility) {
+        binding.fabRutaMapa.setVisibility(visibility);
+    }
+
+    @Override
     public void setVisibilityMenuFab(int visibility) {
         binding.boxMenuFab.setVisibility(visibility);
+    }
+
+    @Override
+    public void onLoading(boolean show) {
+        if (show) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            binding.googleMap.setVisibility(View.GONE);
+        } else {
+            binding.progressBar.setVisibility(View.GONE);
+            binding.googleMap.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -292,6 +335,51 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
         }
+    }
+
+    @Override
+    public void drawRouteOnMap(List<ParadaRuta> paradas) {
+        if (googleMap == null || paradas == null || paradas.isEmpty()) {
+            return;
+        }
+
+        Random random = new Random();
+        LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
+
+        for (ParadaRuta parada : paradas) {
+            LatLng inicio = new LatLng(parada.getDirPx(), parada.getDirPy());
+
+            Marker marker = googleMap.addMarker(new MarkerOptions()
+                    .position(inicio)
+            );
+            marker.setTag(parada);
+
+            boundsBuilder.include(inicio);
+
+            int color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+
+            List<WaypointRuta> waypoints = new ArrayList<>(parada.getWaypoints());
+            Collections.sort(waypoints, (w1, w2) -> Integer.compare(w1.getSecuencia(), w2.getSecuencia()));
+
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .width(7)
+                    .color(color);
+
+            for (WaypointRuta waypoint : waypoints) {
+                LatLng punto = new LatLng(waypoint.getCoorX(), waypoint.getCoorY());
+                polylineOptions.add(punto);
+
+                boundsBuilder.include(punto);
+            }
+
+            googleMap.addPolyline(polylineOptions);
+        }
+
+        LatLngBounds bounds = boundsBuilder.build();
+        int padding = 100;
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
+
+        onLoading(false);
     }
 
     @Override
@@ -327,9 +415,24 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
                             BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehaviorGuias.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
+
+            if (bottomSheetBehaviorMarkerInfo.getState() ==
+                    BottomSheetBehavior.STATE_SETTLING ||
+                    bottomSheetBehaviorMarkerInfo.getState() ==
+                            BottomSheetBehavior.STATE_COLLAPSED ||
+                    bottomSheetBehaviorMarkerInfo.getState() ==
+                            BottomSheetBehavior.STATE_EXPANDED) {
+                bottomSheetBehaviorMarkerInfo.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
         });
 
         googleMap.setOnMarkerClickListener(marker -> {
+            selectedMarker = marker;
+            if (getPositionMarker(marker) == -1) {
+                ParadaRuta parada = (ParadaRuta) marker.getTag();
+                showMarkerInfoInBottomSheet(parada.getDireccion(), parada.getClientes());
+                return true;
+            }
             presenter.onClickMarkerMap(getPositionMarker(marker));
             return false;
         });
@@ -423,6 +526,27 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
         binding.rvGuias.setLayoutManager(new LinearLayoutManager(this));
         binding.rvGuias.setHasFixedSize(true);
 
+        binding.fabRutaMapa.setOnClickListener(v -> {
+            LocationServices.getFusedLocationProviderClient(AndroidApplication.getAppContext())
+                    .getLastLocation().addOnCompleteListener(task -> {
+                        if(task.isSuccessful() && task.getResult() != null) {
+                            if(selectedMarker != null){
+                                Location location = task.getResult();
+                                LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                                LatLng destination = getMarkerCoordinates(selectedMarker);
+
+                                if (destination != null) {
+                                    openGoogleMapsWithRoute(userLocation, destination);
+                                } else {
+                                    BaseModalsView.showToast(getViewContext(), "No se pudo obtener el destino", Toast.LENGTH_SHORT);
+                                }
+                            } else {
+                                BaseModalsView.showToast(getViewContext(), "Seleccione un punto de entrega", Toast.LENGTH_SHORT);
+                            }
+                        }
+                    });
+        });
+
         binding.fabShowMyLocation.setOnClickListener(v -> {
             LocationServices.getFusedLocationProviderClient(AndroidApplication.getAppContext())
                     .getLastLocation().addOnCompleteListener(task -> {
@@ -494,6 +618,39 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             }
         });
 
+        bottomSheetMarkerInfo = findViewById(R.id.bottomSheetMarkerInfo);
+        bottomSheetBehaviorMarkerInfo = BottomSheetBehavior.from(bottomSheetMarkerInfo);
+
+        bottomSheetBehaviorMarkerInfo.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        bottomSheetBehaviorMarkerInfo.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (BottomSheetBehavior.STATE_SETTLING == newState ) {
+                    googleMap.setPadding(0, MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, 24) +
+                                    CommonUtils.getActionBarDimensionPixelSize(MapaRutaDelDiaActivity.this), 0,
+                            MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, BEHAVIOR_PEEK_HEIGHT) +
+                                    MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, 10));
+                } else if (BottomSheetBehavior.STATE_COLLAPSED == newState) {
+                    googleMap.setPadding(0, MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, 24) +
+                                    CommonUtils.getActionBarDimensionPixelSize(MapaRutaDelDiaActivity.this), 0,
+                            MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, BEHAVIOR_PEEK_HEIGHT) +
+                                    MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, 10));
+                } else if (BottomSheetBehavior.STATE_EXPANDED == newState) {
+                    googleMap.setPadding(0, MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, 24) +
+                                    CommonUtils.getActionBarDimensionPixelSize(MapaRutaDelDiaActivity.this), 0,
+                            binding.bottomSheetMarkerInfo.getHeight() - MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, 5));
+                } else if (BottomSheetBehavior.STATE_HIDDEN == newState) {
+                    googleMap.setPadding(0, MetricsUtils.dpToPx(MapaRutaDelDiaActivity.this, 24) +
+                            CommonUtils.getActionBarDimensionPixelSize(MapaRutaDelDiaActivity.this), 0, 0);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+
         if (CommonUtils.isAndroidLollipop()) {
             binding.rvGuias.setClipToOutline(true);
         }
@@ -514,6 +671,47 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             }
         }
         return -1;
+    }
+
+    private LatLng getMarkerCoordinates(Marker marker) {
+        if (marker != null) {
+            return marker.getPosition();
+        }
+        return null;
+    }
+
+    private void openGoogleMapsWithRoute(LatLng userLocation, LatLng destination) {
+        String uri = "http://maps.google.com/maps?saddr=" + userLocation.latitude + "," + userLocation.longitude +
+                "&daddr=" + destination.latitude + "," + destination.longitude;
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            BaseModalsView.showToast(getViewContext(), "Google Maps no está instalado", Toast.LENGTH_SHORT);
+        }
+    }
+
+    private void showMarkerInfoInBottomSheet(String title, List<ClienteRuta> clientes) {
+        TextView titleView = bottomSheetMarkerInfo.findViewById(R.id.title);
+        LinearLayout clientesContainer = bottomSheetMarkerInfo.findViewById(R.id.clientesContainer);
+
+        clientesContainer.removeAllViews();
+        titleView.setText(title);
+
+        for (ClienteRuta cliente : clientes) {
+            TextView clienteView = new TextView(this);
+            clienteView.setText(cliente.getGuia() + " - Piezas: " + cliente.getTotalPiezas());
+            clienteView.setTextSize(16);
+            clienteView.setPadding(0, 8, 0, 8);
+            clientesContainer.addView(clienteView);
+        }
+
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetMarkerInfo);
+        bottomSheetBehavior.setPeekHeight(200);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        bottomSheetBehaviorGuias.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
     public Bitmap drawTextToBitmap(Context mContext, int resourceId, String mText) {

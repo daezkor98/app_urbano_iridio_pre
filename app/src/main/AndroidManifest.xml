@@ -286,7 +286,9 @@
             android:value="2.1" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC2EI9V85Xl2C3sdIEW2lhST-HFCpzg0cY" />
+            android:value="AIzaSyC2EI9V85Xl2C3sdIEW2lhST-HFCpzg0cY"/>
+<!--            android:value="AIzaSyDahK2PjUCBKNTiZKyWU52nyrP7GA1sNjA" />-->
+
         <!-- SUGAR DB-->
         <meta-data
             android:name="DATABASE"

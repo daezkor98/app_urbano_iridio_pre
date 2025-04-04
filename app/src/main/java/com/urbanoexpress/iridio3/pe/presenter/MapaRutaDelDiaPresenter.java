@@ -8,11 +8,21 @@ import android.os.Bundle;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.android.gms.maps.model.LatLng;
+import com.urbanoexpress.iridio3.pe.model.entity.ClienteRuta;
+import com.urbanoexpress.iridio3.pe.model.entity.CoordenadasRuta;
+import com.urbanoexpress.iridio3.pe.model.entity.ParadaRuta;
+import com.urbanoexpress.iridio3.pe.model.entity.WaypointRuta;
+import com.urbanoexpress.iridio3.pe.model.interactor.MapaRutaDelDiaInteractor;
+import com.urbanoexpress.iridio3.pe.util.Preferences;
 import com.urbanoexpress.iridio3.pe.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pe.R;
 import com.urbanoexpress.iridio3.pe.model.entity.GuiaGestionada;
@@ -26,14 +36,17 @@ import com.urbanoexpress.iridio3.pe.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pe.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pe.util.CommonUtils;
 import com.urbanoexpress.iridio3.pe.util.constant.LocalAction;
+import com.urbanoexpress.iridio3.pe.view.BaseModalsView;
 import com.urbanoexpress.iridio3.pe.view.MapaRutaDelDiaView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +76,7 @@ public class MapaRutaDelDiaPresenter {
     }
 
     public void init() {
+        getParadas();
         LocalBroadcastManager.getInstance(view.getViewContext())
                 .registerReceiver(editarCoordenadaGuiaReceiver,
                         new IntentFilter(LocalAction.EDITAR_COORDENADA_GE));
@@ -108,6 +122,10 @@ public class MapaRutaDelDiaPresenter {
 //        guiaItems.add(rutaItem);
 //
 //        view.displayListGuias(guiaItems);
+
+        if (position < 0 || position >= guias.size()) {
+            return;
+        }
 
         if (rutearGuias) {
             if (guias.get(position).getSecuencia().isEmpty()) {
@@ -581,6 +599,93 @@ public class MapaRutaDelDiaPresenter {
             view.animateCameraMap(latLngs);
         }
         return false;
+    }
+
+    private void getParadas(){
+        view.onLoading(true);
+        RequestCallback callback = new RequestCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try{
+                    if(response.getBoolean("success")) {
+                        JSONObject data = response.getJSONObject("data");
+                        JSONArray paradasArray = data.getJSONArray("data");
+                        List<ParadaRuta> paradas = new ArrayList<>();
+
+                        for (int i = 0; i < paradasArray.length(); i++) {
+                            JSONObject paradaJson = paradasArray.getJSONObject(i);
+                            JSONArray datosArray = paradaJson.getJSONArray("datos");
+
+                            List<ClienteRuta> clientes = new ArrayList<>();
+
+                            for (int j = 0; j < datosArray.length(); j++) {
+                                JSONObject clienteJson = datosArray.getJSONObject(j);
+
+                                String nombre = clienteJson.getString("cliente");
+                                String guia = clienteJson.getString("barra_guia");
+                                int totalPiezas = clienteJson.getInt("total_piezas");
+
+                                clientes.add(new ClienteRuta(nombre, guia, totalPiezas));
+                            }
+
+                            double dirPx = paradaJson.getDouble("dir_px");
+                            double dirPy = paradaJson.getDouble("dir_py");
+                            int geoId = paradaJson.getInt("geo_id");
+                            String direccion = paradaJson.getString("direccion");
+
+                            JSONArray waypointsArray = paradaJson.getJSONArray("waypoint");
+                            List<WaypointRuta> waypoints = new ArrayList<>();
+
+                            for (int j = 0; j < waypointsArray.length(); j++) {
+                                JSONObject waypointJson = waypointsArray.getJSONObject(j);
+
+                                double coorX = waypointJson.getDouble("coor_x");
+                                double coorY = waypointJson.getDouble("coor_y");
+                                int secuencia = waypointJson.getInt("secuencia");
+                                int idWayPoint = waypointJson.getInt("id_way_point");
+
+                                waypoints.add(new WaypointRuta(coorX, coorY, secuencia, idWayPoint));
+                            }
+
+                            ParadaRuta parada = new ParadaRuta(clientes, dirPx, dirPy, geoId, direccion, waypoints);
+                            paradas.add(parada);
+                        }
+
+                        long delayMillis = 3000;
+
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                            if (paradas.isEmpty()) {
+                                view.onLoading(false);
+                            } else {
+                                view.setVisibilityFabRutaMapa(View.VISIBLE);
+                                view.drawRouteOnMap(paradas);
+                            }
+                        }, delayMillis);
+                    }
+                } catch (JSONException e){
+                    e.printStackTrace();
+                    view.onLoading(false);
+                    BaseModalsView.showToast(view.getViewContext(),
+                            R.string.json_object_exception,
+                            Toast.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                error.printStackTrace();
+                view.onLoading(false);
+                BaseModalsView.showToast(view.getViewContext(),
+                        R.string.volley_error_message,
+                        Toast.LENGTH_SHORT);
+            }
+        };
+
+        String[] params = new String[]{
+                Preferences.getInstance().getString("idUsuario", ""),
+                Preferences.getInstance().getString("code_path", "")
+        };
+        MapaRutaDelDiaInteractor.getCoordenadas(params, view.getViewContext(), callback);
     }
 
     /**
