@@ -153,7 +153,8 @@ public class VerficationCodeFragment extends AppThemeBaseFragment implements Ver
             if (task.isSuccessful()) {
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
-                    presenter.onBtnContinueClick(user.getEmail());
+                    String email = user.getEmail();
+                    presenter.onBtnContinueClick(email);
                 }
             } else {
                 showMessageError();
