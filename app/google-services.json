@@ -143,6 +143,14 @@
           }
         },
         {
+          "client_id": "884191591532-pj3veo8pjr0rv70oqsejh86u4f14a8s1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pe",
+            "certificate_hash": "51a7442ba96b567be4ef9d32260f6cfc87a27d00"
+          }
+        },
+        {
           "client_id": "884191591532-q0ah7c5uft267amdv561p31p5l57irlt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

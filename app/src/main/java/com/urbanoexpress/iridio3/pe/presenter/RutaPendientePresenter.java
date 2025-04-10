@@ -1450,6 +1450,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         private void setTitleActivity() {
             if (dbRuta.size() > 0) {
                 String title = "";
+                saveRutaId(dbRuta.get(0).getIdRuta());
                 for (int i = 0; i < dbRuta.size(); i++) {
                     if (dbRuta.get(i).getLineaNegocio().equals("3")) {
                         title = "Ruta: " + dbRuta.get(i).getIdRuta();
@@ -1786,4 +1787,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 .putString("code_path", token).apply();
     }
 
+    private void saveRutaId(String idRuta) {
+        Preferences.getInstance().edit()
+                .putString("id_ruta", idRuta).apply();
+    }
 }

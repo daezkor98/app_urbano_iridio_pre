@@ -22,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -343,6 +344,11 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             return;
         }
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
+
         Random random = new Random();
         LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
 
@@ -377,7 +383,7 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
         LatLngBounds bounds = boundsBuilder.build();
         int padding = 100;
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
 
         onLoading(false);
     }
@@ -703,7 +709,7 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
         for (ClienteRuta cliente : clientes) {
             TextView clienteView = new TextView(this);
             clienteView.setText(cliente.getGuia() + " - Piezas: " + cliente.getTotalPiezas());
-            clienteView.setTextSize(16);
+            clienteView.setTextSize(14);
             clienteView.setPadding(0, 8, 0, 8);
             clientesContainer.addView(clienteView);
         }

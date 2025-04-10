@@ -683,7 +683,7 @@ public class MapaRutaDelDiaPresenter {
 
         String[] params = new String[]{
                 Preferences.getInstance().getString("idUsuario", ""),
-                Preferences.getInstance().getString("code_path", "")
+                Preferences.getInstance().getString("id_ruta", "0")
         };
         MapaRutaDelDiaInteractor.getCoordenadas(params, view.getViewContext(), callback);
     }
