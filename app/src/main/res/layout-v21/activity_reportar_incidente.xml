@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urbanoexpress.iridio3.pe.ui.ReportarIncidenteActivity">
+    android:fitsSystemWindows="true"
+    tools:context="com.urbanoexpress.iridio3.pre.ui.ReportarIncidenteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -19,7 +20,6 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:background="@color/colorGreyUrbano"
-            android:fitsSystemWindows="true"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     </com.google.android.material.appbar.AppBarLayout>

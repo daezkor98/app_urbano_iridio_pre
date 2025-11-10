@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urbanoexpress.iridio3.pe.ui.TransferirGuiaActivity">
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
+    tools:context="com.urbanoexpress.iridio3.pre.ui.TransferirGuiaActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -25,6 +27,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGuias"
         android:theme="@style/color_theme_colorPrimary"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

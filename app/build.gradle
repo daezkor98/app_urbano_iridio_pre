@@ -21,14 +21,15 @@ android {
     }
     compileSdkVersion 34
 
-    namespace 'com.urbanoexpress.iridio3.pe'
+    namespace 'com.urbanoexpress.iridio3.pre'
 
     defaultConfig {
-        applicationId 'com.urbanoexpress.iridio3.pe'
+        applicationId 'com.urbanoexpress.iridio3.pre'
         minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 135
-        versionName "2.26.72"
+        targetSdkVersion 35
+        versionCode 140
+//        versionName "2.26.73"
+        versionName "3.0.0"
         multiDexEnabled true
         resConfigs 'es'
         vectorDrawables.useSupportLibrary = true
@@ -70,12 +71,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -146,6 +152,7 @@ dependencies {
 
     //libreria para los numeros
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.37'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.2'
 
     //Hilt DI
     implementation "com.google.dagger:hilt-android:$hilt_v"

@@ -17,4 +17,6 @@
 
     <dimen name="bottom_sheet_corner_radius">10dp</dimen>
     <dimen name="bottom_sheet_top_padding">0dp</dimen>
+
+    <dimen name="navigation_bar_height">48dp</dimen>
 </resources>

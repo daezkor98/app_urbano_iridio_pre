@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
+    android:fitsSystemWindows="false"
+    android:paddingBottom="@dimen/navigation_bar_height">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -32,6 +33,7 @@
         android:orientation="vertical"
         app:behavior_hideable="true"
         app:behavior_peekHeight="85dp"
+        android:paddingBottom="@dimen/navigation_bar_height"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
         <FrameLayout
@@ -72,6 +74,7 @@
         android:orientation="vertical"
         app:behavior_hideable="true"
         app:behavior_peekHeight="85dp"
+        android:paddingBottom="@dimen/navigation_bar_height"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
         <include layout="@layout/bottom_sheet_info_entrega" />

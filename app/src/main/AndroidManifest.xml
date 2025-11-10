@@ -30,16 +30,17 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
-    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+
 
     <application
-        android:name="com.urbanoexpress.iridio3.pe.application.AndroidApplication"
+        android:name="com.urbanoexpress.iridio3.pre.application.AndroidApplication"
         android:allowBackup="true"
         android:icon="@mipmap/new_ic_launcher"
         android:label="@string/app_name"
@@ -47,7 +48,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.InitActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.InitActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.SplashScreen">
@@ -58,222 +59,225 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.MotorizadoDocFormActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.MotorizadoDocFormActivity"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.MisGananciasActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.MisGananciasActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MainActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.GoogleMapActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.GoogleMapActivity"
             android:exported="false"
             android:label="@string/title_activity_google_map"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.PlanDeViajeActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.PlanDeViajeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.PlanDeViajeActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.PlanDeViajeActivity"
             android:exported="false"
             android:label="@string/title_activity_plan_de_viaje"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ParadaProgramadaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ParadaProgramadaActivity"
             android:exported="false"
             android:label="@string/title_activity_parada_programada"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.PlanDeViajeActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.PlanDeViajeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.QRScannerActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.QRScannerActivity"
             android:exported="false"
             android:label="@string/title_activity_qrscanner"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.ParadaProgramadaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.ParadaProgramadaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Base" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.RutaActivity"
             android:exported="false"
             android:label="@string/title_activity_ruta"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.urbanoexpress.iridio3.pe.ui.MainActivity" />
+                android:value="com.urbanoexpress.iridio3.pre.ui.MainActivity" />
         </activity>
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ResumenRutaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ResumenRutaActivity"
             android:exported="false"
             android:label="@string/title_activity_resumen_ruta"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ResumenRutaRuralActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ResumenRutaRuralActivity"
             android:exported="false"
             android:label="@string/title_activity_resumen_ruta"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.FirmarActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.FirmarActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.DetalleRutaRuralActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.DetalleRutaRuralActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.GenerarManifiestoActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.GenerarManifiestoActivity"
             android:exported="false"
             android:label="@string/activity_generar_man_title_generar_manifiesto"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.RutaRuralActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.RutaRuralActivity"
             android:exported="false"
             android:label="@string/title_activity_ruta_rural"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.urbanoexpress.iridio3.pe.ui.MainActivity" />
+                android:value="com.urbanoexpress.iridio3.pre.ui.MainActivity" />
         </activity>
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.DetalleRutaRuralActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.DetalleRutaRuralActivity"
             android:exported="false"
             android:label="@string/title_activity_detalle_ruta"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaRuralActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.RutaRuralActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.AcercaDeActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.AcercaDeActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ConfiguracionActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ConfiguracionActivity"
             android:exported="false"
             android:label="@string/title_activity_configuracion"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.LogErrorSyncActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.LogErrorSyncActivity"
             android:exported="false"
             android:label="@string/title_activity_registro_errores"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ManifestarGuiaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ManifestarGuiaActivity"
             android:exported="false"
             android:label="@string/title_activity_manifestar_guia"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.InformacionRutaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.InformacionRutaActivity"
             android:exported="false"
             android:label="@string/title_activity_informacion_ruta"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.RequestPermissionActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.RequestPermissionActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.SplashScreen" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.TransferirGuiaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.TransferirGuiaActivity"
             android:exported="false"
             android:label="@string/title_activity_transferir_guia"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.TurnOnGPSActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.TurnOnGPSActivity"
             android:exported="false"
             android:label="@string/title_activity_turn_on_gps"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.MapaRutaDelDiaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.MapaRutaDelDiaActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.RutaActivity"
             android:theme="@style/AppTheme.MapRutaDelDiaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ForgotPasswordActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ForgotPasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.FiltrarGuiaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.FiltrarGuiaActivity"
             android:exported="false"
             android:label="@string/title_activity_filtrar_guia"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.TransferirGuiaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.TransferirGuiaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ReportarIncidenteActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ReportarIncidenteActivity"
             android:exported="false"
             android:label="@string/title_activity_google_map"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.GoogleMapActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.GoogleMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ReportarIncidenciaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ConsideracionesImportantesRutaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ConsideracionesImportantesRutaActivity"
             android:exported="false"
             android:label="@string/title_activity_consideraciones_importantes_ruta"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.NotificacionesRutaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.NotificacionesRutaActivity"
             android:exported="false"
             android:label="@string/title_activity_notificaciones_ruta"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.MainActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.UserProfileActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.UserProfileActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.ConfiguracionActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.ConfiguracionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.UserCredentialActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.UserCredentialActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.UserProfileActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MapRutaDelDiaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ShareProfileQRCodeActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ShareProfileQRCodeActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.UserProfileActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.ChangePasswordActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.ChangePasswordActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.UserProfileActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.UserProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
-            android:name="com.urbanoexpress.iridio3.pe.ui.RecolectarValijaActivity"
+            android:name="com.urbanoexpress.iridio3.pre.ui.RecolectarValijaActivity"
             android:exported="false"
-            android:parentActivityName="com.urbanoexpress.iridio3.pe.ui.RutaActivity"
+            android:parentActivityName="com.urbanoexpress.iridio3.pre.ui.RutaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.RutaActivity" />
         <activity
@@ -295,7 +299,7 @@
             android:value="urbano.db" />
         <meta-data
             android:name="VERSION"
-            android:value="56" />
+            android:value="57" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -324,7 +328,7 @@
         </provider>
 
         <receiver
-            android:name="com.urbanoexpress.iridio3.pe.util.SmsBroadcastReceiver"
+            android:name="com.urbanoexpress.iridio3.pre.util.SmsBroadcastReceiver"
             android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
             <intent-filter>
@@ -333,12 +337,12 @@
         </receiver>
 
         <service
-            android:name="com.urbanoexpress.iridio3.pe.services.DataSyncService"
+            android:name="com.urbanoexpress.iridio3.pre.services.DataSyncService"
             android:exported="false"
             android:foregroundServiceType="dataSync"
             android:persistent="true" />
         <service
-            android:name="com.urbanoexpress.iridio3.pe.util.firebase.MyFirebaseMessagingService"
+            android:name="com.urbanoexpress.iridio3.pre.util.firebase.MyFirebaseMessagingService"
             android:foregroundServiceType="remoteMessaging"
             android:exported="false">
             <intent-filter>

@@ -8,6 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        android:paddingTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -57,8 +58,8 @@
                     android:paddingStart="65dp"
                     android:paddingEnd="25dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/lightPrimaryText"
-                    android:textColorHint="@color/lightPrimaryText"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
                     android:theme="@style/selectableItemBlackStyle" />
 
                 <ImageView
@@ -87,8 +88,8 @@
                     android:paddingStart="65dp"
                     android:paddingEnd="25dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/lightPrimaryText"
-                    android:textColorHint="@color/lightPrimaryText"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
                     android:theme="@style/selectableItemBlackStyle" />
 
                 <ImageView
@@ -107,7 +108,7 @@
                     android:background="?selectableItemBackgroundBorderless"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_eye_off_grey"
-                    app:tint="@color/white" />
+                    app:tint="@color/brandPurple" />
             </FrameLayout>
 
             <Button

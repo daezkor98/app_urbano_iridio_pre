@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.urbanoexpress.iridio3.pe.ui.NotificacionesRutaActivity"
-    android:background="@android:color/white">
+    tools:context="com.urbanoexpress.iridio3.pre.ui.NotificacionesRutaActivity"
+    android:background="@color/colorPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             xmlns:local="http://schemas.android.com/apk/res-auto"
@@ -21,13 +20,13 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            android:fitsSystemWindows="true"
             local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

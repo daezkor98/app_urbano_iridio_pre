@@ -52,11 +52,23 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
-                    android:text="¿Va Pagar con Yape?"
+                    android:text="¿Va realizar el pago?"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/darkPrimaryText"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+<!--                <TextView-->
+<!--                    android:id="@+id/textView3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:ellipsize="end"-->
+<!--                    android:text="¿Va Pagar con Yape?"-->
+<!--                    android:textAppearance="?android:attr/textAppearanceSmall"-->
+<!--                    android:textColor="@color/darkPrimaryText"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textStyle="bold" />-->
 
             </LinearLayout>
 

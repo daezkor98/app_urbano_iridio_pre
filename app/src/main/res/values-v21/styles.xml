@@ -237,7 +237,7 @@
 
     <style name="Widget.App.Button.LoginButton" parent="Widget.App.Button">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.Button.LoginButton</item>
-        <item name="backgroundTint">@color/colorSecondary</item>
+        <item name="backgroundTint">@color/brandPurple</item>
     </style>
 
     <style name="ThemeOverlay.App.Button" parent="">

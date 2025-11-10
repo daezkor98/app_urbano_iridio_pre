@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/planRutaCamaraFragment"
-        android:name="com.urbanoexpress.iridio3.pe.ui.fragment.PlanRutaCamaraFragment"
+        android:name="com.urbanoexpress.iridio3.pre.ui.fragment.PlanRutaCamaraFragment"
         android:label="fragment_plan_ruta"
         tools:layout="@layout/fragment_plan_ruta_camara">
         <action
@@ -17,12 +17,12 @@
     </fragment>
     <fragment
         android:id="@+id/planRutaDetallesFragment"
-        android:name="com.urbanoexpress.iridio3.pe.ui.fragment.PlanRutaDetallesFragment"
+        android:name="com.urbanoexpress.iridio3.pre.ui.fragment.PlanRutaDetallesFragment"
         android:label="fragment_plan_ruta_detalles"
         tools:layout="@layout/fragment_plan_ruta_detalles">
         <argument
             android:name="detallesRuta"
-            app:argType="com.urbanoexpress.iridio3.pe.ui.model.DataItemForView" />
+            app:argType="com.urbanoexpress.iridio3.pre.ui.model.DataItemForView" />
         <action
             android:id="@+id/action_planRutaDetallesFragment_to_planRutaTransporteFragment"
             app:destination="@id/planRutaTransporteFragment" />
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/planRutaTransporteFragment"
-        android:name="com.urbanoexpress.iridio3.pe.ui.fragment.PlanRutaTransporteFragment"
+        android:name="com.urbanoexpress.iridio3.pre.ui.fragment.PlanRutaTransporteFragment"
         android:label="fragment_plan_ruta_transporte"
         tools:layout="@layout/fragment_plan_ruta_transporte" >
         <argument

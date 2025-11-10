@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urbanoexpress.iridio3.pe.ui.TurnOnGPSActivity">
+    android:fitsSystemWindows="true"
+    tools:context="com.urbanoexpress.iridio3.pre.ui.TurnOnGPSActivity">
 
     <LinearLayout
         android:orientation="vertical"

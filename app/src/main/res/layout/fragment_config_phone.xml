@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.urbanoexpress.iridio3.pe.ui.fragment.ConfigPhoneFragment">
+    android:fitsSystemWindows="true"
+    tools:context="com.urbanoexpress.iridio3.pre.ui.fragment.ConfigPhoneFragment">
 
     <FrameLayout
         android:id="@+id/image"
@@ -64,7 +65,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Numeró celular">
+                    android:hint="Número celular">
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteTextView"
