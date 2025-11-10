@@ -3,13 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
+    android:fitsSystemWindows="false"
+    android:paddingBottom="@dimen/navigation_bar_height">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:indeterminateTint="@color/blue_1"
+        android:visibility="gone" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/googleMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:fitsSystemWindows="false" />
 
 
@@ -22,6 +33,7 @@
         android:orientation="vertical"
         app:behavior_hideable="true"
         app:behavior_peekHeight="85dp"
+        android:paddingBottom="@dimen/navigation_bar_height"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
         <FrameLayout
@@ -53,6 +65,21 @@
         </FrameLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/bottomSheetMarkerInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:orientation="vertical"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="85dp"
+        android:paddingBottom="@dimen/navigation_bar_height"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <include layout="@layout/bottom_sheet_info_entrega" />
+    </LinearLayout>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="wrap_content"
@@ -73,6 +100,18 @@
         android:orientation="vertical"
         app:layout_anchor="@id/bottomSheetGuias"
         app:layout_anchorGravity="end">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRutaMapa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/blackPrimary"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_near_me_white" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabGuiasSinCoordenadas"
@@ -300,7 +339,6 @@
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
-
     <include
         android:id="@+id/progress_layout"
         layout="@layout/progressbar_layout" />

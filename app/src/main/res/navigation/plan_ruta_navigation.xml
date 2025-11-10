@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/plan_ruta_navigation"
+    app:startDestination="@id/planRutaCamaraFragment">
+
+    <fragment
+        android:id="@+id/planRutaCamaraFragment"
+        android:name="com.urbanoexpress.iridio3.pre.ui.fragment.PlanRutaCamaraFragment"
+        android:label="fragment_plan_ruta"
+        tools:layout="@layout/fragment_plan_ruta_camara">
+        <action
+            android:id="@+id/action_planRutaCamaraFragment_to_planRutaDetallesFragment"
+            app:destination="@id/planRutaDetallesFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/planRutaDetallesFragment"
+        android:name="com.urbanoexpress.iridio3.pre.ui.fragment.PlanRutaDetallesFragment"
+        android:label="fragment_plan_ruta_detalles"
+        tools:layout="@layout/fragment_plan_ruta_detalles">
+        <argument
+            android:name="detallesRuta"
+            app:argType="com.urbanoexpress.iridio3.pre.ui.model.DataItemForView" />
+        <action
+            android:id="@+id/action_planRutaDetallesFragment_to_planRutaTransporteFragment"
+            app:destination="@id/planRutaTransporteFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/planRutaTransporteFragment"
+        android:name="com.urbanoexpress.iridio3.pre.ui.fragment.PlanRutaTransporteFragment"
+        android:label="fragment_plan_ruta_transporte"
+        tools:layout="@layout/fragment_plan_ruta_transporte" >
+        <argument
+            android:name="idRouteId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="9999" />
+    </fragment>
+
+
+</navigation>

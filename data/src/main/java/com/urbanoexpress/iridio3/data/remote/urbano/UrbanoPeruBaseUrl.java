@@ -5,8 +5,13 @@ import com.urbanoexpress.iridio3.data.remote.BaseUrl;
 
 public final class UrbanoPeruBaseUrl implements BaseUrl {
 
-    private static final String DEVELOPMENT_BASE_URL = "https://pyp3.dev-urbano.dev/";
-    private static final String PRODUCTION_BASE_URL = "https://app.urbano.com.pe/";
+    //private static final String DEVELOPMENT_BASE_URL = "https://api.geo.dev-urbano.dev/iridio/";
+    private static final String DEVELOPMENT_BASE_URL = "https://bkd-tms.urbanoexpress.com.pe/iridio/";
+    //private static final String DEVELOPMENT_BASE_URL = "https://pyp3.dev-urbano.dev/";
+
+    //private static final String PRODUCTION_BASE_URL = "https://api.geo.dev-urbano.dev/iridio/";
+    private static final String PRODUCTION_BASE_URL = "https://bkd-tms.urbanoexpress.com.pe/iridio/";
+    //private static final String PRODUCTION_BASE_URL = "https://app.urbano.com.pe/";
 
     private final int apiEnvironment;
 

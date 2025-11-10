@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.urbanoexpress.iridio3.pe.ui.RutaRuralActivity">
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
+    tools:context="com.urbanoexpress.iridio3.pre.ui.RutaRuralActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -115,14 +117,15 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.urbanoexpress.iridio3.pe.util.components.CustomViewPager
+        <com.urbanoexpress.iridio3.pre.util.components.CustomViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@color/white"
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <com.urbanoexpress.iridio3.pe.util.components.searchview.MaterialSearchView
+    <com.urbanoexpress.iridio3.pre.util.components.searchview.MaterialSearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

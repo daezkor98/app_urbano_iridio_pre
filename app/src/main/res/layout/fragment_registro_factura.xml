@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </com.google.android.material.textfield.TextInputLayout>-->
-                <com.urbanoexpress.iridio3.pe.ui.widget.FormFieldView
+                <com.urbanoexpress.iridio3.pre.ui.widget.FormFieldView
                     android:id="@+id/field_fecha_factura"
                     android:layout_width="match_parent"
                     app:headerHint="Fecha de Factura"

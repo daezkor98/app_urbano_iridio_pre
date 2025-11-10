@@ -3,9 +3,41 @@
     "project_number": "884191591532",
     "firebase_url": "https://urbano-iridio.firebaseio.com",
     "project_id": "urbano-iridio",
-    "storage_bucket": "urbano-iridio.appspot.com"
+    "storage_bucket": "urbano-iridio.firebasestorage.app"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884191591532:android:a7b9c50a8b553fd89c6c49",
+        "android_client_info": {
+          "package_name": "com.iridioapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDahK2PjUCBKNTiZKyWU52nyrP7GA1sNjA"
+        },
+        {
+          "current_key": "AIzaSyCswdNIXdLvzlCecL43kNM1ZK6QfmC2YTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:884191591532:android:9d0b76928e9ab5bf",
@@ -14,6 +46,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "884191591532-ak8e4im5b76qjnj68p4nfa3me0q4omqb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio",
+            "certificate_hash": "f776d9b92c63ebf05fcb412fd17cbad12e49ffd9"
+          }
+        },
         {
           "client_id": "884191591532-f5f3j6qo5h0pt7c6rm3g9n7uh3qpfaod.apps.googleusercontent.com",
           "client_type": 1,
@@ -71,6 +111,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "884191591532-co9o8q6cghjmvns56rvervcdji8v1f3l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3",
+            "certificate_hash": "f776d9b92c63ebf05fcb412fd17cbad12e49ffd9"
+          }
+        },
+        {
           "client_id": "884191591532-eahibjt386hcff84hlq9a82721727rp6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -110,6 +158,110 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "884191591532-lfvhs7ssm366uafvh3am12d7ri75ipob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pe",
+            "certificate_hash": "31edae6451a426835190265b455debc47c026231"
+          }
+        },
+        {
+          "client_id": "884191591532-osnoso07l06fasf4u17m8g4hhd6atohi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pe",
+            "certificate_hash": "f776d9b92c63ebf05fcb412fd17cbad12e49ffd9"
+          }
+        },
+        {
+          "client_id": "884191591532-pj3veo8pjr0rv70oqsejh86u4f14a8s1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pe",
+            "certificate_hash": "51a7442ba96b567be4ef9d32260f6cfc87a27d00"
+          }
+        },
+        {
+          "client_id": "884191591532-q0ah7c5uft267amdv561p31p5l57irlt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pe",
+            "certificate_hash": "765ba92a8bfc45d72eca9e3090f2c531347a7bc4"
+          }
+        },
+        {
+          "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDahK2PjUCBKNTiZKyWU52nyrP7GA1sNjA"
+        },
+        {
+          "current_key": "AIzaSyCswdNIXdLvzlCecL43kNM1ZK6QfmC2YTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884191591532:android:2074b769c543d4e29c6c49",
+        "android_client_info": {
+          "package_name": "com.urbanoexpress.iridio3.pre"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884191591532-1gj9e3nldlptvu4cpbc74b5i779ur1tr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pre",
+            "certificate_hash": "3fe001b8d343f69ff0f709ad9a564b0b1c3f8930"
+          }
+        },
+        {
+          "client_id": "884191591532-1q8dpqhf3bvhq1qf9pj1td2kr3ihm4d2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pre",
+            "certificate_hash": "f776d9b92c63ebf05fcb412fd17cbad12e49ffd9"
+          }
+        },
+        {
+          "client_id": "884191591532-2opgq541fjcq7jbhk4rq0tbsjrg9qdqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pre",
+            "certificate_hash": "31edae6451a426835190265b455debc47c026231"
+          }
+        },
+        {
+          "client_id": "884191591532-e0acj8puimm5c9tm0965mfrehp01oi7t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pre",
+            "certificate_hash": "765ba92a8bfc45d72eca9e3090f2c531347a7bc4"
+          }
+        },
+        {
+          "client_id": "884191591532-tp0afh0e6pfi4e467m5g5v20llh0l90s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.urbanoexpress.iridio3.pre",
+            "certificate_hash": "51a7442ba96b567be4ef9d32260f6cfc87a27d00"
+          }
+        },
         {
           "client_id": "884191591532-r2qoltte752slhd0huch0gl64e9mjphi.apps.googleusercontent.com",
           "client_type": 3

@@ -19,6 +19,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
         classpath("com.google.dagger:hilt-android-gradle-plugin:$hilt_v")
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0"
     }
 }
 
