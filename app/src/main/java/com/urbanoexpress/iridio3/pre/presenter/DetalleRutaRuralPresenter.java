@@ -460,7 +460,12 @@ public class DetalleRutaRuralPresenter {
         }
 
         details.add(new DetailsItem("Observaciones", ruta.getObservaciones()));
-        details.add(new DetailsItem("Anotaciones", ruta.getAnotaciones()));
+
+        details.add(new DetailsItem(
+                "Notificaciones",
+                "Entregar en la siguiente dirección",
+                true
+        ));
 
         view.showDetalleRuta(details);
     }

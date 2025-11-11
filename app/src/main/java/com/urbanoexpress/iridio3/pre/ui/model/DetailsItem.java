@@ -7,21 +7,31 @@ public class DetailsItem implements Parcelable {
 
     private String title;
     private String description;
+    private boolean showActionButton;
 
     public DetailsItem(String title, String description) {
         this.title = title;
         this.description = description;
+        this.showActionButton = false;
+    }
+
+    public DetailsItem(String title, String description, boolean showActionButton) {
+        this.title = title;
+        this.description = description;
+        this.showActionButton = showActionButton;
     }
 
     protected DetailsItem(Parcel in) {
         title = in.readString();
         description = in.readString();
+        showActionButton = in.readByte() != 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(description);
+        dest.writeByte((byte) (showActionButton ? 1 : 0));
     }
 
     @Override
@@ -55,5 +65,9 @@ public class DetailsItem implements Parcelable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean shouldShowActionButton() {
+        return showActionButton;
     }
 }

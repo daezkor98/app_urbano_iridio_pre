@@ -2,25 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:paddingHorizontal="@dimen/activity_horizontal_margin"
     android:paddingVertical="@dimen/item_list_vertical_margin">
 
-    <TextView
-        android:id="@+id/title_text"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight=".5"
-        android:paddingRight="10dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/gris_2"/>
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/description_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".5"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/gris_2"/>
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:paddingRight="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/gris_2"/>
+
+        <TextView
+            android:id="@+id/description_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/gris_2"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/actionButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:contentDescription="Mapa"
+        android:src="@drawable/ic_near_me_white"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        app:tint="@color/colorPrimary" />
+
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio3.pre.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -35,6 +36,9 @@ public class DetailsAdapter extends RecyclerView.Adapter<DetailsAdapter.ViewHold
         DetailsItem item = data.get(position);
         holder.binding.titleText.setText(item.getTitle());
         holder.binding.descriptionText.setText(item.getDescription());
+        holder.binding.actionButton.setOnClickListener(v -> {
+            Log.d("BOTON CHAT", "se dio click en boton");
+        });
 
         if (position % 2 == 0) {
             holder.itemView.setBackgroundResource(R.color.bg_list_even);
