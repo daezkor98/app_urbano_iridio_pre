@@ -117,7 +117,6 @@ public class ModelUtils {
                 case Ruta.TipoEnvio.LOGISTICA_INVERSA:
                     return MotivoDescarga.Tipo.NO_ENTREGA;
                 case Ruta.TipoEnvio.LIQUIDACION:
-                    return MotivoDescarga.Tipo.NO_ENTREGA_LIQ_DEV;
                 case Ruta.TipoEnvio.DEVOLUCION:
                     return MotivoDescarga.Tipo.NO_ENTREGA_LIQ_DEV;
                 default:

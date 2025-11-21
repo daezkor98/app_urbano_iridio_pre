@@ -133,11 +133,7 @@ public class NoEntregaGEPresenter {
 
         loadDataRutas();
         setTipoMotivoDescarga();
-        if(rutas.get(0).getTipo().equals("R")){
-            loadMotivosRecoleccion();
-        } else {
-            loadSubMotivos();
-        }
+        setMotivosEspecial();
         loadGaleria();
 
         StringBuilder stringBuilder = new StringBuilder("Descargas/");
@@ -399,9 +395,9 @@ public class NoEntregaGEPresenter {
         view.showListaMotivos(motivoItems);
     }
 
-    private void loadMotivosRecoleccion() {
+    private void loadMotivosEspeciales(int idMotivo) {
         dbMotivoDescargas = rutaPendienteInteractor.selectAllMotivos(
-                40, rutas.get(0).getLineaNegocio());
+                idMotivo, rutas.get(0).getLineaNegocio());
 
         selectedIndexMotivo = -1;
 
@@ -415,7 +411,6 @@ public class NoEntregaGEPresenter {
 
         view.showListaMotivos(motivoItems);
     }
-
 
     private void loadDataRutas() {
         for (int i = 0; i < rutas.size(); i++) {
@@ -434,6 +429,17 @@ public class NoEntregaGEPresenter {
             tipoMotivoDescarga = ModelUtils.getTipoMotivoDescarga(rutas.get(0).getTipoEnvio(), 2);
         } else {
             tipoMotivoDescarga = MotivoDescarga.Tipo.NO_RECOLECTA;
+        }
+    }
+
+    private void setMotivosEspecial(){
+        if(rutas.get(0).getTipo().equals("R")) {
+            loadMotivosEspeciales(40);
+        } else if (rutas.get(0).getTipoEnvio().equals("D") ||
+                rutas.get(0).getTipoEnvio().equals("L")) {
+            loadMotivosEspeciales(70);
+        } else {
+            loadSubMotivos();
         }
     }
 

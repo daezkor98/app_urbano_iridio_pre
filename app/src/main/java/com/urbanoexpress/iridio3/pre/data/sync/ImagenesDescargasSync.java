@@ -3,6 +3,12 @@ package com.urbanoexpress.iridio3.pre.data.sync;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.urbanoexpress.iridio3.pre.model.entity.Data;
@@ -117,6 +123,16 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
                     public void onError(VolleyError error) {
                         Log.i("_._"+TAG, "onError: " + error.toString());
                         error.printStackTrace();
+
+                        String errorType = getVolleyErrorType(error);
+
+                        if ("NETWORK_ERROR".equals(errorType) || "TIMEOUT_ERROR".equals(errorType) ||
+                                "NO_CONNECTION_ERROR".equals(errorType) || "SERVICE_UNAVAILABLE".equals(errorType) ||
+                                "STREAM_ERROR".equals(errorType)) {
+                            finishSync();
+                            return;
+                        }
+
                         LogErrorSync errorSync = new LogErrorSync(
                                 "3_"+TAG,
                                 getData().get(getCountData()).getIdUsuario(),
@@ -207,5 +223,34 @@ public class ImagenesDescargasSync extends DataSyncModel<Imagen> {
             return "10";
         }
         return "0";
+    }
+
+    private String getVolleyErrorType(VolleyError error) {
+        if (error instanceof TimeoutError) {
+            return "TIMEOUT_ERROR";
+        } else if (error instanceof NoConnectionError) {
+            return "NO_CONNECTION_ERROR";
+        } else if (error instanceof ServerError) {
+            if (error.networkResponse != null) {
+                int statusCode = error.networkResponse.statusCode;
+                if (statusCode == 503) {
+                    return "SERVICE_UNAVAILABLE";
+                }
+            }
+            return "SERVER_ERROR";
+        } else if (error instanceof NetworkError) {
+            return "NETWORK_ERROR";
+        } else {
+            String message = error.getMessage();
+            if (message != null) {
+                message = message.toLowerCase();
+                if (message.contains("timeout")) {
+                    return "TIMEOUT_ERROR";
+                } else if (message.contains("end of stream")) {
+                    return "STREAM_ERROR";
+                }
+            }
+            return "UNKNOWN_ERROR";
+        }
     }
 }

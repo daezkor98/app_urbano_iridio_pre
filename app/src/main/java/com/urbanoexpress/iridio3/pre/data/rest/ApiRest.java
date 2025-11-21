@@ -126,12 +126,6 @@ public final class ApiRest {
                 return null;
         }
     }
-
-    public String getApiBaseUrlV2(){
-        return "https://api.geo.dev-urbano.dev/iridio/";
-        //return "https://bkd-tms.urbanoexpress.com.pe/iridio/";
-    }
-
 }
 
 //public final class ApiRest {

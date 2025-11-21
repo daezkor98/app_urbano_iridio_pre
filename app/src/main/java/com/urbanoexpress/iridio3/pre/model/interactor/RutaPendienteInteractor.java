@@ -351,6 +351,37 @@ public class RutaPendienteInteractor {
                 tipoMotivo + "", lineaNegocio);
     }
 
+//    public List<MotivoDescarga> selectAllMotivosByIds(List<Integer> idsMotivos, String lineaNegocio) {
+//        if (idsMotivos == null || idsMotivos.isEmpty()) {
+//            return new ArrayList<>();
+//        }
+//
+//        String placeholders = String.join(",", Collections.nCopies(idsMotivos.size(), "?"));
+//        List<String> args = new ArrayList<>();
+//        args.add(Preferences.getInstance().getString("idUsuario", ""));
+//
+//        for (Integer id : idsMotivos) {
+//            args.add(String.valueOf(id));
+//        }
+//
+//        args.add(lineaNegocio);
+//
+//        return MotivoDescarga.find(MotivoDescarga.class,
+//                NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
+//                        NamingHelper.toSQLNameDefault("tipo") + " IN (" + placeholders + ") and " +
+//                        NamingHelper.toSQLNameDefault("lineaNegocio") + " in (0, ?)",
+//                args.toArray(new String[0]));
+//    }
+
+    public List<MotivoDescarga> selectMotivosDev(int idMotivo, String lineaNegocio) {
+        return MotivoDescarga.find(MotivoDescarga.class,
+                NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
+                        NamingHelper.toSQLNameDefault("idMotivo") + " = ? and " +
+                        NamingHelper.toSQLNameDefault("lineaNegocio") + " in (0, ?)",
+                Preferences.getInstance().getString("idUsuario", ""),
+                idMotivo + "", lineaNegocio);
+    }
+
     public List<MotivoDescarga> selectAllSubMotivos(int gruId) {
         return MotivoDescarga.find(MotivoDescarga.class,
                 NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +

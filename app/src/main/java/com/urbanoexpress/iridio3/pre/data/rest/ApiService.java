@@ -9,6 +9,7 @@ import com.urbanoexpress.iridio3.pre.util.network.volley.MultipartJsonObjectRequ
 
 import org.json.JSONObject;
 
+import okhttp3.ConnectionPool;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -89,10 +90,18 @@ public class ApiService {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         // Configurar OkHttpClient con timeout
+//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+//                .connectTimeout(60, TimeUnit.SECONDS)
+//                .readTimeout(60, TimeUnit.SECONDS)
+//                .writeTimeout(60, TimeUnit.SECONDS);
+
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS);
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .connectionPool(new ConnectionPool(5, 30, TimeUnit.SECONDS))
+                .pingInterval(10, TimeUnit.SECONDS);
 
         // Agregar interceptor para añadir headers
         httpClient.addInterceptor(chain -> {
@@ -165,15 +174,12 @@ public class ApiService {
                     if (response.isSuccessful() && response.body() != null) {
                         String responseString = response.body().string();
                         JSONObject jsonResponse = new JSONObject(responseString);
-                        Log.d(TAG, "SUCCESS: " + jsonResponse.toString());
                         responseListener.onResponse(jsonResponse);
                     } else {
                         VolleyError error = createVolleyError(response);
-                        Log.d(TAG, "ERROR: " + error.getMessage());
                         responseListener.onErrorResponse(error);
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "Error processing response", e);
                     VolleyError error = new VolleyError("Error processing response: " + e.getMessage());
                     responseListener.onErrorResponse(error);
                 }
@@ -181,7 +187,6 @@ public class ApiService {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e(TAG, "Request failed", t);
                 VolleyError error = new VolleyError(t.getMessage(), t);
                 responseListener.onErrorResponse(error);
             }
@@ -196,13 +201,26 @@ public class ApiService {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful() && response.body() != null) {
-                        String responseString = response.body().string();
+                        String responseString = null;
+                        try {
+                            responseString = response.body().string();
+                        } finally {
+                            response.body().close();
+                        }
+                        //String responseString = response.body().string();
                         JSONObject jsonResponse = new JSONObject(responseString);
-                        Log.d(TAG, "SUCCESS: " + jsonResponse.toString());
                         responseListener.onResponse(jsonResponse);
                     } else {
+                        String errorBodyContent = null;
+                        try {
+                            errorBodyContent = response.errorBody() != null ?
+                                    response.errorBody().string() : "Unknown error";
+                        } finally {
+                            if (response.errorBody() != null) {
+                                response.errorBody().close();
+                            }
+                        }
                         VolleyError error = createVolleyError(response);
-                        Log.d(TAG, "ERROR: " + error.getMessage());
                         responseListener.onErrorResponse(error);
                     }
                 } catch (Exception e) {
@@ -226,6 +244,8 @@ public class ApiService {
                 .connectTimeout(420, TimeUnit.SECONDS)
                 .readTimeout(420, TimeUnit.SECONDS)
                 .writeTimeout(420, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .connectionPool(new ConnectionPool(3, 60, TimeUnit.SECONDS))
                 .build();
 
         Retrofit retrofitWithLongTimeout = new Retrofit.Builder()
@@ -269,17 +289,29 @@ public class ApiService {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful() && response.body() != null) {
-                        String responseString = response.body().string();
-                        org.json.JSONObject jsonResponse = new org.json.JSONObject(responseString);
-                        Log.d(TAG, "SUCCESS: " + jsonResponse.toString());
+                        String responseString = null;
+                        try {
+                            responseString = response.body().string();
+                        } finally {
+                            response.body().close();
+                        }
+                        //String responseString = response.body().string();
+                        JSONObject jsonResponse = new JSONObject(responseString);
                         responseListener.onResponse(jsonResponse);
                     } else {
+                        String errorBodyContent = null;
+                        try {
+                            errorBodyContent = response.errorBody() != null ?
+                                    response.errorBody().string() : "Unknown error";
+                        } finally {
+                            if (response.errorBody() != null) {
+                                response.errorBody().close();
+                            }
+                        }
                         VolleyError error = createVolleyError(response);
-                        Log.d(TAG, "ERROR: " + error.getMessage());
                         responseListener.onErrorResponse(error);
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "Error processing response", e);
                     VolleyError error = new VolleyError("Error processing response: " + e.getMessage());
                     responseListener.onErrorResponse(error);
                 }

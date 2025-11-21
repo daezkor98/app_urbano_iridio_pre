@@ -121,7 +121,9 @@ public class GuiaGestionadaSync extends DataSyncModel<GuiaGestionada> {
 
                         String errorType = getVolleyErrorType(error);
 
-                        if ("NETWORK_ERROR".equals(errorType) || "TIMEOUT_ERROR".equals(errorType)) {
+                        if ("NETWORK_ERROR".equals(errorType) || "TIMEOUT_ERROR".equals(errorType) ||
+                                "NO_CONNECTION_ERROR".equals(errorType) || "SERVICE_UNAVAILABLE".equals(errorType) ||
+                                "STREAM_ERROR".equals(errorType)) {
                             finishSync();
                             return;
                         }
@@ -212,16 +214,27 @@ public class GuiaGestionadaSync extends DataSyncModel<GuiaGestionada> {
         if (error instanceof TimeoutError) {
             return "TIMEOUT_ERROR";
         } else if (error instanceof NoConnectionError) {
-            return "NETWORK_ERROR";
-        } else if (error instanceof AuthFailureError) {
-            return "AUTH_ERROR";
+            return "NO_CONNECTION_ERROR";
         } else if (error instanceof ServerError) {
+            if (error.networkResponse != null) {
+                int statusCode = error.networkResponse.statusCode;
+                if (statusCode == 503) {
+                    return "SERVICE_UNAVAILABLE";
+                }
+            }
             return "SERVER_ERROR";
         } else if (error instanceof NetworkError) {
             return "NETWORK_ERROR";
-        } else if (error instanceof ParseError) {
-            return "PARSE_ERROR";
         } else {
+            String message = error.getMessage();
+            if (message != null) {
+                message = message.toLowerCase();
+                if (message.contains("timeout")) {
+                    return "TIMEOUT_ERROR";
+                } else if (message.contains("end of stream")) {
+                    return "STREAM_ERROR";
+                }
+            }
             return "UNKNOWN_ERROR";
         }
     }

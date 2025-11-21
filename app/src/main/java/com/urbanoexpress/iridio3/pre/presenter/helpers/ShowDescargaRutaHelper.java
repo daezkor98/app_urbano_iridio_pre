@@ -173,7 +173,11 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
                                 onClickDescarga();
                             })
                             .setNegativeButton("No, registrar visita", (dialog, which) -> {
-                                updateProcesoDescarga(DescargaRuta.Entrega.NO_ENTREGO);
+                                if(isNoEntregaDevLiq()){
+                                    updateProcesoDescarga(DescargaRuta.Entrega.NO_ENTREGAR_DEV_LIQ);
+                                } else {
+                                    updateProcesoDescarga(DescargaRuta.Entrega.NO_ENTREGO);
+                                }
                                 onClickDescarga();
                             })
                             .setNeutralButton(R.string.text_cancelar, null)
@@ -234,13 +238,14 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
                     dialogFragment = EntregaGEDialog.newInstance(rutas, numVecesGestionado);
                     tagFragment = EntregaGEDialog.TAG;
                     break;
+                case DescargaRuta.Recoleccion.NO_RECOLECTO:
+                case DescargaRuta.Entrega.NO_ENTREGAR_DEV_LIQ:
+                    dialogFragment = NoEntregaGEDialog.newInstance(rutas, numVecesGestionado, 0);
+                    tagFragment = NoEntregaGEDialog.TAG;
+                    break;
                 case DescargaRuta.Entrega.NO_ENTREGO:
                     dialogFragment = NoEntregaListMotivosFragment.Companion.newInstance(rutas, numVecesGestionado);
                     tagFragment = NoEntregaListMotivosFragment.Companion.getTAG();
-                    break;
-                case DescargaRuta.Recoleccion.NO_RECOLECTO:
-                    dialogFragment = NoEntregaGEDialog.newInstance(rutas, numVecesGestionado, 0);
-                    tagFragment = NoEntregaGEDialog.TAG;
                     break;
                 case DescargaRuta.Recoleccion.LLEGO_DIRECCION_RECOJO:
                     ModalHelper.getBuilderAlertDialog(activity)
@@ -471,6 +476,22 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
             if (!TextUtils.isEmpty(rutas.get(i).getHabilitantes())) return true;
         }
         return false;
+    }
+
+    private boolean isEntregaDevolucion(){
+        return rutas.stream().anyMatch(ruta ->
+                ruta.getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.DEVOLUCION));
+    }
+
+    private boolean isEntregaLiquidacion(){
+        return rutas.stream().anyMatch(ruta ->
+                ruta.getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION));
+    }
+
+    private boolean isNoEntregaDevLiq(){
+        return rutas.stream().anyMatch(ruta ->
+                ruta.getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.DEVOLUCION) ||
+                        ruta.getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION));
     }
 
     private void updateProcesoDescarga(int procesoDescarga) {

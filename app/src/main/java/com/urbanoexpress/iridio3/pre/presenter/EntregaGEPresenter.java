@@ -154,6 +154,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     private int tipoMotivo;
 
+    private boolean isEntregaParcial = false;
+
     private final String CHK_ENTREGA = "9";
     private final String CHK_ENTREGA_DEVOLUCION = "10";
     private final int REQUEST_IMAGE_GALLERY = 200;
@@ -441,7 +443,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     //loadMotivos();
                     //currentStep = STEPS.TIPO_ENTREGA;
 
-                    loadMotivos();
+                    isEntregaParcial = true;
+                    setMotivosList();
+
                     view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
                     view.notifyGaleriaFotosAllItemChanged();
                     currentStep = STEPS.FOTOS_PRODUCTO;
@@ -455,7 +459,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             if (validateSelectedProductosEntregados()) {
                 view.setVisibilityBoxStepProductosEntregados(View.GONE);
                 view.setVisibilityBoxStepTipoEntrega(View.VISIBLE);
-                loadMotivos();
+                setMotivosList();
+                //loadMotivos();
                 currentStep = STEPS.TIPO_ENTREGA;
             }
             return;
@@ -670,6 +675,20 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
+    private void setMotivosList(){
+        if(rutas.get(0).getTipoEnvio().equals("D")){
+            if(isEntregaParcial){
+                loadMotivosDev(33);
+            } else {
+                loadMotivosDev(69);
+            }
+        } else if (rutas.get(0).getTipoEnvio().equals("L")){
+            loadMotivosLiq(60);
+        } else {
+            loadMotivos();
+        }
+    }
+
     private void loadMotivos() {
         dbMotivoDescargas = rutaPendienteInteractor.selectAllMotivos(tipoMotivo,
                 rutas.get(0).getLineaNegocio());
@@ -686,6 +705,61 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
         view.showListaMotivos(motivoItems);
     }
+
+    private void loadMotivosDev(int idMotivo) {
+        dbMotivoDescargas = rutaPendienteInteractor.selectMotivosDev(idMotivo, rutas.get(0).getLineaNegocio());
+
+        selectedIndexMotivo = -1;
+
+        motivoItems = new ArrayList<>();
+        MotivoDescargaItem item;
+
+        for (MotivoDescarga motivo : dbMotivoDescargas) {
+            item = new MotivoDescargaItem(motivo.getDescripcion(), false);
+            motivoItems.add(item);
+        }
+
+        view.showListaMotivos(motivoItems);
+    }
+
+    private void loadMotivosLiq(int idMotivo) {
+        dbMotivoDescargas = rutaPendienteInteractor.selectAllMotivos(idMotivo,
+                rutas.get(0).getLineaNegocio());
+
+        selectedIndexMotivo = -1;
+
+        motivoItems = new ArrayList<>();
+        MotivoDescargaItem item;
+
+        for (MotivoDescarga motivo : dbMotivoDescargas) {
+            item = new MotivoDescargaItem(motivo.getDescripcion(), false);
+            motivoItems.add(item);
+        }
+
+        view.showListaMotivos(motivoItems);
+    }
+
+//    private void loadMotivosLiq(int... idsMotivos) {
+//        List<Integer> idsList = new ArrayList<>();
+//        for (int id : idsMotivos) {
+//            idsList.add(id);
+//        }
+//
+//        dbMotivoDescargas = rutaPendienteInteractor.selectAllMotivosByIds(idsList,
+//                rutas.get(0).getLineaNegocio());
+//
+//        selectedIndexMotivo = -1;
+//
+//        motivoItems = new ArrayList<>();
+//        MotivoDescargaItem item;
+//
+//        for (MotivoDescarga motivo : dbMotivoDescargas) {
+//            item = new MotivoDescargaItem(motivo.getDescripcion(), false);
+//            motivoItems.add(item);
+//        }
+//
+//        view.showListaMotivos(motivoItems);
+//    }
 
     private void loadDataPiezas() {
 
@@ -1032,7 +1106,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
             // view.setVisibilityBoxStepTipoEntrega(View.VISIBLE);
             //view.notifyMotivosAllItemChanged();
-            loadMotivos();
+            //loadMotivos();
+            setMotivosList();
             view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
             view.notifyGaleriaFotosAllItemChanged();
             //currentStep = STEPS.TIPO_ENTREGA;
@@ -1873,7 +1948,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                     }
                 }
             } else {
-                if (tipoMotivo == MotivoDescarga.Tipo.ENTREGA_PARCIAL) {
+                if (tipoMotivo == MotivoDescarga.Tipo.ENTREGA_PARCIAL ||
+                        tipoMotivo == MotivoDescarga.Tipo.ENTREGA_DEVOLUCION_PARCIAL) {
                     updateEstadoGestionGE(DescargaRuta.Entrega.ENTREGAR);
                 } else {
                     updateEstadoGestionGE(DescargaRuta.Entrega.FINALIZADO);

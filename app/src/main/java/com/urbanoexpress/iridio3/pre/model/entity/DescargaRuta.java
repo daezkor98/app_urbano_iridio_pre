@@ -73,7 +73,8 @@ public class DescargaRuta extends SugarRecord implements Serializable {
         int ENTREGA_EFECTIVA    = 11; // Paso 3
         int ENTREGAR            = 12; // Paso 4
         int NO_ENTREGO          = 13; // Paso 4
-        int RECOGIO_HABILITANTES = 14; // Paso 2
+        int RECOGIO_HABILITANTES = 14;
+        int NO_ENTREGAR_DEV_LIQ  = 15;
     }
 
     public interface Recoleccion extends Finalizado {

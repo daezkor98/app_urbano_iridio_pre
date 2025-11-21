@@ -323,6 +323,7 @@ public class DetalleRutaRuralPresenter {
                             case Ruta.TipoEnvio.PAQUETE:
                             case Ruta.TipoEnvio.VALIJA:
                             case Ruta.TipoEnvio.LOGISTICA_INVERSA:
+                            case Ruta.TipoEnvio.DEVOLUCION:
                                 break;
                             default:
                                 view.hideBtnGestionar();
