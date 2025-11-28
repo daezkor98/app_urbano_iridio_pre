@@ -34,40 +34,6 @@ class PlanRutaTransporteInteractor(context: Context) {
 
     private val requestQueue: RequestQueue = Volley.newRequestQueue(context)
 
-//    suspend fun validateRoad(road: PlacaGeoModel): PlanRutaDetallesResponse =
-//        suspendCoroutine { continuation ->
-//            val jsonString = gson.toJson(road)
-//            val jsonRequestBody = JSONObject(jsonString)
-//            val jsonObjectRequest = JsonObjectRequest(
-//                Request.Method.POST,
-//                ApiRest.getInstance().apiBaseUrl + ApiRest.Api.VALIDATE_DATOS_RUTA,
-//                jsonRequestBody,
-//                { response ->
-//                    val successStatus = response.optBoolean(SUCCESS, false)
-//                    if (successStatus) {
-//                        val apiResponseResult = runCatching {
-//                            Gson().fromJson(
-//                                response.toString(),
-//                                PlanRutaDetallesResponse::class.java
-//                            )
-//                        }
-//                        apiResponseResult.onSuccess { successResponse ->
-//                            continuation.resume(successResponse)
-//                        }.onFailure { exception ->
-//                            continuation.resumeWithException(BaseException(cause = exception))
-//                        }
-//                    } else {
-//                        continuation.resumeWithException(getException(response))
-//                    }
-//                },
-//                { error ->
-//                    continuation.resumeWithException(BaseException(cause = error))
-//                }
-//            )
-//
-//            requestQueue.add(jsonObjectRequest)
-//        }
-
     suspend fun validateRoad(road: PlacaGeoModel): PlanRutaDetallesResponse =
         suspendCoroutine { continuation ->
 

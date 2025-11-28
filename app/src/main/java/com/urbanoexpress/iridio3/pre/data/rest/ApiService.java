@@ -84,47 +84,6 @@ public class ApiService {
         return apiService;
     }
 
-//    private void initRetrofit() {
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
-//                .connectTimeout(30, TimeUnit.SECONDS)
-//                .readTimeout(30, TimeUnit.SECONDS)
-//                .writeTimeout(30, TimeUnit.SECONDS)
-//                .retryOnConnectionFailure(true)
-//                .connectionPool(new ConnectionPool(5, 30, TimeUnit.SECONDS))
-//                .pingInterval(10, TimeUnit.SECONDS);
-//
-//        // Agregar interceptor para añadir headers
-//        httpClient.addInterceptor(chain -> {
-//            okhttp3.Request original = chain.request();
-//            okhttp3.Request.Builder requestBuilder = original.newBuilder();
-//
-//            // Agregar token de autorización si existe
-//            String bearerToken = Preferences.getInstance().getString("auth_token", "");
-//            if (!bearerToken.isEmpty()) {
-//                requestBuilder.header("Authorization", "Bearer " + bearerToken);
-//            }
-//
-//            String contentType = original.header("Content-Type");
-//            if (contentType == null) {
-//                requestBuilder.header("Content-Type", "application/json; charset=UTF-8");
-//            }
-//
-//            okhttp3.Request request = requestBuilder.build();
-//            return chain.proceed(request);
-//        });
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .client(httpClient.build())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        apiInterface = retrofit.create(RetrofitApiInterface.class);
-//    }
-
     private void initRetrofit() {
         OkHttpClient normalClient = buildNormalClient();
 
@@ -220,49 +179,6 @@ public class ApiService {
                 break;
         }
     }
-
-//    public void requestJSon(String url, int typeParams, JSONObject jsonBody, final ResponseListener responseListener) {
-//        switch (typeParams) {
-//            case TypeParams.FORM_DATA:
-//                requestFormDataJSon(url, jsonBody, responseListener);
-//                break;
-//            case TypeParams.MULTIPART:
-//                requestMultiPart(url, responseListener);
-//                break;
-//        }
-//    }
-
-//    public void requestFormDataJSon(String url, JSONObject jsonBody, final ResponseListener responseListener) {
-//        // Convertir Map a JSONObject para mantener compatibilidad
-//        //JSONObject jsonParams = new org.json.JSONObject(requestParams);
-//
-//        Call<ResponseBody> call = apiInterface.requestFormDataJson(url, jsonBody);
-//
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                try {
-//                    if (response.isSuccessful() && response.body() != null) {
-//                        String responseString = response.body().string();
-//                        JSONObject jsonResponse = new JSONObject(responseString);
-//                        responseListener.onResponse(jsonResponse);
-//                    } else {
-//                        VolleyError error = createVolleyError(response);
-//                        responseListener.onErrorResponse(error);
-//                    }
-//                } catch (Exception e) {
-//                    VolleyError error = new VolleyError("Error processing response: " + e.getMessage());
-//                    responseListener.onErrorResponse(error);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                VolleyError error = new VolleyError(t.getMessage(), t);
-//                responseListener.onErrorResponse(error);
-//            }
-//        });
-//    }
 
     private void requestFormData(String url, final ResponseListener responseListener) {
         Call<ResponseBody> call = apiInterface.requestFormData(url, requestParams);
