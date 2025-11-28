@@ -35,6 +35,7 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
     private lateinit var binding: FragmentPlanRutaTransporteBinding
     private lateinit var presenter: PlanRutaTransportePresenter
     val args: PlanRutaTransporteFragmentArgs by navArgs()
+    private var isValidationInProgress = false;
 
 
     override fun onCreateView(
@@ -52,6 +53,10 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
         binding.etPlaca.addTextChangedListener(getTextWatcher())
         binding.etPiezasContadas.addTextChangedListener(getTextWatcher())
         binding.btnValidar.setOnClickListener {
+            if (isValidationInProgress) return@setOnClickListener
+
+            isValidationInProgress = true
+            binding.btnValidar.isEnabled = false
             this.showProgressDialog(getString(R.string.plan_ruta_validando))
             presenter.validateRoad(
                 PlacaGeoModel(
@@ -62,7 +67,6 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
                     perId = getPerId(),
                     vpIdUser = Session.getUser().idUsuario
                 )
-
             )
         }
         return binding.root
@@ -93,15 +97,6 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
         return textWatcher
     }
 
-    override fun showGuideList(successMsg: String) {
-        this.dismissProgressDialog()
-        val intent = Intent(requireContext(), RutaActivity::class.java)
-        intent.putExtra(MODULE_NAME, MODULE_TITLE)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        requireActivity().finish()
-    }
-
     private fun getUserPhone(): String {
         Preferences.getInstance().init(requireContext(), PREFERENCES_GLOBAL_CONFIG)
         return Preferences.getInstance().getString(PREFERENCES_PHONE, EMPTY_VALUE) ?: EMPTY_VALUE
@@ -112,8 +107,19 @@ class PlanRutaTransporteFragment : BaseFragment(), PlanRutaTransporteContract.Vi
         return Preferences.getInstance().getString(PREFERENCES_ID_PER, EMPTY_VALUE) ?: EMPTY_VALUE
     }
 
+    override fun showGuideList(successMsg: String?) {
+        this.dismissProgressDialog()
+        isValidationInProgress = false
+        val intent = Intent(requireContext(), RutaActivity::class.java)
+        intent.putExtra(MODULE_NAME, MODULE_TITLE)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
     override fun showError(error: BaseException) {
         this.dismissProgressDialog()
+        isValidationInProgress = false
         when (error.errorCode) {
             ERROR_CODE_PIEZA -> {
                 BaseModalsView.showAlertDialog(

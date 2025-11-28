@@ -198,6 +198,8 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
             //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-12.228864, -76.927627), 15));
         }
+
+        onLoading(false);
     }
 
     @Override
@@ -258,6 +260,8 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
         }
+
+        onLoading(false);
     }
 
     @Override

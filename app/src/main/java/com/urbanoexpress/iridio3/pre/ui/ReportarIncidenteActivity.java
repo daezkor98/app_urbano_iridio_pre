@@ -30,6 +30,12 @@ public class ReportarIncidenteActivity extends AppThemeBaseActivity {
         setupToolbar(binding.toolbar);
         setScreenTitle("Reportar incidente");
 
+        binding.btnRoboUnidad.setTag(61);
+        binding.btnRevisionCarga.setTag(60);
+        binding.btnAccidenteCarretera.setTag(59);
+        binding.btnDesastreNatural.setTag(8);
+        binding.btnHuelgaCarretera.setTag(11);
+
         binding.btnRoboUnidad.setOnClickListener(onClickListener);
         binding.btnRevisionCarga.setOnClickListener(onClickListener);
         binding.btnAccidenteCarretera.setOnClickListener(onClickListener);

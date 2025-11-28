@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView4"
             android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"
             android:textStyle="bold" />
     </LinearLayout>
 

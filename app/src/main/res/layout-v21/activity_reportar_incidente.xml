@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     tools:context="com.urbanoexpress.iridio3.pre.ui.ReportarIncidenteActivity">
 
     <com.google.android.material.appbar.AppBarLayout

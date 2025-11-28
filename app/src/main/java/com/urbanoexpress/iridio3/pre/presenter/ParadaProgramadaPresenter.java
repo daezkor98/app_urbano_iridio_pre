@@ -199,12 +199,18 @@ public class ParadaProgramadaPresenter {
                 public void onSuccess(JSONObject response) {
                     try {
                         if (response.getBoolean("success")) {
-                            saveAllCheckedDespachos(dbDespachoBajadas);
-                            saveAllCheckedDespachos(dbDespachoSubidas);
-                            resetActionMode();
-                            hideActionMode();
-                            view.dismissProgressDialog();
-                            view.showToast(R.string.act_plan_de_viaje_message_success_confirmar_despachos);
+                            JSONArray data = response.getJSONArray("data");
+                            if(data.length() > 0){
+                                saveAllCheckedDespachos(dbDespachoBajadas);
+                                saveAllCheckedDespachos(dbDespachoSubidas);
+                                resetActionMode();
+                                hideActionMode();
+                                view.dismissProgressDialog();
+                                view.showToast(R.string.act_plan_de_viaje_message_success_confirmar_despachos);
+                            } else {
+                                view.dismissProgressDialog();
+                                view.showToast("No hay data a procesar");
+                            }
                         } else {
                             view.dismissProgressDialog();
                             view.showToast(response.getString("msg_error"));

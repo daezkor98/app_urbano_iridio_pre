@@ -18,8 +18,10 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.google.android.gms.maps.model.LatLng;
 import com.urbanoexpress.iridio3.pre.model.entity.ClienteRuta;
+import com.urbanoexpress.iridio3.pre.model.entity.Data;
 import com.urbanoexpress.iridio3.pre.model.entity.ParadaRuta;
 import com.urbanoexpress.iridio3.pre.model.entity.ResumenRuta;
+import com.urbanoexpress.iridio3.pre.model.entity.SecuenciaRuta;
 import com.urbanoexpress.iridio3.pre.model.entity.WaypointRuta;
 import com.urbanoexpress.iridio3.pre.model.interactor.MapaRutaDelDiaInteractor;
 import com.urbanoexpress.iridio3.pre.ui.model.GuiasMapaRutaDiaItem;
@@ -80,10 +82,14 @@ public class MapaRutaDelDiaPresenter {
     }
 
     public void init() {
-        getParadas();
+        //getParadas();
+
         if(Session.getUser().getFlag().equals("0")) {
             getMarcadoresRutaDia();
+        } else {
+            view.onLoading(true);
         }
+
         LocalBroadcastManager.getInstance(view.getViewContext())
                 .registerReceiver(editarCoordenadaGuiaReceiver,
                         new IntentFilter(LocalAction.EDITAR_COORDENADA_GE));
@@ -717,6 +723,7 @@ public class MapaRutaDelDiaPresenter {
     }
 
     private void getMarcadoresRutaDia(){
+        view.onLoading(true);
         RequestCallback callback = new RequestCallback() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -746,7 +753,7 @@ public class MapaRutaDelDiaPresenter {
                             guiasMapa.add(guias);
                         }
 
-                        long delayMillis = 3000;
+                        long delayMillis = 1000;
 
                         new Handler(Looper.getMainLooper()).postDelayed(() -> {
                             if (guiasMapa.isEmpty()) {
@@ -783,6 +790,13 @@ public class MapaRutaDelDiaPresenter {
         };
 
         MapaRutaDelDiaInteractor.getDatosMapaRutaDia(Preferences.getInstance().getString("id_ruta", "0"), callback);
+    }
+
+    private void registerNewSecuencia() {
+        SecuenciaRuta secuenciaRuta = new SecuenciaRuta(
+                Preferences.getInstance().getString("idUsuario", ""),
+                Data.Delete.NO);
+        secuenciaRuta.save();
     }
 
     /**

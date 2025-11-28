@@ -10,7 +10,7 @@ import com.urbanoexpress.iridio3.pre.util.Exception.BaseException
 interface PlanRutaTransporteContract {
 
     interface View {
-        fun showGuideList(successMsg:String)
+        fun showGuideList(successMsg:String?)
         fun showError(error: BaseException)
     }
 

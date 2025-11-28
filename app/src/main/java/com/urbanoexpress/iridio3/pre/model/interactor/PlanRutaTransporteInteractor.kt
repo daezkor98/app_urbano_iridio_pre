@@ -3,11 +3,13 @@ package com.urbanoexpress.iridio3.pre.model.interactor
 import android.content.Context
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.urbanoexpress.iridio3.pre.data.rest.ApiRest
+import com.urbanoexpress.iridio3.pre.data.rest.ApiService
 import com.urbanoexpress.iridio3.pre.model.response.PlanRutaDetallesResponse
 import com.urbanoexpress.iridio3.pre.ui.model.PlacaGeoModel
 import com.urbanoexpress.iridio3.pre.util.Exception.BaseException
@@ -31,41 +33,82 @@ import kotlin.coroutines.suspendCoroutine
 class PlanRutaTransporteInteractor(context: Context) {
 
     private val requestQueue: RequestQueue = Volley.newRequestQueue(context)
-//    "https://api.geo.dev-urbano.dev/iridio/api/rutas/grabarRuta"
 
+//    suspend fun validateRoad(road: PlacaGeoModel): PlanRutaDetallesResponse =
+//        suspendCoroutine { continuation ->
+//            val jsonString = gson.toJson(road)
+//            val jsonRequestBody = JSONObject(jsonString)
+//            val jsonObjectRequest = JsonObjectRequest(
+//                Request.Method.POST,
+//                ApiRest.getInstance().apiBaseUrl + ApiRest.Api.VALIDATE_DATOS_RUTA,
+//                jsonRequestBody,
+//                { response ->
+//                    val successStatus = response.optBoolean(SUCCESS, false)
+//                    if (successStatus) {
+//                        val apiResponseResult = runCatching {
+//                            Gson().fromJson(
+//                                response.toString(),
+//                                PlanRutaDetallesResponse::class.java
+//                            )
+//                        }
+//                        apiResponseResult.onSuccess { successResponse ->
+//                            continuation.resume(successResponse)
+//                        }.onFailure { exception ->
+//                            continuation.resumeWithException(BaseException(cause = exception))
+//                        }
+//                    } else {
+//                        continuation.resumeWithException(getException(response))
+//                    }
+//                },
+//                { error ->
+//                    continuation.resumeWithException(BaseException(cause = error))
+//                }
+//            )
+//
+//            requestQueue.add(jsonObjectRequest)
+//        }
 
     suspend fun validateRoad(road: PlacaGeoModel): PlanRutaDetallesResponse =
         suspendCoroutine { continuation ->
-            val jsonString = gson.toJson(road)
-            val jsonRequestBody = JSONObject(jsonString)
-            val jsonObjectRequest = JsonObjectRequest(
-                Request.Method.POST,
-                ApiRest.getInstance().apiBaseUrl + ApiRest.Api.VALIDATE_DATOS_RUTA,
-                jsonRequestBody,
-                { response ->
-                    val successStatus = response.optBoolean(SUCCESS, false)
-                    if (successStatus) {
-                        val apiResponseResult = runCatching {
-                            Gson().fromJson(
-                                response.toString(),
-                                PlanRutaDetallesResponse::class.java
-                            )
-                        }
-                        apiResponseResult.onSuccess { successResponse ->
-                            continuation.resume(successResponse)
-                        }.onFailure { exception ->
-                            continuation.resumeWithException(BaseException(cause = exception))
-                        }
-                    } else {
-                        continuation.resumeWithException(getException(response))
-                    }
-                },
-                { error ->
-                    continuation.resumeWithException(BaseException(cause = error))
-                }
-            )
 
-            requestQueue.add(jsonObjectRequest)
+            ApiService.getInstance().apply {
+                newParams()
+                putParams("rou_id", road.rouId.toString())
+                putParams("tot_pza", road.totPza.toString())
+                putParams("und_placa", road.undPlaca.toString())
+                putParams("celular", road.celular.toString())
+                putParams("per_id", road.perId.toString())
+                putParams("vp_id_user", road.vpIdUser.toString())
+
+                requestWithLongTimeout(
+                    ApiRest.getInstance().apiBaseUrl + ApiRest.Api.VALIDATE_DATOS_RUTA,
+                    ApiService.TypeParams.FORM_DATA,
+                    object : ApiService.ResponseListener {
+                        override fun onResponse(response: JSONObject) {
+                            val successStatus = response.optBoolean(SUCCESS, false)
+                            if (successStatus) {
+                                val apiResponseResult = runCatching {
+                                    Gson().fromJson(
+                                        response.toString(),
+                                        PlanRutaDetallesResponse::class.java
+                                    )
+                                }
+                                apiResponseResult.onSuccess { successResponse ->
+                                    continuation.resume(successResponse)
+                                }.onFailure { exception ->
+                                    continuation.resumeWithException(BaseException(cause = exception))
+                                }
+                            } else {
+                                continuation.resumeWithException(getException(response))
+                            }
+                        }
+
+                        override fun onErrorResponse(error: VolleyError) {
+                            continuation.resumeWithException(BaseException(cause = error))
+                        }
+                    }
+                )
+            }
         }
 
     private fun getException(json: JSONObject): BaseException {
