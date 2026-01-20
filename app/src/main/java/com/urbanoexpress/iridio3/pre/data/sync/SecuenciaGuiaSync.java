@@ -174,7 +174,8 @@ public class SecuenciaGuiaSync extends DataSyncModel<Ruta> {
                                         JSONObject jsonObjectSecuencia = new JSONObject();
                                         Date horarioAproximado = new Date(getData().get(countGroupData).getHorarioAproximado());
                                         Date horarioOrdenamiento = new Date(getData().get(countGroupData).getHorarioOrdenamiento());
-                                        int secuencia = Integer.parseInt(getData().get(countGroupData).getSecuencia()) + totalGuiasGestionadas;
+                                        //int secuencia = Integer.parseInt(getData().get(countGroupData).getSecuencia()) + totalGuiasGestionadas;
+                                        int secuencia = Integer.parseInt(getData().get(countGroupData).getParadaSecuencia()) + totalGuiasGestionadas;
 
                                         jsonObjectSecuencia.put("vp_doc_id", getData().get(countGroupData).getIdServicio());
                                         jsonObjectSecuencia.put("vp_fecha", new SimpleDateFormat("dd/MM/yyyy").format(horarioAproximado));

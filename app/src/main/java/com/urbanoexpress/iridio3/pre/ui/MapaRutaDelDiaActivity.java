@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.DisplayMetrics;
@@ -61,8 +63,10 @@ import com.urbanoexpress.iridio3.pre.view.MapaRutaDelDiaView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
@@ -80,6 +84,9 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
     private BottomSheetBehavior bottomSheetBehaviorMarkerInfo;
     private View bottomSheetMarkerInfo;
+
+    private Map<Integer, List<Ruta>> mapaParadasConGuias;
+    private Map<Marker, Integer> mapaMarkerAParadaId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,86 +128,218 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
     @Override
     public void displayGuiasOnMap(List<Ruta> guias) {
         googleMap.clear();
-
         configCustomMap();
 
-        LatLngBounds.Builder latlngBoundsBuilder = new LatLngBounds.Builder();
-        LatLngBounds bounds;
+        // Inicializar mapas
+        mapaParadasConGuias = new HashMap<>();
+        mapaMarkerAParadaId = new HashMap<>();
 
+        // Agrupar guías por paradaId
+        Map<Integer, List<Ruta>> guiasPorParada = new HashMap<>();
+        Map<Integer, Integer> markerPositionToParadaId = new HashMap<>(); // NUEVO: Para mapear posición→paradaId
+
+        for (Ruta guia : guias) {
+            int paradaId = guia.getParadaId();
+
+            if (paradaId > 0) {
+                if (!guiasPorParada.containsKey(paradaId)) {
+                    guiasPorParada.put(paradaId, new ArrayList<>());
+                }
+                guiasPorParada.get(paradaId).add(guia);
+            }
+        }
+
+        // Guardar en variable de clase
+        mapaParadasConGuias = guiasPorParada;
+
+        LatLngBounds.Builder latlngBoundsBuilder = new LatLngBounds.Builder();
         markerGuias = new ArrayList<>();
 
-        for (int i = 0; i < guias.size(); i++) {
+        int position = 0; // Contador de posición
+
+        // Iterar sobre las paradas
+        for (Map.Entry<Integer, List<Ruta>> entry : guiasPorParada.entrySet()) {
+            int paradaId = entry.getKey();
+            List<Ruta> guiasEnParada = entry.getValue();
+
+            if (guiasEnParada.isEmpty()) continue;
+
+            Ruta primeraGuia = guiasEnParada.get(0);
             LatLng latLng;
-            if (CommonUtils.isValidCoords(guias.get(i).getGpsLatitude(), guias.get(i).getGpsLongitude())) {
-                latLng = new LatLng(Double.parseDouble(guias.get(i).getGpsLatitude()),
-                        Double.parseDouble(guias.get(i).getGpsLongitude()));
-            } else {
-                latLng = new LatLng(0,0);
+
+            // USAR COORDENADAS DE LA PARADA (prioridad alta)
+            if (CommonUtils.isValidCoords(primeraGuia.getParadaLatitude(),
+                    primeraGuia.getParadaLongitude())) {
+                latLng = new LatLng(Double.parseDouble(primeraGuia.getParadaLatitude()),
+                        Double.parseDouble(primeraGuia.getParadaLongitude()));
+            }
+            // Si no hay coordenadas de parada, usar coordenadas de la guía
+            else if (CommonUtils.isValidCoords(primeraGuia.getGpsLatitude(),
+                    primeraGuia.getGpsLongitude())) {
+                latLng = new LatLng(Double.parseDouble(primeraGuia.getGpsLatitude()),
+                        Double.parseDouble(primeraGuia.getGpsLongitude()));
+            }
+            // Coordenadas por defecto
+            else {
+                latLng = new LatLng(0, 0);
             }
 
+            // Contar estados de gestión
+            int gestionadas = 0;
+            boolean todasGestionadas = true;
+
+            for (Ruta guia : guiasEnParada) {
+                if (esGuiaGestionada(guia)) {
+                    gestionadas++;
+                } else {
+                    todasGestionadas = false;
+                }
+            }
+
+            int pendientes = guiasEnParada.size() - gestionadas;
+
+            // Crear marcador
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
-                    .draggable(true)
-                    .icon(BitmapDescriptorFactory.fromResource(
-                            R.drawable.ic_marker_truck));
+                    .draggable(true);
 
-//            switch (guias.get(i).getResultadoGestion()) {
-//                case Ruta.ResultadoGestion.NO_DEFINIDO:
-//                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(
-//                            drawTextToBitmap(
-//                                    MapaRutaDelDiaActivity.this,
-//                                    R.drawable.ic_marker_yellow,
-//                                    guias.get(i).getSecuencia())
-//                    ));
-//                    break;
-//                case Ruta.ResultadoGestion.EFECTIVA_COMPLETA:
-//                case Ruta.ResultadoGestion.EFECTIVA_PARCIAL:
-//                    markerOptions.icon(BitmapDescriptorFactory.fromResource(
-//                            R.drawable.ic_marker_package_blue));
-//                    break;
-//                case Ruta.ResultadoGestion.NO_EFECTIVA:
-//                    markerOptions.icon(BitmapDescriptorFactory.fromResource(
-//                            R.drawable.ic_marker_package_red));
-//                    break;
-//            }
-
-            if (guias.get(i).getFlagValidaGestion() == 1 || guias.get(i).getFlagValidaGestion() == 3 ||
-                    guias.get(i).getResultadoGestion() == 1 || guias.get(i).getResultadoGestion() == 3){
-                //EFECTIVA_COMPLETA - EFECTIVA_PARCIAL
+            // Lógica de iconos según tu requerimiento
+            if (todasGestionadas && guiasEnParada.size() > 0) {
+                // TODAS las guías gestionadas (FlagValidaGestion 1,2,3 o ResultadoGestion 1,2,3)
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(
                         R.drawable.ic_marker_package_blue));
-            } else if(guias.get(i).getFlagValidaGestion() == 2 || guias.get(i).getResultadoGestion() == 2){
-                //NO_EFECTIVA
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(
-                        R.drawable.ic_marker_package_red));
             } else {
-                //NO_DEFINIDO
+                // Hay al menos una guía pendiente (no definida)
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(
                         drawTextToBitmap(
                                 MapaRutaDelDiaActivity.this,
                                 R.drawable.ic_marker_yellow,
-                                guias.get(i).getSecuencia())
+                                String.valueOf(primeraGuia.getParadaSecuencia()))
                 ));
             }
 
-            markerGuias.add(googleMap.addMarker(markerOptions));
+            Marker marker = googleMap.addMarker(markerOptions);
 
+            // Guardar relación entre marker y parada
+            marker.setTag(paradaId);
+            mapaMarkerAParadaId.put(marker, paradaId);
+
+            // NUEVO: Guardar relación posición→paradaId para el Presenter
+            markerPositionToParadaId.put(position, paradaId);
+
+            markerGuias.add(marker);
             latlngBoundsBuilder.include(latLng);
+
+            position++; // Incrementar posición
         }
 
-        if (markerGuias.size() > 0) {
-            bounds = latlngBoundsBuilder.build();
+        // NUEVO: Pasar los mapas al Presenter
+        if (presenter != null) {
+            presenter.setMapaParadasConGuias(guiasPorParada);
+            presenter.setMarkerPositionToParadaId(markerPositionToParadaId);
+        }
 
+        // Manejo de la cámara
+        if (markerGuias.size() > 0) {
+            LatLngBounds bounds = latlngBoundsBuilder.build();
             int width = getResources().getDisplayMetrics().widthPixels;
             int height = getResources().getDisplayMetrics().heightPixels;
-            int padding = (int) (width * 0.15); // offset from edges of the map 12% of screen
+            int padding = (int) (width * 0.15);
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
-            //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-12.228864, -76.927627), 15));
         }
 
         onLoading(false);
     }
+
+    // Método auxiliar para verificar si una guía está gestionada
+    private boolean esGuiaGestionada(Ruta guia) {
+        return guia.getFlagValidaGestion() == 1 || guia.getFlagValidaGestion() == 3 ||
+                guia.getResultadoGestion() == 1 || guia.getResultadoGestion() == 3 ||
+                guia.getFlagValidaGestion() == 2 || guia.getResultadoGestion() == 2;
+    }
+//    public void displayGuiasOnMap(List<Ruta> guias) {
+//        googleMap.clear();
+//
+//        configCustomMap();
+//
+//        LatLngBounds.Builder latlngBoundsBuilder = new LatLngBounds.Builder();
+//        LatLngBounds bounds;
+//
+//        markerGuias = new ArrayList<>();
+//
+//        for (int i = 0; i < guias.size(); i++) {
+//            LatLng latLng;
+//            if (CommonUtils.isValidCoords(guias.get(i).getGpsLatitude(), guias.get(i).getGpsLongitude())) {
+//                latLng = new LatLng(Double.parseDouble(guias.get(i).getGpsLatitude()),
+//                        Double.parseDouble(guias.get(i).getGpsLongitude()));
+//            } else {
+//                latLng = new LatLng(0,0);
+//            }
+//
+//            MarkerOptions markerOptions = new MarkerOptions()
+//                    .position(latLng)
+//                    .draggable(true)
+//                    .icon(BitmapDescriptorFactory.fromResource(
+//                            R.drawable.ic_marker_truck));
+//
+////            switch (guias.get(i).getResultadoGestion()) {
+////                case Ruta.ResultadoGestion.NO_DEFINIDO:
+////                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(
+////                            drawTextToBitmap(
+////                                    MapaRutaDelDiaActivity.this,
+////                                    R.drawable.ic_marker_yellow,
+////                                    guias.get(i).getSecuencia())
+////                    ));
+////                    break;
+////                case Ruta.ResultadoGestion.EFECTIVA_COMPLETA:
+////                case Ruta.ResultadoGestion.EFECTIVA_PARCIAL:
+////                    markerOptions.icon(BitmapDescriptorFactory.fromResource(
+////                            R.drawable.ic_marker_package_blue));
+////                    break;
+////                case Ruta.ResultadoGestion.NO_EFECTIVA:
+////                    markerOptions.icon(BitmapDescriptorFactory.fromResource(
+////                            R.drawable.ic_marker_package_red));
+////                    break;
+////            }
+//
+//            if (guias.get(i).getFlagValidaGestion() == 1 || guias.get(i).getFlagValidaGestion() == 3 ||
+//                    guias.get(i).getResultadoGestion() == 1 || guias.get(i).getResultadoGestion() == 3){
+//                //EFECTIVA_COMPLETA - EFECTIVA_PARCIAL
+//                markerOptions.icon(BitmapDescriptorFactory.fromResource(
+//                        R.drawable.ic_marker_package_blue));
+//            } else if(guias.get(i).getFlagValidaGestion() == 2 || guias.get(i).getResultadoGestion() == 2){
+//                //NO_EFECTIVA
+//                markerOptions.icon(BitmapDescriptorFactory.fromResource(
+//                        R.drawable.ic_marker_package_red));
+//            } else {
+//                //NO_DEFINIDO
+//                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(
+//                        drawTextToBitmap(
+//                                MapaRutaDelDiaActivity.this,
+//                                R.drawable.ic_marker_yellow,
+//                                guias.get(i).getSecuencia())
+//                ));
+//            }
+//
+//            markerGuias.add(googleMap.addMarker(markerOptions));
+//
+//            latlngBoundsBuilder.include(latLng);
+//        }
+//
+//        if (markerGuias.size() > 0) {
+//            bounds = latlngBoundsBuilder.build();
+//
+//            int width = getResources().getDisplayMetrics().widthPixels;
+//            int height = getResources().getDisplayMetrics().heightPixels;
+//            int padding = (int) (width * 0.15); // offset from edges of the map 12% of screen
+//
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
+//            //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-12.228864, -76.927627), 15));
+//        }
+//
+//        onLoading(false);
+//    }
 
     @Override
     public void displayGuiasOnMapV2(List<GuiasMapaRutaDiaItem> guias) {
@@ -264,24 +403,76 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
         onLoading(false);
     }
 
-    @Override
-    public void displayRutearGuiasOnMap(List<Ruta> guias) {
-        googleMap.clear();
+//    @Override
+//    public void displayRutearGuiasOnMap(List<Ruta> guias) {
+//        googleMap.clear();
+//
+//        configCustomMap();
+//
+//        LatLngBounds.Builder latlngBoundsBuilder = new LatLngBounds.Builder();
+//        LatLngBounds bounds;
+//
+//        markerGuias = new ArrayList<>();
+//
+//        for (int i = 0; i < guias.size(); i++) {
+//            LatLng latLng;
+//            if (CommonUtils.isValidCoords(guias.get(i).getGpsLatitude(), guias.get(i).getGpsLongitude())) {
+//                latLng = new LatLng(Double.parseDouble(guias.get(i).getGpsLatitude()),
+//                        Double.parseDouble(guias.get(i).getGpsLongitude()));
+//            } else {
+//                latLng = new LatLng(0,0);
+//            }
+//
+//            MarkerOptions markerOptions = new MarkerOptions()
+//                    .position(latLng)
+//                    .draggable(true)
+//                    .icon(BitmapDescriptorFactory.fromBitmap(
+//                            drawTextToBitmap(
+//                                    MapaRutaDelDiaActivity.this,
+//                                    R.drawable.ic_marker_yellow, "")
+//            ));
+//
+//            markerGuias.add(googleMap.addMarker(markerOptions));
+//
+//            latlngBoundsBuilder.include(latLng);
+//        }
+//
+//        if (markerGuias.size() > 0) {
+//            bounds = latlngBoundsBuilder.build();
+//
+//            int width = getResources().getDisplayMetrics().widthPixels;
+//            int height = getResources().getDisplayMetrics().heightPixels;
+//            int padding = (int) (width * 0.15); // offset from edges of the map 12% of screen
+//
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
+//        }
+//    }
 
+    @Override
+    public void displayRutearGuiasOnMap(List<Ruta> paradasRepresentativas) {
+        googleMap.clear();
         configCustomMap();
 
         LatLngBounds.Builder latlngBoundsBuilder = new LatLngBounds.Builder();
-        LatLngBounds bounds;
-
         markerGuias = new ArrayList<>();
 
-        for (int i = 0; i < guias.size(); i++) {
+        for (int i = 0; i < paradasRepresentativas.size(); i++) {
+            Ruta guiaRepresentante = paradasRepresentativas.get(i);
             LatLng latLng;
-            if (CommonUtils.isValidCoords(guias.get(i).getGpsLatitude(), guias.get(i).getGpsLongitude())) {
-                latLng = new LatLng(Double.parseDouble(guias.get(i).getGpsLatitude()),
-                        Double.parseDouble(guias.get(i).getGpsLongitude()));
+
+            // PRIORIDAD: coordenadas de parada
+            if (CommonUtils.isValidCoords(guiaRepresentante.getParadaLatitude(),
+                    guiaRepresentante.getParadaLongitude())) {
+                latLng = new LatLng(Double.parseDouble(guiaRepresentante.getParadaLatitude()),
+                        Double.parseDouble(guiaRepresentante.getParadaLongitude()));
             } else {
-                latLng = new LatLng(0,0);
+                latLng = new LatLng(0, 0);
+            }
+
+            // Texto para el marcador (secuencia si existe)
+            String textoMarcador = "";
+            if (guiaRepresentante.getParadaSecuencia() != null && !guiaRepresentante.getParadaSecuencia().isEmpty()) {
+                textoMarcador = guiaRepresentante.getParadaSecuencia();
             }
 
             MarkerOptions markerOptions = new MarkerOptions()
@@ -290,20 +481,24 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
                     .icon(BitmapDescriptorFactory.fromBitmap(
                             drawTextToBitmap(
                                     MapaRutaDelDiaActivity.this,
-                                    R.drawable.ic_marker_yellow, "")
-            ));
+                                    R.drawable.ic_marker_yellow,
+                                    textoMarcador)
+                    ));
 
-            markerGuias.add(googleMap.addMarker(markerOptions));
+            Marker marker = googleMap.addMarker(markerOptions);
 
+            // Guardar posición para referencia
+            marker.setTag(i); // O guardar paradaId si lo tienes disponible
+
+            markerGuias.add(marker);
             latlngBoundsBuilder.include(latLng);
         }
 
         if (markerGuias.size() > 0) {
-            bounds = latlngBoundsBuilder.build();
-
+            LatLngBounds bounds = latlngBoundsBuilder.build();
             int width = getResources().getDisplayMetrics().widthPixels;
             int height = getResources().getDisplayMetrics().heightPixels;
-            int padding = (int) (width * 0.15); // offset from edges of the map 12% of screen
+            int padding = (int) (width * 0.15);
 
             googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding));
         }
@@ -523,7 +718,8 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
     @Override
     public void onClickGuiaItem(View view, int position) {
-        presenter.onClickItemGuia();
+//        presenter.onClickItemGuia();
+        presenter.onGuiaDeParadaSeleccionada(position);
     }
 
     @Override
@@ -567,12 +763,25 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
         googleMap.setOnMarkerClickListener(marker -> {
             selectedMarker = marker;
-            if (getPositionMarker(marker) == -1) {
-                ParadaRuta parada = (ParadaRuta) marker.getTag();
-                showMarkerInfoInBottomSheet(parada.getDireccion(), parada.getClientes());
-                return true;
+
+            Object tag = marker.getTag();
+            if (tag instanceof Integer) {
+                int paradaId = (Integer) tag;
+                List<Ruta> guiasDeLaParada = mapaParadasConGuias.get(paradaId);
+                if (guiasDeLaParada != null && !guiasDeLaParada.isEmpty()) {
+//                    presenter.cargarGuiasDeParada(guiasDeLaParada);
+                    presenter.onClickMarkerMap(getPositionMarker(marker));
+                    return true;
+                }
             }
+
             presenter.onClickMarkerMap(getPositionMarker(marker));
+
+//            if (getPositionMarker(marker) == -1) {
+//                ParadaRuta parada = (ParadaRuta) marker.getTag();
+//                showMarkerInfoInBottomSheet(parada.getDireccion(), parada.getClientes());
+//                return true;
+//            }
             return false;
         });
 
@@ -917,6 +1126,56 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             return bitmap;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    private List<RutaItem> convertirRutasARutaItems(List<Ruta> guiasDeLaParada) {
+        List<RutaItem> rutaItems = new ArrayList<>();
+
+        for (Ruta guia : guiasDeLaParada) {
+            RutaItem item = new RutaItem();
+
+            // Mapear datos básicos
+            item.setGuia(guia.getGuia());
+            item.setDistrito(guia.getDistrito());
+            item.setDireccion(guia.getDireccion());
+            item.setTipoRuta(guia.getPiezas() != null && !guia.getPiezas().isEmpty() ?
+                    guia.getPiezas() : "1");
+
+            // Determinar estado de gestión
+            int resultadoGestion = obtenerResultadoGestion(guia);
+            item.setGestionEfectiva(resultadoGestion);
+            item.setShowIconGestionGuia(true);
+
+            // Configurar importe por cobrar si existe
+            if (guia.getImporte() != null && !guia.getImporte().isEmpty() &&
+                    !guia.getImporte().equals("0.00")) {
+                item.setShowImportePorCobrar(true);
+                item.setSimboloMoneda("S/");
+            } else {
+                item.setShowImportePorCobrar(false);
+            }
+
+            item.setIcon(R.drawable.ic_tipo_guia_paquete);
+
+            // Configurar colores
+            item.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+            item.setLblColorHorario(ContextCompat.getColor(this, R.color.gris_2));
+
+            rutaItems.add(item);
+        }
+
+        return rutaItems;
+    }
+
+    private int obtenerResultadoGestion(Ruta guia) {
+        if (guia.getFlagValidaGestion() == 1 || guia.getFlagValidaGestion() == 3 ||
+                guia.getResultadoGestion() == 1 || guia.getResultadoGestion() == 3) {
+            return Ruta.ResultadoGestion.EFECTIVA_COMPLETA;
+        } else if (guia.getFlagValidaGestion() == 2 || guia.getResultadoGestion() == 2) {
+            return Ruta.ResultadoGestion.NO_EFECTIVA;
+        } else {
+            return Ruta.ResultadoGestion.NO_DEFINIDO;
         }
     }
 }

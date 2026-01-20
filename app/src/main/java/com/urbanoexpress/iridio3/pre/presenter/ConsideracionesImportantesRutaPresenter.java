@@ -191,7 +191,9 @@ public class ConsideracionesImportantesRutaPresenter implements RutaAdapter.OnCl
                         dbRuta.get(i).getResultadoGestion() == 0,
                         ModelUtils.isTipoEnvioValija(dbRuta.get(i).getTipoEnvio()),
                         ModelUtils.isShowIconImportePorCobrar(dbRuta.get(i).getImporte()),
-                        false
+                        false,
+                        dbRuta.get(i).getParadaId(),
+                        dbRuta.get(i).getParadaSecuencia()
                 );
 
                 rutaItems.add(rutaItem);

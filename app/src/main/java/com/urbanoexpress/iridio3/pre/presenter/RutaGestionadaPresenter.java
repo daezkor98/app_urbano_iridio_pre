@@ -216,7 +216,9 @@ public class RutaGestionadaPresenter extends BaseModalsView {
                         false,
                         ModelUtils.isTipoEnvioValija(dbRuta.get(i).getTipoEnvio()),
                         false,
-                        false
+                        false,
+                        dbRuta.get(i).getParadaId(),
+                        dbRuta.get(i).getParadaSecuencia()
                 );
 
                 rutaItems.add(item);

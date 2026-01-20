@@ -314,7 +314,9 @@ public class TransferirGuiaPresenter {
                             false,
                             ModelUtils.isTipoEnvioValija(dbGuias.get(i).getTipoEnvio()),
                             ModelUtils.isShowIconImportePorCobrar(dbGuias.get(i).getImporte()),
-                            false
+                            false,
+                            dbGuias.get(i).getParadaId(),
+                            dbGuias.get(i).getParadaSecuencia()
                     );
                     items.add(rutaItem);
                 }
@@ -338,7 +340,8 @@ public class TransferirGuiaPresenter {
                 queryParamsList.toArray(new String[0]));
 
         Collections.sort(guias, (lhs, rhs) ->
-                Integer.valueOf(lhs.getSecuencia()).compareTo(Integer.parseInt(rhs.getSecuencia())));
+//                Integer.valueOf(lhs.getSecuencia()).compareTo(Integer.parseInt(rhs.getSecuencia())));
+                Integer.valueOf(lhs.getParadaSecuencia()).compareTo(Integer.parseInt(rhs.getParadaSecuencia())));
 
         return guias;
     }

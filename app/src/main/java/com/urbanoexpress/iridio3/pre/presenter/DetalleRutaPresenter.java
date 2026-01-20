@@ -522,7 +522,8 @@ public class DetalleRutaPresenter {
 
     private boolean validateOrdenDescarga() {
         if (existRuta()) {
-            if (ruta.getSecuencia().equals("1")) {
+//            if (ruta.getSecuencia().equals("1")) {
+            if (ruta.getParadaSecuencia().equals("1")) {
                 return true;
             }
         }

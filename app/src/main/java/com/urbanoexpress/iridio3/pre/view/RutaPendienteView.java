@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
+import com.urbanoexpress.iridio3.pre.ui.model.ParadaRutaItem;
 import com.urbanoexpress.iridio3.pre.ui.model.RutaItem;
 
 /**
@@ -16,6 +17,7 @@ public interface RutaPendienteView extends BaseV5View {
     Fragment getFragment();
 
     void showDatosRutasPendientes(List<RutaItem> rutasPendientes);
+    void showParadasAgrupadas(List<RutaItem> guias);
     void notifyItemChanged(int position);
     void notifyItemInsert(int position);
     void notifyItemRemove(int position);

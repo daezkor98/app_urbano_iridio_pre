@@ -180,6 +180,7 @@ public class TrackLocationSync extends DataSyncModel<TrackLocation> {
                     };
 
                     dataSyncInteractor.uploadTrackLocation(params, callback);
+
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                     LogErrorSync errorSync = new LogErrorSync(

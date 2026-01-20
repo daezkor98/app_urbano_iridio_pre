@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio3.pre.model.interactor
 
 import android.content.Context
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -58,6 +59,12 @@ class PlanRutaCamaraInteractor(context: Context) {
                 { error ->
                     continuation.resumeWithException(error)
                 }
+            )
+
+            jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+                30000,
+                0,
+                1.0f
             )
 
             requestQueue.add(jsonObjectRequest)

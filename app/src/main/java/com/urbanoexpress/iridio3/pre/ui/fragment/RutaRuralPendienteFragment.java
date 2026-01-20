@@ -21,6 +21,7 @@ import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.databinding.FragmentRutasBinding;
 import com.urbanoexpress.iridio3.pre.presenter.RutaRuralPendientePresenter;
 import com.urbanoexpress.iridio3.pre.ui.interfaces.OnActionModeListener;
+import com.urbanoexpress.iridio3.pre.ui.model.ParadaRutaItem;
 import com.urbanoexpress.iridio3.pre.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pre.ui.adapter.RutaAdapter;
 import com.urbanoexpress.iridio3.pre.util.AnimationUtils;
@@ -129,6 +130,11 @@ public class RutaRuralPendienteFragment extends BaseFragment implements RutaPend
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public void showParadasAgrupadas(List<RutaItem> guias) {
+
     }
 
     @Override

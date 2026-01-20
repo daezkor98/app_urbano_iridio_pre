@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.pre.ui.fragment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,16 +21,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.databinding.FragmentRutasBinding;
 import com.urbanoexpress.iridio3.pre.presenter.RutaPendientePresenter;
 import com.urbanoexpress.iridio3.pre.services.DataSyncService;
 import com.urbanoexpress.iridio3.pre.ui.InitActivity;
+import com.urbanoexpress.iridio3.pre.ui.adapter.ParadaAdapter;
 import com.urbanoexpress.iridio3.pre.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pre.ui.interfaces.OnActionModeListener;
+import com.urbanoexpress.iridio3.pre.ui.model.ParadaRutaItem;
 import com.urbanoexpress.iridio3.pre.ui.model.RutaItem;
 import com.urbanoexpress.iridio3.pre.ui.adapter.RutaAdapter;
 import com.urbanoexpress.iridio3.pre.util.AnimationUtils;
@@ -41,7 +48,7 @@ import com.urbanoexpress.iridio3.pre.view.RutaPendienteView;
 import com.urbanoexpress.iridio3.pre.work.UserStatusWorker;
 
 public class RutaPendienteFragment extends BaseFragment implements RutaPendienteView,
-        RutaAdapter.OnClickGuiaItemListener, ActionMode.Callback {
+        RutaAdapter.OnClickGuiaItemListener, ActionMode.Callback, ParadaAdapter.OnParadaClickListener {
 
     private FragmentRutasBinding binding;
     private RutaPendientePresenter presenter;
@@ -50,6 +57,10 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     private ItemTouchHelper touchHelper;
     private RutaAdapter rutaAdapter;
     private Menu menu;
+    private ParadaAdapter paradaAdapter;
+    private Map<Integer, List<RutaItem>> mapaParadas = new HashMap<>();
+    private List<Integer> idsParadas = new ArrayList<>();
+    private List<RutaItem> todasLasGuiasPendientes = new ArrayList<>();
 
     public RutaPendienteFragment() {
     }
@@ -149,6 +160,28 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     }
 
     @Override
+    public void showParadasAgrupadas(List<RutaItem> rutas) {
+        try {
+            if (rutas.size() > 0) {
+                binding.rvRutas.setBackgroundColor(Color.parseColor("#f1f1f1"));
+            } else {
+                binding.rvRutas.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+            todasLasGuiasPendientes = rutas;
+            agruparPorParadas(rutas);
+
+            paradaAdapter = new ParadaAdapter(getActivity(), this, idsParadas, mapaParadas, rutas);
+            binding.rvRutas.setAdapter(paradaAdapter);
+            clearAttachRecyclerView();
+            addAttachRecyclerView();
+//            agruparPorParadas(rutas);
+//            mostrarParadasEnLista(rutas);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
     public void notifyItemChanged(int position) {
         try {
             binding.rvRutas.getAdapter().notifyItemChanged(position);
@@ -239,7 +272,9 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     @Override
     public void addAttachRecyclerView() {
         ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(getActivity(), rutaAdapter, presenter);
+                new SimpleItemTouchHelperCallback(getActivity(), paradaAdapter, presenter);
+//        ItemTouchHelper.Callback callback =
+//                new SimpleItemTouchHelperCallback(getActivity(), rutaAdapter, presenter);
 
         touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(binding.rvRutas);
@@ -284,6 +319,11 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     @Override
     public void onClickGuiaIconTipoEnvio(View view, int position) {
         presenter.onClickTipoEnvio(position);
+    }
+
+    @Override
+    public void onParadaClick(int paradaId, int position) {
+        manejarClickParada(paradaId);
     }
 
     @Override
@@ -332,6 +372,137 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
                 .show();
     }
 
+    private void agruparPorParadas(List<RutaItem> rutas) {
+        mapaParadas.clear();
+        idsParadas.clear();
+
+        for (RutaItem ruta : rutas) {
+            int paradaId = ruta.getParadaId();
+
+            if (!mapaParadas.containsKey(paradaId)) {
+                mapaParadas.put(paradaId, new ArrayList<>());
+                idsParadas.add(paradaId);
+            }
+
+            mapaParadas.get(paradaId).add(ruta);
+        }
+    }
+
+//    private void mostrarParadasEnLista(List<RutaItem> rutas) {
+//        if (paradaAdapter == null) {
+//            paradaAdapter = new ParadaAdapter(getActivity(),
+//                    new ParadaAdapter.OnParadaClickListener() {
+//                        @Override
+//                        public void onParadaClick(int paradaId, int position) {
+//                            manejarClickParada(paradaId);
+//                        }
+//                    }, idsParadas, mapaParadas, rutas);
+//
+//            binding.rvRutas.setAdapter(paradaAdapter);
+//            clearAttachRecyclerView();
+//            addAttachRecyclerView();
+//        } else {
+//            paradaAdapter.setData(idsParadas, mapaParadas);
+//            paradaAdapter.notifyDataSetChanged();
+//        }
+//    }
+
+    private void manejarClickParada(int paradaId) {
+        List<RutaItem> guiasEnParada = mapaParadas.get(paradaId);
+
+        if (guiasEnParada == null || guiasEnParada.isEmpty()) {
+            return;
+        }
+
+        // Si solo tiene 1 guía, ir directo a gestionar
+        if (guiasEnParada.size() == 1) {
+            RutaItem guia = guiasEnParada.get(0);
+            int posicion = encontrarPosicionGuia(guia);
+            if (posicion >= 0) {
+                if (actionMode == null) {
+                    presenter.onClickItem(posicion);
+                } else {
+                    presenter.onSelectedItem(posicion);
+                }
+            }
+        } else {
+            mostrarModalGuiasParada(paradaId, guiasEnParada);
+        }
+    }
+
+    private int encontrarPosicionGuia(RutaItem guiaBuscada) {
+        for (int i = 0; i < todasLasGuiasPendientes.size(); i++) {
+            if (todasLasGuiasPendientes.get(i).getGuia().equals(guiaBuscada.getGuia())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void mostrarModalGuiasParada(int paradaId, List<RutaItem> guias) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_parada_guias, null);
+        builder.setView(dialogView);
+
+        TextView txtTitulo = dialogView.findViewById(R.id.txtTituloParada);
+        txtTitulo.setText("Parada #" + paradaId);
+
+        RecyclerView rvGuias = dialogView.findViewById(R.id.rvGuiasParada);
+        rvGuias.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        RutaAdapter guiasAdapter = new RutaAdapter(getActivity(),
+                new RutaAdapter.OnClickGuiaItemListener() {
+                    @Override
+                    public void onClickGuiaItem(View view, int position) {
+                        // Cuando se selecciona una guía en el modal
+                        RutaItem guiaSeleccionada = guias.get(position);
+                        int posicionReal = encontrarPosicionGuia(guiaSeleccionada);
+
+                        if (posicionReal >= 0) {
+                            // Cerrar el modal
+                            AlertDialog dialog = (AlertDialog) view.getRootView().getTag();
+                            if (dialog != null && dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
+
+                            // Manejar la selección
+                            if (actionMode == null) {
+                                presenter.onClickItem(posicionReal);
+                            } else {
+                                presenter.onSelectedItem(posicionReal);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onClickGuiaIconLinea(View view, int position) {
+                        // Opcional: manejar click en icono
+                    }
+
+                    @Override
+                    public void onClickGuiaIconImporte(View view, int position) {
+                        // Opcional: manejar click en importe
+                    }
+
+                    @Override
+                    public void onClickGuiaIconTipoEnvio(View view, int position) {
+                        // Opcional: manejar click en tipo de envío
+                    }
+                }, guias);
+
+        rvGuias.setAdapter(guiasAdapter);
+
+        // Crear y mostrar el dialog
+        AlertDialog dialog = builder.create();
+
+        // Configurar botón de cerrar
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cerrar",
+                (dialogInterface, which) -> dialogInterface.dismiss());
+
+        dialog.show();
+    }
+
     private void closeUSerSession() {
         WorkManager.getInstance(requireContext()).cancelUniqueWork(UserStatusWorker.TAG);
 
@@ -360,3 +531,4 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
         });
     }
 }
+

@@ -88,6 +88,12 @@ public class Ruta extends SugarRecord implements Serializable {
 
     private String observacionFotos;
 
+    private int paradaId;
+    private String paradaSecuencia;
+    private String paradaLatitude;
+    private String paradaLongitude;
+
+
     public Ruta() { }
 
     public Ruta(String idUsuario, String idServicio, String idServicioRecoleccion, String idMotivo,
@@ -106,7 +112,8 @@ public class Ruta extends SugarRecord implements Serializable {
                 String guiaRequerimientoHorario, String guiaRequerimientoNuevaDireccion,
                 String premiosGestionGuia, String firmaClienteGestionGuia, String minimoFotosProductoGestionGuia,
                 String descripcion, String observaciones, String secuenciaRuteo, String flagScanPck, int mostrarAlerta,
-                int estadoDescarga, int resultadoGestion, int eliminado, int dataValidate, String observacionFotos, int flagValidaGestion) {
+                int estadoDescarga, int resultadoGestion, int eliminado, int dataValidate, String observacionFotos, int flagValidaGestion,
+                int paradaId, String paradaSecuencia, String paradaLatitude, String paradaLongitude) {
         this.idUsuario = idUsuario;
         this.idServicio = idServicio;
         this.idServicioRecoleccion = idServicioRecoleccion;
@@ -174,6 +181,10 @@ public class Ruta extends SugarRecord implements Serializable {
         this.idImagen = "";
         this.observacionFotos = observacionFotos;
         this.flagValidaGestion = flagValidaGestion;
+        this.paradaId = paradaId;
+        this.paradaSecuencia = paradaSecuencia;
+        this.paradaLatitude = paradaLatitude;
+        this.paradaLongitude = paradaLongitude;
     }
 
     public String getIdUsuario() {
@@ -710,6 +721,38 @@ public class Ruta extends SugarRecord implements Serializable {
 
     public void setFlagValidaGestion(int flagValidaGestion) {
         this.flagValidaGestion = flagValidaGestion;
+    }
+
+    public int getParadaId() {
+        return paradaId;
+    }
+
+    public void setParadaId(int paradaId) {
+        this.paradaId = paradaId;
+    }
+
+    public String getParadaSecuencia() {
+        return paradaSecuencia;
+    }
+
+    public void setParadaSecuencia(String paradaSecuencia) {
+        this.paradaSecuencia = paradaSecuencia;
+    }
+
+    public String getParadaLatitude() {
+        return paradaLatitude;
+    }
+
+    public void setParadaLatitude(String paradaLatitude) {
+        this.paradaLatitude = paradaLatitude;
+    }
+
+    public String getParadaLongitude() {
+        return paradaLongitude;
+    }
+
+    public void setParadaLongitude(String paradaLongitude) {
+        this.paradaLongitude = paradaLongitude;
     }
 
     public interface ZONA {

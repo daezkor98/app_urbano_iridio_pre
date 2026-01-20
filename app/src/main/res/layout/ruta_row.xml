@@ -32,8 +32,8 @@
 
                 <ImageView
                     android:id="@+id/imgLinea"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="47dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
                     android:scaleType="centerInside" />
 

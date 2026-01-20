@@ -159,7 +159,12 @@ public class SeleccionarGENoRecolectadasDialog extends DialogFragment
                                 Ruta.ResultadoGestion.NO_DEFINIDO,
                                 Data.Delete.NO,
                                 Data.Validate.VALID,
-                                "",0
+                                "",
+                                0,
+                                0,
+                                "",
+                                "",
+                                ""
                                 )
                         );
                     }

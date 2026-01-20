@@ -78,7 +78,8 @@ public class RutaAdapter extends RecyclerView.Adapter<RutaAdapter.ViewHolder>
 
         if (item.isShowCounterItem()) {
             holder.binding.boxCounterItem.setVisibility(View.VISIBLE);
-            holder.binding.lblCounterItem.setText(item.getCounterItem());
+//            holder.binding.lblCounterItem.setText(item.getCounterItem());
+            holder.binding.lblCounterItem.setText(item.getSecuenciaParada());
         } else {
             holder.binding.boxCounterItem.setVisibility(View.GONE);
         }

@@ -378,7 +378,11 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
                 Data.Delete.NO,
                 Data.Validate.VALID,
                 jsonRuta.getString("mensaje_custom_fotos"),
-                jsonRuta.getInt("flag_valida_gestion")
+                jsonRuta.getInt("flag_valida_gestion"),
+                jsonRuta.getInt("parada_id"),
+                jsonRuta.getString("parada_sec"),
+                jsonRuta.getString("parada_px"),
+                jsonRuta.getString("parada_py")
         );
 
         if (jsonRuta.has("pck")) {
@@ -571,7 +575,9 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
                             true,
                             ModelUtils.isTipoEnvioValija(dbRuta.get(i).getTipoEnvio()),
                             ModelUtils.isShowIconImportePorCobrar(dbRuta.get(i).getImporte()),
-                            false
+                            false,
+                            dbRuta.get(i).getParadaId(),
+                            dbRuta.get(i).getParadaSecuencia()
                     );
                     rutaItems.add(rutaItem);
                     /*dbRuta.get(i).setSecuencia(String.valueOf(i + 1));

@@ -516,7 +516,8 @@ public class DetalleRutaRuralPresenter {
 
     private boolean validateOrdenDescarga() {
         if(Session.getUser().getFlag().equals("1")){
-            return ruta.getSecuencia().equals("1");
+//            return ruta.getSecuencia().equals("1");
+            return ruta.getParadaSecuencia().equals("1");
         } else {
             return true;
         }

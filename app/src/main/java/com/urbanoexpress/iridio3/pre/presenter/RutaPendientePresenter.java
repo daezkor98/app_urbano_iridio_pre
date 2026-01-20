@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.VolleyError;
 import com.orm.util.NamingHelper;
 import com.urbanoexpress.iridio3.pre.data.sync.SecuenciaGuiaSync;
+import com.urbanoexpress.iridio3.pre.ui.model.ParadaRutaItem;
 import com.urbanoexpress.iridio3.pre.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.model.entity.Data;
@@ -63,7 +64,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mick on 22/06/16.
@@ -852,7 +855,11 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 Data.Delete.NO,
                 Data.Validate.VALID,
                 jsonRuta.getString("mensaje_custom_fotos"),
-                jsonRuta.getInt("flag_valida_gestion")
+                jsonRuta.getInt("flag_valida_gestion"),
+                jsonRuta.getInt("parada_id"),
+                jsonRuta.getString("parada_sec"),
+                jsonRuta.getString("parada_px"),
+                jsonRuta.getString("parada_py")
         );
 
         removeRutaOnDescargaFinalizada(new ArrayList<Ruta>(singletonList(ruta)));
@@ -937,7 +944,11 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 Data.Delete.NO,
                 Data.Validate.VALID,
                 jsonRuta.getString("mensaje_custom_fotos"),
-                jsonRuta.getInt("flag_valida_gestion")
+                jsonRuta.getInt("flag_valida_gestion"),
+                jsonRuta.getInt("parada_id"),
+                jsonRuta.getString("parada_sec"),
+                jsonRuta.getString("parada_px"),
+                jsonRuta.getString("parada_py")
         );
 
         if (jsonRuta.has("pck")) {
@@ -1061,12 +1072,13 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 // Actualizar los contadores
                 new Thread(() -> {
                     for (int i = 0; i < dbRuta.size(); i++) {
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getParadaSecuencia());
 
-                        dbRuta.get(i).setSecuencia((i + 1) + "");
+                        dbRuta.get(i).setParadaSecuencia((i + 1) + "");
+//                        dbRuta.get(i).setSecuencia((i + 1) + "");
                         rutaItems.get(i).setCounterItem((i + 1) + "");
 
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getParadaSecuencia());
 
                         dbRuta.get(i).save();
                     }
@@ -1143,7 +1155,9 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                     true,
                     ModelUtils.isTipoEnvioValija(rutaEliminada.getTipoEnvio()),
                     CommonUtils.parseDouble(rutaEliminada.getImporte()) > 0,
-                    false
+                    false,
+                    rutaEliminada.getParadaId(),
+                    rutaEliminada.getParadaSecuencia()
             );
 
             rutaItems.add(positionRutaEliminada, item);
@@ -1168,6 +1182,79 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
     }
 
     private void updateSecuenciaAllRutasPendientes() {
+//        new Thread(() -> {
+//            int previousPositionGuia = -1;
+//            Date horarioAproximado = null;
+//            Date horarioOrdenamiento = new Date();
+//
+//            try {
+//                if (dbRuta != null) {
+//                    for (int i = 0; i < dbRuta.size(); i++) {
+//                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getParadaSecuencia());
+//
+//                        dbRuta.get(i).setParadaSecuencia((i + 1) + "");
+//                        rutaItems.get(i).setCounterItem((i + 1) + "");
+//
+//                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getParadaSecuencia());
+//
+//                        horarioAproximado = calculateTimeArriveGE(i, previousPositionGuia, horarioAproximado);
+//                        Instant instant = Instant.ofEpochMilli(horarioAproximado.getTime());
+//                        instant = instant.plus(addMinutosRefrigerio(horarioAproximado), ChronoUnit.MINUTES);
+//                        horarioAproximado = Date.from(instant);
+//
+//                        Log.d(TAG, "HORA CALCULADA (" + new SimpleDateFormat("h:mm a").format(horarioAproximado) + ") POSITION: " + i);
+//
+//                        previousPositionGuia = i;
+//
+//                        dbRuta.get(i).setHorarioAproximado(horarioAproximado.getTime());
+//                        dbRuta.get(i).setHorarioOrdenamiento(horarioOrdenamiento.getTime());
+//
+//                        if (ModelUtils.isGuiaEntrega(dbRuta.get(i).getTipo())) {
+//                            //dbRuta.get(i).setHorarioEntrega(new SimpleDateFormat("h:mm a").format(horarioAproximado));
+//                            rutaItems.get(i).setHoraLlegadaEstimada(new SimpleDateFormat("h:mm a").format(horarioAproximado));
+//                        }
+//
+//                        dbRuta.get(i).save();
+//                    }
+////                    for (int i = 0; i < dbRuta.size(); i++) {
+////                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+////
+////                        dbRuta.get(i).setSecuencia((i + 1) + "");
+////                        rutaItems.get(i).setCounterItem((i + 1) + "");
+////
+////                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+////
+////                        horarioAproximado = calculateTimeArriveGE(i, previousPositionGuia, horarioAproximado);
+////                        Instant instant = Instant.ofEpochMilli(horarioAproximado.getTime());
+////                        instant = instant.plus(addMinutosRefrigerio(horarioAproximado), ChronoUnit.MINUTES);
+////                        horarioAproximado = Date.from(instant);
+////
+////                        Log.d(TAG, "HORA CALCULADA (" + new SimpleDateFormat("h:mm a").format(horarioAproximado) + ") POSITION: " + i);
+////
+////                        previousPositionGuia = i;
+////
+////                        dbRuta.get(i).setHorarioAproximado(horarioAproximado.getTime());
+////                        dbRuta.get(i).setHorarioOrdenamiento(horarioOrdenamiento.getTime());
+////
+////                        if (ModelUtils.isGuiaEntrega(dbRuta.get(i).getTipo())) {
+////                            //dbRuta.get(i).setHorarioEntrega(new SimpleDateFormat("h:mm a").format(horarioAproximado));
+////                            rutaItems.get(i).setHoraLlegadaEstimada(new SimpleDateFormat("h:mm a").format(horarioAproximado));
+////                        }
+////
+////                        dbRuta.get(i).save();
+////                    }
+//                }
+//            } catch (IndexOutOfBoundsException ex) {
+//                ex.printStackTrace();
+//            }
+//
+//            if (view.getViewContext() != null) {
+//                ((AppCompatActivity) view.getViewContext()).runOnUiThread(() -> {
+//                    view.dismissProgressDialog();
+//                    view.notifyAllItemChanged();
+//                });
+//            }
+//        }).start();
         new Thread(() -> {
             int previousPositionGuia = -1;
             Date horarioAproximado = null;
@@ -1175,36 +1262,91 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
             try {
                 if (dbRuta != null) {
+                    // Mapa para llevar el control de la secuencia de parada
+                    Map<Integer, Integer> paradaSecuenciaMap = new HashMap<>();
+                    int contadorSecuenciaParada = 1;
+
+                    // Para manejar horarios por parada
+                    Map<Integer, Date> horariosPorParada = new HashMap<>();
+
                     for (int i = 0; i < dbRuta.size(); i++) {
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        Ruta ruta = dbRuta.get(i);
+                        int paradaId = ruta.getParadaId();
 
-                        dbRuta.get(i).setSecuencia((i + 1) + "");
-                        rutaItems.get(i).setCounterItem((i + 1) + "");
+                        Log.d(TAG, "Procesando posición " + i +
+                                " - GUIA: " + ruta.getGuia() +
+                                " - PARADA_ID: " + paradaId +
+                                " - SECUENCIA actual: " + ruta.getSecuencia() +
+                                " - PARADA_SECUENCIA actual: " + ruta.getParadaSecuencia());
 
-                        Log.d(TAG, "UPDATE SECUENCIA GUIA (" + dbRuta.get(i).getGuia() + ") SECUENCIA: " + dbRuta.get(i).getSecuencia());
+                        // 1. Asignar PARADA_SECUENCIA (misma para todas las guías de una parada)
+                        if (!paradaSecuenciaMap.containsKey(paradaId)) {
+                            // Es la primera vez que vemos esta parada
+                            paradaSecuenciaMap.put(paradaId, contadorSecuenciaParada);
 
-                        horarioAproximado = calculateTimeArriveGE(i, previousPositionGuia, horarioAproximado);
-                        Instant instant = Instant.ofEpochMilli(horarioAproximado.getTime());
-                        instant = instant.plus(addMinutosRefrigerio(horarioAproximado), ChronoUnit.MINUTES);
-                        horarioAproximado = Date.from(instant);
+                            // Calcular horario para esta nueva parada
+                            horarioAproximado = calculateTimeArriveGE(i, previousPositionGuia, horarioAproximado);
+                            Instant instant = Instant.ofEpochMilli(horarioAproximado.getTime());
+                            instant = instant.plus(addMinutosRefrigerio(horarioAproximado), ChronoUnit.MINUTES);
+                            horarioAproximado = Date.from(instant);
 
-                        Log.d(TAG, "HORA CALCULADA (" + new SimpleDateFormat("h:mm a").format(horarioAproximado) + ") POSITION: " + i);
+                            // Guardar horario para esta parada
+                            horariosPorParada.put(paradaId, horarioAproximado);
 
-                        previousPositionGuia = i;
+                            Log.d(TAG, "Nueva parada " + paradaId +
+                                    " - ParadaSecuencia asignada: " + contadorSecuenciaParada +
+                                    " - Hora: " + new SimpleDateFormat("h:mm a").format(horarioAproximado));
 
-                        dbRuta.get(i).setHorarioAproximado(horarioAproximado.getTime());
-                        dbRuta.get(i).setHorarioOrdenamiento(horarioOrdenamiento.getTime());
-
-                        if (ModelUtils.isGuiaEntrega(dbRuta.get(i).getTipo())) {
-                            //dbRuta.get(i).setHorarioEntrega(new SimpleDateFormat("h:mm a").format(horarioAproximado));
-                            rutaItems.get(i).setHoraLlegadaEstimada(new SimpleDateFormat("h:mm a").format(horarioAproximado));
+                            previousPositionGuia = i;
+                            contadorSecuenciaParada++;
                         }
 
-                        dbRuta.get(i).save();
+                        // Obtener secuencia de parada
+                        int secuenciaParada = paradaSecuenciaMap.get(paradaId);
+
+                        // 2. Actualizar PARADA_SECUENCIA (ESTE ES EL CAMPO IMPORTANTE)
+                        ruta.setParadaSecuencia(String.valueOf(secuenciaParada));
+
+                        // 3. La SECUENCIA individual ya debería estar correcta del código anterior
+                        // pero por si acaso la actualizamos también
+                        // ruta.setSecuencia(secuenciaParada + "");
+
+                        // Actualizar UI con la secuencia de parada
+                        if (i < rutaItems.size()) {
+                            rutaItems.get(i).setCounterItem(secuenciaParada + "");
+                        }
+
+                        // Obtener horario de la parada
+                        Date horarioParada = horariosPorParada.get(paradaId);
+
+                        // 4. Asignar horarios
+                        ruta.setHorarioAproximado(horarioParada.getTime());
+                        ruta.setHorarioOrdenamiento(horarioOrdenamiento.getTime());
+
+                        // 5. Actualizar UI para entregas
+                        if (ModelUtils.isGuiaEntrega(ruta.getTipo())) {
+                            if (i < rutaItems.size()) {
+                                rutaItems.get(i).setHoraLlegadaEstimada(
+                                        new SimpleDateFormat("h:mm a").format(horarioParada));
+                            }
+                        }
+
+                        // 6. Guardar cambios en la base de datos
+                        ruta.save();
+
+                        Log.d(TAG, "Resultado - Posición: " + i +
+                                " - Guía: " + ruta.getGuia() +
+                                " - ParadaID: " + paradaId +
+                                " - ParadaSecuencia actualizada: " + secuenciaParada +
+                                " - Secuencia: " + ruta.getSecuencia());
                     }
+
                 }
             } catch (IndexOutOfBoundsException ex) {
                 ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Log.e(TAG, "Error en updateSecuenciaAllRutasPendientes: " + ex.getMessage());
             }
 
             if (view.getViewContext() != null) {
@@ -1354,11 +1496,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
             isMostrarAlerta = ConsideracionesImportantesRutaInteractor.isMostrarAlerta();
 
-//            Test
-//            for (int i = 0; i < dbRuta.size(); i++) {
-//                Log.d(TAG, "GUIA: " + dbRuta.get(i).getGuia() + " SECUENCIA: " + dbRuta.get(i).getSecuencia());
-//            }
-
             // Verificar si una guia no se actualizo correctamente el estado de gestion.
             for (int i = 0; i < dbRuta.size(); i++) {
                 GuiaGestionada guiaGestionada =
@@ -1371,11 +1508,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 }
             }
 
-//            dbRuta = interactor.selectRutasPendientes();
-
             rutaItems = new ArrayList<>();
-
-//            Log.d(TAG, "LOAD RUTAS TOTAL: " + dbRuta.size());
 
             if (dbRuta.size() > 0) {
                 for (int i = 0; i < dbRuta.size(); i++) {
@@ -1432,19 +1565,16 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                             true,
                             ModelUtils.isTipoEnvioValija(dbRuta.get(i).getTipoEnvio()),
                             ModelUtils.isShowIconImportePorCobrar(dbRuta.get(i).getImporte()),
-                            false
+                            false,
+                            dbRuta.get(i).getParadaId(),
+                            dbRuta.get(i).getParadaSecuencia()
                     );
                     rutaItems.add(rutaItem);
-//                    Log.d(TAG, "Estado Descarga: " + dbRuta.get(i).getEstadoDescarga() + "");
-//                    Log.d(TAG, "GUIA: " + dbRuta.get(i).getGuia() + "");
-//                    Log.d(TAG, "ID_RUTA: " + dbRuta.get(i).getIdRuta() + "");
-//                    Log.d(TAG, "SECUENCIA: " + dbRuta.get(i).getSecuencia() + "");
-                    dbRuta.get(i).setSecuencia(i + 1 + "");
+//                    dbRuta.get(i).setSecuencia(i + 1 + "");
+                    dbRuta.get(i).setParadaSecuencia(i + 1 + "");
                     dbRuta.get(i).save();
-//                    Log.d(TAG, "SECUENCIA POST: " + dbRuta.get(i).getSecuencia() + "");
                 }
 
-//                Log.d(TAG, "TOTAL GE: " + rutaItems.size());
                 actionMenuRutaPendienteHelper.setDbRuta(dbRuta);
                 actionMenuRutaPendienteHelper.setRutaItems(rutaItems);
             }
@@ -1454,7 +1584,10 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         public void onPostExecute(Boolean result) {
             setTitleActivity();
             showAlerta();
-            view.showDatosRutasPendientes(rutaItems);
+//            view.showDatosRutasPendientes(rutaItems);
+
+            view.showParadasAgrupadas(rutaItems);
+
             if (showMsgDialogNoHayRutaPendiente && rutaItems.size() == 0) {
                 view.showToast(R.string.fragment_ruta_pendiente_message_no_hay_rutas);
             }

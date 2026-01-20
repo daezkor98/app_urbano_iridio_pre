@@ -196,10 +196,11 @@ public class ActionMenuRutaPendienteHelper extends BaseModalsView {
 
             for (int i = 0; i < rutaItems.size(); i++) {
                 if (rutaItems.get(i).isSelected()) {
-                    dbRuta.get(i).setSecuencia(rutaItems.get(i).getCounterItem());
+                    //dbRuta.get(i).setSecuencia(rutaItems.get(i).getCounterItem());
+                    dbRuta.get(i).setParadaSecuencia(rutaItems.get(i).getCounterItem());
                     dbRuta.get(i).save();
                 } else {
-                    dbRuta.get(i).setSecuencia(counterSecuencia + "");
+                    dbRuta.get(i).setParadaSecuencia(counterSecuencia + "");
                     dbRuta.get(i).save();
                     counterSecuencia++;
                 }
@@ -430,7 +431,8 @@ public class ActionMenuRutaPendienteHelper extends BaseModalsView {
     private void updateSecuenciaAllRutasPendientes() {
         for (int i = 0; i < dbRuta.size(); i++) {
             Log.d(TAG, "UPDATE SECUENCIA GUIA ("+ dbRuta.get(i).getGuia() +") SECUENCIA: " + dbRuta.get(i).getSecuencia());
-            dbRuta.get(i).setSecuencia(i + 1 + "");
+//            dbRuta.get(i).setSecuencia(i + 1 + "");
+            dbRuta.get(i).setParadaSecuencia(i + 1 + "");
             dbRuta.get(i).save();
             Log.d(TAG, "UPDATE SECUENCIA GUIA ("+ dbRuta.get(i).getGuia() +") SECUENCIA: " + dbRuta.get(i).getSecuencia());
         }

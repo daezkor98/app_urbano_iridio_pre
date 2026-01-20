@@ -1,12 +1,13 @@
 package com.urbanoexpress.iridio3.pre.ui.model;
 
-import java.io.Serializable;
+import com.urbanoexpress.iridio3.pre.model.entity.Ruta;
 
-/**
- * Created by mick on 22/06/16.
- */
-public class RutaItem implements Serializable {
+import java.util.ArrayList;
+import java.util.List;
 
+public class ParadaRutaItem {
+    private String idParada;
+    private String secuenciaParada;
     private String idServicio;
     private String idManifiesto;
     private String guia;
@@ -27,40 +28,27 @@ public class RutaItem implements Serializable {
     private boolean showTipoEnvio;
     private boolean showImportePorCobrar;
     private boolean selected;
-    private int paradaId;
-    private String secuenciaParada;
+    private List<RutaItem> guias;
 
-    public RutaItem(String idServicio, String idManifiesto, String guia, String distrito, String direccion,
-                    String horaLlegadaEstimada,String tipoRuta, String counterItem, String simboloMoneda,
-                    int icon, int idResIcon, int iconTipoEnvio, int backgroundColor, int lblColorHorario,
-                    int gestionEfectiva, boolean showIconGestionGuia, boolean showCounterItem,
-                    boolean showTipoEnvio, boolean showImportePorCobrar, boolean selected, int paradaId, String secuenciaParada) {
-        this.idServicio = idServicio;
-        this.idManifiesto = idManifiesto;
-        this.guia = guia;
-        this.distrito = distrito;
-        this.direccion = direccion;
-        this.horaLlegadaEstimada = horaLlegadaEstimada;
-        this.tipoRuta = tipoRuta;
-        this.counterItem = counterItem;
-        this.simboloMoneda = simboloMoneda;
-        this.icon = icon;
-        this.idResIcon = idResIcon;
-        this.iconTipoEnvio = iconTipoEnvio;
-        this.backgroundColor = backgroundColor;
-        this.lblColorHorario = lblColorHorario;
-        this.gestionEfectiva = gestionEfectiva;
-        this.showIconGestionGuia = showIconGestionGuia;
-        this.showCounterItem = showCounterItem;
-        this.showTipoEnvio = showTipoEnvio;
-        this.showImportePorCobrar = showImportePorCobrar;
-        this.selected = selected;
-        this.paradaId = paradaId;
-        this.secuenciaParada = secuenciaParada;
+    public ParadaRutaItem() {
+        this.guias = new ArrayList<>();
+        this.selected = false;
     }
 
-    public RutaItem() {
+    public String getIdParada() {
+        return idParada;
+    }
 
+    public void setIdParada(String idParada) {
+        this.idParada = idParada;
+    }
+
+    public String getSecuenciaParada() {
+        return secuenciaParada;
+    }
+
+    public void setSecuenciaParada(String secuenciaParada) {
+        this.secuenciaParada = secuenciaParada;
     }
 
     public String getIdServicio() {
@@ -223,19 +211,16 @@ public class RutaItem implements Serializable {
         this.selected = selected;
     }
 
-    public int getParadaId() {
-        return paradaId;
+    public List<RutaItem> getGuias() {
+        return guias;
     }
 
-    public void setParadaId(int paradaId) {
-        this.paradaId = paradaId;
+    public void setGuias(List<RutaItem> guias) {
+        this.guias = guias;
     }
 
-    public String getSecuenciaParada() {
-        return secuenciaParada;
-    }
-
-    public void setSecuenciaParada(String secuenciaParada) {
-        this.secuenciaParada = secuenciaParada;
+    public void addGuia(RutaItem guia) {
+        if (guias == null) guias = new ArrayList<>();
+        guias.add(guia);
     }
 }
