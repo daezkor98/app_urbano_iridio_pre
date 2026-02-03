@@ -34,12 +34,13 @@ import com.urbanoexpress.iridio3.pre.databinding.ActivityMainBinding;
 import com.urbanoexpress.iridio3.pre.model.NavigationMenuModel;
 import com.urbanoexpress.iridio3.pre.presenter.NavigationMenuPresenter;
 import com.urbanoexpress.iridio3.pre.presenter.NotificacionesRutaPresenter;
-import com.urbanoexpress.iridio3.pre.services.DataSyncService;
+import com.urbanoexpress.iridio3.pre.services.SyncManager;
 import com.urbanoexpress.iridio3.pre.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pre.ui.adapter.MainMenuAdapter;
 import com.urbanoexpress.iridio3.pre.ui.dialogs.EncuestaTipoUsuarioDialog;
 import com.urbanoexpress.iridio3.pre.ui.dialogs.LogoutDialog;
 import com.urbanoexpress.iridio3.pre.ui.interfaces.OnClickItemListener;
+import com.urbanoexpress.iridio3.pre.util.Session;
 import com.urbanoexpress.iridio3.urbanocore.values.Val;
 import com.urbanoexpress.iridio3.pre.util.DateSystemHelper;
 import com.urbanoexpress.iridio3.pre.util.InfoDevice;
@@ -143,6 +144,11 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
     @Override
     protected void onResume() {
         super.onResume();
+//        validateFeatures();
+        if (Session.getUser() != null) {
+            SyncManager.startImmediateSync(MainActivity.this);
+        }
+
         validateFeatures();
     }
 
@@ -235,55 +241,6 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
                 .load(R.drawable.bg_bottom_urbano_transport)
                 .dontAnimate()
                 .into(binding.imgCarUrbano);
-
-        /*Log.d("MERRY", "INIT");
-        try {
-            Date initDateMerryChristmas = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("01/12/2019 00:00:00");
-            Date lastDateMerryChristmas = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("31/12/2019 23:59:59");
-            Date now = new Date();
-
-            if (now.getTime() >= initDateMerryChristmas.getTime()
-                    && now.getTime() <= lastDateMerryChristmas.getTime()) {
-                Log.d("MERRY", "MERRY CHRISTMAS");
-                boxImgCarUrbanoChristmas.setVisibility(View.VISIBLE);
-                Glide.with(this)
-                        .load(R.drawable.bg_bottom_urbano_transport_merry_christmas)
-                        .dontAnimate()
-                        .into(imgCarUrbanoChristmas);
-
-                imgCarUrbanoChristmas.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        BaseModalsView.showToast(MainActivity.this,
-                                "Que pases una Feliz Navidad y un Próspero Año Nuevo Jo Jo Jo...",
-                                Toast.LENGTH_LONG);
-                    }
-                });
-            } else {
-                Log.d("MERRY", "MERRY CHRISTMAS FINISH");
-                boxImgCarUrbano.setVisibility(View.VISIBLE);
-                Glide.with(this)
-                        .load(R.drawable.bg_bottom_urbano_transport)
-                        .dontAnimate()
-                        .into(imgCarUrbano);
-            }
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-            Log.d("MERRY", "MERRY CHRISTMAS FAIL");
-            boxImgCarUrbano.setVisibility(View.VISIBLE);
-            Glide.with(this)
-                    .load(R.drawable.bg_bottom_urbano_transport)
-                    .dontAnimate()
-                    .into(imgCarUrbano);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.d("MERRY", "MERRY CHRISTMAS ERROR FATAL");
-            boxImgCarUrbano.setVisibility(View.VISIBLE);
-            Glide.with(this)
-                    .load(R.drawable.bg_bottom_urbano_transport)
-                    .dontAnimate()
-                    .into(imgCarUrbano);
-        }*/
     }
 
     @Override
@@ -320,13 +277,21 @@ public class MainActivity extends AppThemeBaseActivity implements NavigationView
 
     @Override
     public void initializeServices() {
-        if (!InfoDevice.isServiceRunning(this, DataSyncService.class)) {
-            if (serviceDataSync == null) {
-                serviceDataSync = new Intent(MainActivity.this, DataSyncService.class);
-                ContextCompat.startForegroundService(MainActivity.this, serviceDataSync);
-            }
+//        if (!InfoDevice.isServiceRunning(this, DataSyncService.class)) {
+//            if (serviceDataSync == null) {
+//                serviceDataSync = new Intent(MainActivity.this, DataSyncService.class);
+//                ContextCompat.startForegroundService(MainActivity.this, serviceDataSync);
+//            }
+//        } else {
+//            Log.d("ACTIVITY", "HAY SERVICIO DE SINCRONIZACION");
+//        }
+
+        if (InfoDevice.areSyncsActive(this)) {
+            SyncManager.startImmediateSync(this);
+            Log.d("MainActivity", "WorkManager iniciado para sincronizaciones");
         } else {
-            Log.d("ACTIVITY", "HAY SERVICIO DE SINCRONIZACION");
+            Log.d("ACTIVITY", "Sincronizaciones ya están activas");
+            SyncManager.startAllSyncs(MainActivity.this);
         }
     }
 

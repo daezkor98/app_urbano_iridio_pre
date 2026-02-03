@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio3.pre.model.interactor
 
 import android.content.Context
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -27,8 +28,6 @@ import kotlin.coroutines.suspendCoroutine
 class PlanRutaCamaraInteractor(context: Context) {
 
     private val requestQueue: RequestQueue = Volley.newRequestQueue(context)
-//    "https://api.geo.dev-urbano.dev/iridio/api/registro/datosRuta/" + "${idRutaQr}" + "/" +
-//    "${Preferences.getInstance().getString("idUsuario", "")}"
 
     suspend fun getRutaDetail(idRutaQr: String): PlanRutaCamaraResponse =
         suspendCoroutine { continuation ->
@@ -58,6 +57,12 @@ class PlanRutaCamaraInteractor(context: Context) {
                 { error ->
                     continuation.resumeWithException(error)
                 }
+            )
+
+            jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+                30000,
+                0,
+                1.0f
             )
 
             requestQueue.add(jsonObjectRequest)

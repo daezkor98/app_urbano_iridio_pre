@@ -9,13 +9,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.work.WorkManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
 import com.urbanoexpress.iridio3.pre.databinding.ModalLogoutBinding;
-import com.urbanoexpress.iridio3.pre.services.DataSyncService;
+import com.urbanoexpress.iridio3.pre.services.SyncManager;
 import com.urbanoexpress.iridio3.pre.ui.InitActivity;
 import com.urbanoexpress.iridio3.pre.util.CommonUtils;
 import com.urbanoexpress.iridio3.pre.util.Session;
@@ -61,16 +62,36 @@ public class LogoutDialog extends DialogFragment {
         binding.btnNo.setOnClickListener(v -> dismiss());
 
         binding.btnSi.setOnClickListener(v -> {
-            WorkManager.getInstance(getActivity()).cancelUniqueWork(UserStatusWorker.TAG);
+//            WorkManager.getInstance(getActivity()).cancelUniqueWork(UserStatusWorker.TAG);
+//
+//            new Thread(() -> {
+//                CommonUtils.deleteUserData();
+//                Session.clearSession();
+//            }).start();
+//
+//            getActivity().stopService(new Intent(getActivity(), DataSyncService.class));
+//            getActivity().startActivity(new Intent(getActivity(), InitActivity.class));
+//            getActivity().finish();
+
+            WorkManager.getInstance(requireActivity()).cancelUniqueWork(UserStatusWorker.TAG);
+
+            SyncManager.stopAllSyncs(requireActivity());
+
+            try {
+                //requireActivity().stopService(new Intent(requireActivity(), DataSyncService.class));
+                SyncManager.stopAllSyncs(requireActivity());
+            } catch (Exception e) {
+                Log.e("LogoutDialog", "Error deteniendo servicio antiguo", e);
+            }
 
             new Thread(() -> {
                 CommonUtils.deleteUserData();
                 Session.clearSession();
+                System.gc();
             }).start();
 
-            getActivity().stopService(new Intent(getActivity(), DataSyncService.class));
-            getActivity().startActivity(new Intent(getActivity(), InitActivity.class));
-            getActivity().finish();
+            requireActivity().startActivity(new Intent(requireActivity(), InitActivity.class));
+            requireActivity().finish();
         });
     }
 

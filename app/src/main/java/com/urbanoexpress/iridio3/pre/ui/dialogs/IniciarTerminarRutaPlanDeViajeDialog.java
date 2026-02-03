@@ -1,5 +1,6 @@
 package com.urbanoexpress.iridio3.pre.ui.dialogs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -30,7 +31,7 @@ import com.urbanoexpress.iridio3.pre.model.entity.ParadaProgramada;
 import com.urbanoexpress.iridio3.pre.model.entity.PlanDeViaje;
 import com.urbanoexpress.iridio3.pre.model.interactor.PlanDeViajeInteractor;
 import com.urbanoexpress.iridio3.pre.model.interactor.callback.RequestCallback;
-import com.urbanoexpress.iridio3.pre.services.DataSyncService;
+import com.urbanoexpress.iridio3.pre.services.SyncManager;
 import com.urbanoexpress.iridio3.pre.util.CommonUtils;
 import com.urbanoexpress.iridio3.pre.util.InfoDevice;
 import com.urbanoexpress.iridio3.pre.util.LocationUtils;
@@ -174,8 +175,18 @@ public class IniciarTerminarRutaPlanDeViajeDialog extends DialogFragment {
                                         ? R.string.act_plan_de_viaje_message_success_iniciando_ruta
                                         : R.string.act_plan_de_viaje_message_success_finalizando_ruta,
                                 Toast.LENGTH_LONG);
-                        getActivity().stopService(new Intent(getActivity(), DataSyncService.class));
-                        getActivity().startService(new Intent(getActivity(), DataSyncService.class));
+//                        getActivity().stopService(new Intent(getActivity(), DataSyncService.class));
+//                        getActivity().startService(new Intent(getActivity(), DataSyncService.class));
+
+                        Context context = getActivity();
+                        if (nuevoEstadoRuta == PlanDeViaje.EstadoRuta.INICIO_RUTA) {
+                            // Si se INICIA el plan de viaje: activar tracking
+                            SyncManager.startAllSyncs(context);
+                        } else {
+                            // Si se FINALIZA el plan de viaje: detener tracking
+                            SyncManager.stopLocationTracking(context);
+                            SyncManager.startImmediateSync(context);
+                        }
 
                         dismiss();
                     } else {

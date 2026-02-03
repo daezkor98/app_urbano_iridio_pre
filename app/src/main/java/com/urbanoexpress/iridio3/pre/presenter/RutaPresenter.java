@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.urbanoexpress.iridio3.pre.services.SyncManager;
 import com.urbanoexpress.iridio3.pre.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.application.AndroidApplication;
@@ -41,7 +42,6 @@ import com.urbanoexpress.iridio3.pre.model.interactor.RutaPendienteInteractor;
 import com.urbanoexpress.iridio3.pre.model.interactor.callback.RequestCallback;
 import com.urbanoexpress.iridio3.pre.model.util.ModelUtils;
 import com.urbanoexpress.iridio3.pre.presenter.helpers.ForzarCierreRutaHelper;
-import com.urbanoexpress.iridio3.pre.services.DataSyncService;
 import com.urbanoexpress.iridio3.pre.ui.ConsideracionesImportantesRutaActivity;
 import com.urbanoexpress.iridio3.pre.ui.InformacionRutaActivity;
 import com.urbanoexpress.iridio3.pre.ui.ManifestarGuiaActivity;
@@ -1165,9 +1165,12 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
             Log.d(TAG, "STOP SERVICE");
             LocationUtils.setCurrentLocation(null);
-            activity.stopService(new Intent(view.getContextView(), DataSyncService.class));
+            //activity.stopService(new Intent(view.getContextView(), DataSyncService.class));
+            SyncManager.stopAllSyncs(view.getContextView());
             Log.d(TAG, "INIT SERVICE");
-            activity.startService(new Intent(view.getContextView(), DataSyncService.class));
+            //activity.startService(new Intent(view.getContextView(), DataSyncService.class));
+            SyncManager.startAllSyncs(view.getContextView());
+            SyncManager.startImmediateSync(view.getContextView());
 
             activity.runOnUiThread(() -> {
                 FloatingActionButton fab = (FloatingActionButton)
@@ -1193,9 +1196,11 @@ public class RutaPresenter extends BaseModalsView implements OnClickItemListener
 
             Log.d(TAG, "STOP SERVICE");
             LocationUtils.setCurrentLocation(null);
-            activity.stopService(new Intent(view.getContextView(), DataSyncService.class));
+            //activity.stopService(new Intent(view.getContextView(), DataSyncService.class));
+            SyncManager.stopAllSyncs(view.getContextView());
             Log.d(TAG, "INIT SERVICE");
-            activity.startService(new Intent(view.getContextView(), DataSyncService.class));
+            //activity.startService(new Intent(view.getContextView(), DataSyncService.class));
+            SyncManager.startImmediateSync(view.getContextView());
 //            new ConfigUIEstadoRutaTask().execute();
 
             activity.runOnUiThread(() -> {

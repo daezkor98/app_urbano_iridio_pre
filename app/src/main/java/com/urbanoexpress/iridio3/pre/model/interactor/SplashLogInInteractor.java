@@ -59,6 +59,8 @@ public class SplashLogInInteractor {
                     put("password", params[1]);
                     put("firebaseToken", params[2]);
                     put("device_imei", params[3]);
+                    put("email", params[4]);
+                    put("app_version", params[5]);
                 }})
                 .requestForm(ApiRest.Api.LOGIN_v2, new ApiService.ResponseListener() {
                     @Override
