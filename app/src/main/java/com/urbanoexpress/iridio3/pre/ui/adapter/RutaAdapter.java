@@ -27,6 +27,7 @@ public class RutaAdapter extends RecyclerView.Adapter<RutaAdapter.ViewHolder>
     private List<RutaItem> data;
     private LayoutInflater inflater;
     private OnClickGuiaItemListener listener;
+    private int idParada;
 
     public RutaAdapter(Context context, OnClickGuiaItemListener listener, List<RutaItem> data) {
         this.data = data;
@@ -52,6 +53,8 @@ public class RutaAdapter extends RecyclerView.Adapter<RutaAdapter.ViewHolder>
         holder.binding.lblPiezas.setText(item.getTipoRuta());
         holder.binding.bgLinearLayout.setBackgroundColor(item.getBackgroundColor());
         holder.binding.txtHoraLlegadaEstimada.setTextColor(item.getLblColorHorario());
+
+        idParada = item.getParadaId();
 
         if (item.isShowIconGestionGuia()) {
             switch (item.getGestionEfectiva()) {
@@ -156,7 +159,8 @@ public class RutaAdapter extends RecyclerView.Adapter<RutaAdapter.ViewHolder>
 
             binding.containerImgStatusLocation.setOnClickListener(view -> {
                 if (listener != null)
-                    listener.onClickGuiaIconLinea(view, getBindingAdapterPosition());
+//                    listener.onClickGuiaIconLinea(view, getBindingAdapterPosition());
+                    listener.onClickParadaIconLinea(view, getBindingAdapterPosition(), idParada);
             });
 
             binding.btnImportePorCobrar.setOnClickListener(view -> {
@@ -174,6 +178,7 @@ public class RutaAdapter extends RecyclerView.Adapter<RutaAdapter.ViewHolder>
     public interface OnClickGuiaItemListener {
         void onClickGuiaItem(View view, int position);
         void onClickGuiaIconLinea(View view, int position);
+        void onClickParadaIconLinea(View view, int position, int idParada);
         void onClickGuiaIconImporte(View view, int position);
         void onClickGuiaIconTipoEnvio(View view, int position);
     }

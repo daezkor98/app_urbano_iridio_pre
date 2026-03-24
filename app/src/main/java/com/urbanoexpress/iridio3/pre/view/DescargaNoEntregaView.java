@@ -37,6 +37,7 @@ public interface DescargaNoEntregaView extends BaseV5View {
     Fragment getFragment();
 
     void dismiss();
+    void closeDialog();
 
     void hideKeyboard();
     void showKeyboard();

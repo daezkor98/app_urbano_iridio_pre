@@ -107,6 +107,11 @@ public class RutaRuralPendientePresenter implements RutaAdapter.OnClickGuiaItemL
     }
 
     @Override
+    public void onClickParadaIconLinea(View view, int position, int idParada) {
+
+    }
+
+    @Override
     public void onClickGuiaIconImporte(View v, int position) {
         view.showSnackBar("Importe por cobrar: " + ModelUtils.getSimboloMoneda(view.getViewContext()) +
                 " " + dbRuta.get(position).getImporte());

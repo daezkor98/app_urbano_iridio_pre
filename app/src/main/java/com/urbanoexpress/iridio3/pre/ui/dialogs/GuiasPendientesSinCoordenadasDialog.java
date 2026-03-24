@@ -72,6 +72,11 @@ public class GuiasPendientesSinCoordenadasDialog extends DialogFragment
     }
 
     @Override
+    public void onClickParadaIconLinea(View view, int position, int idParada) {
+
+    }
+
+    @Override
     public void onClickGuiaIconImporte(View view, int position) {
 
     }

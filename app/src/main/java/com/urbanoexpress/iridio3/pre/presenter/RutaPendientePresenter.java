@@ -65,6 +65,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -136,27 +137,100 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         Log.d(TAG, "From: " + fromPosition);
         Log.d(TAG, "To: " + toPosition);
 
+//        try {
+//            itemMove = true;
+//
+//            if (fromPosition < toPosition) {
+//                for (int i = fromPosition; i < toPosition; i++) {
+//                    Collections.swap(dbRuta, i, i + 1);
+//                    Collections.swap(rutaItems, i, i + 1);
+//                }
+//                Log.d(TAG, "FINISH REORDER LIST GUIAS");
+//            } else {
+//                for (int i = fromPosition; i > toPosition; i--) {
+//                    Collections.swap(dbRuta, i, i - 1);
+//                    Collections.swap(rutaItems, i, i - 1);
+//                }
+//                Log.d(TAG, "FINISH REORDER LIST GUIAS");
+//            }
+//        } catch (IndexOutOfBoundsException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//        return false;
+
+
         try {
             itemMove = true;
 
+            // 1. Agrupar las guías por parada
+            Map<Integer, List<Ruta>> paradasMap = new LinkedHashMap<>();
+            Map<Integer, List<RutaItem>> paradasItemsMap = new LinkedHashMap<>();
+
+            for (Ruta ruta : dbRuta) {
+                int paradaId = ruta.getParadaId();
+                if (!paradasMap.containsKey(paradaId)) {
+                    paradasMap.put(paradaId, new ArrayList<>());
+                    paradasItemsMap.put(paradaId, new ArrayList<>());
+                }
+            }
+
+            // 2. Llenar las listas por parada manteniendo el orden actual
+            for (int i = 0; i < dbRuta.size(); i++) {
+                int paradaId = dbRuta.get(i).getParadaId();
+                paradasMap.get(paradaId).add(dbRuta.get(i));
+                paradasItemsMap.get(paradaId).add(rutaItems.get(i));
+            }
+
+            // 3. Obtener lista de IDs de parada en el orden actual
+            List<Integer> paradaIds = new ArrayList<>();
+            for (Ruta ruta : dbRuta) {
+                int paradaId = ruta.getParadaId();
+                if (!paradaIds.contains(paradaId)) {
+                    paradaIds.add(paradaId);
+                }
+            }
+
+            // 4. Intercambiar paradas, no guías individuales
             if (fromPosition < toPosition) {
                 for (int i = fromPosition; i < toPosition; i++) {
-                    Collections.swap(dbRuta, i, i + 1);
-                    Collections.swap(rutaItems, i, i + 1);
+                    Collections.swap(paradaIds, i, i + 1);
                 }
-                Log.d(TAG, "FINISH REORDER LIST GUIAS");
             } else {
                 for (int i = fromPosition; i > toPosition; i--) {
-                    Collections.swap(dbRuta, i, i - 1);
-                    Collections.swap(rutaItems, i, i - 1);
+                    Collections.swap(paradaIds, i, i - 1);
                 }
-                Log.d(TAG, "FINISH REORDER LIST GUIAS");
             }
+
+            // 5. Reconstruir las listas con el nuevo orden de paradas
+            List<Ruta> nuevoDbRuta = new ArrayList<>();
+            List<RutaItem> nuevoRutaItems = new ArrayList<>();
+
+            for (int paradaId : paradaIds) {
+                nuevoDbRuta.addAll(paradasMap.get(paradaId));
+                nuevoRutaItems.addAll(paradasItemsMap.get(paradaId));
+            }
+
+            // 6. Actualizar las listas originales
+            dbRuta.clear();
+            dbRuta.addAll(nuevoDbRuta);
+
+            rutaItems.clear();
+            rutaItems.addAll(nuevoRutaItems);
+
+            updateParadaSecuenciaAfterMove();
+
+            Log.d(TAG, "FINISH REORDER LIST PARADAS");
+
         } catch (IndexOutOfBoundsException ex) {
             ex.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            Log.e(TAG, "Error en onItemMove: " + e.getMessage());
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     @Override
@@ -195,11 +269,50 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
     @Override
     public void onItemSelectChanged(RecyclerView.ViewHolder view, int actionState) {
         Log.d(TAG, "onItemSelectChanged");
+//        if (actionState == ItemTouchHelper.ACTION_STATE_IDLE && itemMove) {
+//            this.view.showProgressDialog(R.string.fragment_ruta_pendiente_message_ordenando_guias);
+//            updateParadaSecuenciaAfterMove();
+//            updateSecuenciaAllRutasPendientes();
+//            registerNewSecuencia();
+//            itemMove = false;
+//        }
+
         if (actionState == ItemTouchHelper.ACTION_STATE_IDLE && itemMove) {
             this.view.showProgressDialog(R.string.fragment_ruta_pendiente_message_ordenando_guias);
-            updateSecuenciaAllRutasPendientes();
-            registerNewSecuencia();
-            itemMove = false;
+
+            new Thread(() -> {
+                try {
+                    // 1. Guardar todas las secuencias en BD
+                    for (Ruta ruta : dbRuta) {
+                        ruta.save();
+                    }
+
+                    Log.d(TAG, "Secuencias guardadas en BD");
+
+                    // 2. Actualizar horarios aproximados
+                    updateSecuenciaAllRutasPendientes();
+
+                    // 3. Registrar nueva secuencia
+                    registerNewSecuencia();
+
+                    Log.d(TAG, "Procesos adicionales completados");
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Error: " + e.getMessage());
+                } finally {
+                    itemMove = false;
+                    refreshView();
+                }
+            }).start();
+        }
+    }
+
+    public void refreshView(){
+        if (view != null && view.getViewContext() != null) {
+            ((AppCompatActivity) view.getViewContext()).runOnUiThread(() -> {
+                view.dismissProgressDialog();
+                view.showParadasAgrupadas(rutaItems);
+            });
         }
     }
 
@@ -867,6 +980,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     private void saveRuta(JSONObject jsonRuta) throws JSONException {
         String flag_scaneo_pck;
+        int lastIdParada = 0;
+        int lastSecuenciaParada = 0;
         try {
             flag_scaneo_pck = jsonRuta.getString("flag_scaneo_pck");
             if (flag_scaneo_pck.equals("")) {
@@ -877,6 +992,58 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         }
 
         String idMedioPago = jsonRuta.getString("id_medio_pago");
+
+        int paradaId;
+        int secuenciaParada;
+        String paradaPx = "0.0";
+        String paradaPy = "0.0";
+        try {
+            if (jsonRuta.has("parada_id") && !jsonRuta.isNull("parada_id")) {
+                paradaId = jsonRuta.getInt("parada_id");
+                if (paradaId > lastIdParada) {
+                    lastIdParada = paradaId;
+                }
+            } else {
+                if (lastIdParada == 0) {
+                    lastIdParada = obtenerMaximoParadaId();
+                }
+                lastIdParada++;
+                paradaId = lastIdParada;
+            }
+
+            if (jsonRuta.has("parada_sec") && !jsonRuta.isNull("parada_sec")) {
+                secuenciaParada = Integer.parseInt(jsonRuta.getString("parada_sec"));
+                if (secuenciaParada > lastSecuenciaParada) {
+                    lastSecuenciaParada = secuenciaParada;
+                }
+            } else {
+                if (lastSecuenciaParada == 0) {
+                    lastSecuenciaParada = obtenerMaximoSecuencia();
+                }
+                lastSecuenciaParada++;
+                secuenciaParada = lastSecuenciaParada;
+            }
+
+            if (jsonRuta.has("parada_px") && !jsonRuta.isNull("parada_px")) {
+                paradaPx = jsonRuta.getString("parada_px");
+            }
+
+            if (jsonRuta.has("parada_py") && !jsonRuta.isNull("parada_py")) {
+                paradaPy = jsonRuta.getString("parada_py");
+            }
+        } catch (JSONException e) {
+            if (lastIdParada == 0) {
+                lastIdParada = obtenerMaximoParadaId();
+            }
+            lastIdParada++;
+            paradaId = lastIdParada;
+
+            if (lastSecuenciaParada == 0) {
+                lastSecuenciaParada = obtenerMaximoSecuencia();
+            }
+            lastSecuenciaParada++;
+            secuenciaParada = lastSecuenciaParada;
+        }
 
         Ruta ruta = new Ruta(//aqui se guarda la ruta en local
                 Preferences.getInstance().getString("idUsuario", ""),
@@ -945,10 +1112,12 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 Data.Validate.VALID,
                 jsonRuta.getString("mensaje_custom_fotos"),
                 jsonRuta.getInt("flag_valida_gestion"),
-                jsonRuta.getInt("parada_id"),
-                jsonRuta.getString("parada_sec"),
-                jsonRuta.getString("parada_px"),
-                jsonRuta.getString("parada_py")
+//                jsonRuta.getInt("parada_id"),
+                paradaId,
+//                jsonRuta.getString("parada_sec"),
+                String.valueOf(secuenciaParada),
+                paradaPx,
+                paradaPy
         );
 
         if (jsonRuta.has("pck")) {
@@ -973,6 +1142,30 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
         ruta.save();
         dbRuta.add(ruta);
+    }
+
+    private int obtenerMaximoParadaId() {
+        int maxId = 0;
+        if (dbRuta != null && !dbRuta.isEmpty()) {
+            for (Ruta ruta : dbRuta) {
+                if (ruta.getParadaId() > maxId) {
+                    maxId = ruta.getParadaId();
+                }
+            }
+        }
+        return maxId;
+    }
+
+    private int obtenerMaximoSecuencia() {
+        int maxSec = 0;
+        if (dbRuta != null && !dbRuta.isEmpty()) {
+            for (Ruta ruta : dbRuta) {
+                if (Integer.parseInt(ruta.getParadaSecuencia()) > maxSec) {
+                    maxSec = Integer.parseInt(ruta.getParadaSecuencia());
+                }
+            }
+        }
+        return maxSec;
     }
 
     private void deleteGEAnuladas(final JSONObject jsonRuta) {
@@ -1082,12 +1275,13 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
                         dbRuta.get(i).save();
                     }
-                    if (view.getViewContext() != null) {
-                        ((AppCompatActivity) view.getViewContext()).runOnUiThread(() -> {
-                            view.dismissProgressDialog();
-                            view.notifyAllItemChanged();
-                        });
-                    }
+//                    if (view.getViewContext() != null) {
+//                        ((AppCompatActivity) view.getViewContext()).runOnUiThread(() -> {
+//                            view.dismissProgressDialog();
+//                            view.notifyAllItemChanged();
+//                        });
+//                    }
+                    refreshView();
                 }).start();
             }
         }
@@ -1101,7 +1295,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
         rutaItems.clear();
         dbRuta.clear();
-        view.notifyAllItemChanged();
+//        view.notifyAllItemChanged();
+        refreshView();
     }
 
     private void restoreRutaEliminada() {
@@ -1356,6 +1551,94 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 });
             }
         }).start();
+    }
+
+    private void updateParadaSecuenciaAfterMove() {
+//        new Thread(() -> {
+//            try {
+//                if (dbRuta != null && !dbRuta.isEmpty()) {
+//                    // 1. Identificar paradas únicas en el nuevo orden
+//                    Map<Integer, Integer> paradaSecuenciaMap = new HashMap<>();
+//                    int secuenciaParada = 1;
+//
+//                    for (Ruta ruta : dbRuta) {
+//                        int paradaId = ruta.getParadaId();
+//                        if (!paradaSecuenciaMap.containsKey(paradaId)) {
+//                            paradaSecuenciaMap.put(paradaId, secuenciaParada);
+//                            secuenciaParada++;
+//                        }
+//                    }
+//
+//                    // 2. Actualizar todas las guías con la nueva secuencia de parada
+//                    for (int i = 0; i < dbRuta.size(); i++) {
+//                        Ruta ruta = dbRuta.get(i);
+//                        int paradaId = ruta.getParadaId();
+//                        int nuevaSecuenciaParada = paradaSecuenciaMap.get(paradaId);
+//
+//                        // Actualizar en la base de datos
+//                        ruta.setParadaSecuencia(String.valueOf(nuevaSecuenciaParada));
+//                        ruta.save();
+//
+//                        // Actualizar en la UI
+//                        if (i < rutaItems.size()) {
+//                            rutaItems.get(i).setCounterItem(String.valueOf(nuevaSecuenciaParada));
+//                            rutaItems.get(i).setSecuenciaParada(String.valueOf(nuevaSecuenciaParada));
+//                        }
+//
+//                        Log.d(TAG, "Guía " + ruta.getGuia() +
+//                                " - Parada " + paradaId +
+//                                " - Nueva secuencia: " + nuevaSecuenciaParada);
+//                    }
+//
+//                    // 3. Actualizar la UI
+//                    if (view.getViewContext() != null) {
+//                        ((AppCompatActivity) view.getViewContext()).runOnUiThread(() -> {
+//                            view.notifyAllItemChanged();
+//                        });
+//                    }
+//                }
+//            } catch (Exception e) {
+//                Log.e(TAG, "Error en updateParadaSecuenciaAfterMove: " + e.getMessage());
+//            }
+//        }).start();
+
+        try {
+            if (dbRuta != null && !dbRuta.isEmpty()) {
+                // 1. Identificar paradas únicas en el nuevo orden
+                Map<Integer, Integer> paradaSecuenciaMap = new HashMap<>();
+                int secuenciaParada = 1;
+
+                for (Ruta ruta : dbRuta) {
+                    int paradaId = ruta.getParadaId();
+                    if (!paradaSecuenciaMap.containsKey(paradaId)) {
+                        paradaSecuenciaMap.put(paradaId, secuenciaParada);
+                        secuenciaParada++;
+                    }
+                }
+
+                // 2. Actualizar todas las guías con la nueva secuencia de parada (solo en memoria)
+                for (int i = 0; i < dbRuta.size(); i++) {
+                    Ruta ruta = dbRuta.get(i);
+                    int paradaId = ruta.getParadaId();
+                    int nuevaSecuenciaParada = paradaSecuenciaMap.get(paradaId);
+
+                    // Actualizar en el objeto Ruta (solo memoria)
+                    ruta.setParadaSecuencia(String.valueOf(nuevaSecuenciaParada));
+
+                    // Actualizar en RutaItem (solo memoria)
+                    if (i < rutaItems.size()) {
+                        rutaItems.get(i).setCounterItem(String.valueOf(nuevaSecuenciaParada));
+                        rutaItems.get(i).setSecuenciaParada(String.valueOf(nuevaSecuenciaParada));
+                    }
+
+                    Log.d(TAG, "Guía " + ruta.getGuia() +
+                            " - Parada " + paradaId +
+                            " - Nueva secuencia: " + nuevaSecuenciaParada);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error en updateParadaSecuenciaAfterMove: " + e.getMessage());
+        }
     }
 
     private Date calculateTimeArriveGE(int currentPosition, int previousPosition, Date previousHour) {

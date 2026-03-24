@@ -61,6 +61,7 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     private Map<Integer, List<RutaItem>> mapaParadas = new HashMap<>();
     private List<Integer> idsParadas = new ArrayList<>();
     private List<RutaItem> todasLasGuiasPendientes = new ArrayList<>();
+    private AlertDialog dialogParada = null;
 
     public RutaPendienteFragment() {
     }
@@ -170,12 +171,11 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
             todasLasGuiasPendientes = rutas;
             agruparPorParadas(rutas);
 
-            paradaAdapter = new ParadaAdapter(getActivity(), this, idsParadas, mapaParadas, rutas);
+//            paradaAdapter = new ParadaAdapter(getActivity(), this, idsParadas, mapaParadas, rutas);
+            paradaAdapter = new ParadaAdapter(getActivity(), this, idsParadas, mapaParadas);
             binding.rvRutas.setAdapter(paradaAdapter);
             clearAttachRecyclerView();
             addAttachRecyclerView();
-//            agruparPorParadas(rutas);
-//            mostrarParadasEnLista(rutas);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -312,6 +312,11 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     }
 
     @Override
+    public void onClickParadaIconLinea(View view, int position, int idParada) {
+
+    }
+
+    @Override
     public void onClickGuiaIconImporte(View view, int position) {
         presenter.onClickImportePorCobrar(position);
     }
@@ -324,6 +329,11 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     @Override
     public void onParadaClick(int paradaId, int position) {
         manejarClickParada(paradaId);
+    }
+
+    @Override
+    public void onClickParadaIconLinea(int paradaId, int position) {
+        //manejarSeleccionParada(paradaId);
     }
 
     @Override
@@ -388,25 +398,6 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
         }
     }
 
-//    private void mostrarParadasEnLista(List<RutaItem> rutas) {
-//        if (paradaAdapter == null) {
-//            paradaAdapter = new ParadaAdapter(getActivity(),
-//                    new ParadaAdapter.OnParadaClickListener() {
-//                        @Override
-//                        public void onParadaClick(int paradaId, int position) {
-//                            manejarClickParada(paradaId);
-//                        }
-//                    }, idsParadas, mapaParadas, rutas);
-//
-//            binding.rvRutas.setAdapter(paradaAdapter);
-//            clearAttachRecyclerView();
-//            addAttachRecyclerView();
-//        } else {
-//            paradaAdapter.setData(idsParadas, mapaParadas);
-//            paradaAdapter.notifyDataSetChanged();
-//        }
-//    }
-
     private void manejarClickParada(int paradaId) {
         List<RutaItem> guiasEnParada = mapaParadas.get(paradaId);
 
@@ -414,7 +405,6 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
             return;
         }
 
-        // Si solo tiene 1 guía, ir directo a gestionar
         if (guiasEnParada.size() == 1) {
             RutaItem guia = guiasEnParada.get(0);
             int posicion = encontrarPosicionGuia(guia);
@@ -428,6 +418,30 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
         } else {
             mostrarModalGuiasParada(paradaId, guiasEnParada);
         }
+    }
+
+    private void manejarSeleccionParada(int paradaId){
+        List<RutaItem> guiasEnParada = mapaParadas.get(paradaId);
+
+        if (guiasEnParada == null || guiasEnParada.isEmpty()) {
+            return;
+        }
+
+        RutaItem guia = guiasEnParada.get(0);
+        int posicion = encontrarPosicionGuia(guia);
+        presenter.onSelectedItem(posicion);
+    }
+
+    private void manejarSeleccionGuiaParada(int paradaId, int position){
+        List<RutaItem> guiasEnParada = mapaParadas.get(paradaId);
+
+        if (guiasEnParada == null || guiasEnParada.isEmpty()) {
+            return;
+        }
+
+        RutaItem guia = guiasEnParada.get(position);
+        int posicion = encontrarPosicionGuia(guia);
+        presenter.onSelectedItem(posicion);
     }
 
     private int encontrarPosicionGuia(RutaItem guiaBuscada) {
@@ -451,22 +465,25 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
         RecyclerView rvGuias = dialogView.findViewById(R.id.rvGuiasParada);
         rvGuias.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        List<RutaItem> guiasActualizadas = obtenerGuiasActualizadas(guias);
+
         RutaAdapter guiasAdapter = new RutaAdapter(getActivity(),
                 new RutaAdapter.OnClickGuiaItemListener() {
                     @Override
                     public void onClickGuiaItem(View view, int position) {
-                        // Cuando se selecciona una guía en el modal
                         RutaItem guiaSeleccionada = guias.get(position);
                         int posicionReal = encontrarPosicionGuia(guiaSeleccionada);
 
                         if (posicionReal >= 0) {
-                            // Cerrar el modal
-                            AlertDialog dialog = (AlertDialog) view.getRootView().getTag();
-                            if (dialog != null && dialog.isShowing()) {
-                                dialog.dismiss();
+//                            AlertDialog dialog = (AlertDialog) view.getRootView().getTag();
+//                            if (dialog != null && dialog.isShowing()) {
+//                                dialog.dismiss();
+//                            }
+                            if (dialogParada != null && dialogParada.isShowing()) {
+                                dialogParada.dismiss();
+                                dialogParada = null;
                             }
 
-                            // Manejar la selección
                             if (actionMode == null) {
                                 presenter.onClickItem(posicionReal);
                             } else {
@@ -477,30 +494,45 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
                     @Override
                     public void onClickGuiaIconLinea(View view, int position) {
-                        // Opcional: manejar click en icono
+                    }
+
+                    @Override
+                    public void onClickParadaIconLinea(View view, int position, int idParada) {
+                        manejarSeleccionGuiaParada(idParada, position);
+                        dialogParada.dismiss();
+                        mostrarModalGuiasParada(paradaId, guias);
                     }
 
                     @Override
                     public void onClickGuiaIconImporte(View view, int position) {
-                        // Opcional: manejar click en importe
                     }
 
                     @Override
                     public void onClickGuiaIconTipoEnvio(View view, int position) {
-                        // Opcional: manejar click en tipo de envío
                     }
-                }, guias);
+                }, guiasActualizadas);
 
         rvGuias.setAdapter(guiasAdapter);
 
-        // Crear y mostrar el dialog
-        AlertDialog dialog = builder.create();
+        dialogParada = builder.create();
 
-        // Configurar botón de cerrar
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cerrar",
+        dialogParada.setButton(AlertDialog.BUTTON_NEGATIVE, "Cerrar",
                 (dialogInterface, which) -> dialogInterface.dismiss());
 
-        dialog.show();
+        dialogParada.show();
+    }
+
+    private List<RutaItem> obtenerGuiasActualizadas(List<RutaItem> guias) {
+        List<RutaItem> actualizadas = new ArrayList<>();
+        for (RutaItem guia : guias) {
+            int posicionReal = encontrarPosicionGuia(guia);
+            if (posicionReal >= 0) {
+                actualizadas.add(todasLasGuiasPendientes.get(posicionReal));
+            } else {
+                actualizadas.add(guia);
+            }
+        }
+        return actualizadas;
     }
 
     private void closeUSerSession() {

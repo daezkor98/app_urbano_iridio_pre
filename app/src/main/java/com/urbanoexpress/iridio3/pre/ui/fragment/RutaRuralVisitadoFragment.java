@@ -101,6 +101,11 @@ public class RutaRuralVisitadoFragment extends Fragment implements RutaGestionad
     }
 
     @Override
+    public void onClickParadaIconLinea(View view, int position, int idParada) {
+        presenter.onClickItem(position);
+    }
+
+    @Override
     public void onClickGuiaIconImporte(View view, int position) { }
 
     @Override

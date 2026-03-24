@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /c/Users/USER-PC/Desktop/App/\"Iridio Pre\"/appurbano_iridio_pre/app/src/main/java/com/urbanoexpress/iridio3/pre/presenter/*.java)"
+    ]
+  }
+}

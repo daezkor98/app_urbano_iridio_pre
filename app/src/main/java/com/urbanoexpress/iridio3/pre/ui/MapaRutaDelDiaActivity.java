@@ -461,10 +461,18 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             LatLng latLng;
 
             // PRIORIDAD: coordenadas de parada
-            if (CommonUtils.isValidCoords(guiaRepresentante.getParadaLatitude(),
-                    guiaRepresentante.getParadaLongitude())) {
-                latLng = new LatLng(Double.parseDouble(guiaRepresentante.getParadaLatitude()),
-                        Double.parseDouble(guiaRepresentante.getParadaLongitude()));
+//            if (CommonUtils.isValidCoords(guiaRepresentante.getParadaLatitude(),
+//                    guiaRepresentante.getParadaLongitude())) {
+//                latLng = new LatLng(Double.parseDouble(guiaRepresentante.getParadaLatitude()),
+//                        Double.parseDouble(guiaRepresentante.getParadaLongitude()));
+//            } else {
+//                latLng = new LatLng(0, 0);
+//            }
+
+            if (CommonUtils.isValidCoords(guiaRepresentante.getGpsLatitude(),
+                    guiaRepresentante.getGpsLongitude())) {
+                latLng = new LatLng(Double.parseDouble(guiaRepresentante.getGpsLatitude()),
+                        Double.parseDouble(guiaRepresentante.getGpsLongitude()));
             } else {
                 latLng = new LatLng(0, 0);
             }
@@ -724,6 +732,11 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
     @Override
     public void onClickGuiaIconLinea(View view, int position) {
+
+    }
+
+    @Override
+    public void onClickParadaIconLinea(View view, int position, int idParada) {
 
     }
 

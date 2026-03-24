@@ -101,6 +101,11 @@ public class RutaGestionadaFragment extends Fragment implements RutaGestionadaVi
     }
 
     @Override
+    public void onClickParadaIconLinea(View view, int position, int idParada) {
+
+    }
+
+    @Override
     public void onClickGuiaIconImporte(View view, int position) { }
 
     @Override

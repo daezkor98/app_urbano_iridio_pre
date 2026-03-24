@@ -39,12 +39,27 @@ abstract class AsyncTaskCoroutine<I, O> {
         }
     }
 
+//    private suspend fun callAsync(vararg input: I) {
+//        try {
+//            GlobalScope.async(Dispatchers.IO) {
+//                result = doInBackground(*input)
+//            }.await()
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        GlobalScope.launch(Dispatchers.Main) {
+//            onPostExecute(result)
+//        }
+//    }
+
     private suspend fun callAsync(vararg input: I) {
-        GlobalScope.async(Dispatchers.IO) {
-            result = doInBackground(*input)
-        }.await()
-        GlobalScope.launch(Dispatchers.Main) {
-            onPostExecute(result)
+        try {
+            GlobalScope.async(Dispatchers.IO) {
+                result = doInBackground(*input)
+            }.await()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+        onPostExecute(result)
     }
 }

@@ -426,6 +426,14 @@ public class RutaPendienteInteractor {
         return null;
     }
 
+    public static List<Ruta> selectRutasByParadaId(int paradaId) {
+        return Ruta.find(Ruta.class,
+                NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +
+                        NamingHelper.toSQLNameDefault("paradaId") + " = ?",
+                Preferences.getInstance().getString("idUsuario", ""),
+                String.valueOf(paradaId));
+    }
+
     public List<Ruta> selectAllRutas() {
         return Ruta.find(Ruta.class,
                 NamingHelper.toSQLNameDefault("idUsuario") + " = ? and " +

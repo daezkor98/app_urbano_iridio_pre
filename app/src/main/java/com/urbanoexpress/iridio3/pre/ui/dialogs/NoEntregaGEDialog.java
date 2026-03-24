@@ -100,6 +100,18 @@ import com.urbanoexpress.iridio3.pre.view.DescargaNoEntregaView;
         }
     }
 
+//    @Override
+//    public void dismiss() {
+//        dismissAllowingStateLoss();
+//    }
+
+    @Override
+    public void closeDialog() {
+        if (getDialog() != null && getDialog().isShowing()) {
+            dismissAllowingStateLoss();
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

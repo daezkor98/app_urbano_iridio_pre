@@ -629,13 +629,27 @@ public class MapaRutaDelDiaPresenter {
 
         @Override
         public String doInBackground(String... strings) {
-            Ruta guia = RutaPendienteInteractor.selectRuta(
-                    guiaSeleccionada.getIdServicio(), guiaSeleccionada.getLineaNegocio());
+//            Ruta guia = RutaPendienteInteractor.selectRuta(
+//                    guiaSeleccionada.getIdServicio(), guiaSeleccionada.getLineaNegocio());
+//
+//            if (guia != null) {
+//                guia.setGpsLatitude(strings[0]);
+//                guia.setGpsLongitude(strings[1]);
+//                guia.save();
+//            }
+//            return null;
+            List<Ruta> guias = RutaPendienteInteractor.selectRutasByParadaId(
+                    guiaSeleccionada.getParadaId());
 
-            if (guia != null) {
-                guia.setGpsLatitude(strings[0]);
-                guia.setGpsLongitude(strings[1]);
-                guia.save();
+            if (guias != null && !guias.isEmpty()) {
+                for (Ruta guia : guias) {
+                    guia.setParadaLatitude(strings[0]);
+                    guia.setParadaLongitude(strings[1]);
+
+                    guia.setGpsLatitude(strings[0]);
+                    guia.setGpsLongitude(strings[1]);
+                    guia.save();
+                }
             }
             return null;
         }
@@ -737,7 +751,8 @@ public class MapaRutaDelDiaPresenter {
 
                 for (Ruta guia : guiasEnParada) {
                     // Verificar coordenadas de PARADA primero
-                    if (CommonUtils.isValidCoords(guia.getParadaLatitude(), guia.getParadaLongitude())) {
+//                    if (CommonUtils.isValidCoords(guia.getParadaLatitude(), guia.getParadaLongitude())) {
+                    if (CommonUtils.isValidCoords(guia.getGpsLatitude(), guia.getGpsLongitude())) {
                         guiaPrincipal = guia;
                         break;
                     }

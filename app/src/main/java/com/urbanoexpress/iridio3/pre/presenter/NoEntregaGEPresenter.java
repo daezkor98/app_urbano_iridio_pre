@@ -732,12 +732,14 @@ public class NoEntregaGEPresenter {
 
     private void updateEstadoGestionGE(int procesoDescarga) {
         for (int i = 0; i < descargaRutas.size(); i++) {
+            if (descargaRutas.get(i) == null) continue;
             descargaRutas.get(i).setProcesoDescarga(procesoDescarga);
             descargaRutas.get(i).save();
         }
         for (int i = 0; i < rutas.size(); i++) {
             Ruta ruta = rutaPendienteInteractor.selectRuta(
                     rutas.get(i).getIdServicio(), rutas.get(i).getLineaNegocio());
+            if (ruta == null) continue;
             Log.d(TAG, "UPDATE ESTADO DESCARGA ON RUTA");
             ruta.setEstadoDescarga(Ruta.EstadoDescarga.GESTIONADO);
             ruta.setIdMotivo(dbMotivoDescargas.get(selectedIndexMotivo).getIdMotivo());

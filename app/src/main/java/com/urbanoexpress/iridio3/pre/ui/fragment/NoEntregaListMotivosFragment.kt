@@ -26,6 +26,7 @@ class NoEntregaListMotivosFragment : BaseDialogFragment(),
     private var param1: String? = null
     private var binding: FragmentNoEntregaListMotivosBinding? = null
     private var presenter: NoEntregaListMotivosPresenter? = null
+    private var isProcessing = false
 
     companion object {
         val TAG = NoEntregaListMotivosFragment::class.java.simpleName
@@ -56,6 +57,11 @@ class NoEntregaListMotivosFragment : BaseDialogFragment(),
             presenter?.getListMotivosNoEntrega()
         }
         return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        isProcessing = false
     }
 
     override fun showListMotivosNoEntrega(motivos: List<MotivoDescargaItem>) {
@@ -102,9 +108,15 @@ class NoEntregaListMotivosFragment : BaseDialogFragment(),
     }
 
     private fun next(idMotivo: Int) {
+        if (isProcessing) {
+            return
+        }
+
         arguments?.let {
             val ruta = it.getSerializable("guias") as? ArrayList<Ruta>
             val numVecesGestionado = it.getInt("numVecesGestionado")
+            isProcessing = true
+            dismiss()
             val dialogFragment = NoEntregaGEDialog.newInstance(ruta, numVecesGestionado, idMotivo)
             val tagFragment = NoEntregaGEDialog.TAG
             dialogFragment?.show(requireActivity().supportFragmentManager, tagFragment)
