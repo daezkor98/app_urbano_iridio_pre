@@ -28,8 +28,6 @@ import kotlin.coroutines.suspendCoroutine
 class PlanRutaCamaraInteractor(context: Context) {
 
     private val requestQueue: RequestQueue = Volley.newRequestQueue(context)
-//    "https://api.geo.dev-urbano.dev/iridio/api/registro/datosRuta/" + "${idRutaQr}" + "/" +
-//    "${Preferences.getInstance().getString("idUsuario", "")}"
 
     suspend fun getRutaDetail(idRutaQr: String): PlanRutaCamaraResponse =
         suspendCoroutine { continuation ->

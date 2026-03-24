@@ -39,8 +39,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class ApiService {
 
     private static final String TAG = ApiService.class.getSimpleName();
-    private static final String BASE_URL = "https://bkd-tms.urbanoexpress.com.pe/iridio/";
-    //private static final String BASE_URL = "https://api.geo.dev-urbano.dev/iridio/";
+    //private static final String BASE_URL = "https://bkd-tms.urbanoexpress.com.pe/iridio/";
+    private static final String BASE_URL = "https://api.geo.dev-urbano.dev/iridio/";
 
     private static ApiService apiService;
     private RetrofitApiInterface apiInterface;

@@ -18,6 +18,7 @@ import android.util.Log;
 import java.lang.reflect.Method;
 
 import com.urbanoexpress.iridio3.pre.R;
+import com.urbanoexpress.iridio3.pre.services.SyncManager;
 
 /**
  * Created by mick on 19/05/16.
@@ -146,6 +147,17 @@ public class InfoDevice {
             }
         }
         return false;
+    }
+
+    public static boolean areSyncsActive(Context context) {
+        if (Session.getUser() == null) {
+            return false;
+        }
+        try {
+            return SyncManager.areSyncsActive(context);
+        } catch (Exception e) {
+            return Session.getUser() != null;
+        }
     }
 
     private static String getIMEIFromSystemProperties() {

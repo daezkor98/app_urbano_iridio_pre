@@ -31,7 +31,7 @@ import java.util.Map;
 import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.databinding.FragmentRutasBinding;
 import com.urbanoexpress.iridio3.pre.presenter.RutaPendientePresenter;
-import com.urbanoexpress.iridio3.pre.services.DataSyncService;
+import com.urbanoexpress.iridio3.pre.services.SyncManager;
 import com.urbanoexpress.iridio3.pre.ui.InitActivity;
 import com.urbanoexpress.iridio3.pre.ui.adapter.ParadaAdapter;
 import com.urbanoexpress.iridio3.pre.ui.helpers.ModalHelper;
@@ -543,7 +543,8 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
             Session.clearSession();
         }).start();
 
-        requireActivity().stopService(new Intent(getActivity(), DataSyncService.class));
+        //requireActivity().stopService(new Intent(getActivity(), DataSyncService.class));
+        SyncManager.stopAllSyncs(getActivity());
         requireActivity().startActivity(new Intent(getActivity(), InitActivity.class));
         requireActivity().finish();
     }

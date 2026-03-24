@@ -3,7 +3,10 @@ package com.urbanoexpress.iridio3.pre.presenter;
 import android.content.Intent;
 
 import com.android.volley.VolleyError;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.urbanoexpress.iridio3.pre.BuildConfig;
 import com.urbanoexpress.iridio3.pre.model.entity.GrupoMotivo;
 import com.urbanoexpress.iridio3.pre.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pre.R;
@@ -32,6 +35,10 @@ public class SplashLogInPresenter implements RequestCallback {
 
     private String firebaseToken = "";
     private String devicePhone = "";
+    private String email = "";
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = mAuth.getCurrentUser();
 
     public SplashLogInPresenter(SplashLogInView view) {
         this.view = view;
@@ -43,6 +50,10 @@ public class SplashLogInPresenter implements RequestCallback {
         Preferences.getInstance().init(view.getViewContext(), "UserProfile");
 
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(s -> firebaseToken = s);
+
+        if (currentUser != null) {
+            email = currentUser.getEmail();
+        }
 
         view.animateSplashScreen();
     }
@@ -71,7 +82,9 @@ public class SplashLogInPresenter implements RequestCallback {
                         userName,
                         CommonUtils.getSHA1(passWord),
                         firebaseToken,
-                        devicePhone
+                        devicePhone,
+                        email,
+                        BuildConfig.VERSION_NAME
                 };
 
                 splashLogInInteractor.logIn(params, this);

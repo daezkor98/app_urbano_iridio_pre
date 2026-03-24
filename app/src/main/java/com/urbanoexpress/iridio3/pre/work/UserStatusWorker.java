@@ -27,7 +27,7 @@ import com.urbanoexpress.iridio3.data.entity.VerifyUserSessionEntity;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
 import com.urbanoexpress.iridio3.data.remote.urbano.UrbanoApiManager;
 import com.urbanoexpress.iridio3.pre.data.rest.ApiRest;
-import com.urbanoexpress.iridio3.pre.services.DataSyncService;
+import com.urbanoexpress.iridio3.pre.services.SyncManager;
 import com.urbanoexpress.iridio3.pre.ui.InitActivity;
 import com.urbanoexpress.iridio3.pre.util.CommonUtils;
 import com.urbanoexpress.iridio3.pre.util.NotificationUtils;
@@ -88,8 +88,9 @@ public class UserStatusWorker extends Worker {
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() -> {
 
-                    getApplicationContext().stopService(
-                            new Intent(getApplicationContext(), DataSyncService.class));
+//                    getApplicationContext().stopService(
+//                            new Intent(getApplicationContext(), DataSyncService.class));
+                    SyncManager.stopAllSyncs(getApplicationContext());
 
                     Intent intent = new Intent(getApplicationContext(), InitActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
