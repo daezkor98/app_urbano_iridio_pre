@@ -3,81 +3,330 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yape_color">
+    android:background="@color/colorSecondary">
 
-    <TextView
-        android:id="@+id/lbl_step_order"
-        android:layout_width="0dp"
+    <!-- Logo Urbano -->
+    <ImageView
+        android:id="@+id/img_logo_urbano"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:gravity="center"
-        android:text="@string/scann_yape_qr"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/lightPrimaryText"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/sub_constraint"
-        app:layout_constraintEnd_toEndOf="@id/sub_constraint"
-        app:layout_constraintStart_toStartOf="@id/sub_constraint" />
+        android:layout_marginTop="32dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="Urbano"
+        android:src="@drawable/logo_urbano_lema_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Contenido QR -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/sub_constraint"
+        android:id="@+id/box_qr_contenido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:background="@drawable/bg_white_with_corner_10dp"
-        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/img_logo_urbano">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/lay_importe_group"
+        <!-- Tarjeta blanca -->
+        <LinearLayout
+            android:id="@+id/sub_constraint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            app:layout_constraintEnd_toEndOf="@id/qr_code_image"
-            app:layout_constraintStart_toStartOf="@id/qr_code_image"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/lbl_importe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:text="Importe:"
-                android:textColor="@color/yape_color"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/lbl_importe_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="5dp"
-                android:text="S/. 4.50"
-                android:textColor="@color/yape_color"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/qr_code_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="5dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/yape_qr"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginHorizontal="30dp"
+            android:background="@drawable/bg_white_with_corner_10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lay_importe_group" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Botón Generar QR (visible por defecto, se oculta al generar) -->
+            <TextView
+                android:id="@+id/btn_generar_qr"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:paddingHorizontal="30dp"
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/bg_btn_filled_secondary"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/btn_generar_qr"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <!-- Contenido del QR (oculto hasta que se genere) -->
+            <TextView
+                android:id="@+id/lbl_escanea_pagar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="@string/qr_escanea_para_pagar"
+                android:textColor="@color/colorUrbanoGrey"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/qr_code_image"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:layout_marginVertical="8dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/yape_qr"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/lbl_rq_id_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:textColor="@color/colorUrbanoGrey"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/lbl_monto_qr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textColor="@color/colorUrbanoGrey"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <!-- Billeteras electrónicas (visible junto al QR) -->
+            <TextView
+                android:id="@+id/lbl_billeteras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="Puedes pagar con tus billeteras electrónicas de:"
+                android:textColor="@color/colorUrbanoGrey"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/lay_medios_pago"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Yape"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/yape" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Plin"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/plin" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="BCP"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bcp" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="BBVA"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/bbva" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Interbank"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/itbk" />
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Scotiabank"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sct" />
+
+            </LinearLayout>
+
+            <!-- Comprobante de pago (visible solo cuando el pago fue exitoso) -->
+            <LinearLayout
+                android:id="@+id/box_comprobante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="12dp"
+                    android:contentDescription="Pago realizado"
+                    android:src="@drawable/ic_check_circle_green" />
+
+                <TextView
+                    android:id="@+id/lbl_comprobante_estado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="#4CAF50"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/gris_3" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Guía:"
+                        android:textColor="@color/colorUrbanoGrey"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/lbl_comprobante_guia"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/colorBlackUrbano"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Monto:"
+                        android:textColor="@color/colorUrbanoGrey"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/lbl_comprobante_monto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/colorBlackUrbano"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Documento:"
+                        android:textColor="@color/colorUrbanoGrey"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/lbl_comprobante_doc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/colorBlackUrbano"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nombre:"
+                        android:textColor="@color/colorUrbanoGrey"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/lbl_comprobante_nombre"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/colorBlackUrbano"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Botón Pago en Efectivo -->
+        <TextView
+            android:id="@+id/btn_efectivo"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_btn_outline_white"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingHorizontal="20dp"
+            android:text="Pago en Efectivo"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sub_constraint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

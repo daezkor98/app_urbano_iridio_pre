@@ -29,12 +29,18 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import com.google.android.gms.location.LocationServices;
 import com.orm.util.NamingHelper;
+import com.urbanoexpress.iridio3.pre.data.rest.ApiRest;
 import com.urbanoexpress.iridio3.pre.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.application.AndroidApplication;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
+import android.os.Handler;
+import android.os.Looper;
+import com.urbanoexpress.iridio3.pre.data.rest.ApiService;
+import com.urbanoexpress.iridio3.pre.model.entity.ConsultarQRRequest;
 import com.urbanoexpress.iridio3.pre.model.entity.Data;
 import com.urbanoexpress.iridio3.pre.model.entity.DescargaRuta;
+import com.urbanoexpress.iridio3.pre.model.entity.GenerarQRRequest;
 import com.urbanoexpress.iridio3.pre.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio3.pre.model.entity.Imagen;
 import com.urbanoexpress.iridio3.pre.model.entity.MotivoDescarga;
@@ -103,8 +109,16 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     private static final String TAG = EntregaGEPresenter.class.getSimpleName();
 
+    private static final int POLLING_INTERVAL_MS = 5000;
+
     private DescargaEntregaView view;
     private RutaPendienteInteractor rutaPendienteInteractor;
+
+    private String datosPagoNombre;
+    private String datosPagoDni;
+    private String rqIdCode;
+    private final Handler pollingHandler = new Handler(Looper.getMainLooper());
+    private Runnable pollingRunnable;
 
     private List<MotivoDescarga> dbMotivoDescargas = Collections.emptyList();
     private List<MotivoDescargaItem> motivoItems = new ArrayList<>();
@@ -374,6 +388,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
+        stopPollingPago();
         LocalBroadcastManager.getInstance(view.getViewContext())
                 .unregisterReceiver(saveFirmaReceiver);
         LocalBroadcastManager.getInstance(view.getViewContext())
@@ -478,11 +493,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.DATOS_ENTREGA) {
             if (validateDatosEntrega()) {
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
-//                if (isMedioPagoYape()) {
-//                    showYapeQRStep();
-//                } else if (isMedioPagoEfectivo()) {
-//                    showPagoDialog();
-                if (minFotosProducto == 0 || hasHabilitantes() || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
+                // showQRPagoStep(); // método de pago QR deshabilitado temporalmente
+                view.setVisibilityBtnSiguiente(View.VISIBLE);
+                if (minFotosProducto == 0 || hasHabilitantes()
+                        || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
                     currentStep = STEPS.FOTOS_CARGO;
@@ -536,9 +550,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
         if (currentStep == STEPS.YAPE_QR) {
             view.setVisibilityBoxYapeQR(View.GONE);
-
-            view.setVisibilityBoxYapeQR(View.GONE);
             view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
+            view.setTextBtnSiguiente("Siguiente");
             currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;
             return;
         }
@@ -1225,12 +1238,157 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    private void showYapeQRStep() {
-        //view.setVisibilityBoxYapeQR(View.VISIBLE);
+    private void showQRPagoStep() {
+        datosPagoNombre = view.getTextNombre();
+        datosPagoDni = view.getTextDNI();
+        view.setVisibilityBoxYapeQR(View.VISIBLE);
+        view.setVisibilityBoxQRBotones(View.VISIBLE);   // muestra btn "Generar QR" dentro de la tarjeta
+        view.setVisibilityBoxQRContenido(View.GONE);    // oculta imagen QR + monto
+        view.setVisibilityBtnSiguiente(View.GONE);
         currentStep = STEPS.YAPE_QR;
-        //requestYapeQR();
     }
 
+    private void startPollingPago() {
+        pollingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                consultarPago();
+            }
+        };
+        pollingHandler.postDelayed(pollingRunnable, POLLING_INTERVAL_MS);
+    }
+
+    private void stopPollingPago() {
+        if (pollingRunnable != null) {
+            pollingHandler.removeCallbacks(pollingRunnable);
+            pollingRunnable = null;
+        }
+    }
+
+    private void consultarPago() {
+        ConsultarQRRequest request = new ConsultarQRRequest(rqIdCode);
+        ApiService.getInstance().requestJson(ApiRest.Api.URL_CONSULTAR_QR, request, new ApiService.ResponseListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (!response.isNull("data") && response.getJSONObject("data") != null) {
+                        JSONObject data = response.getJSONObject("data");
+                        String estado = data.optString("estado", "");
+                        if ("PAGADO".equalsIgnoreCase(estado)) {
+                            stopPollingPago();
+                            String guia = data.optString("guia", "");
+                            String monto = ModelUtils.getSimboloMoneda(view.getViewContext())
+                                    + " " + data.optString("monto", "");
+                            String docNumero = data.optString("doc_numero", "");
+                            String nombre = data.optString("name", "");
+                            view.showComprobantePago(estado, guia, monto, docNumero, nombre);
+                            view.setVisibilityBtnSiguiente(View.VISIBLE);
+                            view.setTextBtnSiguiente("Continuar");
+                            return;
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "consultarPago: ", e);
+                }
+                // Pago aún no realizado — reintentar
+                pollingHandler.postDelayed(pollingRunnable, POLLING_INTERVAL_MS);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // 400 = no pagado aún, seguir polling
+                pollingHandler.postDelayed(pollingRunnable, POLLING_INTERVAL_MS);
+            }
+        });
+    }
+
+    public void onBtnEfectivoClick() {
+        stopPollingPago();
+        view.setVisibilityBoxYapeQR(View.GONE);
+        view.setVisibilityBtnSiguiente(View.VISIBLE);
+        if (minFotosProducto == 0 || hasHabilitantes()
+                || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
+            view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
+            view.notifyGaleriaCargoAllItemChanged();
+            currentStep = STEPS.FOTOS_CARGO;
+        } else {
+            view.setVisibilityBoxStepProductoCliente(View.VISIBLE);
+            view.notifyGaleriaProductoClienteAllItemChanged();
+            view.setTextBtnSiguiente("Gestionar");
+            currentStep = STEPS.FOTOS_PRODUCTO_CLIENTE;
+        }
+    }
+
+    public void onBtnGenerarQRClick() {
+        view.setVisibilityBoxQRBotones(View.GONE);  // oculta btn "Generar QR" de la tarjeta
+        view.setVisibilityBtnSiguiente(View.GONE);
+        requestQR();
+    }
+
+    private void requestQR() {
+        view.showProgressDialog("Generando QR...");
+
+        double monto;
+        try {
+            monto = Double.parseDouble(rutas.get(0).getImporte());
+        } catch (NumberFormatException e) {
+            monto = 0;
+        }
+
+        GenerarQRRequest request = new GenerarQRRequest(
+                rutas.get(0).getGuia(),
+                monto,
+                datosPagoNombre,
+                datosPagoDni
+        );
+
+        ApiService.getInstance().requestJson(ApiRest.Api.URL_GENERAR_QR, request, new ApiService.ResponseListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                view.dismissProgressDialog();
+                try {
+                    // Guía ya pagada previamente (el servidor responde HTTP 200 con http_code 400 en el body)
+                    if (response.optInt("http_code", 0) == 400) {
+                        JSONObject data = response.optJSONObject("data");
+                        if (data != null) {
+                            String guia = data.optString("guia", "");
+                            String monto = ModelUtils.getSimboloMoneda(view.getViewContext())
+                                    + " " + data.optString("monto", "");
+                            String docNumero = data.optString("doc_numero", "");
+                            String nombre = data.optString("name", "");
+                            view.showComprobantePago("PAGADO", guia, monto, docNumero, nombre);
+                            view.setVisibilityBtnSiguiente(View.VISIBLE);
+                            view.setTextBtnSiguiente("Continuar");
+                        }
+                        return;
+                    }
+                    JSONObject data = response.getJSONObject("data");
+                    String hash = data.getString("hash");
+                    rqIdCode = data.getString("rq_id_code");
+                    view.setVisibilityBoxQRContenido(View.VISIBLE);
+                    view.displayQR(hash);
+                    view.setTextRqIdCode("ID: " + rqIdCode);
+                    view.setTextImporte(ModelUtils.getSimboloMoneda(view.getViewContext())
+                            + " " + rutas.get(0).getImporte());
+                    startPollingPago();
+                } catch (Exception e) {
+                    Log.e(TAG, "requestQR onResponse: ", e);
+                    BaseModalsView.showToast(view.getViewContext(),
+                            "Error al procesar el QR", Toast.LENGTH_LONG);
+                    view.setVisibilityBoxQRBotones(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                view.dismissProgressDialog();
+                BaseModalsView.showToast(view.getViewContext(),
+                        "Error al generar el QR, intente nuevamente", Toast.LENGTH_LONG);
+                view.setVisibilityBoxQRBotones(View.VISIBLE);
+            }
+        });
+    }
+    
     private boolean isMedioPagoEfectivo() {
         switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
             case 1:
@@ -1263,7 +1421,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     private boolean isMedioPagoYape() {
         String medioPago = rutas.get(0).getIdMedioPago();
         return medioPago.equals("3");
-
     }
 
     private boolean hasHabilitantes() {

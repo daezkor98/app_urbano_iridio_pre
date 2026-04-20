@@ -39,10 +39,15 @@ public class VerficationCodePresenter {
     }
 
     public void onBtnContinueClick(String email) {
-        if (Connection.hasNetworkConnectivity(view.getViewContext())) {
+        android.content.Context context = view.getViewContext();
+        if (context == null) {
+            // Contexto no disponible, se intenta continuar asumiendo conectividad
+            requestValidateVerificationEmail(email);
+            return;
+        }
+        if (Connection.hasNetworkConnectivity(context)) {
             view.showProgressDialog();
             requestValidateVerificationEmail(email);
-
         } else {
             view.showMessageNotConnectedToNetwork();
         }
@@ -72,7 +77,6 @@ public class VerficationCodePresenter {
                         @Override
                         public void onResponse(JSONObject response) {
                             view.dismissProgressDialog();
-
                             try {
                                 if (response.getBoolean("success")) {
                                     new ConfigCountryTask().execute();

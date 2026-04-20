@@ -183,8 +183,14 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void notifyItemChanged(int position) {
+//        try {
+//            binding.rvRutas.getAdapter().notifyItemChanged(position);
+//        } catch (NullPointerException ex) {
+//            ex.printStackTrace();
+//        }
         try {
-            binding.rvRutas.getAdapter().notifyItemChanged(position);
+            int adapterPos = obtenerPosicionAdapterParada(position);
+            binding.rvRutas.getAdapter().notifyItemChanged(adapterPos);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -201,8 +207,14 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void notifyItemRemove(int position) {
+//        try {
+//            binding.rvRutas.getAdapter().notifyItemRemoved(position);
+//        } catch (NullPointerException ex) {
+//            ex.printStackTrace();
+//        }
         try {
-            binding.rvRutas.getAdapter().notifyItemRemoved(position);
+            int adapterPos = obtenerPosicionAdapterParada(position);
+            binding.rvRutas.getAdapter().notifyItemRemoved(adapterPos);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -219,11 +231,25 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void scrollToPosition(final int position) {
+//        try {
+//            binding.rvRutas.scrollToPosition(position);
+//            new Handler().postDelayed(() -> getActivity().runOnUiThread(() -> {
+//                RecyclerView.ViewHolder viewHolder
+//                        = binding.rvRutas.findViewHolderForAdapterPosition(position);
+//                if (viewHolder != null) {
+//                    AnimationUtils.setAnimationBlinkEffect(
+//                            viewHolder.itemView.findViewById(R.id.bgLinearLayout));
+//                }
+//            }), 1000);
+//        } catch (NullPointerException ex) {
+//            ex.printStackTrace();
+//        }
         try {
-            binding.rvRutas.scrollToPosition(position);
+            int adapterPos = obtenerPosicionAdapterParada(position);
+            binding.rvRutas.scrollToPosition(adapterPos);
             new Handler().postDelayed(() -> getActivity().runOnUiThread(() -> {
                 RecyclerView.ViewHolder viewHolder
-                        = binding.rvRutas.findViewHolderForAdapterPosition(position);
+                        = binding.rvRutas.findViewHolderForAdapterPosition(adapterPos);
                 if (viewHolder != null) {
                     AnimationUtils.setAnimationBlinkEffect(
                             viewHolder.itemView.findViewById(R.id.bgLinearLayout));
@@ -333,7 +359,7 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void onClickParadaIconLinea(int paradaId, int position) {
-        //manejarSeleccionParada(paradaId);
+        manejarSeleccionParada(paradaId);
     }
 
     @Override
@@ -427,6 +453,11 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
             return;
         }
 
+        if(guiasEnParada.size() > 1){
+            showToast("No se puede seleccionar una parada con más de una guía.");
+            return;
+        }
+
         RutaItem guia = guiasEnParada.get(0);
         int posicion = encontrarPosicionGuia(guia);
         presenter.onSelectedItem(posicion);
@@ -442,6 +473,16 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
         RutaItem guia = guiasEnParada.get(position);
         int posicion = encontrarPosicionGuia(guia);
         presenter.onSelectedItem(posicion);
+    }
+
+    private int obtenerPosicionAdapterParada(int posicionPlana) {
+        if (todasLasGuiasPendientes == null || posicionPlana < 0
+                || posicionPlana >= todasLasGuiasPendientes.size()) {
+            return posicionPlana;
+        }
+        int paradaId = todasLasGuiasPendientes.get(posicionPlana).getParadaId();
+        int adapterPos = idsParadas.indexOf(paradaId);
+        return adapterPos >= 0 ? adapterPos : posicionPlana;
     }
 
     private int encontrarPosicionGuia(RutaItem guiaBuscada) {
@@ -464,6 +505,8 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
         RecyclerView rvGuias = dialogView.findViewById(R.id.rvGuiasParada);
         rvGuias.setLayoutManager(new LinearLayoutManager(getActivity()));
+        int maxHeight = (int) (getResources().getDisplayMetrics().heightPixels * 0.65);
+        rvGuias.getLayoutParams().height = maxHeight;
 
         List<RutaItem> guiasActualizadas = obtenerGuiasActualizadas(guias);
 
@@ -475,10 +518,6 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
                         int posicionReal = encontrarPosicionGuia(guiaSeleccionada);
 
                         if (posicionReal >= 0) {
-//                            AlertDialog dialog = (AlertDialog) view.getRootView().getTag();
-//                            if (dialog != null && dialog.isShowing()) {
-//                                dialog.dismiss();
-//                            }
                             if (dialogParada != null && dialogParada.isShowing()) {
                                 dialogParada.dismiss();
                                 dialogParada = null;
@@ -551,7 +590,7 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     private void setupViews() {
         binding.rvRutas.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.rvRutas.setHasFixedSize(true);
+        binding.rvRutas.setHasFixedSize(false);
 
         binding.swipeRefreshLayout.setColorSchemeResources(
                 R.color.colorPrimary, R.color.colorGreyUrbano, R.color.colorBlackUrbano);

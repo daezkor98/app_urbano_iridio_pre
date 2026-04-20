@@ -14,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:paddingBottom="8dp"
+        android:paddingBottom="10dp"
         android:paddingRight="16dp"
-        android:paddingTop="8dp"
+        android:paddingTop="10dp"
         android:layout_gravity="center">
 
         <FrameLayout
@@ -92,9 +92,8 @@
                 android:id="@+id/txtDistrito"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="marquee"
+                android:ellipsize="end"
                 android:maxLines="1"
-                android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/darkPrimaryText" />
 
@@ -102,9 +101,8 @@
                 android:id="@+id/txtDireccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:maxLines="1"
-                android:singleLine="true"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/darkPrimaryText" />
         </LinearLayout>
