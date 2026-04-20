@@ -82,6 +82,9 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
     private List<RutaItem> rutaItems;
     private List<Ruta> dbRuta;
 
+    private int lastIdParada = 0;
+    private int lastSecuenciaParada = 0;
+
     private Ruta rutaEliminada = null;
 
     private int positionRutaEliminada = -1;
@@ -540,6 +543,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     private void saveRutas(JSONArray jsonRutas) throws JSONException {
         dbRuta = interactor.selectAllRutas();
+        lastIdParada = obtenerMaximoParadaId();
+        lastSecuenciaParada = obtenerMaximoSecuencia();
         if (dbRuta.size() > 0) {
             if (existeRutasPendientes(jsonRutas)) {
                 Log.d("PRUEBARUTA", "RUTAS SIN PROCESAR: " + dbRuta.size());
@@ -982,8 +987,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     private void saveRuta(JSONObject jsonRuta) throws JSONException {
         String flag_scaneo_pck;
-        int lastIdParada = 0;
-        int lastSecuenciaParada = 0;
         try {
             flag_scaneo_pck = jsonRuta.getString("flag_scaneo_pck");
             if (flag_scaneo_pck.equals("")) {
@@ -1006,9 +1009,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                     lastIdParada = paradaId;
                 }
             } else {
-                if (lastIdParada == 0) {
-                    lastIdParada = obtenerMaximoParadaId();
-                }
                 lastIdParada++;
                 paradaId = lastIdParada;
             }
@@ -1032,9 +1032,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             } else if (jsonRuta.has("parada_sec") && !jsonRuta.isNull("parada_sec")) {
                 secuenciaParada = Integer.parseInt(jsonRuta.getString("parada_sec"));
             } else {
-                if (lastSecuenciaParada == 0) {
-                    lastSecuenciaParada = obtenerMaximoSecuencia();
-                }
                 lastSecuenciaParada++;
                 secuenciaParada = lastSecuenciaParada;
             }
@@ -1047,9 +1044,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 paradaPy = jsonRuta.getString("parada_py");
             }
         } catch (JSONException e) {
-            if (lastIdParada == 0) {
-                lastIdParada = obtenerMaximoParadaId();
-            }
             lastIdParada++;
             paradaId = lastIdParada;
 
@@ -1063,9 +1057,6 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             if (secuenciaExistente != null) {
                 secuenciaParada = Integer.parseInt(secuenciaExistente);
             } else {
-                if (lastSecuenciaParada == 0) {
-                    lastSecuenciaParada = obtenerMaximoSecuencia();
-                }
                 lastSecuenciaParada++;
                 secuenciaParada = lastSecuenciaParada;
             }
