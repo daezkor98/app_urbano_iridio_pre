@@ -493,7 +493,19 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.DATOS_ENTREGA) {
             if (validateDatosEntrega()) {
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
-                showQRPagoStep();
+                // showQRPagoStep(); // método de pago QR deshabilitado temporalmente
+                view.setVisibilityBtnSiguiente(View.VISIBLE);
+                if (minFotosProducto == 0 || hasHabilitantes()
+                        || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
+                    view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
+                    view.notifyGaleriaCargoAllItemChanged();
+                    currentStep = STEPS.FOTOS_CARGO;
+                } else {
+                    view.setVisibilityBoxStepProductoCliente(View.VISIBLE);
+                    view.notifyGaleriaProductoClienteAllItemChanged();
+                    view.setTextBtnSiguiente("Gestionar");
+                    currentStep = STEPS.FOTOS_PRODUCTO_CLIENTE;
+                }
                 view.hideKeyboard();
             }
             return;
