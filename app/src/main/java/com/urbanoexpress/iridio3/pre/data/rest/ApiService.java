@@ -39,8 +39,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class ApiService {
 
     private static final String TAG = ApiService.class.getSimpleName();
-    private static final String BASE_URL = "https://bkd-tms.urbanoexpress.com.pe/iridio/";
-    //private static final String BASE_URL = "https://api.geo.dev-urbano.dev/iridio/";
+    //private static final String BASE_URL = "https://bkd-tms.urbanoexpress.com.pe/iridio/";
+    private static final String BASE_URL = "https://api.geo.dev-urbano.dev/iridio/";
 
     private static ApiService apiService;
     private RetrofitApiInterface apiInterface;
@@ -164,6 +164,40 @@ public class ApiService {
 
     public void requestForm(String endpoint, final ResponseListener responseListener) {
         request(ApiRest.withEndpoint(endpoint), TypeParams.FORM_DATA, responseListener);
+    }
+
+    public void requestJson(String url, Object body, final ResponseListener responseListener) {
+        Log.d(TAG, "URL: " + url);
+        Call<ResponseBody> call = apiInterface.requestFormDataJson(url, body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String responseString;
+                        try {
+                            responseString = response.body().string();
+                        } finally {
+                            response.body().close();
+                        }
+                        JSONObject jsonResponse = new JSONObject(responseString);
+                        responseListener.onResponse(jsonResponse);
+                    } else {
+                        VolleyError error = createVolleyError(response);
+                        responseListener.onErrorResponse(error);
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error processing response", e);
+                    responseListener.onErrorResponse(new VolleyError(e.getMessage()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(TAG, "Request failed", t);
+                responseListener.onErrorResponse(new VolleyError(t.getMessage(), t));
+            }
+        });
     }
 
     public void request(String url, int typeParams, final ResponseListener responseListener) {

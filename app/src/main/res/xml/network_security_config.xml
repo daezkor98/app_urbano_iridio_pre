@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="false">dev.urbanoexpress.com.pe</domain>
         <domain includeSubdomains="false">devel.urbanoexpress.com.pe</domain>
+        <domain includeSubdomains="false">urbano-pay-qa-alb-948404491.us-west-2.elb.amazonaws.com</domain>
     </domain-config>
 </network-security-config>

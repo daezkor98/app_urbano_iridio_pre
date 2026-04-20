@@ -62,7 +62,7 @@ public class SplashLogInInteractor {
                     put("email", params[4]);
                     put("app_version", params[5]);
                 }})
-                .requestForm(ApiRest.Api.LOGIN_v2, new ApiService.ResponseListener() {
+                .requestForm(ApiRest.Api.LOGIN_V3, new ApiService.ResponseListener() {
                     @Override
                     public void onResponse(JSONObject response) {
                         callback.onSuccess(response);

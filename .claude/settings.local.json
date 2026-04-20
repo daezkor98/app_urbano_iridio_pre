@@ -1,7 +1,39 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc -l /c/Users/USER-PC/Desktop/App/\"Iridio Pre\"/appurbano_iridio_pre/app/src/main/java/com/urbanoexpress/iridio3/pre/presenter/*.java)"
+      "Bash(wc -l /c/Users/USER-PC/Desktop/App/\"Iridio Pre\"/appurbano_iridio_pre/app/src/main/java/com/urbanoexpress/iridio3/pre/presenter/*.java)",
+      "Read(//c/Users/USER-PC/Desktop/App/IridioV2/iridio-backend/src/**)",
+      "Read(//c/Users/USER-PC/Desktop/App/IridioV2/iridio-backend/src/auth/**)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-backend\\\\src\\\\delivery\\\\dto\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-backend\\\\src\\\\tracking\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-backend\\\\src\\\\chat\\\\dto\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-backend\\\\migrations\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\core\\\\db\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\feature\\\\deliveries\\\\data\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\feature\\\\deliveries\\\\ui\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\feature\\\\chat\\\\ui\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\feature\\\\rural\\\\ui\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\feature\\\\travelplan\\\\ui\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\feature\\\\profile\\\\ui\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-android\\\\app\\\\src\\\\main\\\\java\\\\com\\\\urbanoexpress\\\\iridio\\\\v2\\\\feature\\\\settings\\\\ui\")",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(Object.keys\\(p.dependencies\\).filter\\(k=>k.includes\\('socket'\\)||k.includes\\('websocket'\\)\\).join\\(', '\\)\\)\")",
+      "Bash(npx tsc:*)",
+      "Bash(cmd /c \"cd C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-backend && npx tsc --noEmit 2>&1\")",
+      "Bash(cmd /c \"cd /d C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-backend && npx tsc --noEmit 2>&1\")",
+      "Bash(powershell -Command \"Set-Location 'C:\\\\Users\\\\USER-PC\\\\Desktop\\\\App\\\\IridioV2\\\\iridio-backend'; npx tsc --noEmit 2>&1 | Select-Object -First 50\")",
+      "Bash(where gradle:*)",
+      "Bash(./gradlew checkDebugAarMetadata --stacktrace)",
+      "Bash(./gradlew checkDebugAarMetadata)",
+      "Bash(./gradlew assembleDebug)",
+      "Bash(xargs grep:*)",
+      "Bash(docker compose:*)",
+      "Bash(where docker:*)",
+      "Bash(where \"Docker Desktop\")",
+      "Read(//c/Program Files/Docker/**)",
+      "Bash(where psql:*)",
+      "Read(//c/Program Files/**)",
+      "Bash(./gradlew signingReport)"
     ]
   }
 }

@@ -74,7 +74,7 @@ public final class ApiRest {
 
         String WAYPOINTS = "api/registro/Waypoints/";
         String VALIDATE_VERIFICATION_EMAIL = "api/registro/addPhone";
-        String LOGIN_v2 = "api/registro/loginV3";
+        String LOGIN_V3 = "api/registro/loginV3";
         String GET_RUTAS_V2 = "api/rutas/getGuiasRutaV5";
         String LOGIN_QR ="api/registro/loginRuta/";
         String UPLOAD_SECUENCIA_RUTA_V2 = "api/updateSecuenciaGuiaV3";
@@ -83,6 +83,9 @@ public final class ApiRest {
         String GET_DATOS_QRRUTA = "api/registro/datosRuta";
         String VALIDATE_DATOS_RUTA = "api/rutas/grabarRuta";
         String GET_DATOS_MAPA_RUTA_DEL_DIA = "api/datosMapa/";
+
+        String URL_GENERAR_QR = "https://pay-api.dev-urbano.dev/api/v1/pagos/generar-qr";
+        String URL_CONSULTAR_QR = "https://pay-api.dev-urbano.dev/api/v1/pagos/consultar";
 
         //???
         String UPLOAD_MOTORIZADO_LICENCE = "api-apps/iridio/RegisterLincense";

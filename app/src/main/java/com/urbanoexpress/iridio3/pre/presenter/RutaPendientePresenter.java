@@ -487,11 +487,13 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             }
         };
 
+        String devicePhone = Session.getUser() != null ? Session.getUser().getDevicePhone() : "";
+        String flag = Session.getUser() != null ? Session.getUser().getFlag() : "";
         String[] params = new String[]{
                 Preferences.getInstance().getInt("idRuta", 0) + "",
                 Preferences.getInstance().getString("idUsuario", ""),
-                Session.getUser().getDevicePhone(),
-                Session.getUser().getFlag()
+                devicePhone,
+                flag
         };
 
         interactor.getRutas(params, callback);
@@ -1011,11 +1013,24 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                 paradaId = lastIdParada;
             }
 
-            if (jsonRuta.has("parada_sec") && !jsonRuta.isNull("parada_sec")) {
+//            if (jsonRuta.has("parada_sec") && !jsonRuta.isNull("parada_sec")) {
+//                secuenciaParada = Integer.parseInt(jsonRuta.getString("parada_sec"));
+//                if (secuenciaParada > lastSecuenciaParada) {
+//                    lastSecuenciaParada = secuenciaParada;
+//                }
+//            } else {
+//                if (lastSecuenciaParada == 0) {
+//                    lastSecuenciaParada = obtenerMaximoSecuencia();
+//                }
+//                lastSecuenciaParada++;
+//                secuenciaParada = lastSecuenciaParada;
+//            }
+
+            String secuenciaExistente = obtenerSecuenciaDeLaParada(paradaId);
+            if (secuenciaExistente != null) {
+                secuenciaParada = Integer.parseInt(secuenciaExistente);
+            } else if (jsonRuta.has("parada_sec") && !jsonRuta.isNull("parada_sec")) {
                 secuenciaParada = Integer.parseInt(jsonRuta.getString("parada_sec"));
-                if (secuenciaParada > lastSecuenciaParada) {
-                    lastSecuenciaParada = secuenciaParada;
-                }
             } else {
                 if (lastSecuenciaParada == 0) {
                     lastSecuenciaParada = obtenerMaximoSecuencia();
@@ -1038,11 +1053,22 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
             lastIdParada++;
             paradaId = lastIdParada;
 
-            if (lastSecuenciaParada == 0) {
-                lastSecuenciaParada = obtenerMaximoSecuencia();
+//            if (lastSecuenciaParada == 0) {
+//                lastSecuenciaParada = obtenerMaximoSecuencia();
+//            }
+//            lastSecuenciaParada++;
+//            secuenciaParada = lastSecuenciaParada;
+
+            String secuenciaExistente = obtenerSecuenciaDeLaParada(paradaId);
+            if (secuenciaExistente != null) {
+                secuenciaParada = Integer.parseInt(secuenciaExistente);
+            } else {
+                if (lastSecuenciaParada == 0) {
+                    lastSecuenciaParada = obtenerMaximoSecuencia();
+                }
+                lastSecuenciaParada++;
+                secuenciaParada = lastSecuenciaParada;
             }
-            lastSecuenciaParada++;
-            secuenciaParada = lastSecuenciaParada;
         }
 
         Ruta ruta = new Ruta(//aqui se guarda la ruta en local
@@ -1142,6 +1168,17 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
         ruta.save();
         dbRuta.add(ruta);
+    }
+
+    private String obtenerSecuenciaDeLaParada(int paradaId) {
+        if (dbRuta != null) {
+            for (Ruta ruta : dbRuta) {
+                if (ruta.getParadaId() == paradaId) {
+                    return ruta.getParadaSecuencia();
+                }
+            }
+        }
+        return null;
     }
 
     private int obtenerMaximoParadaId() {
@@ -1854,8 +1891,8 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
                     );
                     rutaItems.add(rutaItem);
 //                    dbRuta.get(i).setSecuencia(i + 1 + "");
-                    dbRuta.get(i).setParadaSecuencia(i + 1 + "");
-                    dbRuta.get(i).save();
+//                    dbRuta.get(i).setParadaSecuencia(i + 1 + "");
+//                    dbRuta.get(i).save();
                 }
 
                 actionMenuRutaPendienteHelper.setDbRuta(dbRuta);
@@ -1888,7 +1925,7 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         }
 
         private void setTitleActivity() {
-            if (dbRuta.size() > 0) {
+            if (dbRuta != null && dbRuta.size() > 0) {
                 String title = "";
                 saveRutaId(dbRuta.get(0).getIdRuta());
                 for (int i = 0; i < dbRuta.size(); i++) {

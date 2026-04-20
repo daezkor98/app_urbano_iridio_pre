@@ -534,7 +534,6 @@ public class MapaRutaDelDiaPresenter {
             }
 
             if (Session.getUser().getFlag().equals("1")) {
-                // Enviar las PARADAS (guías representantes) en lugar de todas las guías
                 List<Ruta> todasLasGuiasParaMapa = new ArrayList<>();
                 for (List<Ruta> guiasEnParada : mapaParadasConGuias.values()) {
                     todasLasGuiasParaMapa.addAll(guiasEnParada);
@@ -564,7 +563,11 @@ public class MapaRutaDelDiaPresenter {
             guiaSinCoordenadasItems = new ArrayList<>();
 
             for (int i = 0; i < guias.size(); i++) {
-                if (CommonUtils.isValidCoords(guias.get(i).getGpsLatitude(),
+                if(CommonUtils.isValidCoords(guias.get(i).getParadaLatitude(),
+                        guias.get(i).getParadaLongitude())){
+                    guias.remove(i);
+                    i -= 1;
+                } else if (CommonUtils.isValidCoords(guias.get(i).getGpsLatitude(),
                         guias.get(i).getGpsLongitude())) {
                     guias.remove(i);
                     i -= 1;

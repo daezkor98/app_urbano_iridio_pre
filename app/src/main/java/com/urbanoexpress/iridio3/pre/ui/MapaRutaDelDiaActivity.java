@@ -130,13 +130,11 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
         googleMap.clear();
         configCustomMap();
 
-        // Inicializar mapas
         mapaParadasConGuias = new HashMap<>();
         mapaMarkerAParadaId = new HashMap<>();
 
-        // Agrupar guías por paradaId
         Map<Integer, List<Ruta>> guiasPorParada = new HashMap<>();
-        Map<Integer, Integer> markerPositionToParadaId = new HashMap<>(); // NUEVO: Para mapear posición→paradaId
+        Map<Integer, Integer> markerPositionToParadaId = new HashMap<>();
 
         for (Ruta guia : guias) {
             int paradaId = guia.getParadaId();
@@ -149,15 +147,13 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             }
         }
 
-        // Guardar en variable de clase
         mapaParadasConGuias = guiasPorParada;
 
         LatLngBounds.Builder latlngBoundsBuilder = new LatLngBounds.Builder();
         markerGuias = new ArrayList<>();
 
-        int position = 0; // Contador de posición
+        int position = 0;
 
-        // Iterar sobre las paradas
         for (Map.Entry<Integer, List<Ruta>> entry : guiasPorParada.entrySet()) {
             int paradaId = entry.getKey();
             List<Ruta> guiasEnParada = entry.getValue();
@@ -167,24 +163,18 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
             Ruta primeraGuia = guiasEnParada.get(0);
             LatLng latLng;
 
-            // USAR COORDENADAS DE LA PARADA (prioridad alta)
             if (CommonUtils.isValidCoords(primeraGuia.getParadaLatitude(),
                     primeraGuia.getParadaLongitude())) {
                 latLng = new LatLng(Double.parseDouble(primeraGuia.getParadaLatitude()),
                         Double.parseDouble(primeraGuia.getParadaLongitude()));
-            }
-            // Si no hay coordenadas de parada, usar coordenadas de la guía
-            else if (CommonUtils.isValidCoords(primeraGuia.getGpsLatitude(),
+            } else if (CommonUtils.isValidCoords(primeraGuia.getGpsLatitude(),
                     primeraGuia.getGpsLongitude())) {
                 latLng = new LatLng(Double.parseDouble(primeraGuia.getGpsLatitude()),
                         Double.parseDouble(primeraGuia.getGpsLongitude()));
-            }
-            // Coordenadas por defecto
-            else {
+            } else {
                 latLng = new LatLng(0, 0);
             }
 
-            // Contar estados de gestión
             int gestionadas = 0;
             boolean todasGestionadas = true;
 
@@ -198,18 +188,14 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
             int pendientes = guiasEnParada.size() - gestionadas;
 
-            // Crear marcador
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng)
                     .draggable(true);
 
-            // Lógica de iconos según tu requerimiento
             if (todasGestionadas && guiasEnParada.size() > 0) {
-                // TODAS las guías gestionadas (FlagValidaGestion 1,2,3 o ResultadoGestion 1,2,3)
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(
                         R.drawable.ic_marker_package_blue));
             } else {
-                // Hay al menos una guía pendiente (no definida)
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(
                         drawTextToBitmap(
                                 MapaRutaDelDiaActivity.this,
@@ -220,26 +206,22 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
 
             Marker marker = googleMap.addMarker(markerOptions);
 
-            // Guardar relación entre marker y parada
             marker.setTag(paradaId);
             mapaMarkerAParadaId.put(marker, paradaId);
 
-            // NUEVO: Guardar relación posición→paradaId para el Presenter
             markerPositionToParadaId.put(position, paradaId);
 
             markerGuias.add(marker);
             latlngBoundsBuilder.include(latLng);
 
-            position++; // Incrementar posición
+            position++;
         }
 
-        // NUEVO: Pasar los mapas al Presenter
         if (presenter != null) {
             presenter.setMapaParadasConGuias(guiasPorParada);
             presenter.setMarkerPositionToParadaId(markerPositionToParadaId);
         }
 
-        // Manejo de la cámara
         if (markerGuias.size() > 0) {
             LatLngBounds bounds = latlngBoundsBuilder.build();
             int width = getResources().getDisplayMetrics().widthPixels;
@@ -252,7 +234,6 @@ public class MapaRutaDelDiaActivity extends AppThemeBaseActivity
         onLoading(false);
     }
 
-    // Método auxiliar para verificar si una guía está gestionada
     private boolean esGuiaGestionada(Ruta guia) {
         return guia.getFlagValidaGestion() == 1 || guia.getFlagValidaGestion() == 3 ||
                 guia.getResultadoGestion() == 1 || guia.getResultadoGestion() == 3 ||
