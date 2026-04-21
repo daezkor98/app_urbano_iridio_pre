@@ -493,9 +493,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.DATOS_ENTREGA) {
             if (validateDatosEntrega()) {
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
-                // showQRPagoStep(); // método de pago QR deshabilitado temporalmente
-                view.setVisibilityBtnSiguiente(View.VISIBLE);
-                if (minFotosProducto == 0 || hasHabilitantes()
+                if (isMedioPagoYape()) {
+                    showQRPagoStep();
+                } else if (minFotosProducto == 0 || hasHabilitantes()
                         || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
                     view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
                     view.notifyGaleriaCargoAllItemChanged();
@@ -510,6 +510,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             }
             return;
         }
+
 
         if (currentStep == STEPS.FOTOS_PRODUCTO_CLIENTE) {
             if (validateFotosProductoxCLiente()) {
@@ -551,6 +552,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.YAPE_QR) {
             view.setVisibilityBoxYapeQR(View.GONE);
             view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
+            view.notifyGaleriaPagoAllItemChanged();
             view.setTextBtnSiguiente("Siguiente");
             currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;
             return;
@@ -621,10 +623,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
                 currentStep = STEPS.FOTOS_CARGO;
             } else if (validateFotosComprobantePago()) {
                 view.setVisibilityBoxStepFotoComprobantePago(View.GONE);
-                // view.setVisibilityBoxStepFotosEntrega(View.VISIBLE);
-                // view.notifyGaleriaFotosAllItemChanged();
-                //currentStep = STEPS.FOTOS_PRODUCTO;
-
                 view.setVisibilityBoxStepProductoCliente(View.VISIBLE);
                 view.notifyGaleriaProductoClienteAllItemChanged();
                 view.setTextBtnSiguiente("Gestionar");
@@ -1271,21 +1269,18 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if (!response.isNull("data") && response.getJSONObject("data") != null) {
-                        JSONObject data = response.getJSONObject("data");
-                        String estado = data.optString("estado", "");
-                        if ("PAGADO".equalsIgnoreCase(estado)) {
-                            stopPollingPago();
-                            String guia = data.optString("guia", "");
-                            String monto = ModelUtils.getSimboloMoneda(view.getViewContext())
-                                    + " " + data.optString("monto", "");
-                            String docNumero = data.optString("doc_numero", "");
-                            String nombre = data.optString("name", "");
-                            view.showComprobantePago(estado, guia, monto, docNumero, nombre);
-                            view.setVisibilityBtnSiguiente(View.VISIBLE);
-                            view.setTextBtnSiguiente("Continuar");
-                            return;
-                        }
+                    String estado = response.optString("estado", "");
+                    if ("PAGADO".equalsIgnoreCase(estado)) {
+                        stopPollingPago();
+                        String guia = response.optString("guia", "");
+                        String monto = ModelUtils.getSimboloMoneda(view.getViewContext())
+                                + " " + response.optString("monto", "");
+                        String docNumero = response.optString("doc_numero", "");
+                        String nombre = response.optString("name", "");
+                        view.showComprobantePago(estado, guia, monto, docNumero, nombre);
+                        view.setVisibilityBtnSiguiente(View.VISIBLE);
+                        view.setTextBtnSiguiente("Continuar");
+                        return;
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "consultarPago: ", e);
