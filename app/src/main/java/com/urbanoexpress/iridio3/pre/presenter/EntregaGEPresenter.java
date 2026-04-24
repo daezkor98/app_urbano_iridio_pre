@@ -219,6 +219,12 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         loadTipoDocIdentificacion();
         loadTipoDireccion();
         loadTipoMedioPago();
+
+        for (int i = 0; i < rutas.size(); i++) {
+            if (rutas.get(i).getIdImagen() == null || rutas.get(i).getIdImagen().isEmpty()) {
+                rutas.get(i).setIdImagen(rutas.get(i).getIdServicio());
+            }
+        }
         loadGaleria();
 
         setVisibilityFirstStep();
