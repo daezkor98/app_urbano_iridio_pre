@@ -73,8 +73,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/qr_code_image"
-                android:layout_width="280dp"
-                android:layout_height="280dp"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
                 android:layout_marginVertical="8dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/yape_qr"

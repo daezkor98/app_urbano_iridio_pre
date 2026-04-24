@@ -437,7 +437,7 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     public void displayQR(String yapeHash) {
         Bitmap drawable = new QRCode.Builder(requireContext())
                 .setValue(yapeHash)
-                .setSize(MetricsUtils.dpToPx(requireContext(), 280))
+                .setSize(MetricsUtils.dpToPx(requireContext(), 220))
                 .build();
 
         Glide.with(this)

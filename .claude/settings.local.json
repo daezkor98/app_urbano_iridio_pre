@@ -33,7 +33,10 @@
       "Read(//c/Program Files/Docker/**)",
       "Bash(where psql:*)",
       "Read(//c/Program Files/**)",
-      "Bash(./gradlew signingReport)"
+      "Bash(./gradlew signingReport)",
+      "Bash(./gradlew installDebug)",
+      "Bash(./gradlew assembleDebug --no-daemon)",
+      "Bash(./gradlew installDebug --no-daemon)"
     ]
   }
 }

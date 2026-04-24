@@ -219,6 +219,12 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         loadTipoDocIdentificacion();
         loadTipoDireccion();
         loadTipoMedioPago();
+
+        for (int i = 0; i < rutas.size(); i++) {
+            if (rutas.get(i).getIdImagen() == null || rutas.get(i).getIdImagen().isEmpty()) {
+                rutas.get(i).setIdImagen(rutas.get(i).getIdServicio());
+            }
+        }
         loadGaleria();
 
         setVisibilityFirstStep();
@@ -1415,7 +1421,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     private boolean isMedioPagoYape() {
         String medioPago = rutas.get(0).getIdMedioPago();
-        return medioPago.equals("3");
+        return medioPago.equals("1");
     }
 
     private boolean hasHabilitantes() {
