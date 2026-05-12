@@ -1161,9 +1161,21 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         dbRuta.add(ruta);
     }
 
+//    private String obtenerSecuenciaDeLaParada(int paradaId) {
+//        if (dbRuta != null) {
+//            for (Ruta ruta : dbRuta) {
+//                if (ruta.getParadaId() == paradaId) {
+//                    return ruta.getParadaSecuencia();
+//                }
+//            }
+//        }
+//        return null;
+//    }
+
     private String obtenerSecuenciaDeLaParada(int paradaId) {
-        if (dbRuta != null) {
-            for (Ruta ruta : dbRuta) {
+        List<Ruta> pendientes = interactor.selectRutasPendientes();
+        if (pendientes != null) {
+            for (Ruta ruta : pendientes) {
                 if (ruta.getParadaId() == paradaId) {
                     return ruta.getParadaSecuencia();
                 }
@@ -1172,25 +1184,50 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
         return null;
     }
 
+//    private int obtenerMaximoParadaId() {
+//        int maxId = 0;
+//        if (dbRuta != null && !dbRuta.isEmpty()) {
+//            for (Ruta ruta : dbRuta) {
+//                if (ruta.getParadaId() > maxId) {
+//                    maxId = ruta.getParadaId();
+//                }
+//            }
+//        }
+//        return maxId;
+//    }
+
     private int obtenerMaximoParadaId() {
         int maxId = 0;
-        if (dbRuta != null && !dbRuta.isEmpty()) {
-            for (Ruta ruta : dbRuta) {
-                if (ruta.getParadaId() > maxId) {
-                    maxId = ruta.getParadaId();
-                }
+        List<Ruta> pendientes = interactor.selectRutasPendientes();
+        if (pendientes != null) {
+            for (Ruta ruta : pendientes) {
+                if (ruta.getParadaId() > maxId) maxId = ruta.getParadaId();
             }
         }
         return maxId;
     }
 
+//    private int obtenerMaximoSecuencia() {
+//        int maxSec = 0;
+//        if (dbRuta != null && !dbRuta.isEmpty()) {
+//            for (Ruta ruta : dbRuta) {
+//                if (Integer.parseInt(ruta.getParadaSecuencia()) > maxSec) {
+//                    maxSec = Integer.parseInt(ruta.getParadaSecuencia());
+//                }
+//            }
+//        }
+//        return maxSec;
+//    }
+
     private int obtenerMaximoSecuencia() {
         int maxSec = 0;
-        if (dbRuta != null && !dbRuta.isEmpty()) {
-            for (Ruta ruta : dbRuta) {
-                if (Integer.parseInt(ruta.getParadaSecuencia()) > maxSec) {
-                    maxSec = Integer.parseInt(ruta.getParadaSecuencia());
-                }
+        List<Ruta> pendientes = interactor.selectRutasPendientes();
+        if (pendientes != null) {
+            for (Ruta ruta : pendientes) {
+                try {
+                    int sec = Integer.parseInt(ruta.getParadaSecuencia());
+                    if (sec > maxSec) maxSec = sec;
+                } catch (NumberFormatException ignored) {}
             }
         }
         return maxSec;
