@@ -280,14 +280,29 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
                     return;
                 }
 
-                for (SubscriptionInfo subscriptionInfo : subscriptionManager.getActiveSubscriptionInfoList()) {
-                    String phoneNumber = subscriptionInfo.getNumber();
-                    //String phoneNumber = "980601243";
+//                for (SubscriptionInfo subscriptionInfo : subscriptionManager.getActiveSubscriptionInfoList()) {
+//                    String phoneNumber = subscriptionInfo.getNumber();
+//                    //String phoneNumber = "980601243";
+//
+//                    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+//                        listPhoneNumber.add(getNationalNumber(phoneNumber));
+//                    } else {
+//                        showManualPhoneNumberDialog();
+//                    }
+//                }
 
-                    if (phoneNumber != null && !phoneNumber.isEmpty()) {
-                        listPhoneNumber.add(getNationalNumber(phoneNumber));
-                    } else {
-                        showManualPhoneNumberDialog();
+                List<SubscriptionInfo> subscriptionInfoList = subscriptionManager.getActiveSubscriptionInfoList();
+
+                if (subscriptionInfoList == null || subscriptionInfoList.isEmpty()) {
+                    showManualPhoneNumberDialog();
+                } else {
+                    for (SubscriptionInfo subscriptionInfo : subscriptionInfoList) {
+                        String phoneNumber = subscriptionInfo.getNumber();
+                        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                            listPhoneNumber.add(getNationalNumber(phoneNumber));
+                        } else {
+                            showManualPhoneNumberDialog();
+                        }
                     }
                 }
             }

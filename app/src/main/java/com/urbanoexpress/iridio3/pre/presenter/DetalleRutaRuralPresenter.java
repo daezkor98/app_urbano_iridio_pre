@@ -514,10 +514,22 @@ public class DetalleRutaRuralPresenter {
                 view.getViewContext(), new ArrayList<Ruta>(Arrays.asList(ruta)), numVecesGestionado);
     }
 
+//    private boolean validateOrdenDescarga() {
+//        if(Session.getUser().getFlag().equals("1")){
+////            return ruta.getSecuencia().equals("1");
+//            return ruta.getParadaSecuencia().equals("1");
+//        } else {
+//            return true;
+//        }
+//    }
+
     private boolean validateOrdenDescarga() {
-        if(Session.getUser().getFlag().equals("1")){
-//            return ruta.getSecuencia().equals("1");
-            return ruta.getParadaSecuencia().equals("1");
+        if (Session.getUser().getFlag().equals("1")) {
+            if (ruta.getParadaSecuencia().equals("1")) {
+                return true;
+            }
+            List<Ruta> rutasPendientes = interactor.selectRutasPendientes();
+            return rutasPendientes != null && rutasPendientes.size() <= 1;
         } else {
             return true;
         }

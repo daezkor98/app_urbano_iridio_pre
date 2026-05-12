@@ -30,7 +30,7 @@ android {
         versionCode 146
 //        versionName "2.26.73"
 //        versionName "0.0.13"
-        versionName "2.31.3"
+        versionName "2.31.4"
         multiDexEnabled true
         resConfigs 'es'
         vectorDrawables.useSupportLibrary = true
