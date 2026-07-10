@@ -128,5 +128,6 @@
     <com.urbanoexpress.iridio3.pre.util.components.searchview.MaterialSearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/navigation_bar_height"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

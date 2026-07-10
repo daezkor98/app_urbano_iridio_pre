@@ -247,14 +247,20 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
         try {
             int adapterPos = obtenerPosicionAdapterParada(position);
             binding.rvRutas.scrollToPosition(adapterPos);
-            new Handler().postDelayed(() -> getActivity().runOnUiThread(() -> {
-                RecyclerView.ViewHolder viewHolder
-                        = binding.rvRutas.findViewHolderForAdapterPosition(adapterPos);
-                if (viewHolder != null) {
-                    AnimationUtils.setAnimationBlinkEffect(
-                            viewHolder.itemView.findViewById(R.id.bgLinearLayout));
-                }
-            }), 1000);
+            // El Handler dispara 1s después; el fragment puede haberse desadjuntado en ese tiempo,
+            // por eso el try/catch externo no captura el NPE — el lambda corre fuera de ese scope.
+            new Handler().postDelayed(() -> {
+                if (!isAdded() || getActivity() == null || binding == null) return;
+                getActivity().runOnUiThread(() -> {
+                    if (binding == null) return;
+                    RecyclerView.ViewHolder viewHolder
+                            = binding.rvRutas.findViewHolderForAdapterPosition(adapterPos);
+                    if (viewHolder != null) {
+                        AnimationUtils.setAnimationBlinkEffect(
+                                viewHolder.itemView.findViewById(R.id.bgLinearLayout));
+                    }
+                });
+            }, 1000);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -364,6 +370,13 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void showAuthenticationError() {
+        // Guard: Volley callbacks pueden llegar tras desadjuntarse el fragment.
+        // Si no podemos mostrar el dialog, igual cerramos sesión silenciosamente
+        // (el token es inválido y debe forzarse re-login en la próxima apertura).
+        if (!isAdded() || getActivity() == null) {
+            closeUSerSession();
+            return;
+        }
         ModalHelper.getBuilderAlertDialog(getActivity())
                 .setTitle(R.string.pending_route_title_token_error)
                 .setMessage(R.string.pending_route_msg_token_error)
@@ -374,6 +387,7 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void showMessageNuevaRutaAsignada() {
+        if (!isAdded() || getActivity() == null) return;
         ModalHelper.getBuilderAlertDialog(getActivity())
                 .setTitle(R.string.activity_ruta_title_nueva_ruta_asignada)
                 .setMessage(R.string.activity_ruta_message_nueva_ruta_asignada)
@@ -383,6 +397,7 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void showMessageNoHayRutaDisponible() {
+        if (!isAdded() || getActivity() == null) return;
         ModalHelper.getBuilderAlertDialog(getActivity())
                 .setTitle(R.string.fragment_ruta_pendiente_titulo_no_hay_rutas)
                 .setMessage(R.string.fragment_ruta_pendiente_message_no_hay_rutas)
@@ -392,6 +407,7 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void showMessageRutaNoIniciada() {
+        if (!isAdded() || getActivity() == null) return;
         ModalHelper.getBuilderAlertDialog(getActivity())
                 .setTitle(R.string.activity_detalle_ruta_title_ruta_no_iniciada)
                 .setMessage(R.string.activity_detalle_ruta_message_debe_iniciar_ruta)
@@ -401,6 +417,7 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
 
     @Override
     public void showMessageRutaFinalizada() {
+        if (!isAdded() || getActivity() == null) return;
         ModalHelper.getBuilderAlertDialog(getActivity())
                 .setTitle(R.string.activity_detalle_ruta_title_ruta_finalizada)
                 .setMessage(R.string.activity_detalle_ruta_message_ruta_finalizada)
@@ -575,17 +592,31 @@ public class RutaPendienteFragment extends BaseFragment implements RutaPendiente
     }
 
     private void closeUSerSession() {
-        WorkManager.getInstance(requireContext()).cancelUniqueWork(UserStatusWorker.TAG);
+        // Usar app context para WorkManager — funciona aunque el fragment esté desadjuntado
+        // (caso: callback de Volley llega después de que el usuario navegó/cerró la app)
+        android.content.Context appCtx = com.urbanoexpress.iridio3.pre.application.AndroidApplication.getAppContext();
+        if (appCtx != null) {
+            try {
+                WorkManager.getInstance(appCtx).cancelUniqueWork(UserStatusWorker.TAG);
+            } catch (Throwable t) {
+                com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(t);
+            }
+        }
 
+        // Limpieza de sesión — siempre se ejecuta para forzar re-login
         new Thread(() -> {
             CommonUtils.deleteUserData();
             Session.clearSession();
         }).start();
 
-        //requireActivity().stopService(new Intent(getActivity(), DataSyncService.class));
-        SyncManager.stopAllSyncs(getActivity());
-        requireActivity().startActivity(new Intent(getActivity(), InitActivity.class));
-        requireActivity().finish();
+        // Las operaciones que dependen del activity solo si el fragment sigue adjunto.
+        // Si está desadjuntado, el usuario ya no está en la app — al reabrir verá InitActivity
+        // por el reset de sesión arriba.
+        if (isAdded() && getActivity() != null) {
+            SyncManager.stopAllSyncs(getActivity());
+            getActivity().startActivity(new Intent(getActivity(), InitActivity.class));
+            getActivity().finish();
+        }
     }
 
     private void setupViews() {

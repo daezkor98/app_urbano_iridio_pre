@@ -70,6 +70,7 @@ public final class ApiRest {
         String GET_MY_REVENUES = "api/MisGanancias/";
         String GET_WEEK_DETAIL = "api/SemanaDetail";
         String UPLOAD_FACTURA_MOTORIZADO = "api/uploadFileMotorizados";
+
         String GUIA_YAPE_QR = "api-apps/iridio/getGuiasRutaQR";
 
         String WAYPOINTS = "api/registro/Waypoints/";

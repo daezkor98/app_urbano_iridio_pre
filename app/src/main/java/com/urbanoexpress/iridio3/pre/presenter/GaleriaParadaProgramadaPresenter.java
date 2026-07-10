@@ -22,7 +22,6 @@ import com.urbanoexpress.iridio3.pre.ui.helpers.ModalHelper;
 import com.urbanoexpress.iridio3.pre.ui.interfaces.OnClickItemGaleriaListener;
 import com.urbanoexpress.iridio3.pre.ui.model.GaleriaDescargaRutaItem;
 import com.urbanoexpress.iridio3.pre.util.CameraUtils;
-import com.urbanoexpress.iridio3.pre.util.CustomSiliCompressor;
 import com.urbanoexpress.iridio3.pre.util.FileUtils;
 import com.urbanoexpress.iridio3.pre.util.LocationUtils;
 import com.urbanoexpress.iridio3.pre.util.Preferences;
@@ -245,6 +244,14 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
     }
 
     public void onActivityResultImageFromCamera() {
+        // Restaurar photoCapture si el proceso fue matado mientras la cámara estaba abierta
+        // (común en dispositivos con poca RAM tras tomar varias fotos)
+        if (photoCapture == null) {
+            photoCapture = CameraUtils.restoreLastPhotoCapture(galeriaDescargaView.getContextView());
+        }
+        if (typeCameraCaptureImage == null && photoCapture != null) {
+            typeCameraCaptureImage = CameraUtils.getTypeFromFileName(photoCapture.getName());
+        }
         if (compressImage()) {
             insertPhotoToGalery();
             saveImage(photoCapture.getName(), photoCapture.getParent() + File.separator, "imagen");
@@ -268,30 +275,9 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
     }
 
     private boolean compressImage() {
-        String pathImage = photoCapture.getPath();
-        Log.d(TAG, "PATHIMAGE SILICOMPRESSOR: " + pathImage);
-
-        String compressFilePath = "";
-
-        try {
-            if (typeCameraCaptureImage.equalsIgnoreCase("Foto")) {
-                compressFilePath = CustomSiliCompressor.with(galeriaDescargaView.getContextView()).compress(pathImage);
-            } else if (typeCameraCaptureImage.equalsIgnoreCase("Cargo")) {
-                compressFilePath = CustomSiliCompressor.with(galeriaDescargaView.getContextView())
-                        .compress(pathImage, 1280.0f, 720.0f, 85);
-            }
-
-            Log.d(TAG, "FILEPATH SILICOMPRESSOR: " + compressFilePath);
-
-            if (photoCapture.delete()) {
-                if (FileUtils.copyFile(compressFilePath, pathImage, true)) return true;
-            }
-        } catch (ArithmeticException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        }
-        return false;
+        boolean useLowerResolution = typeCameraCaptureImage != null
+                && typeCameraCaptureImage.equalsIgnoreCase("Cargo");
+        return CameraUtils.safeCompressImage(galeriaDescargaView.getContextView(), photoCapture, useLowerResolution);
     }
 
     private void insertPhotoToGalery() {
@@ -437,7 +423,9 @@ public class GaleriaParadaProgramadaPresenter extends BaseModalsView implements 
             //Log.d(TAG, "TIME 3: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             BaseModalsView.hideProgressDialog();
 
-            if (status) {
+            // Boolean.TRUE.equals(status) maneja status==null que ocurre cuando doInBackground
+            // cae en un catch (FileNotFoundException, IOException, ImageProcessingException)
+            if (Boolean.TRUE.equals(status)) {
                 insertPhotoToGalery();
             } else {
                 if (galeriaDescargaView.getContextView() != null) {

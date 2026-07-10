@@ -132,12 +132,18 @@ public class RecoleccionCounterDialog  extends BaseDialogFragment implements Rec
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (!isAdded() || getActivity() == null) {
+            com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(
+                new IllegalStateException("RecoleccionCounterDialog.onActivityResult: dialog detached, requestCode=" + requestCode));
+            return;
+        }
 
         try {
             if (CameraUtils.validateOnActivityResult(requestCode, resultCode)) {
                 presenter.onActivityResultImage();
             }
-        } catch (NullPointerException ex) {
+        } catch (Throwable ex) {
+            com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(ex);
             ex.printStackTrace();
             showToast(R.string.activity_resumen_ruta_message_error_al_tomar_foto);
         }

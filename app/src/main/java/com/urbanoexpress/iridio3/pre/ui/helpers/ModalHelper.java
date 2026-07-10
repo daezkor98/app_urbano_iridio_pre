@@ -1,6 +1,7 @@
 package com.urbanoexpress.iridio3.pre.ui.helpers;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,9 +10,12 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.urbanoexpress.iridio3.pre.R;
 
 public class ModalHelper {
+
+    private static final String TAG = "ModalHelper";
 
     public static void showToast(Context context, String message, int duration) {
         try {
@@ -22,6 +26,17 @@ public class ModalHelper {
     }
 
     public static AlertDialog.Builder getBuilderAlertDialog(Context context) {
+        if (context == null) {
+            // Caller (típicamente un Fragment) llamó con getActivity()/getContext()==null,
+            // lo cual ocurre cuando un callback async llega tras desadjuntarse del activity.
+            // Reportamos a Crashlytics y lanzamos excepción clara para identificar al caller.
+            IllegalArgumentException ex = new IllegalArgumentException(
+                    "ModalHelper.getBuilderAlertDialog: context is null. " +
+                    "El caller debe validar isAdded()/getActivity()!=null antes de mostrar el dialog.");
+            Log.e(TAG, ex.getMessage(), ex);
+            FirebaseCrashlytics.getInstance().recordException(ex);
+            throw ex;
+        }
         return new MaterialAlertDialogBuilder(context, R.style.ThemeOverlay_App_MaterialAlertDialog);
     }
 

@@ -68,6 +68,12 @@ class RegistroFacturaFragment : AppThemeBaseFragment() {
                 messageDialog.show(childFragmentManager, "messageD")
             }
         }
+
+        facturaVM.exceptionLD.observe(this) {
+            MessageDialog
+                .newInstance("Lo sentimos, ocurrió un error al registrar su factura. Intentelo nuevamente")
+                .show(childFragmentManager, "messageD")
+        }
     }
 
     private fun onFacturaPosted() {

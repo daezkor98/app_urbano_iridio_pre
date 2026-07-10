@@ -72,10 +72,9 @@ class MisGananciasInteractor {
         ApiService.getInstance().putParams("vp_per_id", params[7])
         ApiService.getInstance().putData("file", data)
 
-        ApiService.getInstance().request(
+        ApiService.getInstance().requestMultiPartShortTimeout(
             ApiRest.getInstance().apiBaseUrl +
                     UPLOAD_FACTURA_MOTORIZADO,
-            ApiService.TypeParams.MULTIPART,
             object : ApiService.ResponseListener {
                 override fun onResponse(response: JSONObject) {
                     response

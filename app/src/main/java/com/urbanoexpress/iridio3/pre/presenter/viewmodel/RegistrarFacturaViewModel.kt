@@ -5,6 +5,8 @@ import com.urbanoexpress.iridio3.pre.model.interactor.MisGananciasInteractor
 import com.urbanoexpress.iridio3.pre.util.Preferences
 import com.urbanoexpress.iridio3.pre.util.network.volley.MultipartJsonObjectRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -28,7 +30,13 @@ class RegistrarFacturaViewModel @Inject constructor() : BaseViewModel() {
         val userID = Preferences.getInstance().getString("idUsuario", "")!!
         val codigoProvincia = Preferences.getInstance().getString("codigoProvincia", "")!!
         val idPer = Preferences.getInstance().getString("idPer", "")!!
-        val fechaFactFormat = fechaFact.replace("/", "-")
+        val fechaFactFormat = try {
+            val input = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val output = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            output.format(input.parse(fechaFact)!!)
+        } catch (e: Exception) {
+            fechaFact.replace("/", "-")
+        }
 
         val map = mapOf(
             "vp_fac_fecha" to fechaFact,

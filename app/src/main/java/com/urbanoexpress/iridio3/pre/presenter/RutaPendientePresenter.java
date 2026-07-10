@@ -312,9 +312,10 @@ public class RutaPendientePresenter implements OnTouchItemRutasListener {
 
     public void refreshView(){
         if (view != null && view.getViewContext() != null) {
+            List<RutaItem> snapshot = new ArrayList<>(rutaItems);
             ((AppCompatActivity) view.getViewContext()).runOnUiThread(() -> {
                 view.dismissProgressDialog();
-                view.showParadasAgrupadas(rutaItems);
+                view.showParadasAgrupadas(snapshot);
             });
         }
     }

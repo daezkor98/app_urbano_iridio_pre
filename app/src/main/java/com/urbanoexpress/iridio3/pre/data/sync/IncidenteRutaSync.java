@@ -3,6 +3,10 @@ package com.urbanoexpress.iridio3.pre.data.sync;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.urbanoexpress.iridio3.pre.model.entity.Data;
 import com.urbanoexpress.iridio3.pre.model.entity.IncidenteRuta;
@@ -113,6 +117,16 @@ public class IncidenteRutaSync extends DataSyncModel<IncidenteRuta> {
                     @Override
                     public void onError(VolleyError error) {
                         error.printStackTrace();
+
+                        String errorType = getVolleyErrorType(error);
+
+                        if ("NETWORK_ERROR".equals(errorType) || "TIMEOUT_ERROR".equals(errorType) ||
+                                "NO_CONNECTION_ERROR".equals(errorType) || "SERVICE_UNAVAILABLE".equals(errorType) ||
+                                "STREAM_ERROR".equals(errorType)) {
+                            finishSync();
+                            return;
+                        }
+
                         finishSync();
                         LogErrorSync errorSync = new LogErrorSync(
                                 "3_"+TAG,
@@ -183,5 +197,51 @@ public class IncidenteRutaSync extends DataSyncModel<IncidenteRuta> {
             return "9";
         }
         return "0";
+    }
+
+    private String getVolleyErrorType(VolleyError error) {
+        if (error instanceof TimeoutError) {
+            return "TIMEOUT_ERROR";
+        } else if (error instanceof NoConnectionError) {
+            return "NO_CONNECTION_ERROR";
+        } else if (error instanceof ServerError) {
+            if (error.networkResponse != null) {
+                int statusCode = error.networkResponse.statusCode;
+                if (statusCode == 503) {
+                    return "SERVICE_UNAVAILABLE";
+                }
+            }
+            return "SERVER_ERROR";
+        } else if (error instanceof NetworkError) {
+            return "NETWORK_ERROR";
+        } else {
+            String message = error.getMessage();
+            if (message != null) {
+                message = message.toLowerCase();
+                if (message.contains("timeout")) {
+                    return "TIMEOUT_ERROR";
+                } else if (message.contains("end of stream")
+                        || message.contains("required settings preface")) {
+                    // STREAM_ERROR: protocolo HTTP/2 interrumpido o handshake roto
+                    return "STREAM_ERROR";
+                } else if (message.contains("connection abort") ||
+                           message.contains("connection reset") ||
+                           message.contains("broken pipe") ||
+                           message.contains("socket closed") ||
+                           message.contains("unable to resolve host") ||
+                           message.contains("no address associated") ||
+                           message.contains("failed to connect") ||
+                           message.contains("network is unreachable") ||
+                           message.contains("ssl") ||
+                           message.contains("handshake") ||
+                           message.contains("trust anchor")) {
+                    // Fallos puros de red / DNS / TLS — no son errores del API
+                    return "NETWORK_ERROR";
+                } else if (message.contains("connection refused")) {
+                    return "NO_CONNECTION_ERROR";
+                }
+            }
+            return "UNKNOWN_ERROR";
+        }
     }
 }

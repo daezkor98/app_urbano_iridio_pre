@@ -292,8 +292,25 @@ public class SecuenciaGuiaSync extends DataSyncModel<Ruta> {
                 message = message.toLowerCase();
                 if (message.contains("timeout")) {
                     return "TIMEOUT_ERROR";
-                } else if (message.contains("end of stream")) {
+                } else if (message.contains("end of stream")
+                        || message.contains("required settings preface")) {
+                    // STREAM_ERROR: protocolo HTTP/2 interrumpido o handshake roto
                     return "STREAM_ERROR";
+                } else if (message.contains("connection abort") ||
+                           message.contains("connection reset") ||
+                           message.contains("broken pipe") ||
+                           message.contains("socket closed") ||
+                           message.contains("unable to resolve host") ||
+                           message.contains("no address associated") ||
+                           message.contains("failed to connect") ||
+                           message.contains("network is unreachable") ||
+                           message.contains("ssl") ||
+                           message.contains("handshake") ||
+                           message.contains("trust anchor")) {
+                    // Fallos puros de red / DNS / TLS — no son errores del API
+                    return "NETWORK_ERROR";
+                } else if (message.contains("connection refused")) {
+                    return "NO_CONNECTION_ERROR";
                 }
             }
             return "UNKNOWN_ERROR";

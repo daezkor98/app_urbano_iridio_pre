@@ -248,6 +248,7 @@ public class RecoleccionValijaPresenter extends BaseModalsView implements OnClic
     }
 
     public void onClickItemMotivo(int position) {
+        if (position < 0 || position >= dbMotivoDescargas.size()) return;
         updateBackgroundSelectListaMotivos(position);
         selectedIndexMotivo = position;
     }
@@ -412,30 +413,20 @@ public class RecoleccionValijaPresenter extends BaseModalsView implements OnClic
     }
 
     private boolean compressImage() {
-        String pathImage = photoCapture.getPath();
-        Log.d(TAG, "PATHIMAGE SILICOMPRESSOR: " + pathImage);
-
-        String compressFilePath = "";
-
-        try {
-            if (typeCameraCaptureImage.equalsIgnoreCase("Cargo")) {
-                compressFilePath = CustomSiliCompressor.with(view.getContextView())
-                        .compress(pathImage, 1280.0f, 720.0f, 85);
-            } else {
-                compressFilePath = CustomSiliCompressor.with(view.getContextView()).compress(pathImage);
-            }
-
-            Log.d(TAG, "FILEPATH SILICOMPRESSOR: " + compressFilePath);
-
-            if (photoCapture.delete()) {
-                if (FileUtils.copyFile(compressFilePath, pathImage, true)) return true;
-            }
-        } catch (ArithmeticException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+        if (photoCapture == null) {
+            photoCapture = CameraUtils.restoreLastPhotoCapture(view.getContextView());
         }
-        return false;
+        if (photoCapture == null) return false;
+        // Restore typeCameraCaptureImage from filename if null (process restarted)
+        if (typeCameraCaptureImage == null) {
+            typeCameraCaptureImage = CameraUtils.getTypeFromFileName(photoCapture.getName());
+        }
+        boolean useLowerResolution = typeCameraCaptureImage.equalsIgnoreCase("Cargo");
+        if (CameraUtils.safeCompressImage(view.getContextView(), photoCapture, useLowerResolution)) {
+            return true;
+        }
+        // Fallback: si la compresión falla pero el archivo original existe, úsalo
+        return photoCapture.exists();
     }
 
     private void insertPhotoToGalery() {

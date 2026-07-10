@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.databinding.FragmentRutasBinding;
@@ -66,8 +67,10 @@ public class RutaGestionadaFragment extends Fragment implements RutaGestionadaVi
         try {
             binding.rvRutas.scrollToPosition(position);
             new Handler().postDelayed(() -> getActivity().runOnUiThread(() -> {
-                View view = binding.rvRutas.findViewHolderForAdapterPosition(position).itemView;
-                view = view.findViewById(R.id.bgLinearLayout);
+                RecyclerView.ViewHolder holder = binding.rvRutas.findViewHolderForAdapterPosition(position);
+                if (holder == null) return;
+                View view = holder.itemView.findViewById(R.id.bgLinearLayout);
+                if (view == null) return;
                 AnimationUtils.setAnimationBlinkEffect(view);
             }), 1000);
         } catch (NullPointerException ex) {

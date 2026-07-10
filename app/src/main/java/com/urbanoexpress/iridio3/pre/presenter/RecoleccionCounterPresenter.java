@@ -32,7 +32,6 @@ import com.urbanoexpress.iridio3.pre.ui.model.ContenedorRecoleccionItem;
 import com.urbanoexpress.iridio3.pre.ui.model.PiezaRecolectadaItem;
 import com.urbanoexpress.iridio3.pre.util.CameraUtils;
 import com.urbanoexpress.iridio3.pre.util.CommonUtils;
-import com.urbanoexpress.iridio3.pre.util.CustomSiliCompressor;
 import com.urbanoexpress.iridio3.pre.util.FileUtils;
 import com.urbanoexpress.iridio3.pre.util.LocationUtils;
 import com.urbanoexpress.iridio3.pre.util.Preferences;
@@ -142,6 +141,14 @@ public class RecoleccionCounterPresenter {
     }
 
     public void onActivityResultImage() {
+        // Restaurar photoCapture si el proceso fue matado mientras la cámara estaba abierta
+        // (común en dispositivos con poca RAM tras tomar varias fotos)
+        if (photoCapture == null) {
+            photoCapture = CameraUtils.restoreLastPhotoCapture(view.getViewContext());
+        }
+        if (typeCameraCaptureImage == null && photoCapture != null) {
+            typeCameraCaptureImage = CameraUtils.getTypeFromFileName(photoCapture.getName());
+        }
         if (compressImage()) {
             insertImageToGallery();
             saveImage(photoCapture.getName(), photoCapture.getParent() + File.separator, typeCameraCaptureImage.toLowerCase());
@@ -1132,6 +1139,20 @@ public class RecoleccionCounterPresenter {
         String name = "", path = "";
         int indexSplit;
 
+        // Guard: position puede estar desfasada (doble tap, rotación, etc.)
+        int listSize = -1;
+        switch (currentStep) {
+            case FOTOS_PRODUCTO:  listSize = galeria.size(); break;
+            case FIRMA_CLIENTE:   listSize = galeriaFirma.size(); break;
+            case FOTOS_CARGO:     listSize = galeriaCargo.size(); break;
+            case FOTOS_DOMICILIO: listSize = galeriaDomicilio.size(); break;
+        }
+        if (position < 0 || position >= listSize) {
+            Log.w(TAG, "deleteImageFromGallery: posición inválida " + position
+                    + " para lista de tamaño " + listSize + ", step=" + currentStep);
+            return;
+        }
+
         switch (currentStep) {
             case FOTOS_PRODUCTO:
                 FileUtils.deleteFile(((GalleryPhotoItem) galeria.get(position)).getPathImage());
@@ -1189,30 +1210,9 @@ public class RecoleccionCounterPresenter {
     }
 
     private boolean compressImage() {
-        String pathImage = photoCapture.getPath();
-        Log.d(TAG, "PATHIMAGE SILICOMPRESSOR: " + pathImage);
-
-        String compressFilePath;
-
-        try {
-            if (typeCameraCaptureImage.equalsIgnoreCase("Cargo")) {
-                compressFilePath = CustomSiliCompressor.with(view.getViewContext())
-                        .compress(pathImage, 1280.0f, 720.0f, 85);
-            } else {
-                compressFilePath = CustomSiliCompressor.with(view.getViewContext()).compress(pathImage);
-            }
-
-            Log.d(TAG, "FILEPATH SILICOMPRESSOR: " + compressFilePath);
-
-            if (photoCapture.delete()) {
-                if (FileUtils.copyFile(compressFilePath, pathImage, true)) return true;
-            }
-        } catch (ArithmeticException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        }
-        return false;
+        boolean useLowerResolution = typeCameraCaptureImage != null
+                && typeCameraCaptureImage.equalsIgnoreCase("Cargo");
+        return CameraUtils.safeCompressImage(view.getViewContext(), photoCapture, useLowerResolution);
     }
 
     private void updateEstadoGestionGE(int procesoDescarga) {

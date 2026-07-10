@@ -173,6 +173,7 @@ public class GestionarGENoRecolectadasPresenter extends BaseModalsView implement
     }
 
     public void onClickItemMotivo(int position) {
+        if (position < 0 || position >= dbMotivoDescargas.size()) return;
         updateBackgroundSelectListaMotivos(position);
         selectedIndexMotivo = position;
     }
@@ -317,23 +318,15 @@ public class GestionarGENoRecolectadasPresenter extends BaseModalsView implement
     }
 
     private boolean compressImage() {
-        String pathImage = photoCapture.getPath();
-        Log.d(TAG, "PATHIMAGE SILICOMPRESSOR: " + pathImage);
-
-        try {
-            String compressFilePath = CustomSiliCompressor.with(view.getContextView()).compress(pathImage);
-
-            Log.d(TAG, "FILEPATH SILICOMPRESSOR: " + compressFilePath);
-
-            if (photoCapture.delete()) {
-                if (FileUtils.copyFile(compressFilePath, pathImage, true)) return true;
-            }
-        } catch (ArithmeticException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+        if (photoCapture == null) {
+            photoCapture = CameraUtils.restoreLastPhotoCapture(view.getContextView());
         }
-        return false;
+        if (photoCapture == null) return false;
+        if (CameraUtils.safeCompressImage(view.getContextView(), photoCapture, false)) {
+            return true;
+        }
+        // Fallback: si la compresión falla pero el archivo original existe, úsalo
+        return photoCapture.exists();
     }
 
     private void insertPhotoToGalery() {

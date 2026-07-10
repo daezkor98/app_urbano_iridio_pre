@@ -230,7 +230,9 @@ public class RutaRuralActivity extends BaseActivity implements RutaRuralView,
 
             @Override
             public void onSearchViewClosed() {
-
+                // Restaurar el AppBar (toolbar + tabs) al cerrar la búsqueda
+                AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+                appBarLayout.setExpanded(true, true);
             }
         });
 

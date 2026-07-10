@@ -26,7 +26,6 @@ import com.urbanoexpress.iridio3.pre.ui.model.GaleriaDescargaRutaItem;
 import com.urbanoexpress.iridio3.pre.ui.model.MotivoDescargaItem;
 import com.urbanoexpress.iridio3.pre.util.CameraUtils;
 import com.urbanoexpress.iridio3.pre.util.CommonUtils;
-import com.urbanoexpress.iridio3.pre.util.CustomSiliCompressor;
 import com.urbanoexpress.iridio3.pre.util.FileUtils;
 import com.urbanoexpress.iridio3.pre.util.LocationUtils;
 import com.urbanoexpress.iridio3.pre.util.Preferences;
@@ -158,6 +157,14 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
     }
 
     public void onActivityResultImage() {
+        // Restaurar photoCapture si el proceso fue matado mientras la cámara estaba abierta
+        // (común en dispositivos con poca RAM tras tomar varias fotos)
+        if (photoCapture == null) {
+            photoCapture = CameraUtils.restoreLastPhotoCapture(view.getContextView());
+        }
+        if (typeCameraCaptureImage == null && photoCapture != null) {
+            typeCameraCaptureImage = CameraUtils.getTypeFromFileName(photoCapture.getName());
+        }
         if (compressImage()) {
             insertPhotoToGalery();
             saveImage(photoCapture.getName(), photoCapture.getParent() + File.separator, typeCameraCaptureImage.toLowerCase());
@@ -170,6 +177,7 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
     }
 
     public void onClickItemMotivo(int position) {
+        if (position < 0 || position >= dbMotivoDescargas.size()) return;
         updateBackgroundSelectListaMotivos(position);
         selectedIndexMotivo = position;
     }
@@ -307,24 +315,8 @@ public class ObservarGestionEntregaPresenter implements OnClickItemGaleriaListen
     }
 
     private boolean compressImage() {
-        String pathImage = photoCapture.getPath();
-        Log.d(TAG, "PATHIMAGE SILICOMPRESSOR: " + pathImage);
-
-        try {
-            String compressFilePath = CustomSiliCompressor.with(view.getContextView())
-                    .compress(pathImage, 1280.0f, 720.0f, 85);
-
-            Log.d(TAG, "FILEPATH SILICOMPRESSOR: " + compressFilePath);
-
-            if (photoCapture.delete()) {
-                if (FileUtils.copyFile(compressFilePath, pathImage, true)) return true;
-            }
-        } catch (ArithmeticException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        }
-        return false;
+        boolean useLowerResolution = true;
+        return CameraUtils.safeCompressImage(view.getContextView(), photoCapture, useLowerResolution);
     }
 
     private void insertPhotoToGalery() {

@@ -93,6 +93,11 @@ public class GaleriaGEDialog extends DialogFragment implements GaleriaDescargaVi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (!isAdded() || getActivity() == null) {
+            com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(
+                new IllegalStateException("GaleriaGEDialog.onActivityResult: dialog detached, requestCode=" + requestCode));
+            return;
+        }
         Log.d(TAG, "RESULT");
         try {
             if (CameraUtils.validateOnActivityResult(requestCode, resultCode)) {
@@ -101,7 +106,8 @@ public class GaleriaGEDialog extends DialogFragment implements GaleriaDescargaVi
                     resultCode == Activity.RESULT_OK) {
                 presenter.onActivityResultImageFromStorage(data);
             }
-        } catch (NullPointerException ex) {
+        } catch (Throwable ex) {
+            com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(ex);
             ex.printStackTrace();
             Toast.makeText(getActivity(),
                     R.string.activity_resumen_ruta_message_error_al_tomar_foto,
@@ -139,7 +145,11 @@ public class GaleriaGEDialog extends DialogFragment implements GaleriaDescargaVi
 
     @Override
     public void notifyGaleryAllItemChanged() {
-        binding.lvGaleriaDescarga.getAdapter().notifyDataSetChanged();
+        // Guard: el adapter puede ser null si el dialog se está creando/destruyendo.
+        // NPE reportado en Crashlytics.
+        if (binding != null && binding.lvGaleriaDescarga.getAdapter() != null) {
+            binding.lvGaleriaDescarga.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override

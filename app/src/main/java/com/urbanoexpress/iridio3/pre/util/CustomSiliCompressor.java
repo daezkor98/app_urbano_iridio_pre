@@ -235,13 +235,41 @@ public class CustomSiliCompressor {
             bmp = BitmapFactory.decodeFile(filePath, options);
         } catch (OutOfMemoryError exception) {
             exception.printStackTrace();
-
+            // Retry with double inSampleSize to use half the memory
+            options.inSampleSize = options.inSampleSize * 2;
+            Log.w(LOG_TAG, "compressImage: OOM al decodificar, reintentando con inSampleSize=" + options.inSampleSize);
+            try {
+                bmp = BitmapFactory.decodeFile(filePath, options);
+            } catch (OutOfMemoryError exception2) {
+                exception2.printStackTrace();
+            }
         }
 
         try {
             scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
         } catch (OutOfMemoryError exception) {
             exception.printStackTrace();
+            // Fallback to RGB_565 which uses half the memory of ARGB_8888
+            Log.w(LOG_TAG, "compressImage: OOM creando scaledBitmap ARGB_8888, reintentando con RGB_565");
+            try {
+                scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.RGB_565);
+            } catch (OutOfMemoryError exception2) {
+                exception2.printStackTrace();
+                // Last resort: reduce dimensions by half too
+                Log.w(LOG_TAG, "compressImage: OOM con RGB_565, reduciendo dimensiones a la mitad");
+                try {
+                    scaledBitmap = Bitmap.createBitmap(actualWidth / 2, actualHeight / 2, Bitmap.Config.RGB_565);
+                    actualWidth = actualWidth / 2;
+                    actualHeight = actualHeight / 2;
+                } catch (OutOfMemoryError exception3) {
+                    exception3.printStackTrace();
+                }
+            }
+        }
+
+        if (bmp == null || scaledBitmap == null) {
+            Log.e(LOG_TAG, "compressImage: bmp o scaledBitmap es null tras reintentos, no se puede comprimir");
+            return null;
         }
 
         float ratioX = actualWidth / (float) options.outWidth;
@@ -255,6 +283,11 @@ public class CustomSiliCompressor {
         Canvas canvas = new Canvas(scaledBitmap);
         canvas.setMatrix(scaleMatrix);
         canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        // Free bmp memory as soon as it's been drawn — no longer needed
+        if (bmp != scaledBitmap) {
+            bmp.recycle();
+        }
 
 //      check the rotation of the image and display it properly
         ExifInterface exif;
@@ -275,9 +308,16 @@ public class CustomSiliCompressor {
                 matrix.postRotate(270);
                 Log.d("EXIF", "Exif: " + orientation);
             }
-            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
-                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,
-                    true);
+            try {
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+                        scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+                scaledBitmap.recycle();
+                scaledBitmap = rotatedBitmap;
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+                Log.w(LOG_TAG, "compressImage: OOM al rotar imagen EXIF, se usa sin rotar");
+                // Keep scaledBitmap unrotated — better than losing the photo
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

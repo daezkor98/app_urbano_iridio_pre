@@ -101,12 +101,18 @@ public class GestionarGENoRecolectadasDialog extends DialogFragment implements N
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (!isAdded() || getActivity() == null) {
+            com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(
+                new IllegalStateException("GestionarGENoRecolectadasDialog.onActivityResult: dialog detached, requestCode=" + requestCode));
+            return;
+        }
         Log.d(TAG, "RESULT");
         try {
             if (CameraUtils.validateOnActivityResult(requestCode, resultCode)) {
                 presenter.onActivityResultImage();
             }
-        } catch (NullPointerException ex) {
+        } catch (Throwable ex) {
+            com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(ex);
             ex.printStackTrace();
             Toast.makeText(getActivity(),
                     R.string.activity_resumen_ruta_message_error_al_tomar_foto,

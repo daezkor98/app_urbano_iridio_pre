@@ -66,7 +66,6 @@ import com.urbanoexpress.iridio3.pre.ui.model.PiezaItem;
 import com.urbanoexpress.iridio3.pre.ui.model.PremioItem;
 import com.urbanoexpress.iridio3.pre.util.CameraUtils;
 import com.urbanoexpress.iridio3.pre.util.CommonUtils;
-import com.urbanoexpress.iridio3.pre.util.CustomSiliCompressor;
 import com.urbanoexpress.iridio3.pre.util.FileUtils;
 import com.urbanoexpress.iridio3.pre.util.FileUtilss;
 import com.urbanoexpress.iridio3.pre.util.LocationUtils;
@@ -373,6 +372,15 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     public void onActivityResultImageFromCamera() {
+        // Restaurar photoCapture si el proceso fue matado mientras la cámara estaba abierta
+        // (común en dispositivos con poca RAM tras tomar varias fotos)
+        if (photoCapture == null) {
+            photoCapture = CameraUtils.restoreLastPhotoCapture(view.getViewContext());
+        }
+        // Restaurar typeCameraCaptureImage desde el nombre del archivo si es null (proceso reiniciado)
+        if (typeCameraCaptureImage == null && photoCapture != null) {
+            typeCameraCaptureImage = CameraUtils.getTypeFromFileName(photoCapture.getName());
+        }
         if (compressImage()) {
             insertImageToGallery();
             saveImage(photoCapture.getName(), photoCapture.getParent() + File.separator, typeCameraCaptureImage.toLowerCase());
@@ -404,8 +412,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     public void onClickItemMotivo(int position) {
-        // Si selecciona el motivo (ENTREGA A TITULAR)
-        // pintar el nombre del cliente
+        if (position < 0 || position >= dbMotivoDescargas.size()) return;
         if (rutas.size() == 1) {
             if (dbMotivoDescargas.get(position).getCodigo().equals("ET") ||
                     dbMotivoDescargas.get(position).getCodigo().equals("PT")) {
@@ -1859,6 +1866,24 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         String name = "", path = "";
         int indexSplit;
 
+        // Guard: position puede estar desfasada (doble tap, rotación, etc.)
+        // El dialog de confirmación captura la posición en su lambda y puede dispararse
+        // después de que la lista cambió, causando IndexOutOfBoundsException.
+        int listSize = -1;
+        switch (currentStep) {
+            case FOTOS_PRODUCTO:           listSize = galeria.size(); break;
+            case FIRMA_CLIENTE:            listSize = galeriaFirma.size(); break;
+            case FOTOS_CARGO:              listSize = galeriaCargo.size(); break;
+            case FOTOS_DOMICILIO:          listSize = galeriaDomicilio.size(); break;
+            case FOTOS_PRODUCTO_CLIENTE:   listSize = galeriaProductoxCliente.size(); break;
+            case FOTOS_COMPROBANTE_PAGO:   listSize = galeriaComprobantePago.size(); break;
+        }
+        if (position < 0 || position >= listSize) {
+            Log.w(TAG, "deleteImageFromGallery: posición inválida " + position
+                    + " para lista de tamaño " + listSize + ", step=" + currentStep);
+            return;
+        }
+
         switch (currentStep) {
             case FOTOS_PRODUCTO:
                 FileUtils.deleteFile(((GalleryPhotoItem) galeria.get(position)).getPathImage());
@@ -1939,31 +1964,10 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     }
 
     private boolean compressImage() {
-        String pathImage = photoCapture.getPath();
-        Log.d(TAG, "PATHIMAGE SILICOMPRESSOR: " + pathImage);
-
-        String compressFilePath;
-
-        try {
-            if (typeCameraCaptureImage.equalsIgnoreCase("Cargo") ||
-                    typeCameraCaptureImage.equalsIgnoreCase("Voucher")) {
-                compressFilePath = CustomSiliCompressor.with(view.getViewContext())
-                        .compress(pathImage, 1280.0f, 720.0f, 85);
-            } else {
-                compressFilePath = CustomSiliCompressor.with(view.getViewContext()).compress(pathImage);
-            }
-
-            Log.d(TAG, "FILEPATH SILICOMPRESSOR: " + compressFilePath);
-
-            if (photoCapture.delete()) {
-                if (FileUtils.copyFile(compressFilePath, pathImage, true)) return true;
-            }
-        } catch (ArithmeticException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        }
-        return false;
+        boolean useLowerResolution = typeCameraCaptureImage != null
+                && (typeCameraCaptureImage.equalsIgnoreCase("Cargo")
+                    || typeCameraCaptureImage.equalsIgnoreCase("Voucher"));
+        return CameraUtils.safeCompressImage(view.getViewContext(), photoCapture, useLowerResolution);
     }
 
     private void updateEstadoGestionGE(int procesoDescarga) {
@@ -2282,7 +2286,9 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             //Log.d(TAG, "TIME 3: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
             view.dismissProgressDialog();
 
-            if (status) {
+            // Boolean.TRUE.equals(status) maneja status==null que ocurre cuando doInBackground
+            // cae en un catch (FileNotFoundException, IOException, OutOfMemoryError)
+            if (Boolean.TRUE.equals(status)) {
                 insertImageToGallery();
             } else {
                 view.showToast(msgError);

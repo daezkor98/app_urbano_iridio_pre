@@ -347,6 +347,79 @@ public class ApiService {
         });
     }
 
+    public void requestMultiPartShortTimeout(String url, final ResponseListener responseListener) {
+        OkHttpClient shortTimeoutClient = new OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .writeTimeout(120, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .connectionPool(new ConnectionPool(3, 60, TimeUnit.SECONDS))
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(shortTimeoutClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitApiInterface apiInterfaceShort = retrofit.create(RetrofitApiInterface.class);
+
+        Map<String, RequestBody> params = new HashMap<>();
+        for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+            RequestBody body = RequestBody.create(okhttp3.MultipartBody.FORM, entry.getValue());
+            params.put(entry.getKey(), body);
+        }
+
+        MultipartBody.Part filePart = null;
+        if (!requestParamsData.isEmpty()) {
+            Map.Entry<String, MultipartJsonObjectRequest.DataPart> entry =
+                    requestParamsData.entrySet().iterator().next();
+            MultipartJsonObjectRequest.DataPart dataPart = entry.getValue();
+            RequestBody fileRequestBody = RequestBody.create(
+                    okhttp3.MediaType.parse(dataPart.getType()),
+                    dataPart.getContent()
+            );
+            filePart = MultipartBody.Part.createFormData(
+                    entry.getKey(),
+                    dataPart.getFileName(),
+                    fileRequestBody
+            );
+        }
+
+        Call<ResponseBody> call = apiInterfaceShort.requestMultipart(url, params, filePart);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String responseString = null;
+                        try {
+                            responseString = response.body().string();
+                        } finally {
+                            response.body().close();
+                        }
+                        JSONObject jsonResponse = new JSONObject(responseString);
+                        responseListener.onResponse(jsonResponse);
+                    } else {
+                        VolleyError error = createVolleyError(response);
+                        responseListener.onErrorResponse(error);
+                    }
+                } catch (Exception e) {
+                    VolleyError error = new VolleyError("Error processing response: " + e.getMessage());
+                    responseListener.onErrorResponse(error);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(TAG, "Request failed", t);
+                VolleyError error = new VolleyError(t.getMessage(), t);
+                responseListener.onErrorResponse(error);
+            }
+        });
+    }
+
     public void requestWithLongTimeout(String url, int typeParams, final ResponseListener responseListener) {
         Log.d(TAG, "URL (LongTimeout): " + url);
         Log.d(TAG, "PARAMS: " + requestParams.toString());

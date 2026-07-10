@@ -189,10 +189,17 @@ public class SplashLogInPresenter implements RequestCallback {
         @Override
         public void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            // Guard: el activity puede haberse destruido mientras corría la task asíncrona
+            // (usuario cerró la app, rotó, navegó, etc.) → view.getViewContext() retorna null
+            if (view == null || view.getViewContext() == null) {
+                com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().recordException(
+                        new IllegalStateException("SplashLogInPresenter.ProcessLogInDataTask.onPostExecute: view/context null"));
+                return;
+            }
             view.dismissProgressDialog();
 
             // Validar si todos los datos se proceso correctamente
-            if (aBoolean) {
+            if (aBoolean != null && aBoolean) {
                 view.showToast(R.string.act_login_login_success);
                 view.getViewContext().startActivity(
                         new Intent(view.getViewContext(), MainActivity.class));

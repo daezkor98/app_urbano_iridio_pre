@@ -40,11 +40,7 @@ public class VerficationCodePresenter {
 
     public void onBtnContinueClick(String email) {
         android.content.Context context = view.getViewContext();
-        if (context == null) {
-            // Contexto no disponible, se intenta continuar asumiendo conectividad
-            requestValidateVerificationEmail(email);
-            return;
-        }
+        if (context == null) return;
         if (Connection.hasNetworkConnectivity(context)) {
             view.showProgressDialog();
             requestValidateVerificationEmail(email);
@@ -63,7 +59,9 @@ public class VerficationCodePresenter {
     }
 
     private void requestValidateVerificationEmail(String email) {
-        if (Connection.hasNetworkConnectivity(view.getViewContext())) {
+        android.content.Context context = view.getViewContext();
+        if (context == null) return;
+        if (Connection.hasNetworkConnectivity(context)) {
             ApiService.getInstance().newParams();
             ApiService.getInstance().putParams("telefono", numberPhone);
             ApiService.getInstance().putParams("codigo", codePhone);

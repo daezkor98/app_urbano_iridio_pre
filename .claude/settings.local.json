@@ -33,7 +33,16 @@
       "Read(//c/Program Files/Docker/**)",
       "Bash(where psql:*)",
       "Read(//c/Program Files/**)",
-      "Bash(./gradlew signingReport)"
+      "Bash(./gradlew signingReport)",
+      "Bash(cd \"C:/Users/USER-PC/Desktop/App/IridioV2/iridio-android\" && ./gradlew assembleDebug 2>&1 | tail -80)",
+      "Bash(./gradlew assembleDebug --no-daemon)",
+      "Bash(adb install *)",
+      "Bash(adb shell *)",
+      "Bash(adb logcat *)",
+      "Bash(python -c ' *)",
+      "Bash(adb exec-out *)",
+      "Bash(adb devices *)",
+      "Bash(adb wait-for-device *)"
     ]
   }
 }

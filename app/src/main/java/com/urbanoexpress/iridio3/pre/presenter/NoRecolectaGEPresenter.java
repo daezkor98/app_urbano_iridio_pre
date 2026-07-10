@@ -30,7 +30,6 @@ import com.urbanoexpress.iridio3.pre.ui.model.GaleriaDescargaRutaItem;
 import com.urbanoexpress.iridio3.pre.ui.model.MotivoDescargaItem;
 import com.urbanoexpress.iridio3.pre.util.CameraUtils;
 import com.urbanoexpress.iridio3.pre.util.CommonUtils;
-import com.urbanoexpress.iridio3.pre.util.CustomSiliCompressor;
 import com.urbanoexpress.iridio3.pre.util.FileUtils;
 import com.urbanoexpress.iridio3.pre.util.LocationUtils;
 import com.urbanoexpress.iridio3.pre.util.Preferences;
@@ -163,6 +162,11 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
     }
 
     public void onActivityResultImage() {
+        // Restaurar photoCapture si el proceso fue matado mientras la cámara estaba abierta
+        // (común en dispositivos con poca RAM tras tomar varias fotos)
+        if (photoCapture == null) {
+            photoCapture = CameraUtils.restoreLastPhotoCapture(noRecolectaView.getContextView());
+        }
         if (compressImage()) {
             insertPhotoToGalery();
             saveImage(photoCapture.getName(), photoCapture.getParent() + File.separator, "imagen");
@@ -175,6 +179,7 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
     }
 
     public void onClickItemMotivo(int position) {
+        if (position < 0 || position >= dbMotivoDescargas.size()) return;
         updateBackgroundSelectListaMotivos(position);
         selectedIndexMotivo = position;
     }
@@ -324,23 +329,8 @@ public class NoRecolectaGEPresenter extends BaseModalsView implements OnClickIte
     }
 
     private boolean compressImage() {
-        String pathImage = photoCapture.getPath();
-        Log.d(TAG, "PATHIMAGE SILICOMPRESSOR: " + pathImage);
-
-        try {
-            String compressFilePath = CustomSiliCompressor.with(noRecolectaView.getContextView()).compress(pathImage);
-
-            Log.d(TAG, "FILEPATH SILICOMPRESSOR: " + compressFilePath);
-
-            if (photoCapture.delete()) {
-                if (FileUtils.copyFile(compressFilePath, pathImage, true)) return true;
-            }
-        } catch (ArithmeticException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        }
-        return false;
+        boolean useLowerResolution = false;
+        return CameraUtils.safeCompressImage(noRecolectaView.getContextView(), photoCapture, useLowerResolution);
     }
 
     private void insertPhotoToGalery() {

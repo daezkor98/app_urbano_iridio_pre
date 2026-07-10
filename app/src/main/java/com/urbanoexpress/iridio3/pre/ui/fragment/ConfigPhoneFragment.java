@@ -78,6 +78,7 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
     private final int HINT_REQUEST = 100;
     private ArrayList<String> listPhoneNumber = new ArrayList<>();
     private boolean isShowingPermissionScreen = false;
+    private boolean isHandlingFocusChange = false;
     private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestMultiplePermissions(), permissions -> {
                 boolean allPermissionsGranted = true;
@@ -121,11 +122,13 @@ public class ConfigPhoneFragment extends AppThemeBaseFragment implements ConfigP
                     }
             );
             autoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
-                        if (hasFocus) {
+                        if (hasFocus && !isHandlingFocusChange) {
+                            isHandlingFocusChange = true;
                             if (!isShowingPermissionScreen) {
                                 validatePermissionUSer();
                             }
                             autoCompleteTextView.clearFocus();
+                            isHandlingFocusChange = false;
                         }
                     }
             );

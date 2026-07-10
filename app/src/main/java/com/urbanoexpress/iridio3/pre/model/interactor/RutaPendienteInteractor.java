@@ -464,8 +464,9 @@ public class RutaPendienteInteractor {
         Collections.sort(ruta, new Comparator<Ruta>() {
             @Override
             public int compare(Ruta lhs, Ruta rhs) {
-//                return new Integer(lhs.getSecuencia()).compareTo(new Integer(rhs.getSecuencia()));
-                return new Integer(lhs.getParadaSecuencia()).compareTo(new Integer(rhs.getParadaSecuencia()));
+                int secLhs = lhs.getParadaSecuencia() != null ? Integer.parseInt(lhs.getParadaSecuencia()) : 0;
+                int secRhs = rhs.getParadaSecuencia() != null ? Integer.parseInt(rhs.getParadaSecuencia()) : 0;
+                return Integer.compare(secLhs, secRhs);
             }
         });
 
