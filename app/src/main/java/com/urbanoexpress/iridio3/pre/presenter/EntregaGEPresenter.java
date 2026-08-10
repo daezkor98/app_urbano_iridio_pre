@@ -506,7 +506,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.DATOS_ENTREGA) {
             if (validateDatosEntrega()) {
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
-                // showQRPagoStep(); // método de pago QR deshabilitado temporalmente
+                showQRPagoStep();
                 view.setVisibilityBtnSiguiente(View.VISIBLE);
                 if (minFotosProducto == 0 || hasHabilitantes()
                         || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
