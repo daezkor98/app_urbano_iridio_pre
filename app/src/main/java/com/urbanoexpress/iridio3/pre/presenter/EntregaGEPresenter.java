@@ -29,18 +29,12 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 import com.google.android.gms.location.LocationServices;
 import com.orm.util.NamingHelper;
-import com.urbanoexpress.iridio3.pre.data.rest.ApiRest;
 import com.urbanoexpress.iridio3.pre.util.async.AsyncTaskCoroutine;
 import com.urbanoexpress.iridio3.pre.R;
 import com.urbanoexpress.iridio3.pre.application.AndroidApplication;
 import com.urbanoexpress.iridio3.data.local.PreferencesHelper;
-import android.os.Handler;
-import android.os.Looper;
-import com.urbanoexpress.iridio3.pre.data.rest.ApiService;
-import com.urbanoexpress.iridio3.pre.model.entity.ConsultarQRRequest;
 import com.urbanoexpress.iridio3.pre.model.entity.Data;
 import com.urbanoexpress.iridio3.pre.model.entity.DescargaRuta;
-import com.urbanoexpress.iridio3.pre.model.entity.GenerarQRRequest;
 import com.urbanoexpress.iridio3.pre.model.entity.GuiaGestionada;
 import com.urbanoexpress.iridio3.pre.model.entity.Imagen;
 import com.urbanoexpress.iridio3.pre.model.entity.MotivoDescarga;
@@ -108,16 +102,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     private static final String TAG = EntregaGEPresenter.class.getSimpleName();
 
-    private static final int POLLING_INTERVAL_MS = 5000;
-
     private DescargaEntregaView view;
     private RutaPendienteInteractor rutaPendienteInteractor;
-
-    private String datosPagoNombre;
-    private String datosPagoDni;
-    private String rqIdCode;
-    private final Handler pollingHandler = new Handler(Looper.getMainLooper());
-    private Runnable pollingRunnable;
 
     private List<MotivoDescarga> dbMotivoDescargas = Collections.emptyList();
     private List<MotivoDescargaItem> motivoItems = new ArrayList<>();
@@ -150,6 +136,17 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
     private int selectedIndexTipoDireccion = -1;
 
     private int selectedIndexTipoMedioPago = -1;
+
+    /**
+     * Método de pago cobrado (viene de {@link UrbanoPayActivity} vía {@link #onUrbanoPayResult}).
+     * <ul>
+     *   <li>1 = Efectivo</li>
+     *   <li>7 = QR</li>
+     *   <li>-1 = no definido aún</li>
+     * </ul>
+     * Se envía al server cuando la guía tiene idMedioPago == 1 (COD por definir).
+     */
+    private int selectedIndexMetodoPago = -1;
 
     private int numVecesGestionado = 0;
 
@@ -247,39 +244,7 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    private void requestYapeQR() {
-        view.showProgressDialog("Cargando QR");
-        String[] params = {
-                rutas.get(0).getIdServicio()
-        };
-//        HashMap<String, String> requestParams = new HashMap<String, String>();
-//        requestParams.put("vp_man_id_det", rutas.get(0).getIdServicio());
-        rutaPendienteInteractor.getQuiaYapeQR(params, new RequestCallback() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                view.dismissProgressDialog();
-                try {
-                    JSONObject ar = response.getJSONArray("data").getJSONObject(0);
-                    String QR = ar.getString("qr");
-                    view.displayQR(QR);
-                    view.setTextImporte(ModelUtils.getSimboloMoneda(view.getViewContext()) + " " + rutas.get(0).getImporte());
-                } catch (Exception e) {
-                    Log.e(TAG, "onSuccess: ", e);
-                    BaseModalsView.showToast(view.getViewContext(),
-                            "Hubo un error, ", Toast.LENGTH_LONG);
-                }
-
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                BaseModalsView.showToast(view.getViewContext(),
-                        "Hubo un error, ", Toast.LENGTH_LONG);
-            }
-        });
-    }
-
-    public void onBtnScanPCKClick() {
+public void onBtnScanPCKClick() {
         Intent intent = new Intent(view.getViewContext(), QRScannerActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("typeImpl", QRScannerPresenter.IMPLEMENT.CONTINUOUS);
@@ -402,7 +367,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
 
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
-        stopPollingPago();
         LocalBroadcastManager.getInstance(view.getViewContext())
                 .unregisterReceiver(saveFirmaReceiver);
         LocalBroadcastManager.getInstance(view.getViewContext())
@@ -506,20 +470,28 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         if (currentStep == STEPS.DATOS_ENTREGA) {
             if (validateDatosEntrega()) {
                 view.setVisibilityBoxStepDatosEntrega(View.GONE);
-                showQRPagoStep();
-                view.setVisibilityBtnSiguiente(View.VISIBLE);
-                if (minFotosProducto == 0 || hasHabilitantes()
-                        || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
-                    view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
-                    view.notifyGaleriaCargoAllItemChanged();
-                    currentStep = STEPS.FOTOS_CARGO;
-                } else {
-                    view.setVisibilityBoxStepProductoCliente(View.VISIBLE);
-                    view.notifyGaleriaProductoClienteAllItemChanged();
-                    view.setTextBtnSiguiente("Gestionar");
-                    currentStep = STEPS.FOTOS_PRODUCTO_CLIENTE;
-                }
                 view.hideKeyboard();
+
+                if (isMetodoPagoNoDefinido()) {
+                    // Guía COD por definir (idMedioPago=1): motorizado debe cobrar por UrbanoPay
+                    // (o elegir efectivo dentro de la Activity). Al volver, onUrbanoPayResult decide.
+                    lanzarUrbanoPay();
+                } else {
+                    // Guía sin pago pendiente (ya pagada, gratis, crédito, etc.) → saltar UrbanoPay
+                    // e ir directo al step de fotos correspondiente.
+                    view.setVisibilityBtnSiguiente(View.VISIBLE);
+                    if (minFotosProducto == 0 || hasHabilitantes()
+                            || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
+                        view.setVisibilityBoxStepFotoCargoEntrega(View.VISIBLE);
+                        view.notifyGaleriaCargoAllItemChanged();
+                        currentStep = STEPS.FOTOS_CARGO;
+                    } else {
+                        view.setVisibilityBoxStepProductoCliente(View.VISIBLE);
+                        view.notifyGaleriaProductoClienteAllItemChanged();
+                        view.setTextBtnSiguiente("Gestionar");
+                        currentStep = STEPS.FOTOS_PRODUCTO_CLIENTE;
+                    }
+                }
             }
             return;
         }
@@ -561,13 +533,8 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             return;
         }
 
-        if (currentStep == STEPS.YAPE_QR) {
-            view.setVisibilityBoxYapeQR(View.GONE);
-            view.setVisibilityBoxStepFotoComprobantePago(View.VISIBLE);
-            view.setTextBtnSiguiente("Siguiente");
-            currentStep = STEPS.FOTOS_COMPROBANTE_PAGO;
-            return;
-        }
+        // El step YAPE_QR ya no se maneja aquí — UrbanoPayActivity toma el control y
+        // el resultado se recibe por onUrbanoPayResult(). El bloque original fue removido.
 
         if (currentStep == STEPS.FIRMA_CLIENTE) {
             boolean isGuiaDevolucion = rutas.get(0).getTipoEnvio().toUpperCase().equals(Ruta.TipoEnvio.DEVOLUCION);
@@ -959,6 +926,12 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
             tipoMedioPago = selectedIndexTipoMedioPago + "";
         }
 
+        // Cuando la guía es COD por definir (idMedioPago=1), el motorizado indica cómo cobró
+        // vía UrbanoPay (efectivo=1, QR=7). Este valor lo setea onUrbanoPayResult.
+        if (isMetodoPagoNoDefinido()) {
+            tipoMedioPago = selectedIndexMetodoPago + "";
+        }
+
         String comentarioGestionEntrega = view.getTextComentarios();
 
         if (observarEntrega) {
@@ -1251,73 +1224,56 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    private void showQRPagoStep() {
-        datosPagoNombre = view.getTextNombre();
-        datosPagoDni = view.getTextDNI();
-        view.setVisibilityBoxYapeQR(View.VISIBLE);
-        view.setVisibilityBoxQRBotones(View.VISIBLE);   // muestra btn "Generar QR" dentro de la tarjeta
-        view.setVisibilityBoxQRContenido(View.GONE);    // oculta imagen QR + monto
-        view.setVisibilityBtnSiguiente(View.GONE);
-        currentStep = STEPS.YAPE_QR;
+    /**
+     * Lanza la Activity dedicada de Urbano Pay. Reemplaza al antiguo step interno YAPE_QR.
+     * El resultado llega por {@link #onUrbanoPayResult}.
+     */
+    private void lanzarUrbanoPay() {
+        double monto;
+        try {
+            monto = Double.parseDouble(rutas.get(0).getImporte());
+        } catch (NumberFormatException e) {
+            monto = 0;
+        }
+        com.urbanoexpress.iridio3.pre.model.entity.UrbanoPayInput input =
+                new com.urbanoexpress.iridio3.pre.model.entity.UrbanoPayInput(
+                        rutas.get(0).getGuia(),
+                        monto,
+                        view.getTextNombre(),
+                        view.getTextDNI());
+        currentStep = STEPS.YAPE_QR; // marcar step actual para lifecycle
+        view.launchUrbanoPay(input);
     }
 
-    private void startPollingPago() {
-        pollingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                consultarPago();
-            }
-        };
-        pollingHandler.postDelayed(pollingRunnable, POLLING_INTERVAL_MS);
-    }
-
-    private void stopPollingPago() {
-        if (pollingRunnable != null) {
-            pollingHandler.removeCallbacks(pollingRunnable);
-            pollingRunnable = null;
+    /**
+     * Handler llamado desde EntregaGEDialog cuando UrbanoPayActivity retorna un resultado.
+     * Decide cómo continuar el flujo (fotos / cierre / etc.) según el status.
+     */
+    public void onUrbanoPayResult(com.urbanoexpress.iridio3.pre.model.entity.UrbanoPayResult result) {
+        if (result == null) return;
+        switch (result.getStatus()) {
+            case PAGADO_TOTAL:
+            case PAGADO_PARCIAL_Y_EFECTIVO:
+                selectedIndexMetodoPago = 7;   // QR (parcial cuenta como QR)
+                continuarDespuesDePago();
+                break;
+            case EFECTIVO:
+                selectedIndexMetodoPago = 1;   // Efectivo puro
+                continuarDespuesDePago();
+                break;
+            case CANCELADO:
+                // El motorizado presionó back sin cobrar. Regresarlo al step de datos.
+                view.setVisibilityBoxStepDatosEntrega(View.VISIBLE);
+                currentStep = STEPS.DATOS_ENTREGA;
+                break;
         }
     }
 
-    private void consultarPago() {
-        ConsultarQRRequest request = new ConsultarQRRequest(rqIdCode);
-        ApiService.getInstance().requestJson(ApiRest.Api.URL_CONSULTAR_QR, request, new ApiService.ResponseListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    if (!response.isNull("data") && response.getJSONObject("data") != null) {
-                        JSONObject data = response.getJSONObject("data");
-                        String estado = data.optString("estado", "");
-                        if ("PAGADO".equalsIgnoreCase(estado)) {
-                            stopPollingPago();
-                            String guia = data.optString("guia", "");
-                            String monto = ModelUtils.getSimboloMoneda(view.getViewContext())
-                                    + " " + data.optString("monto", "");
-                            String docNumero = data.optString("doc_numero", "");
-                            String nombre = data.optString("name", "");
-                            view.showComprobantePago(estado, guia, monto, docNumero, nombre);
-                            view.setVisibilityBtnSiguiente(View.VISIBLE);
-                            view.setTextBtnSiguiente("Continuar");
-                            return;
-                        }
-                    }
-                } catch (Exception e) {
-                    Log.e(TAG, "consultarPago: ", e);
-                }
-                // Pago aún no realizado — reintentar
-                pollingHandler.postDelayed(pollingRunnable, POLLING_INTERVAL_MS);
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // 400 = no pagado aún, seguir polling
-                pollingHandler.postDelayed(pollingRunnable, POLLING_INTERVAL_MS);
-            }
-        });
-    }
-
-    public void onBtnEfectivoClick() {
-        stopPollingPago();
-        view.setVisibilityBoxYapeQR(View.GONE);
+    /**
+     * Avanza del step de pago al siguiente step del wizard (FOTOS_CARGO o FOTOS_PRODUCTO_CLIENTE).
+     * Extracted de onBtnEfectivoClick para reusarlo desde el resultado de UrbanoPay.
+     */
+    private void continuarDespuesDePago() {
         view.setVisibilityBtnSiguiente(View.VISIBLE);
         if (minFotosProducto == 0 || hasHabilitantes()
                 || rutas.get(0).getTipoEnvio().equalsIgnoreCase(Ruta.TipoEnvio.LIQUIDACION)) {
@@ -1332,76 +1288,6 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         }
     }
 
-    public void onBtnGenerarQRClick() {
-        view.setVisibilityBoxQRBotones(View.GONE);  // oculta btn "Generar QR" de la tarjeta
-        view.setVisibilityBtnSiguiente(View.GONE);
-        requestQR();
-    }
-
-    private void requestQR() {
-        view.showProgressDialog("Generando QR...");
-
-        double monto;
-        try {
-            monto = Double.parseDouble(rutas.get(0).getImporte());
-        } catch (NumberFormatException e) {
-            monto = 0;
-        }
-
-        GenerarQRRequest request = new GenerarQRRequest(
-                rutas.get(0).getGuia(),
-                monto,
-                datosPagoNombre,
-                datosPagoDni
-        );
-
-        ApiService.getInstance().requestJson(ApiRest.Api.URL_GENERAR_QR, request, new ApiService.ResponseListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-                view.dismissProgressDialog();
-                try {
-                    // Guía ya pagada previamente (el servidor responde HTTP 200 con http_code 400 en el body)
-                    if (response.optInt("http_code", 0) == 400) {
-                        JSONObject data = response.optJSONObject("data");
-                        if (data != null) {
-                            String guia = data.optString("guia", "");
-                            String monto = ModelUtils.getSimboloMoneda(view.getViewContext())
-                                    + " " + data.optString("monto", "");
-                            String docNumero = data.optString("doc_numero", "");
-                            String nombre = data.optString("name", "");
-                            view.showComprobantePago("PAGADO", guia, monto, docNumero, nombre);
-                            view.setVisibilityBtnSiguiente(View.VISIBLE);
-                            view.setTextBtnSiguiente("Continuar");
-                        }
-                        return;
-                    }
-                    JSONObject data = response.getJSONObject("data");
-                    String hash = data.getString("hash");
-                    rqIdCode = data.getString("rq_id_code");
-                    view.setVisibilityBoxQRContenido(View.VISIBLE);
-                    view.displayQR(hash);
-                    view.setTextRqIdCode("ID: " + rqIdCode);
-                    view.setTextImporte(ModelUtils.getSimboloMoneda(view.getViewContext())
-                            + " " + rutas.get(0).getImporte());
-                    startPollingPago();
-                } catch (Exception e) {
-                    Log.e(TAG, "requestQR onResponse: ", e);
-                    BaseModalsView.showToast(view.getViewContext(),
-                            "Error al procesar el QR", Toast.LENGTH_LONG);
-                    view.setVisibilityBoxQRBotones(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                view.dismissProgressDialog();
-                BaseModalsView.showToast(view.getViewContext(),
-                        "Error al generar el QR, intente nuevamente", Toast.LENGTH_LONG);
-                view.setVisibilityBoxQRBotones(View.VISIBLE);
-            }
-        });
-    }
-    
     private boolean isMedioPagoEfectivo() {
         switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
             case 1:
@@ -1426,6 +1312,19 @@ public class EntregaGEPresenter implements PiezasAdapter.OnPiezaListener,
         String pago = rutas.get(0).getIdMedioPago();
         switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
             case 8:
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * True cuando la guía tiene {@code idMedioPago == 1} (COD por definir).
+     * En ese caso el server necesita saber cómo cobró el motorizado (efectivo o QR)
+     * en el campo {@code tipoMedioPago} al gestionar la guía.
+     */
+    private boolean isMetodoPagoNoDefinido() {
+        switch (Integer.parseInt(rutas.get(0).getIdMedioPago())) {
+            case 1:
                 return true;
         }
         return false;

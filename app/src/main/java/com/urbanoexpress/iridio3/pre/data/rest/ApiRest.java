@@ -86,7 +86,7 @@ public final class ApiRest {
         String GET_DATOS_MAPA_RUTA_DEL_DIA = "api/datosMapa/";
 
         String URL_GENERAR_QR = "https://pay-api.dev-urbano.dev/api/v1/pagos/generar-qr";
-        String URL_CONSULTAR_QR = "https://pay-api.dev-urbano.dev/api/v1/pagos/consultar";
+        String URL_STATUS_QR = "https://pay-api.dev-urbano.dev/api/v1/pagos/status-qr";
 
         //???
         String UPLOAD_MOTORIZADO_LICENCE = "api-apps/iridio/RegisterLincense";

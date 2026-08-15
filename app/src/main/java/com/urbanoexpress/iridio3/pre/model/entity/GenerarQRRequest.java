@@ -25,10 +25,21 @@ public class GenerarQRRequest {
     @SerializedName("fintech_id")
     private int fintechId;
 
-    public GenerarQRRequest(String guia, double monto, String nombre, String dni) {
+    @SerializedName("monto_total")
+    private double montoTotal;
+
+    /**
+     * @param guia número de guía
+     * @param monto monto de ESTE QR (máx 500, o el resto si es menor)
+     * @param montoTotal monto total de la guía (para el servidor saber cuánto va a cobrar en total)
+     * @param nombre nombre del cliente
+     * @param dni DNI del cliente
+     */
+    public GenerarQRRequest(String guia, double monto, double montoTotal, String nombre, String dni) {
         this.guia = guia;
         this.monto = monto;
-        this.tipo = "Iridio";
+        this.montoTotal = montoTotal;
+        this.tipo = "IRIDIO";
         this.nombre = nombre;
         this.dni = dni;
         this.divisa = "PEN";

@@ -284,6 +284,11 @@
             android:name=".ui.PlanRutaActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.UrbanoPayActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <meta-data
             android:name="android.max_aspect"

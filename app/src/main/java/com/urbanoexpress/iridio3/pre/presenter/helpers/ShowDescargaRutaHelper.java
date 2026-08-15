@@ -76,15 +76,6 @@ public class ShowDescargaRutaHelper extends BaseModalsView {
         loadDataPreguntaDescargaRuta();
     }
 
-    public ShowDescargaRutaHelper(Context context, LinkedHashMap<String, String> mapIDsGE, int numVecesGestionado) {
-        this.activity = (AppCompatActivity) context;
-        this.mapIDsGE = mapIDsGE;
-        this.layoutInflater = activity.getLayoutInflater();
-        this.numVecesGestionado = numVecesGestionado;
-        this.rutaPendienteInteractor = new RutaPendienteInteractor(context);
-        loadDataPreguntaDescargaRutaFromHashMap();
-    }
-
     private void loadDataPreguntaDescargaRuta() {
         Log.d(TAG, "loadDataPreguntaDescargaRuta");
         Log.d(TAG, "rutas: " + rutas.size());

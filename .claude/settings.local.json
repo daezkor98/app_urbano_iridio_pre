@@ -42,7 +42,14 @@
       "Bash(python -c ' *)",
       "Bash(adb exec-out *)",
       "Bash(adb devices *)",
-      "Bash(adb wait-for-device *)"
+      "Bash(adb wait-for-device *)",
+      "Bash(adb kill-server *)",
+      "Bash(adb start-server *)",
+      "Bash(timeout 15 adb logcat -d -t 4000)",
+      "Bash(timeout 12 adb logcat -d -t 2500)",
+      "Bash(timeout 12 adb logcat -d -t 1500)",
+      "Bash(timeout 8 adb logcat -d -t 1500)",
+      "Bash(timeout 12 adb logcat -d -t 3000)"
     ]
   }
 }

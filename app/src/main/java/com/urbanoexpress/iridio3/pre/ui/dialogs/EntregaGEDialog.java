@@ -68,6 +68,22 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     private ModalEntregarGuiaBinding binding;
     private EntregaGEPresenter presenter;
 
+    /**
+     * Launcher para {@code UrbanoPayActivity}. Al retornar reenvía el resultado al presenter.
+     */
+    private final androidx.activity.result.ActivityResultLauncher<android.content.Intent> urbanoPayLauncher =
+            registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == android.app.Activity.RESULT_OK
+                                && result.getData() != null && presenter != null) {
+                            com.urbanoexpress.iridio3.pre.model.entity.UrbanoPayResult r =
+                                    (com.urbanoexpress.iridio3.pre.model.entity.UrbanoPayResult)
+                                            result.getData().getSerializableExtra(
+                                                    com.urbanoexpress.iridio3.pre.ui.UrbanoPayActivity.EXTRA_RESULT);
+                            if (r != null) presenter.onUrbanoPayResult(r);
+                        }
+                    });
+
     public EntregaGEDialog() { }
 
     /**
@@ -440,32 +456,14 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     }
 
     @Override
-    public void displayQR(String yapeHash) {
-        Bitmap drawable = new QRCode.Builder(requireContext())
-                .setValue(yapeHash)
-                .setSize(MetricsUtils.dpToPx(requireContext(), 280))
-                .build();
-
-        Glide.with(this)
-                .load(drawable)
-                .into(binding.boxYapeQR.qrCodeImage);
-
-        binding.boxYapeQR.lblEscaneaPagar.setVisibility(VISIBLE);
-        binding.boxYapeQR.qrCodeImage.setVisibility(VISIBLE);
-        binding.boxYapeQR.lblBilleteras.setVisibility(VISIBLE);
-        binding.boxYapeQR.layMediosPago.setVisibility(VISIBLE);
-        binding.boxYapeQR.lblRqIdCode.setVisibility(VISIBLE);
-    }
-
-    @Override
-    public void setTextRqIdCode(String rqIdCode) {
-        binding.boxYapeQR.lblRqIdCode.setText(rqIdCode);
-    }
-
-    @Override
-    public void setTextImporte(String importe) {
-        binding.boxYapeQR.lblMontoQr.setText(importe);
-        binding.boxYapeQR.lblMontoQr.setVisibility(VISIBLE);
+    public void launchUrbanoPay(com.urbanoexpress.iridio3.pre.model.entity.UrbanoPayInput input) {
+        android.content.Intent i = new android.content.Intent(getContext(),
+                com.urbanoexpress.iridio3.pre.ui.UrbanoPayActivity.class);
+        i.putExtra(com.urbanoexpress.iridio3.pre.ui.UrbanoPayActivity.EXTRA_INPUT, input);
+        urbanoPayLauncher.launch(i);
+        if (getActivity() != null) {
+            getActivity().overridePendingTransition(R.anim.slide_enter_from_bottom, R.anim.not_slide);
+        }
     }
 
     @Override
@@ -474,52 +472,11 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
     }
 
     @Override
-    public void setVisibilityBoxYapeQR(int visible) {
-        binding.boxYapeQR.getRoot().setVisibility(visible);
-    }
-
-    @Override
     public void setVisibilityBtnSiguiente(int visible) {
         binding.btnSiguiente.setVisibility(visible);
     }
 
     @Override
-    public void setVisibilityBoxQRBotones(int visible) {
-        // Controla el botón "Generar QR" dentro de la tarjeta blanca
-        binding.boxYapeQR.btnGenerarQr.setVisibility(visible);
-    }
-
-    @Override
-    public void setVisibilityBoxQRContenido(int visible) {
-        // Controla el área de imagen QR + monto + billeteras dentro de la tarjeta
-        binding.boxYapeQR.qrCodeImage.setVisibility(visible);
-        binding.boxYapeQR.lblEscaneaPagar.setVisibility(visible);
-        binding.boxYapeQR.lblMontoQr.setVisibility(visible);
-        binding.boxYapeQR.lblBilleteras.setVisibility(visible);
-        binding.boxYapeQR.layMediosPago.setVisibility(visible);
-    }
-
-    @Override
-    public void showComprobantePago(String estado, String guia, String monto, String docNumero, String nombre) {
-        // Ocultar QR y botón efectivo
-        binding.boxYapeQR.qrCodeImage.setVisibility(View.GONE);
-        binding.boxYapeQR.lblEscaneaPagar.setVisibility(View.GONE);
-        binding.boxYapeQR.lblMontoQr.setVisibility(View.GONE);
-        binding.boxYapeQR.lblBilleteras.setVisibility(View.GONE);
-        binding.boxYapeQR.layMediosPago.setVisibility(View.GONE);
-        binding.boxYapeQR.lblRqIdCode.setVisibility(View.GONE);
-        binding.boxYapeQR.btnEfectivo.setVisibility(View.GONE);
-        // Mostrar comprobante
-        binding.boxYapeQR.boxComprobante.setVisibility(VISIBLE);
-        binding.boxYapeQR.lblComprobanteEstado.setText(estado);
-        binding.boxYapeQR.lblComprobanteGuia.setText(guia);
-        binding.boxYapeQR.lblComprobanteMonto.setText(monto);
-        binding.boxYapeQR.lblComprobanteDoc.setText(docNumero);
-        binding.boxYapeQR.lblComprobanteNombre.setText(nombre);
-    }
-
-    @Override
-
     public void setVisibilityBoxStepFotosDomicilio(int visible) {
         binding.boxStepFotosDomicilio.setVisibility(visible);
     }
@@ -695,9 +652,6 @@ public class EntregaGEDialog extends BaseDialogFragment implements DescargaEntre
         binding.btnScanPCK.setOnClickListener(view -> presenter.onBtnScanPCKClick());
 
         binding.btnSiguiente.setOnClickListener(v -> presenter.onBtnSiguienteClick());
-
-        binding.boxYapeQR.btnGenerarQr.setOnClickListener(v -> presenter.onBtnGenerarQRClick());
-        binding.boxYapeQR.btnEfectivo.setOnClickListener(v -> presenter.onBtnEfectivoClick());
 
         DividerItemDecoration itemDecoration =
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);

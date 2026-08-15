@@ -593,13 +593,9 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
-            <!-- -->
-
-            <include
-                android:id="@+id/boxYapeQR"
-                layout="@layout/box_entrega_step_yape_qr"
-                android:visibility="gone"
-                tools:visibility="visible" />
+            <!-- El paso de pago QR ahora se maneja en UrbanoPayActivity (activity dedicada),
+                 lanzada desde EntregaGEPresenter.lanzarUrbanoPay(). El antiguo include
+                 boxYapeQR fue eliminado. -->
 
             <LinearLayout
                 android:id="@+id/boxStepFirmaEntrega"
